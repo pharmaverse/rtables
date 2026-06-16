@@ -11,7 +11,7 @@ rheader(..., format = "xx", .lst = NULL)
 \code{\link[=LabelRow]{LabelRow()}}, etc.}
 
 \item{format}{(\code{string}, \code{function}, or \code{list})\cr the format label (string) or formatter function to apply to the
-cell values passed via \code{...}. See \code{\link[formatters:list_valid_format_labels]{formatters::list_valid_format_labels()}} for currently supported format labels.}
+cell values passed via \code{...}. See \code{\link[formatters:list_formats]{formatters::list_valid_format_labels()}} for currently supported format labels.}
 
 \item{.lst}{(\code{list})\cr an already-collected list of arguments to be used instead of the elements of \code{...}.
 Arguments passed via \code{...} will be ignored if this is specified.}
@@ -34,9 +34,9 @@ h2
 
 }
 \seealso{
-Other compatibility:
-\code{\link[=rrow]{rrow()}},
-\code{\link[=rrowl]{rrowl()}},
-\code{\link[=rtable]{rtable()}}
+Other compatibility: 
+\code{\link{rrow}()},
+\code{\link{rrowl}()},
+\code{\link{rtable}()}
 }
 \concept{compatibility}

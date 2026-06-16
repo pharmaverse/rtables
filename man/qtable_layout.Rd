@@ -59,16 +59,16 @@ lists are interpreted as multiple cells.}
 \item{summarize_groups}{(\code{flag})\cr whether each level of nesting should include marginal summary rows. Defaults to
 \code{FALSE}.}
 
-\item{title}{(\code{string})\cr single string to use as main title (\code{\link[formatters:main_title]{formatters::main_title()}}). Ignored for subtables.}
+\item{title}{(\code{string})\cr single string to use as main title (\code{\link[formatters:title_footer]{formatters::main_title()}}). Ignored for subtables.}
 
-\item{subtitles}{(\code{character})\cr a vector of strings to use as subtitles (\code{\link[formatters:subtitles]{formatters::subtitles()}}), where every
+\item{subtitles}{(\code{character})\cr a vector of strings to use as subtitles (\code{\link[formatters:title_footer]{formatters::subtitles()}}), where every
 element is printed on a separate line. Ignored for subtables.}
 
 \item{main_footer}{(\code{character})\cr a vector of strings to use as main global (non-referential) footer materials
-(\code{\link[formatters:main_footer]{formatters::main_footer()}}), where every element is printed on a separate line.}
+(\code{\link[formatters:title_footer]{formatters::main_footer()}}), where every element is printed on a separate line.}
 
 \item{prov_footer}{(\code{character})\cr a vector of strings to use as provenance-related global footer materials
-(\code{\link[formatters:prov_footer]{formatters::prov_footer()}}), where every element is printed on a separate line.}
+(\code{\link[formatters:title_footer]{formatters::prov_footer()}}), where every element is printed on a separate line.}
 
 \item{show_colcounts}{(\code{logical(1)})\cr Indicates whether the lowest level of
 applied to data. \code{NA}, the default, indicates that the \code{show_colcounts}

@@ -18,16 +18,16 @@ basic_table(
 )
 }
 \arguments{
-\item{title}{(\code{string})\cr single string to use as main title (\code{\link[formatters:main_title]{formatters::main_title()}}). Ignored for subtables.}
+\item{title}{(\code{string})\cr single string to use as main title (\code{\link[formatters:title_footer]{formatters::main_title()}}). Ignored for subtables.}
 
-\item{subtitles}{(\code{character})\cr a vector of strings to use as subtitles (\code{\link[formatters:subtitles]{formatters::subtitles()}}), where every
+\item{subtitles}{(\code{character})\cr a vector of strings to use as subtitles (\code{\link[formatters:title_footer]{formatters::subtitles()}}), where every
 element is printed on a separate line. Ignored for subtables.}
 
 \item{main_footer}{(\code{character})\cr a vector of strings to use as main global (non-referential) footer materials
-(\code{\link[formatters:main_footer]{formatters::main_footer()}}), where every element is printed on a separate line.}
+(\code{\link[formatters:title_footer]{formatters::main_footer()}}), where every element is printed on a separate line.}
 
 \item{prov_footer}{(\code{character})\cr a vector of strings to use as provenance-related global footer materials
-(\code{\link[formatters:prov_footer]{formatters::prov_footer()}}), where every element is printed on a separate line.}
+(\code{\link[formatters:title_footer]{formatters::prov_footer()}}), where every element is printed on a separate line.}
 
 \item{show_colcounts}{(\code{logical(1)})\cr Indicates whether the lowest level of
 applied to data. \code{NA}, the default, indicates that the \code{show_colcounts}
@@ -65,7 +65,7 @@ Every layout must start with a basic table.
 and \code{colcount_format} is 2-dimensional with a percent component, the value component for the percent is always
 populated with \code{1} (i.e. 100\%). 1d formats are used to render the counts exactly as they normally would be,
 while 2d formats which don't include a percent, and all 3d formats result in an error. Formats in the form of
-functions are not supported for \code{colcount} format. See \code{\link[formatters:list_valid_format_labels]{formatters::list_valid_format_labels()}} for the list
+functions are not supported for \code{colcount} format. See \code{\link[formatters:list_formats]{formatters::list_valid_format_labels()}} for the list
 of valid format labels to select from.
 }
 \note{
@@ -73,8 +73,8 @@ of valid format labels to select from.
 \item Because percent components in \code{colcount_format} are \emph{always} populated with the value 1, we can get arguably
 strange results, such as that individual arm columns and a combined "all patients" column all list "100\%" as
 their percentage, even though the individual arm columns represent strict subsets of the "all patients" column.
-\item Note that subtitles (\code{\link[formatters:subtitles]{formatters::subtitles()}}) and footers (\code{\link[formatters:main_footer]{formatters::main_footer()}} and
-\code{\link[formatters:prov_footer]{formatters::prov_footer()}}) that span more than one line can be supplied as a character vector to maintain
+\item Note that subtitles (\code{\link[formatters:title_footer]{formatters::subtitles()}}) and footers (\code{\link[formatters:title_footer]{formatters::main_footer()}} and
+\code{\link[formatters:title_footer]{formatters::prov_footer()}}) that span more than one line can be supplied as a character vector to maintain
 indentation on multiple lines.
 }
 }

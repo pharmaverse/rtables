@@ -74,11 +74,11 @@ build_table(lyt, ex_adsl)
 \seealso{
 \code{\link[=make_split_fun]{make_split_fun()}}
 
-Other make_custom_split:
-\code{\link[=add_combo_facet]{add_combo_facet()}},
-\code{\link[=drop_facet_levels]{drop_facet_levels()}},
-\code{\link[=make_split_fun]{make_split_fun()}},
-\code{\link[=make_split_result]{make_split_result()}},
-\code{\link[=trim_levels_in_facets]{trim_levels_in_facets()}}
+Other make_custom_split: 
+\code{\link{add_combo_facet}()},
+\code{\link{drop_facet_levels}()},
+\code{\link{make_split_fun}()},
+\code{\link{make_split_result}()},
+\code{\link{trim_levels_in_facets}()}
 }
 \concept{make_custom_split}

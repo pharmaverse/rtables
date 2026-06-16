@@ -221,7 +221,9 @@ setMethod(
   "next_rpos", "PreDataRowLayout",
   function(obj, nested, for_analyze) {
     l <- length(obj)
-    if (length(obj[[l]]) > 0L && !.check_if_nest(obj, nested, for_analyze)) {
+    if (is.na(nested)) {
+      l <- NA
+    } else if (length(obj[[l]]) > 0L && !.check_if_nest(obj, nested, for_analyze)) {
       l <- l + 1L
     }
     l
@@ -275,6 +277,20 @@ setMethod(
     }
   }
 )
+
+
+#' @rdname int_methods
+setMethod(
+  "last_rowsplit", "SplitVectorTree",
+  function(obj) {
+    if (length(obj) == 0) {
+      NULL
+    } else {
+      last_rowsplit(obj[[length(obj)]])
+    }
+  }
+)
+
 
 #' @rdname int_methods
 setMethod(

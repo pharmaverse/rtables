@@ -39,8 +39,8 @@ Row-bind \code{TableTree} and related objects
 \note{
 When objects are row-bound, titles and footer information is retained from the first object (if any exists) if all
 other objects have no titles/footers or have identical titles/footers. Otherwise, all titles/footers are removed
-and must be set for the bound table via the \code{\link[formatters:main_title]{formatters::main_title()}}, \code{\link[formatters:subtitles]{formatters::subtitles()}},
-\code{\link[formatters:main_footer]{formatters::main_footer()}}, and \code{\link[formatters:prov_footer]{formatters::prov_footer()}} functions.
+and must be set for the bound table via the \code{\link[formatters:title_footer]{formatters::main_title()}}, \code{\link[formatters:title_footer]{formatters::subtitles()}},
+\code{\link[formatters:title_footer]{formatters::main_footer()}}, and \code{\link[formatters:title_footer]{formatters::prov_footer()}} functions.
 }
 \examples{
 mtbl <- rtable(

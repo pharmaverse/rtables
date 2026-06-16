@@ -1914,6 +1914,10 @@ TableTree <- function(kids = list(),
 ## a pre-existing TableTree/ElementaryTable.
 ## This is used for add_existing_table in colby_constructors.R
 
+split_or_splitvectree <- function(object) {
+    is(object, "Split") || is(object, "SplitVectorTree")
+}
+
 setClass("SplitVector",
   contains = "list",
   validity = function(object) {
@@ -1922,8 +1926,8 @@ setClass("SplitVector",
     } else {
       lst <- NULL
     }
-    all(sapply(head(object, -1), is, "Split")) &&
-      (is.null(lst) || is(lst, "Split") || is(lst, "VTableNodeInfo"))
+    all(sapply(head(object, -1), split_or_splitvectree)) &&
+      (is.null(lst) || split_or_splitvectree(lst) || is(lst, "VTableNodeInfo"))
   }
 )
 
@@ -1936,7 +1940,26 @@ SplitVector <- function(x = NULL,
   new("SplitVector", lst)
 }
 
+setClass("SplitVectorTree",
+         contains = "list",
+         validity = function(object) {
+    all(vapply(object, function(x) is(x, "SplitVector") || is(x, "SplitVectorTree"), TRUE))
+})
+
+SplitVectorTree <- function(x = NULL,
+                            ...,
+                            lst = list(...)) {
+    if (is.null(x))
+        xlst <- NULL
+    else
+        xlst <- list(x)
+    new("SplitVectorTree", c(xlst, lst))
+}
+
 avar_noneorlast <- function(vec) {
+  if (is(vec, "SplitVectorTree")) {
+    return(all(sapply(vec, avar_noneorlast)))
+  }
   if (!is(vec, "SplitVector")) {
     return(FALSE)
   }

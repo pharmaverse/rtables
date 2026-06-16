@@ -34,7 +34,7 @@ non_ref_rcell(
 \item{x}{(\code{ANY})\cr cell value.}
 
 \item{format}{(\code{string} or \code{function})\cr the format label (string) or \code{formatters} function to apply to \code{x}.
-See \code{\link[formatters:list_valid_format_labels]{formatters::list_valid_format_labels()}} for currently supported format labels.}
+See \code{\link[formatters:list_formats]{formatters::list_valid_format_labels()}} for currently supported format labels.}
 
 \item{colspan}{(\code{integer(1)})\cr column span value.}
 
@@ -47,7 +47,7 @@ corresponds to the unmodified default behavior.}
 \item{footnotes}{(\code{list} or \code{NULL})\cr referential footnote messages for the cell.}
 
 \item{align}{(\code{string} or \code{NULL})\cr alignment the value should be rendered with. Defaults to \code{"center"} if
-\code{NULL} is used. See \code{\link[formatters:list_valid_aligns]{formatters::list_valid_aligns()}} for all currently supported alignments.}
+\code{NULL} is used. See \code{\link[formatters:list_formats]{formatters::list_valid_aligns()}} for all currently supported alignments.}
 
 \item{format_na_str}{(\code{string})\cr string which should be displayed when formatted if this cell's value(s)
 are all \code{NA}.}

@@ -23,8 +23,8 @@ find_degen_struct(rtable("hi"))
 
 }
 \seealso{
-Other table structure validation functions:
-\code{\link[=sanitize_table_struct]{sanitize_table_struct()}},
-\code{\link[=validate_table_struct]{validate_table_struct()}}
+Other table structure validation functions: 
+\code{\link{sanitize_table_struct}()},
+\code{\link{validate_table_struct}()}
 }
 \concept{table structure validation functions}

@@ -46,8 +46,8 @@ assert_valid_table(rtable("oops"))
 
 }
 \seealso{
-Other table structure validation functions:
-\code{\link[=find_degen_struct]{find_degen_struct()}},
-\code{\link[=sanitize_table_struct]{sanitize_table_struct()}}
+Other table structure validation functions: 
+\code{\link{find_degen_struct}()},
+\code{\link{sanitize_table_struct}()}
 }
 \concept{table structure validation functions}

@@ -42,7 +42,7 @@ analyzing a single variable.}
 
 \item{format}{(\code{string}, \code{function}, or \code{list})\cr format associated with this split. Formats can be declared via
 strings (\code{"xx.x"}) or function. In cases such as \code{analyze} calls, they can be character vectors or lists of
-functions. See \code{\link[formatters:list_valid_format_labels]{formatters::list_valid_format_labels()}} for a list of all available format strings.}
+functions. See \code{\link[formatters:list_formats]{formatters::list_valid_format_labels()}} for a list of all available format strings.}
 
 \item{formats_var}{(\code{string} or \code{NULL})\cr \code{NULL} (the default) or the name of the list column containing named
 lists of default formats to use. These will be applied with the same precedence as the \code{format} argument; i.e.,
@@ -117,7 +117,7 @@ calculated during the tabulation process, but will be overridden by
 formats specified within \code{rcell} calls in \code{afun}.
 
 \code{format} can accept a format label string (see
-\code{\link[formatters:list_valid_format_labels]{formatters::list_valid_format_labels()}}), a formatting function, an
+\code{\link[formatters:list_formats]{formatters::list_valid_format_labels()}}), a formatting function, an
 unnamed list, or a named list.
 
 When \code{format} is an unnamed list - or a named list where not all

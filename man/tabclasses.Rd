@@ -84,7 +84,7 @@ table for another \code{TableTree}.}
 
 \item{format}{(\code{string}, \code{function}, or \code{list})\cr format associated with this split. Formats can be declared via
 strings (\code{"xx.x"}) or function. In cases such as \code{analyze} calls, they can be character vectors or lists of
-functions. See \code{\link[formatters:list_valid_format_labels]{formatters::list_valid_format_labels()}} for a list of all available format strings.}
+functions. See \code{\link[formatters:list_formats]{formatters::list_valid_format_labels()}} for a list of all available format strings.}
 
 \item{na_str}{(\code{string})\cr string that should be displayed when the value of \code{x} is missing. Defaults to \code{"NA"}.}
 
@@ -92,16 +92,16 @@ functions. See \code{\link[formatters:list_valid_format_labels]{formatters::list
 function (subtable, content table, or row) \emph{and all of that structure's children}. Defaults to 0, which
 corresponds to the unmodified default behavior.}
 
-\item{title}{(\code{string})\cr single string to use as main title (\code{\link[formatters:main_title]{formatters::main_title()}}). Ignored for subtables.}
+\item{title}{(\code{string})\cr single string to use as main title (\code{\link[formatters:title_footer]{formatters::main_title()}}). Ignored for subtables.}
 
-\item{subtitles}{(\code{character})\cr a vector of strings to use as subtitles (\code{\link[formatters:subtitles]{formatters::subtitles()}}), where every
+\item{subtitles}{(\code{character})\cr a vector of strings to use as subtitles (\code{\link[formatters:title_footer]{formatters::subtitles()}}), where every
 element is printed on a separate line. Ignored for subtables.}
 
 \item{main_footer}{(\code{character})\cr a vector of strings to use as main global (non-referential) footer materials
-(\code{\link[formatters:main_footer]{formatters::main_footer()}}), where every element is printed on a separate line.}
+(\code{\link[formatters:title_footer]{formatters::main_footer()}}), where every element is printed on a separate line.}
 
 \item{prov_footer}{(\code{character})\cr a vector of strings to use as provenance-related global footer materials
-(\code{\link[formatters:prov_footer]{formatters::prov_footer()}}), where every element is printed on a separate line.}
+(\code{\link[formatters:title_footer]{formatters::prov_footer()}}), where every element is printed on a separate line.}
 
 \item{header_section_div}{(\code{string})\cr string which will be used to divide the header from the table. See
 \code{\link[=header_section_div]{header_section_div()}} for the associated getter and setter. Please consider changing last element of
@@ -109,7 +109,7 @@ element is printed on a separate line. Ignored for subtables.}
 
 \item{hsep}{(\code{string})\cr set of characters to be repeated as the separator between the header and body of
 the table when rendered as text. Defaults to a connected horizontal line (unicode 2014) in locals that use a UTF
-charset, and to \code{-} elsewhere (with a once per session warning). See \code{\link[formatters:set_default_hsep]{formatters::set_default_hsep()}} for further
+charset, and to \code{-} elsewhere (with a once per session warning). See \code{\link[formatters:default_horizontal_sep]{formatters::set_default_hsep()}} for further
 information.}
 
 \item{trailing_section_div}{(\code{string})\cr string which will be used as a section divider after the printing

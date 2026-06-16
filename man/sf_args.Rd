@@ -21,10 +21,10 @@ No return value.
 Split function argument conventions
 }
 \seealso{
-Other conventions:
-\code{\link[=compat_args]{compat_args()}},
-\code{\link[=constr_args]{constr_args()}},
-\code{\link[=gen_args]{gen_args()}},
-\code{\link[=lyt_args]{lyt_args()}}
+Other conventions: 
+\code{\link{compat_args}()},
+\code{\link{constr_args}()},
+\code{\link{gen_args}()},
+\code{\link{lyt_args}()}
 }
 \concept{conventions}

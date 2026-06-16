@@ -57,20 +57,53 @@ setMethod("split_rows", "NULL", function(lyt, spl, pos, cmpnd_fun = AnalyzeMulti
   PreDataTableLayouts(rlayout = rl, clayout = cl)
 })
 
+
+branch_above_split <- function(splvec, newspl) {
+  len <- length(splvec)
+  lastel <- splvec[[len]]
+  endontree <- is(lastel, "SplitVectorTree")
+  if (endontree) {
+    splvec[[len]] <- SplitVectorTree(lst = c(lastel, list(SplitVector(newspl))))
+  } else {
+    are_spls <- which(!vapply(splvec, is, "VAnalyzeSplit", FUN.VALUE = TRUE))
+    branch_pos <- max(are_spls)
+    lst <-  c(
+            if(branch_pos > 1) splvec[seq(1, branch_pos - 1)],
+            list(SplitVectorTree(lst = list(SplitVector(lst = splvec[seq(branch_pos, len)]),
+                                       SplitVector(newspl))))
+    )
+    splvec <- SplitVector(lst = lst)
+  }
+
+  splvec
+}
+
 #' @rdname int_methods
 setMethod(
   "split_rows", "PreDataRowLayout",
   function(lyt, spl, pos, cmpnd_fun = AnalyzeMultiVars) {
-    stopifnot(pos > 0 && pos <= length(lyt) + 1)
-    tmp <- if (pos <= length(lyt)) {
-      split_rows(lyt[[pos]], spl, pos, cmpnd_fun)
+    stopifnot(is.na(pos) || (pos > 0 && pos <= length(lyt) + 1))
+    if (is.na(pos)) {
+      pos <- length(lyt)
+      oldval <- lyt[[pos]]
+      if (is(oldval, "SplitVectorTree")) {
+          tmp <- SplitVectorTree(lst = c(oldval, list(SplitVector(spl))))
+      } else if (is(oldval, "SplitVector")) {
+          tmp <- branch_above_split(oldval, spl)
+      } else {
+          stop("split_rows failed with NA pos and oldval class '",
+               class(oldval),
+               "'. This should not happen, contact the maintianer.")
+      }
+    } else if (pos <= length(lyt)) {
+      tmp <- split_rows(lyt[[pos]], spl, pos, cmpnd_fun)
     } else {
       if (pos != 1 && has_force_pag(spl)) {
         stop("page_by splits cannot have top-level siblings",
           call. = FALSE
         )
       }
-      SplitVector(spl)
+      tmp <- SplitVector(spl)
     }
     lyt[[pos]] <- tmp
     lyt
@@ -101,6 +134,18 @@ setMethod(
     SplitVector(lst = tmp)
   }
 )
+
+setMethod(
+  "split_rows", "SplitVectorTree",
+  function(lyt, spl, pos, cmpnd_fun = AnalyzeMultiVars) {
+    ## nested is always TRUE by this point as FALSE and the new NA
+    ## should be captured by the pos value in the PreData*Layout
+    ## methods
+    len <- length(lyt)
+    stopifnot(len > 0)
+    lyt[[len]] <- split_rows(lyt[[len]], spl = spl, pos = pos, cmpnd_fun = cmpnd_fun)
+    lyt
+})
 
 #' @rdname int_methods
 setMethod(
@@ -1938,6 +1983,14 @@ setMethod(
 #' @rdname int_methods
 setMethod(
   "fix_dyncuts", "SplitVector",
+  function(spl, df) {
+    .fd_helper(spl, df)
+  }
+)
+
+#' @rdname int_methods
+setMethod(
+  "fix_dyncuts", "SplitVectorTree",
   function(spl, df) {
     .fd_helper(spl, df)
   }

@@ -83,7 +83,7 @@ underneath analyses, which is not allowed.}
 
 \item{format}{(\code{string}, \code{function}, or \code{list})\cr format associated with this split. Formats can be declared via
 strings (\code{"xx.x"}) or function. In cases such as \code{analyze} calls, they can be character vectors or lists of
-functions. See \code{\link[formatters:list_valid_format_labels]{formatters::list_valid_format_labels()}} for a list of all available format strings.}
+functions. See \code{\link[formatters:list_formats]{formatters::list_valid_format_labels()}} for a list of all available format strings.}
 
 \item{cfun}{(\code{list}, \code{function}, or \code{NULL})\cr tabulation function(s) for creating content rows. Must accept \code{x}
 or \code{df} as first parameter. Must accept \code{labelstr} as the second argument. Can optionally accept all optional
@@ -162,7 +162,7 @@ analyzed at the same level of nesting.}
 \item{topleft}{(\code{character})\cr override values for the "top left" material to be displayed during printing.}
 
 \item{align}{(\code{string} or \code{NULL})\cr alignment the value should be rendered with. Defaults to \code{"center"} if
-\code{NULL} is used. See \code{\link[formatters:list_valid_aligns]{formatters::list_valid_aligns()}} for all currently supported alignments.}
+\code{NULL} is used. See \code{\link[formatters:list_formats]{formatters::list_valid_aligns()}} for all currently supported alignments.}
 
 \item{page_by}{(\code{flag})\cr whether pagination should be forced between different children resulting from this
 split. An error will occur if the selected split does not contain at least one value that is not \code{NA}.}
@@ -207,11 +207,11 @@ No return value.
 Layouting function argument conventions
 }
 \seealso{
-Other conventions:
-\code{\link[=compat_args]{compat_args()}},
-\code{\link[=constr_args]{constr_args()}},
-\code{\link[=gen_args]{gen_args()}},
-\code{\link[=sf_args]{sf_args()}}
+Other conventions: 
+\code{\link{compat_args}()},
+\code{\link{constr_args}()},
+\code{\link{gen_args}()},
+\code{\link{sf_args}()}
 }
 \concept{conventions}
 \keyword{internal}

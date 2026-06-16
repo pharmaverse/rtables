@@ -1182,6 +1182,38 @@ recursive_applysplit <- function(df,
     return(splvec[[1]])
   }
 
+  if (is(splvec, "SplitVectorTree")) {
+    return(
+      unlist(
+          lapply(
+            seq_along(splvec),
+            function(ii) {
+              recursive_applysplit(
+                  df = df,
+                  lvl = lvl,
+                  alt_df = alt_df,
+                  alt_df_full = alt_df_full,
+                  splvec = splvec[[ii]],
+                  name = obj_name(unlist(splvec[[ii]])[[1]]),
+                  make_lrow = make_lrow,
+                  partlabel = partlabel,
+                  cinfo = cinfo,
+                  parent_cfun = parent_cfun,
+                  cformat = cformat,
+                  cna_str = cna_str,
+                  cindent_mod = cindent_mod,
+                  cextra_args = cextra_args,
+                  cvar = cvar,
+                  baselines = baselines,
+                  spl_context = spl_context,
+                  no_outer_tbl = no_outer_tbl,
+                  parent_sect_split = parent_sect_split)
+          }
+          )
+      )
+    )
+  }
+
   ## the content function is the one from the PREVIOUS
   ## split, i.e. the one whose children we are now constructing
   ## this is a bit annoying but makes the semantics for
@@ -1452,7 +1484,7 @@ build_table <- function(lyt, df,
     if (length(splvec) == 0) {
       return(NULL)
     }
-    firstspl <- splvec[[1]]
+    firstspl <- unlist(splvec, recursive = TRUE)[[1]] ## could be a SplitVecTree now...
     nm <- obj_name(firstspl)
     ## XXX unused, probably shouldn't be?
     ## this seems to be covered by grabbing the partlabel
@@ -1482,7 +1514,8 @@ build_table <- function(lyt, df,
       no_outer_tbl = !is(firstspl, "AnalyzeMultiVars")
     )
   })
-  kids <- kids[!sapply(kids, is.null)]
+  ##kids <- kids[!sapply(kids, is.null)]
+  kids <- unlist(kids, recursive = TRUE)
   if (length(kids) > 0) names(kids) <- sapply(kids, obj_name)
 
   # top level divisor
@@ -1673,6 +1706,15 @@ setMethod(
     lyt
   }
 )
+
+setMethod(
+  "set_def_child_ord", "SplitVectorTree",
+  function(lyt, df) {
+    lyt[] <- lapply(lyt, set_def_child_ord, df = df)
+    lyt
+  }
+)
+    
 
 ## for most split types, don't do anything
 ## becuause their ordering already isn't data-based
@@ -1891,6 +1933,14 @@ setMethod(
   }
 )
 
+setMethod(
+  "fix_analyze_vis", "SplitVectorTree",
+  function(lyt) {
+    stopifnot(length(lyt) > 0)
+    lst <- lapply(lyt, fix_analyze_vis)
+    SplitVectorTree(lst = lst)
+})
+
 # check_afun_cfun_params ----
 
 # This checks if the input params are used anywhere in cfun/afun
@@ -1924,6 +1974,12 @@ setMethod(
   }
 )
 
+setMethod(
+  "check_afun_cfun_params", "SplitVectorTree",
+  function(lyt, params) {
+    param_l <- lapply(lyt, check_afun_cfun_params, params = params)
+    Reduce(`|`, param_l)
+})
 # Helper function for check_afun_cfun_params
 .afun_cfun_switch <- function(spl_i) {
   if (is(spl_i, "VAnalyzeSplit")) {

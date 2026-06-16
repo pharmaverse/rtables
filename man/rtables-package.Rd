@@ -6,8 +6,6 @@
 \alias{rtables-package}
 \title{rtables: Reporting Tables}
 \description{
-\if{html}{\figure{logo.svg}{options: style='float: right' alt='logo' width='120'}}
-
 Reporting tables often have structure that goes beyond simple rectangular data. The 'rtables' package provides a framework for declaring complex multi-level tabulations and then applying them to data. This framework models both tabulation and the resulting tables as hierarchical, tree-like objects which support sibling sub-tables, arbitrary splitting or grouping of data in row and column dimensions, cells containing multiple values, and the concept of contextual summary computations. A convenient pipe-able interface is provided for declaring table layouts and the corresponding computations, and then applying them to data.
 }
 \seealso{
@@ -24,7 +22,6 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Joe Zhu \email{joe.zhu@roche.com} (\href{https://orcid.org/0000-0001-7566-2787}{ORCID})
   \item Gabriel Becker \email{gabembecker@gmail.com} (Original creator of the package)
   \item Adrian Waddell \email{adrian.waddell@gmail.com}
   \item Davide Garolini \email{davide.garolini@roche.com} (\href{https://orcid.org/0000-0002-1445-1369}{ORCID})
@@ -33,7 +30,7 @@ Authors:
 
 Other contributors:
 \itemize{
-  \item Daniel Sabanés Bové \email{daniel.sabanes_bove@rconis.com} [contributor]
+  \item Daniel Saban<U+00E9>s Bov<U+00E9> \email{daniel.sabanes_bove@rconis.com} [contributor]
   \item Maximilian Mordig \email{maximilian_oliver.mordig@roche.com} [contributor]
   \item Abinaya Yogasekaram \email{ayogasek@gmail.com} (\href{https://orcid.org/0009-0005-2083-1105}{ORCID}) [contributor]
   \item David Munoz Tord \email{david.munoztord@mailbox.org} [contributor]

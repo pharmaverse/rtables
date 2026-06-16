@@ -46,7 +46,7 @@ to \code{FALSE}.}
 Doing this keeps the structure of the cells but may depend on the output device.}
 
 \item{round_type}{(\code{"iec"}, \code{"iec_mod"} or \code{"sas"})\cr the type of rounding to perform.
-See \code{\link[formatters:round_fmt]{round_fmt()}} for details.}
+See \code{\link[formatters:round_fmt]{formatters::round_fmt()}} for details.}
 }
 \value{
 A \code{shiny.tag} object representing \code{x} in HTML.

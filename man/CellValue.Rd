@@ -22,7 +22,7 @@ CellValue(
 
 \item{format}{(\code{string}, \code{function}, or \code{list})\cr format associated with this split. Formats can be declared via
 strings (\code{"xx.x"}) or function. In cases such as \code{analyze} calls, they can be character vectors or lists of
-functions. See \code{\link[formatters:list_valid_format_labels]{formatters::list_valid_format_labels()}} for a list of all available format strings.}
+functions. See \code{\link[formatters:list_formats]{formatters::list_valid_format_labels()}} for a list of all available format strings.}
 
 \item{colspan}{(\code{integer(1)})\cr column span value.}
 
@@ -35,7 +35,7 @@ corresponds to the unmodified default behavior.}
 \item{footnotes}{(\code{list} or \code{NULL})\cr referential footnote messages for the cell.}
 
 \item{align}{(\code{string} or \code{NULL})\cr alignment the value should be rendered with. Defaults to \code{"center"} if
-\code{NULL} is used. See \code{\link[formatters:list_valid_aligns]{formatters::list_valid_aligns()}} for all currently supported alignments.}
+\code{NULL} is used. See \code{\link[formatters:list_formats]{formatters::list_valid_aligns()}} for all currently supported alignments.}
 
 \item{format_na_str}{(\code{string})\cr string which should be displayed when formatted if this cell's value(s)
 are all \code{NA}.}

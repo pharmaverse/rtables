@@ -39,8 +39,8 @@ sanitize_table_struct(badtab)
 
 }
 \seealso{
-Other table structure validation functions:
-\code{\link[=find_degen_struct]{find_degen_struct()}},
-\code{\link[=validate_table_struct]{validate_table_struct()}}
+Other table structure validation functions: 
+\code{\link{find_degen_struct}()},
+\code{\link{validate_table_struct}()}
 }
 \concept{table structure validation functions}
