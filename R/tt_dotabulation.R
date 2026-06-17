@@ -883,6 +883,41 @@ setMethod(
 )
 
 setMethod(
+  ".make_split_kids", "SplitVectorTree",
+  function(spl,
+           have_controws,
+           make_lrow,
+           ...,
+           splvec, ## passed to recursive_applysplit
+           df, ## used to apply split
+           alt_df, ## used to apply split for alternative df
+           alt_df_full, ## passed to recursive_applysplit
+           lvl, ## used to calculate innerlev
+           cinfo, ## used for sanity check
+           baselines, ## used to calc new baselines
+           spl_context) {
+
+  ret <- lapply(
+    spl,
+    function(splvecii) {
+      recursive_applysplit(
+        df = df,
+        lvl = lvl + 1L,
+        alt_df = alt_df,
+        alt_df_full = alt_df_full,
+        splvec = splvecii,
+        name = obj_name(unlist(splvecii, recursive = TRUE)[[1]]), ## XXX I think this is wrong
+        make_lrow = make_lrow,
+        cinfo = cinfo,
+        baselines = baselines,
+        spl_context = spl_context
+      )
+      
+  })
+  ret
+})
+
+setMethod(
   ".make_split_kids", "Split",
   function(spl,
            have_controws,

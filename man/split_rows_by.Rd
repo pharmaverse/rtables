@@ -15,7 +15,7 @@ split_rows_by(
   na_str = NA_character_,
   nested = TRUE,
   child_labels = c("default", "visible", "hidden"),
-  label_pos = "hidden",
+  label_pos = if (is.na(nested)) "visible" else "hidden",
   indent_mod = 0L,
   page_by = FALSE,
   page_prefix = split_label,

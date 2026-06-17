@@ -273,9 +273,14 @@ setMethod(
     if (length(obj) == 0) {
       NULL
     } else {
-      obj[[length(obj)]]
+      last_rowsplit(obj[[length(obj)]])
     }
   }
+)
+
+setMethod(
+  "last_rowsplit", "Split",
+  function(obj) obj
 )
 
 

@@ -130,8 +130,16 @@ setMethod(
         call. = FALSE
       )
     }
-    tmp <- c(unclass(lyt), spl)
-    SplitVector(lst = tmp)
+    len <- length(lyt)
+    
+    ## now that we have branching we need to recursively replace
+    if (len > 0 && is(lyt[[len]], "SplitVectorTree")) {
+      lyt[[len]] <- split_rows(lyt[[len]], spl = spl, pos = pos, cmpnd_fun = cmpnd_fun)
+      lyt
+    } else {
+      tmp <- c(unclass(lyt), spl)
+      SplitVector(lst = tmp)
+    }
   }
 )
 
@@ -557,7 +565,7 @@ split_rows_by <- function(lyt,
                           na_str = NA_character_,
                           nested = TRUE,
                           child_labels = c("default", "visible", "hidden"),
-                          label_pos = "hidden",
+                          label_pos = if (is.na(nested)) "visible" else "hidden",
                           indent_mod = 0L,
                           page_by = FALSE,
                           page_prefix = split_label,
