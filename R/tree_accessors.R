@@ -751,7 +751,7 @@ setGeneric("vis_label", function(spl) standardGeneric("vis_label"))
 
 #' @rdname int_methods
 setMethod("vis_label", "Split", function(spl) {
-  .labelkids_helper(label_position(spl))
+  .labelkids_helper(label_position(spl), na_ok = FALSE)
 })
 
 ## #' @rdname int_methods

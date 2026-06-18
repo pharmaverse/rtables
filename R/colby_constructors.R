@@ -1,4 +1,7 @@
-label_pos_values <- c("hidden", "visible", "topleft")
+## default means hidden if it is by itself but visible if it has
+## direct siblings due to intermediate nesting (of itself or a subsequent
+## split)
+label_pos_values <- c("default", "hidden", "visible", "topleft")
 
 #' @name internal_methods
 #' @rdname int_methods
@@ -66,7 +69,10 @@ branch_above_split <- function(splvec, newspl) {
     splvec[[len]] <- SplitVectorTree(lst = c(lastel, list(SplitVector(newspl))))
   } else {
     are_spls <- which(!vapply(splvec, is, "VAnalyzeSplit", FUN.VALUE = TRUE))
-    branch_pos <- max(are_spls)
+    branch_pos <- max(0, are_spls) ## ensure no -Inf warning
+    if (branch_pos > 0 && label_position(splvec[[branch_pos]]) == "default") {
+      label_position(splvec[[branch_pos]]) <- "visible"
+    }
     lst <-  c(
             if(branch_pos > 1) splvec[seq(1, branch_pos - 1)],
             list(SplitVectorTree(lst = list(SplitVector(lst = splvec[seq(branch_pos, len)]),
@@ -565,7 +571,7 @@ split_rows_by <- function(lyt,
                           na_str = NA_character_,
                           nested = TRUE,
                           child_labels = c("default", "visible", "hidden"),
-                          label_pos = if (is.na(nested)) "visible" else "hidden",
+                          label_pos = if (is.na(nested)) "visible" else "default",
                           indent_mod = 0L,
                           page_by = FALSE,
                           page_prefix = split_label,

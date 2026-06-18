@@ -27,9 +27,9 @@ check_ok_label <- function(lbl, multi_ok = FALSE) {
 }
 
 valid_lbl_pos <- c("default", "visible", "hidden", "topleft")
-.labelkids_helper <- function(charval) {
+.labelkids_helper <- function(charval, na_ok = TRUE) {
   ret <- switch(charval,
-    "default" = NA,
+    "default" = if (na_ok) NA else FALSE,
     "visible" = TRUE,
     "hidden" = FALSE,
     "topleft" = FALSE,

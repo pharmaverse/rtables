@@ -910,7 +910,8 @@ setMethod(
         make_lrow = make_lrow,
         cinfo = cinfo,
         baselines = baselines,
-        spl_context = spl_context
+        spl_context = spl_context,
+        no_outer_tbl = TRUE # XXX is this always right? I think so
       )
       
   })
@@ -1241,7 +1242,7 @@ recursive_applysplit <- function(df,
                   cvar = cvar,
                   baselines = baselines,
                   spl_context = spl_context,
-                  no_outer_tbl = no_outer_tbl,
+                  no_outer_tbl = TRUE, ## XXX is this always right???? no_outer_tbl,
                   parent_sect_split = parent_sect_split)
           }
           )
