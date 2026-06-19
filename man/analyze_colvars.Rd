@@ -11,6 +11,7 @@ analyze_colvars(
   format = NULL,
   na_str = NA_character_,
   nested = TRUE,
+  at_sibling = NULL,
   extra_args = list(),
   indent_mod = 0L,
   inclNAs = FALSE

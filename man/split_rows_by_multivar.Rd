@@ -14,6 +14,7 @@ split_rows_by_multivar(
   format = NULL,
   na_str = NA_character_,
   nested = TRUE,
+  at_sibling = NULL,
   child_labels = c("default", "visible", "hidden"),
   indent_mod = 0L,
   section_div = NA_character_,

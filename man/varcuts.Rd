@@ -31,8 +31,9 @@ split_rows_by_cuts(
   format = NULL,
   na_str = NA_character_,
   nested = TRUE,
+  at_sibling = NULL,
   cumulative = FALSE,
-  label_pos = "hidden",
+  label_pos = if (!is.null(at_sibling)) "default" else "visible",
   section_div = NA_character_
 )
 
@@ -68,11 +69,12 @@ split_rows_by_quartiles(
   format = NULL,
   na_str = NA_character_,
   nested = TRUE,
+  at_sibling = NULL,
   child_labels = c("default", "visible", "hidden"),
   extra_args = list(),
   cumulative = FALSE,
   indent_mod = 0L,
-  label_pos = "hidden",
+  label_pos = if (!is.null(at_sibling)) "default" else "visible",
   section_div = NA_character_
 )
 
@@ -86,11 +88,12 @@ split_rows_by_cutfun(
   format = NULL,
   na_str = NA_character_,
   nested = TRUE,
+  at_sibling = NULL,
   child_labels = c("default", "visible", "hidden"),
   extra_args = list(),
   cumulative = FALSE,
   indent_mod = 0L,
-  label_pos = "hidden",
+  label_pos = if (!is.null(at_sibling)) "default" else "visible",
   section_div = NA_character_
 )
 }

@@ -16,6 +16,7 @@ analyze(
   na_str = NA_character_,
   na_strs_var = NULL,
   nested = TRUE,
+  at_sibling = NULL,
   inclNAs = FALSE,
   extra_args = list(),
   show_labels = c("default", "visible", "hidden"),

@@ -1656,8 +1656,7 @@ uniqify_child_names <- function(kidlst) {
       paste(val_to_fix, " -> {", paste(c(val_to_fix, newnms), collapse = ", "), "}]\n"),
       "  To control table names use split_rows_by*(, parent_name =.) or ",
       " analyze(., table_names = .) when analyzing a single variable, or ",
-      "analyze(., parent_name = .) when analyzing multiple variables in a single call.",
-      call. = FALSE
+      "analyze(., parent_name = .) when analyzing multiple variables in a single call."
     )
     names(kidlst)[inds] <- newnms
   }
