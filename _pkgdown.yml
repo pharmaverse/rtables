@@ -64,6 +64,8 @@ articles:
   - title: Guided Tour
     navbar: Guided Tour
     contents:
+    - guided_intro_basics
+    - guided_intro_nesting
     - guided_intermediate
     - guided_intermediate_translating_shells
     - guided_intermediate_afun_reqs

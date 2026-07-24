@@ -4,7 +4,7 @@ author: "Gabriel Becker"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introductory rtables - Layout Instructions And Nesting}
+  %\VignetteIndexEntry{Introductory rtables - Facet And Analysis Nesting}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options:
@@ -55,6 +55,7 @@ column), with a couple caveats we discuss later. We see this default
 behavior below:
 
 ```{r}
+library(rtables)
 lyt <- basic_table() |>
   split_cols_by("ARM") |>
   split_cols_by("STRATA1") |>

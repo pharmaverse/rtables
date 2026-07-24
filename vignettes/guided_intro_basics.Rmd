@@ -52,6 +52,7 @@ data. We can analyze `AGE` (a numeric variable) to declare a single
 row displaying the mean of patient ages in our data:
 
 ```{r}
+library(rtables)
 lyt <- basic_table() |>
   analyze("AGE")
 
