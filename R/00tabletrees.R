@@ -2207,7 +2207,7 @@ print.RowsVerticalSection <- function(x, ...) {
 }
 
 #' Combine RowsVerticalSection objects
-#' 
+#'
 #' Combine two or more RowsVerticalSection objects (as returned
 #' by [in_rows()]) into a single object
 #'
