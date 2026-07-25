@@ -1,4 +1,4 @@
-url: https://insightsengineering.github.io/rtables
+url: https://pharmaverse.github.io/rtables
 
 template:
   package: nesttemplate
@@ -10,7 +10,7 @@ navbar:
   components:
     github:
       icon: fa-github fa-lg
-      href: https://github.com/insightsengineering/rtables
+      href: https://github.com/pharmaverse/rtables
     dev-guide:
       text: Developer Guide
       menu:
@@ -39,15 +39,15 @@ navbar:
 
 repo:
   url:
-    home: https://github.com/insightsengineering/rtables/
-    source: https://github.com/insightsengineering/rtables/blob/main/
-    issue: https://github.com/insightsengineering/rtables/issues/
+    home: https://github.com/pharmaverse/rtables/
+    source: https://github.com/pharmaverse/rtables/blob/main/
+    issue: https://github.com/pharmaverse/rtables/issues/
     user: https://github.com/
 news:
   cran_dates: true
 
 authors:
-  before: "We define *authors* as those who are actively maintaining the code base, and *contributors* as those who made a significant contribution in the past. For all acknowledgements, see the eponymous section in the [Home Page](https://insightsengineering.github.io/rtables/)."
+  before: "We define *authors* as those who are actively maintaining the code base, and *contributors* as those who made a significant contribution in the past. For all acknowledgements, see the eponymous section in the [Home Page](https://pharmaverse.github.io/rtables/)."
   footer:
     roles: [aut, ctb, cre, fnd]
     text: "Developed by"
