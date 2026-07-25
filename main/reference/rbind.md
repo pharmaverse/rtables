@@ -58,11 +58,11 @@ When objects are row-bound, titles and footer information is retained
 from the first object (if any exists) if all other objects have no
 titles/footers or have identical titles/footers. Otherwise, all
 titles/footers are removed and must be set for the bound table via the
-[`formatters::main_title()`](https://insightsengineering.github.io/formatters/latest-tag/reference/title_footer.html),
-[`formatters::subtitles()`](https://insightsengineering.github.io/formatters/latest-tag/reference/title_footer.html),
-[`formatters::main_footer()`](https://insightsengineering.github.io/formatters/latest-tag/reference/title_footer.html),
+[`formatters::main_title()`](https://rdrr.io/pkg/formatters/man/title_footer.html),
+[`formatters::subtitles()`](https://rdrr.io/pkg/formatters/man/title_footer.html),
+[`formatters::main_footer()`](https://rdrr.io/pkg/formatters/man/title_footer.html),
 and
-[`formatters::prov_footer()`](https://insightsengineering.github.io/formatters/latest-tag/reference/title_footer.html)
+[`formatters::prov_footer()`](https://rdrr.io/pkg/formatters/man/title_footer.html)
 functions.
 
 ## Examples

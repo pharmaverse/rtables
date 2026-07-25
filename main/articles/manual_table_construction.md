@@ -9,15 +9,15 @@ tabulation frameworks or also manually. Currently manual table
 construction is the only way to define column spans. The main functions
 for manual table constructions are:
 
-- [`rtable()`](https://insightsengineering.github.io/rtables/reference/rtable.md):
+- [`rtable()`](https://pharmaverse.github.io/rtables/reference/rtable.md):
   collection of
-  [`rrow()`](https://insightsengineering.github.io/rtables/reference/rrow.md)
+  [`rrow()`](https://pharmaverse.github.io/rtables/reference/rrow.md)
   objects, column header and default format
-- [`rrow()`](https://insightsengineering.github.io/rtables/reference/rrow.md):
+- [`rrow()`](https://pharmaverse.github.io/rtables/reference/rrow.md):
   collection of
-  [`rcell()`](https://insightsengineering.github.io/rtables/reference/rcell.md)
+  [`rcell()`](https://pharmaverse.github.io/rtables/reference/rcell.md)
   objects and default format
-- [`rcell()`](https://insightsengineering.github.io/rtables/reference/rcell.md):
+- [`rcell()`](https://pharmaverse.github.io/rtables/reference/rcell.md):
   collection of data objects and cell format
 
 ## Simple Example
@@ -43,7 +43,7 @@ tbl <- rtable(
 
 Before we go into explaining the individual components used to create
 this table we continue with the html conversion of the
-[`rtable()`](https://insightsengineering.github.io/rtables/reference/rtable.md)
+[`rtable()`](https://pharmaverse.github.io/rtables/reference/rtable.md)
 object:
 
 ``` r

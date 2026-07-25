@@ -55,7 +55,7 @@ ncol(tbl)
 ## Detailed Table Structure
 
 The
-[`table_structure()`](https://insightsengineering.github.io/rtables/reference/table_structure.md)
+[`table_structure()`](https://pharmaverse.github.io/rtables/reference/table_structure.md)
 function prints a summary of a table’s row structure at one of two
 levels of detail. By default, it summarizes the structure at the
 subtable level.
@@ -75,7 +75,7 @@ table_structure(tbl)
 When the `detail` argument is set to `"row"`, however, it provides a
 more detailed row-level summary which acts as a useful alternative to
 how we might normally use the
-[`str()`](https://insightsengineering.github.io/rtables/reference/int_methods.md)
+[`str()`](https://pharmaverse.github.io/rtables/reference/int_methods.md)
 function to interrogate compound nested lists.
 
 ``` r
@@ -148,9 +148,9 @@ vignette on
 [`col_counts`](https://insightsengineering.github.io/rtables/latest-tag/articles/col_counts.html).
 
 The
-[`make_row_df()`](https://insightsengineering.github.io/formatters/latest-tag/reference/make_row_df.html)
+[`make_row_df()`](https://rdrr.io/pkg/formatters/man/make_row_df.html)
 and
-[`make_col_df()`](https://insightsengineering.github.io/rtables/reference/make_col_df.md)
+[`make_col_df()`](https://pharmaverse.github.io/rtables/reference/make_col_df.md)
 functions each create a `data.frame` with a variety of information about
 the table’s structure. Most useful for introspection purposes are the
 `label`, `name`, `abs_rownumber`, `path` and `node_class` columns (the
@@ -170,7 +170,7 @@ make_row_df(tbl)[, c("label", "name", "abs_rownumber", "path", "node_class")]
 ```
 
 There is also a wrapper function,
-[`row_paths()`](https://insightsengineering.github.io/rtables/reference/make_col_row_df.md)
+[`row_paths()`](https://pharmaverse.github.io/rtables/reference/make_col_row_df.md)
 available for `make_row_df` to display only the row path structure:
 
 ``` r
@@ -196,7 +196,7 @@ row_paths(tbl)
 ```
 
 By default
-[`make_row_df()`](https://insightsengineering.github.io/formatters/latest-tag/reference/make_row_df.html)
+[`make_row_df()`](https://rdrr.io/pkg/formatters/man/make_row_df.html)
 summarizes only visible rows, but setting `visible_only` to `FALSE`
 gives us a structural summary of the table with the full hierarchy of
 subtables, including those that are not represented directly by any
@@ -224,7 +224,7 @@ make_row_df(tbl, visible_only = FALSE)[, c("label", "name", "abs_rownumber", "pa
 # 16   max       max             6 STRATA1,....         DataRow
 ```
 
-[`make_col_df()`](https://insightsengineering.github.io/rtables/reference/make_col_df.md)
+[`make_col_df()`](https://pharmaverse.github.io/rtables/reference/make_col_df.md)
 similarly accepts `visible_only`, though here the meaning is slightly
 different, indicating whether only *leaf* columns should be summarized
 (defaults to `TRUE`) or whether higher level groups of columns -
@@ -260,7 +260,7 @@ make_col_df(tbl, visible_only = FALSE)[, c("label", "name", "abs_pos", "path", "
 ```
 
 Similarly, there is wrapper function
-[`col_paths()`](https://insightsengineering.github.io/rtables/reference/make_col_row_df.md)
+[`col_paths()`](https://pharmaverse.github.io/rtables/reference/make_col_row_df.md)
 available, which displays only the column structure:
 
 ``` r
@@ -289,9 +289,9 @@ col_paths(tbl)
 ```
 
 The
-[`row_paths_summary()`](https://insightsengineering.github.io/rtables/reference/row_paths_summary.md)
+[`row_paths_summary()`](https://pharmaverse.github.io/rtables/reference/row_paths_summary.md)
 and
-[`col_paths_summary()`](https://insightsengineering.github.io/rtables/reference/row_paths_summary.md)
+[`col_paths_summary()`](https://pharmaverse.github.io/rtables/reference/row_paths_summary.md)
 functions wrap the respective `make_*_df` functions, printing the
 `name`, `node_class`, and `path` information (in the row case), or the
 `label` and `path` information (in the column case), indented to
@@ -330,14 +330,14 @@ col_paths_summary(tbl)
 ## Insights on Value Format Structure
 
 We can gain insight into the value formatting structure of a table using
-[`table_shell()`](https://insightsengineering.github.io/rtables/reference/table_shell.md),
+[`table_shell()`](https://pharmaverse.github.io/rtables/reference/table_shell.md),
 which returns a table with the same output as
 [`print()`](https://rdrr.io/r/base/print.html) but with the cell values
 replaced by their underlying format strings (e.g. instead of `40.0`,
 `xx.x` is displayed, and so on). This is useful for understanding the
 structure of the table, and for debugging purposes. Another useful tool
 is the
-[`value_formats()`](https://insightsengineering.github.io/rtables/reference/value_formats.md)
+[`value_formats()`](https://pharmaverse.github.io/rtables/reference/value_formats.md)
 function which instead of a table returns a matrix of the format strings
 for each cell value in the table.
 

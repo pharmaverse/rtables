@@ -5,13 +5,13 @@ in dividing the data, hence the table rows or columns, into different
 parts or groups (splits). You can also create your own split function if
 you need to create a custom division as specific as you need. Please
 consider reading
-[custom_split_funs](https://insightsengineering.github.io/rtables/reference/custom_split_funs.md)
+[custom_split_funs](https://pharmaverse.github.io/rtables/reference/custom_split_funs.md)
 if this is the case. Beyond this list of functions, you can also use
-[`add_overall_level()`](https://insightsengineering.github.io/rtables/reference/add_overall_level.md)
+[`add_overall_level()`](https://pharmaverse.github.io/rtables/reference/add_overall_level.md)
 and
-[`add_combo_levels()`](https://insightsengineering.github.io/rtables/reference/add_overall_level.md)
+[`add_combo_levels()`](https://pharmaverse.github.io/rtables/reference/add_overall_level.md)
 for adding or modifying levels and
-[`trim_levels_to_map()`](https://insightsengineering.github.io/rtables/reference/trim_levels_to_map.md)
+[`trim_levels_to_map()`](https://pharmaverse.github.io/rtables/reference/trim_levels_to_map.md)
 to provide possible level combinations to filter the split with.
 
 ## Usage
@@ -82,7 +82,7 @@ trim_levels_in_group(innervar, drop_outlevs = TRUE)
   (`character`)\
   new order of factor levels. All need to be present in the data. To add
   empty levels, rely on pre-processing or create your
-  [custom_split_funs](https://insightsengineering.github.io/rtables/reference/custom_split_funs.md).
+  [custom_split_funs](https://pharmaverse.github.io/rtables/reference/custom_split_funs.md).
 
 - newlabels:
 
@@ -97,7 +97,7 @@ trim_levels_in_group(innervar, drop_outlevs = TRUE)
   is `TRUE`. Note: `drlevels = TRUE` does not drop levels that are not
   originally in the data. Rely on pre-processing or use a combination of
   split functions with
-  [`make_split_fun()`](https://insightsengineering.github.io/rtables/reference/make_split_fun.md)
+  [`make_split_fun()`](https://pharmaverse.github.io/rtables/reference/make_split_fun.md)
   to also drop unused levels.
 
 - innervar:
@@ -118,7 +118,7 @@ trim_levels_in_group(innervar, drop_outlevs = TRUE)
 A function that can be used to split the data accordingly. The actual
 function signature is similar to the one you can define when creating a
 fully custom one. For more details see
-[custom_split_funs](https://insightsengineering.github.io/rtables/reference/custom_split_funs.md).
+[custom_split_funs](https://pharmaverse.github.io/rtables/reference/custom_split_funs.md).
 
 ## Functions
 
@@ -142,7 +142,7 @@ fully custom one. For more details see
 - `trim_levels_in_group()`: Takes the split groups and removes levels of
   `innervar` if not present in those split groups. If you want to
   specify a filter of possible combinations, please consider using
-  [`trim_levels_to_map()`](https://insightsengineering.github.io/rtables/reference/trim_levels_to_map.md).
+  [`trim_levels_to_map()`](https://pharmaverse.github.io/rtables/reference/trim_levels_to_map.md).
 
 ## Note
 
@@ -150,18 +150,18 @@ The following parameters are also documented here but they are only the
 default signature of a split function: `df` (data to be split), `spl`
 (split object), and `vals = NULL`, `labels = NULL`, `trim = FALSE` (last
 three only for internal use). See
-[custom_split_funs](https://insightsengineering.github.io/rtables/reference/custom_split_funs.md)
+[custom_split_funs](https://pharmaverse.github.io/rtables/reference/custom_split_funs.md)
 for more details and
-[`make_split_fun()`](https://insightsengineering.github.io/rtables/reference/make_split_fun.md)
+[`make_split_fun()`](https://pharmaverse.github.io/rtables/reference/make_split_fun.md)
 for a more advanced API.
 
 ## See also
 
-[custom_split_funs](https://insightsengineering.github.io/rtables/reference/custom_split_funs.md),
-[`add_overall_level()`](https://insightsengineering.github.io/rtables/reference/add_overall_level.md),
-[`add_combo_levels()`](https://insightsengineering.github.io/rtables/reference/add_overall_level.md),
+[custom_split_funs](https://pharmaverse.github.io/rtables/reference/custom_split_funs.md),
+[`add_overall_level()`](https://pharmaverse.github.io/rtables/reference/add_overall_level.md),
+[`add_combo_levels()`](https://pharmaverse.github.io/rtables/reference/add_overall_level.md),
 and
-[`trim_levels_to_map()`](https://insightsengineering.github.io/rtables/reference/trim_levels_to_map.md).
+[`trim_levels_to_map()`](https://pharmaverse.github.io/rtables/reference/trim_levels_to_map.md).
 
 ## Examples
 

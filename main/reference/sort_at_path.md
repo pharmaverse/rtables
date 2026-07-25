@@ -97,51 +97,51 @@ remaining `path` entries. This can occur multiple times in a path.
 
 A list of valid (non-wildcard) paths can be seen in the `path` column of
 the `data.frame` created by
-[`formatters::make_row_df()`](https://insightsengineering.github.io/formatters/latest-tag/reference/make_row_df.html)
+[`formatters::make_row_df()`](https://rdrr.io/pkg/formatters/man/make_row_df.html)
 with the `visible_only` argument set to `FALSE`. It can also be inferred
 from the summary given by
-[`table_structure()`](https://insightsengineering.github.io/rtables/reference/table_structure.md).
+[`table_structure()`](https://pharmaverse.github.io/rtables/reference/table_structure.md).
 
 Note that sorting needs a deeper understanding of table structure in
 `rtables`. Please consider reading the related vignette ([Sorting and
 Pruning](https://insightsengineering.github.io/rtables/latest-tag/articles/sorting_pruning.html))
 and explore table structure with useful functions like
-[`table_structure()`](https://insightsengineering.github.io/rtables/reference/table_structure.md)
+[`table_structure()`](https://pharmaverse.github.io/rtables/reference/table_structure.md)
 and
-[`row_paths_summary()`](https://insightsengineering.github.io/rtables/reference/row_paths_summary.md).
+[`row_paths_summary()`](https://pharmaverse.github.io/rtables/reference/row_paths_summary.md).
 It is also very important to understand the difference between "content"
 rows and "data" rows. The first one analyzes and describes the split
 variable generally and is generated with
-[`summarize_row_groups()`](https://insightsengineering.github.io/rtables/reference/summarize_row_groups.md),
+[`summarize_row_groups()`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md),
 while the second one is commonly produced by calling one of the various
-[`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md)
+[`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md)
 instances.
 
 Built-in score functions are
-[`cont_n_allcols()`](https://insightsengineering.github.io/rtables/reference/score_funs.md)
+[`cont_n_allcols()`](https://pharmaverse.github.io/rtables/reference/score_funs.md)
 and
-[`cont_n_onecol()`](https://insightsengineering.github.io/rtables/reference/score_funs.md).
+[`cont_n_onecol()`](https://pharmaverse.github.io/rtables/reference/score_funs.md).
 They are both working with content rows (coming from
-[`summarize_row_groups()`](https://insightsengineering.github.io/rtables/reference/summarize_row_groups.md))
+[`summarize_row_groups()`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md))
 while a custom score function needs to be used on `DataRow`s. Here, some
 useful descriptor and accessor functions (coming from related vignette):
 
-- [`cell_values()`](https://insightsengineering.github.io/rtables/reference/cell_values.md) -
+- [`cell_values()`](https://pharmaverse.github.io/rtables/reference/cell_values.md) -
   Retrieves a named list of a `TableRow` or `TableTree` object's values.
 
-- [`formatters::obj_name()`](https://insightsengineering.github.io/formatters/latest-tag/reference/lab_name.html) -
+- [`formatters::obj_name()`](https://rdrr.io/pkg/formatters/man/lab_name.html) -
   Retrieves the name of an object. Note this can differ from the label
   that is displayed (if any is) when printing.
 
-- [`formatters::obj_label()`](https://insightsengineering.github.io/formatters/latest-tag/reference/lab_name.html) -
+- [`formatters::obj_label()`](https://rdrr.io/pkg/formatters/man/lab_name.html) -
   Retrieves the display label of an object. Note this can differ from
   the name that appears in the path.
 
-- [`content_table()`](https://insightsengineering.github.io/rtables/reference/content_table.md) -
+- [`content_table()`](https://pharmaverse.github.io/rtables/reference/content_table.md) -
   Retrieves a `TableTree` object's content table (which contains its
   summary rows).
 
-- [`tree_children()`](https://insightsengineering.github.io/rtables/reference/tree_children.md) -
+- [`tree_children()`](https://pharmaverse.github.io/rtables/reference/tree_children.md) -
   Retrieves a `TableTree` object's direct children (either subtables,
   rows or possibly a mix thereof, though that should not happen in
   practice).
@@ -149,16 +149,16 @@ useful descriptor and accessor functions (coming from related vignette):
 ## See also
 
 - Score functions
-  [`cont_n_allcols()`](https://insightsengineering.github.io/rtables/reference/score_funs.md)
+  [`cont_n_allcols()`](https://pharmaverse.github.io/rtables/reference/score_funs.md)
   and
-  [`cont_n_onecol()`](https://insightsengineering.github.io/rtables/reference/score_funs.md).
+  [`cont_n_onecol()`](https://pharmaverse.github.io/rtables/reference/score_funs.md).
 
-- [`formatters::make_row_df()`](https://insightsengineering.github.io/formatters/latest-tag/reference/make_row_df.html)
+- [`formatters::make_row_df()`](https://rdrr.io/pkg/formatters/man/make_row_df.html)
   and
-  [`table_structure()`](https://insightsengineering.github.io/rtables/reference/table_structure.md)
+  [`table_structure()`](https://pharmaverse.github.io/rtables/reference/table_structure.md)
   for pathing information.
 
-- [`tt_at_path()`](https://insightsengineering.github.io/rtables/reference/ttap.md)
+- [`tt_at_path()`](https://pharmaverse.github.io/rtables/reference/ttap.md)
   to select a table's (sub)structure at a given path.
 
 ## Examples

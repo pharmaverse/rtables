@@ -735,7 +735,7 @@ tbl3
 Section dividers have a *least specific to most specific* order of
 precedence, with only the least specific applicable section divider
 displayed after any given row. See
-[`?section_div`](https://insightsengineering.github.io/rtables/reference/section_div.md)
+[`?section_div`](https://pharmaverse.github.io/rtables/reference/section_div.md)
 for more details.
 
 In addition to the path specific section dividers, there is also the
@@ -889,7 +889,7 @@ section_div_info(tbl3)
 
 Sorting rows in a table occurs in a path-specific way. See the sorting
 section in the [pruning and sorting
-vignette](https://insightsengineering.github.io/rtables/articles/sorting_pruning.html#Sorting)
+vignette](https://pharmaverse.github.io/rtables/articles/sorting_pruning.html#Sorting)
 for a detailed discussion of this.
 
 #### Extracting And Modifying Values
@@ -897,15 +897,15 @@ for a detailed discussion of this.
 We saw that the `[` method interprets character indicies as paths.
 Beyond that, the `value_at` and `cell_values` getters and setters accept
 paths as well. See the [subsetting
-vignette](https://insightsengineering.github.io/rtables/articles/subsetting_tables.md).
+vignette](https://pharmaverse.github.io/rtables/articles/subsetting_tables.md).
 
 #### Footnotes
 
 Pathing can also be used to add referential footnotes to rows, columns,
 or cells. This is discussed in the [title and
-footer](https://insightsengineering.github.io/rtables/articles/title_footer.md)
+footer](https://pharmaverse.github.io/rtables/articles/title_footer.md)
 and
-[subsetting](https://insightsengineering.github.io/rtables/articles/subsetting_tables.md)
+[subsetting](https://pharmaverse.github.io/rtables/articles/subsetting_tables.md)
 vignettes.
 
 ### Table Structure And Technical Details

@@ -1,7 +1,7 @@
 # Default tabulation
 
 This function is used when
-[`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md)
+[`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md)
 is invoked.
 
 ## Usage
@@ -57,7 +57,7 @@ inputs:
   calls [`length()`](https://rdrr.io/r/base/length.html) on `x`.
 
 The
-[`in_rows()`](https://insightsengineering.github.io/rtables/reference/in_rows.md)
+[`in_rows()`](https://pharmaverse.github.io/rtables/reference/in_rows.md)
 function is called on the resulting value(s). All other classes of input
 currently lead to an error.
 

@@ -5,8 +5,8 @@ to see their documentation.
 
 - formatters:
 
-  [`export_as_pdf()`](https://insightsengineering.github.io/formatters/latest-tag/reference/export_as_pdf.html),
-  [`export_as_txt()`](https://insightsengineering.github.io/formatters/latest-tag/reference/export_as_txt.html)
+  [`export_as_pdf()`](https://rdrr.io/pkg/formatters/man/export_as_pdf.html),
+  [`export_as_txt()`](https://rdrr.io/pkg/formatters/man/export_as_txt.html)
 
 ## Examples
 

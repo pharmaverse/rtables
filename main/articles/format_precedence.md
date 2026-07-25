@@ -7,7 +7,7 @@ numbers in the reporting tables are printed. Formatting functionality is
 provided by the
 [`formatters`](https://insightsengineering.github.io/formatters/) R
 package. See
-[`formatters::list_valid_format_labels()`](https://insightsengineering.github.io/formatters/latest-tag/reference/list_formats.html)
+[`formatters::list_valid_format_labels()`](https://rdrr.io/pkg/formatters/man/list_formats.html)
 for a list of all available formats. The format can be specified by the
 user in a few different places. It may happen that, for a single table
 layout, the format is specified in more than one place. In such a case,
@@ -45,7 +45,7 @@ cells (as leaves) containing multiple values. Particularly noteworthy in
 this context is the fact that the actual table splitting occurs in a
 row-dominant way (even if column splitting is present in the layout).
 `rtables` provides user-end function
-[`table_structure()`](https://insightsengineering.github.io/rtables/reference/table_structure.md)
+[`table_structure()`](https://pharmaverse.github.io/rtables/reference/table_structure.md)
 that prints the structure of a given table object.
 
 For a simple illustration, consider the following example:
@@ -134,12 +134,11 @@ build_table(lyt0, ADSL)
 ### Cell Format
 
 The format of a cell can be explicitly specified via the
-[`rcell()`](https://insightsengineering.github.io/rtables/reference/rcell.md)
-or
-[`in_rows()`](https://insightsengineering.github.io/rtables/reference/in_rows.md)
+[`rcell()`](https://pharmaverse.github.io/rtables/reference/rcell.md) or
+[`in_rows()`](https://pharmaverse.github.io/rtables/reference/in_rows.md)
 functions. The former is essentially a collection of data objects while
 the latter is a collection of
-[`rcell()`](https://insightsengineering.github.io/rtables/reference/rcell.md)
+[`rcell()`](https://pharmaverse.github.io/rtables/reference/rcell.md)
 objects. As previously mentioned, this is the most specific place where
 the format can be specified by the user.
 
@@ -178,14 +177,13 @@ build_table(lyt1a, ADSL)
 
 If the format is specified in both of these places at the same time, the
 one specified via
-[`in_rows()`](https://insightsengineering.github.io/rtables/reference/in_rows.md)
+[`in_rows()`](https://pharmaverse.github.io/rtables/reference/in_rows.md)
 takes highest precedence. Technically, in this case, the format defined
-in
-[`rcell()`](https://insightsengineering.github.io/rtables/reference/rcell.md)
+in [`rcell()`](https://pharmaverse.github.io/rtables/reference/rcell.md)
 will simply be overwritten by the one defined in
-[`in_rows()`](https://insightsengineering.github.io/rtables/reference/in_rows.md).
+[`in_rows()`](https://pharmaverse.github.io/rtables/reference/in_rows.md).
 This is because the format specified in
-[`in_rows()`](https://insightsengineering.github.io/rtables/reference/in_rows.md)
+[`in_rows()`](https://pharmaverse.github.io/rtables/reference/in_rows.md)
 is applied to the cells not the rows (overriding the previously
 specified cell-specific values), which indicates that the precedence
 rules described above are still in place.
@@ -340,9 +338,9 @@ few examples.
 
 At the cell level, it is possible to replace `NA` values with a custom
 string by means of the `format_na_str` parameter in
-[`rcell()`](https://insightsengineering.github.io/rtables/reference/rcell.md)
-or `.format_na_str` parameter in
-[`in_rows()`](https://insightsengineering.github.io/rtables/reference/in_rows.md).
+[`rcell()`](https://pharmaverse.github.io/rtables/reference/rcell.md) or
+`.format_na_str` parameter in
+[`in_rows()`](https://pharmaverse.github.io/rtables/reference/in_rows.md).
 
 ``` r
 
@@ -395,14 +393,14 @@ build_table(lyt7a, ADSL)
 
 If the `NA` string is specified in both of these places at the same
 time, the one specified with
-[`in_rows()`](https://insightsengineering.github.io/rtables/reference/in_rows.md)
+[`in_rows()`](https://pharmaverse.github.io/rtables/reference/in_rows.md)
 takes precedence. Technically, in this case the `NA` replacement string
 defined in
-[`rcell()`](https://insightsengineering.github.io/rtables/reference/rcell.md)
+[`rcell()`](https://pharmaverse.github.io/rtables/reference/rcell.md)
 will simply be overwritten by the one defined in
-[`in_rows()`](https://insightsengineering.github.io/rtables/reference/in_rows.md).
+[`in_rows()`](https://pharmaverse.github.io/rtables/reference/in_rows.md).
 This is because the `NA` string specified in
-[`in_rows()`](https://insightsengineering.github.io/rtables/reference/in_rows.md)
+[`in_rows()`](https://pharmaverse.github.io/rtables/reference/in_rows.md)
 is applied to the cells, not the rows (overriding the previously
 specified cell specific values), which means that the precedence rules
 described above are still in place.

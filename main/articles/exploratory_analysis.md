@@ -3,10 +3,10 @@
 ## Introduction
 
 In this vignette, we would like to introduce how
-[`qtable()`](https://insightsengineering.github.io/rtables/reference/qtable_layout.md)
+[`qtable()`](https://pharmaverse.github.io/rtables/reference/qtable_layout.md)
 can be used to easily create cross tabulations for exploratory data
 analysis.
-[`qtable()`](https://insightsengineering.github.io/rtables/reference/qtable_layout.md)
+[`qtable()`](https://pharmaverse.github.io/rtables/reference/qtable_layout.md)
 is an extension of [`table()`](https://rdrr.io/r/base/table.html) from
 base R and can do much beyond creating two-way contingency tables. The
 function has a simple to use interface while internally it builds
@@ -41,7 +41,7 @@ table(ex_adsl$SEX, ex_adsl$ARM)
 ```
 
 We can easily recreate the cross-tables above with
-[`qtable()`](https://insightsengineering.github.io/rtables/reference/qtable_layout.md)
+[`qtable()`](https://pharmaverse.github.io/rtables/reference/qtable_layout.md)
 by specifying a data.frame with variable(s) to tabulate. The `col_vars`
 and `row_vars` arguments control how to split the data across columns
 and rows respectively.
@@ -64,7 +64,7 @@ qtable(ex_adsl, col_vars = "ARM", row_vars = "SEX")
 ```
 
 Aside from the display style, the main difference is that
-[`qtable()`](https://insightsengineering.github.io/rtables/reference/qtable_layout.md)
+[`qtable()`](https://pharmaverse.github.io/rtables/reference/qtable_layout.md)
 will add (N=xx) in the table header by default. This can be removed with
 `show_colcounts`.
 
@@ -93,7 +93,7 @@ qtable(tmp_adsl, row_vars = "new")
 ## Nested Tables
 
 Providing more than one variable name for the row or column structure in
-[`qtable()`](https://insightsengineering.github.io/rtables/reference/qtable_layout.md)
+[`qtable()`](https://pharmaverse.github.io/rtables/reference/qtable_layout.md)
 will create a nested table. Arbitrary nesting is supported in each
 dimension.
 
@@ -247,7 +247,7 @@ ftable(t1, row.vars = c("SEX", "STRATA1"))
 
 So far in all the examples we have seen, we used counts to summarize the
 data in each table cell as this is the default analysis used by
-[`qtable()`](https://insightsengineering.github.io/rtables/reference/qtable_layout.md).
+[`qtable()`](https://pharmaverse.github.io/rtables/reference/qtable_layout.md).
 Internally, a single analysis variable specified by `avar` is used to
 generate the counts in the table. The default analysis variable is the
 first variable in `data`. In the case of `ex_adsl` this is “STUDYID”.
@@ -329,7 +329,7 @@ qtable(tmp_adsl, row_vars = "ARM", col_vars = "new2")
 ## Custom Aggregation
 
 A powerful feature of
-[`qtable()`](https://insightsengineering.github.io/rtables/reference/qtable_layout.md)
+[`qtable()`](https://pharmaverse.github.io/rtables/reference/qtable_layout.md)
 is that the user can define the type of function used to summarize the
 data in each facet. We can specify the type of analysis summary using
 the `afun` argument:
@@ -389,7 +389,7 @@ qtable(ex_adsl, row_vars = "STRATA2", col_vars = "ARM", avar = "AGE", afun = fiv
 ```
 
 More advanced formatting can be controlled with
-[`in_rows()`](https://insightsengineering.github.io/rtables/reference/in_rows.md).
+[`in_rows()`](https://pharmaverse.github.io/rtables/reference/in_rows.md).
 See function documentation for more details.
 
 ``` r
@@ -416,7 +416,7 @@ qtable(ex_adsl, row_vars = "STRATA2", col_vars = "ARM", avar = "AGE", afun = mea
 ## Marginal Summaries
 
 Another feature of
-[`qtable()`](https://insightsengineering.github.io/rtables/reference/qtable_layout.md)
+[`qtable()`](https://pharmaverse.github.io/rtables/reference/qtable_layout.md)
 is the ability to quickly add marginal summary rows with the
 `summarize_groups` argument. This summary will add to the table the
 count of non-NA records of the analysis variable at each level of
@@ -477,14 +477,14 @@ subgroup is based on 18 subjects which correspond to 13.4% of the
 subjects in arm “A: Drug X”.
 
 See
-[`?summarize_row_groups`](https://insightsengineering.github.io/rtables/reference/summarize_row_groups.md)
+[`?summarize_row_groups`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md)
 for how to add marginal summary rows when using the core `rtables`
 framework.
 
 ## Table Decorations
 
 Tables generated with
-[`qtable()`](https://insightsengineering.github.io/rtables/reference/qtable_layout.md)
+[`qtable()`](https://pharmaverse.github.io/rtables/reference/qtable_layout.md)
 can include annotations such as titles, subtitles and footnotes like so:
 
 ``` r
@@ -507,23 +507,23 @@ qtable(
 # S2         61           67             76      
 # ———————————————————————————————————————————————
 # 
-# Date: 2026-07-02
+# Date: 2026-07-25
 ```
 
 ## Summary
 
 Here is what we have learned in this vignette:
 
-- [`qtable()`](https://insightsengineering.github.io/rtables/reference/qtable_layout.md)
+- [`qtable()`](https://pharmaverse.github.io/rtables/reference/qtable_layout.md)
   can replace and extend uses of
   [`table()`](https://rdrr.io/r/base/table.html) and
   [`stats::ftable()`](https://rdrr.io/r/stats/ftable.html)
 
-- [`qtable()`](https://insightsengineering.github.io/rtables/reference/qtable_layout.md)
+- [`qtable()`](https://pharmaverse.github.io/rtables/reference/qtable_layout.md)
   is useful for exploratory data analysis
 
 As the intended use of
-[`qtable()`](https://insightsengineering.github.io/rtables/reference/qtable_layout.md)
+[`qtable()`](https://pharmaverse.github.io/rtables/reference/qtable_layout.md)
 is for exploratory data analysis, there is limited functionality for
 building very complex tables. For details on how to get started with the
 core `rtables` layout functionality see the

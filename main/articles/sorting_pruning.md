@@ -98,7 +98,7 @@ Trimming represents a convenience wrapper around simple, direct
 subsetting of the rows of a `TableTree`.
 
 We use the
-[`trim_rows()`](https://insightsengineering.github.io/rtables/reference/trim_rows.md)
+[`trim_rows()`](https://pharmaverse.github.io/rtables/reference/trim_rows.md)
 function with our table and a criteria function. All rows where the
 criteria function returns `TRUE` will be removed, and all others will be
 retained.
@@ -108,7 +108,7 @@ awareness of the surrounding structure. This means, for example, that a
 subtree could have all its analysis rows removed and not be removed
 itself. This can easily result in a *degenerate table* which has an
 invalid structure (see
-[`?validate_table_struct`](https://insightsengineering.github.io/rtables/reference/validate_table_struct.md));
+[`?validate_table_struct`](https://pharmaverse.github.io/rtables/reference/validate_table_struct.md));
 for this reason trimming is generally not suggested for tables with
 non-trivial row structures. For structure-aware filtering of a table, we
 will use *pruning* described in the next section.
@@ -153,7 +153,7 @@ trim_rows(raw_tbl)
 There are currently no special utilities for trimming columns but we can
 remove the empty columns with fairly straightforward column subsetting
 using the
-[`col_counts()`](https://insightsengineering.github.io/rtables/reference/col_accessors.md)
+[`col_counts()`](https://pharmaverse.github.io/rtables/reference/col_accessors.md)
 function:
 
 ``` r
@@ -304,7 +304,7 @@ pruned
 ```
 
 We can also use the
-[`low_obs_pruner()`](https://insightsengineering.github.io/rtables/reference/trim_prune_funs.md)
+[`low_obs_pruner()`](https://pharmaverse.github.io/rtables/reference/trim_prune_funs.md)
 pruning function constructor to create a pruning function which removes
 subtrees with content summaries whose first entries for each column sum
 or average are below a specified number. (In the default summaries the
@@ -401,11 +401,11 @@ operation will occur at a particular location within the table, and the
 *direct children* of the element at that path will be reordered. This
 occurs whether those children are subtables themselves, or individual
 rows. Sorting is done via the
-[`sort_at_path()`](https://insightsengineering.github.io/rtables/reference/sort_at_path.md)
+[`sort_at_path()`](https://pharmaverse.github.io/rtables/reference/sort_at_path.md)
 function, which accepts both a (row) path and a scoring function. See
 the [pathing
-vignette](https://insightsengineering.github.io/rtables/articles/pathing.md)
-for details about paths.
+vignette](https://pharmaverse.github.io/rtables/articles/pathing.md) for
+details about paths.
 
 A *score function* accepts a subtree or `TableRow` and returns a single
 orderable (typically numeric) value. Within the subtable currently being
@@ -416,12 +416,12 @@ retrieved: the *content* of a subtable is retrieved via the
 `content _table` accessor.
 
 The
-[`cont_n_allcols()`](https://insightsengineering.github.io/rtables/reference/score_funs.md)
+[`cont_n_allcols()`](https://pharmaverse.github.io/rtables/reference/score_funs.md)
 scoring function provided by `rtables`, works by scoring subtables by
 the sum of the first elements in the first row of the subtable’s
 *content* table. Note that this function fails if the child being scored
 does not have a content function (i.e., if
-[`summarize_row_groups()`](https://insightsengineering.github.io/rtables/reference/summarize_row_groups.md)
+[`summarize_row_groups()`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md)
 was not used at the corresponding point in the layout). We can see this
 in it’s definition, below:
 
@@ -437,7 +437,7 @@ cont_n_allcols
 #     }
 #     sum(sapply(row_values(tree_children(ctab)[[1]]), function(cv) cv[1]))
 # }
-# <bytecode: 0x56031eea3e80>
+# <bytecode: 0x5630b61ba478>
 # <environment: namespace:rtables>
 ```
 
@@ -552,7 +552,7 @@ tmptbl
 ```
 
 It is possible to understand better pathing with
-[`table_structure()`](https://insightsengineering.github.io/rtables/reference/table_structure.md)
+[`table_structure()`](https://pharmaverse.github.io/rtables/reference/table_structure.md)
 that highlights the tree-like structure and the node names:
 
 ``` r
@@ -747,17 +747,17 @@ tbl <- build_table(raw_lyt, DM) |>
 What should we do now if we want to sort each median and mean in each of
 the strata variables? We need to write a custom score function as the
 ready-made ones at the moment work only with content nodes
-([`content_table()`](https://insightsengineering.github.io/rtables/reference/content_table.md)
+([`content_table()`](https://pharmaverse.github.io/rtables/reference/content_table.md)
 access function for
-[`cont_n_allcols()`](https://insightsengineering.github.io/rtables/reference/score_funs.md)
+[`cont_n_allcols()`](https://pharmaverse.github.io/rtables/reference/score_funs.md)
 and
-[`cont_n_onecol()`](https://insightsengineering.github.io/rtables/reference/score_funs.md),
+[`cont_n_onecol()`](https://pharmaverse.github.io/rtables/reference/score_funs.md),
 of which we will talk in a moment). But before that, we need to think
 about what are we ordering, i.e. we need to specify the right path. We
 suggest looking at the structure first with
-[`table_structure()`](https://insightsengineering.github.io/rtables/reference/table_structure.md)
+[`table_structure()`](https://pharmaverse.github.io/rtables/reference/table_structure.md)
 or
-[`row_paths_summary()`](https://insightsengineering.github.io/rtables/reference/row_paths_summary.md).
+[`row_paths_summary()`](https://pharmaverse.github.io/rtables/reference/row_paths_summary.md).
 
 ``` r
 
@@ -853,7 +853,7 @@ show here an example of its exploration from the debugging:
 We can see how powerful and pragmatic it might be to change the sorting
 principles from within the custom scoring function. We show this by
 selecting a specific column to sort. Looking at the pre-defined function
-[`cont_n_onecol()`](https://insightsengineering.github.io/rtables/reference/score_funs.md)
+[`cont_n_onecol()`](https://pharmaverse.github.io/rtables/reference/score_funs.md)
 gives us an insight into how to proceed.
 
 ``` r
@@ -870,12 +870,12 @@ cont_n_onecol
 #         row_values(tree_children(ctab)[[1]])[[j]][1]
 #     }
 # }
-# <bytecode: 0x560327e2ba80>
+# <bytecode: 0x5630bef4dd50>
 # <environment: namespace:rtables>
 ```
 
 We see that a similar function to
-[`cont_n_allcols()`](https://insightsengineering.github.io/rtables/reference/score_funs.md)
+[`cont_n_allcols()`](https://pharmaverse.github.io/rtables/reference/score_funs.md)
 is wrapped by one that allows a parameter `j` to be used to select a
 specific column. We will do the same here for selecting which column we
 want to sort.
@@ -958,21 +958,21 @@ sorting function to retrieve the relevant information from the table.
 
 ### Useful Functions and Accessors
 
-- [`cell_values()`](https://insightsengineering.github.io/rtables/reference/cell_values.md) -
+- [`cell_values()`](https://pharmaverse.github.io/rtables/reference/cell_values.md) -
   Retrieves a named list of a `TableRow` or `TableTree` object’s values
   - accepts both `rowpath` and `colpath` to restrict which cell values
     are returned
-- [`obj_name()`](https://insightsengineering.github.io/formatters/latest-tag/reference/lab_name.html) -
+- [`obj_name()`](https://rdrr.io/pkg/formatters/man/lab_name.html) -
   Retrieves the name of an object. Note this can differ from the label
   that is displayed (if any is) when printing. This will match the
   element in the path.
-- [`obj_label()`](https://insightsengineering.github.io/formatters/latest-tag/reference/lab_name.html) -
+- [`obj_label()`](https://rdrr.io/pkg/formatters/man/lab_name.html) -
   Retrieves the display label of an object. Note this can differ from
   the name that appears in the path.
-- [`content_table()`](https://insightsengineering.github.io/rtables/reference/content_table.md) -
+- [`content_table()`](https://pharmaverse.github.io/rtables/reference/content_table.md) -
   Retrieves a `TableTree` object’s content table (which contains its
   summary rows).
-- [`tree_children()`](https://insightsengineering.github.io/rtables/reference/tree_children.md) -
+- [`tree_children()`](https://pharmaverse.github.io/rtables/reference/tree_children.md) -
   Retrieves a `TableTree` object’s direct children (either subtables,
   rows or possibly a mix thereof, though that should not happen in
   practice)
@@ -1026,7 +1026,7 @@ sort_at_path(ethsort, "RACE", silly_name_scorer) # Now, it is sorted alphabetica
 ```
 
 **NOTE**: Generally this would be more appropriately done using the
-[`reorder_split_levels()`](https://insightsengineering.github.io/rtables/reference/split_funcs.md)
+[`reorder_split_levels()`](https://pharmaverse.github.io/rtables/reference/split_funcs.md)
 function within the layout rather than as a sort post-processing step,
 but other character scorers may or may not map as easily to layouting
 directives.

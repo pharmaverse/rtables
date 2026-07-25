@@ -11,7 +11,7 @@ While the diversity of tables is such that custom analysis functions
 will inevitably be needed in some cases, we will not address the
 *creation* of analysis functions in detail here; that is covered in
 within the
-[advanced](https://insightsengineering.github.io/rtables/articles/advanced_usage.md)
+[advanced](https://pharmaverse.github.io/rtables/articles/advanced_usage.md)
 portion of this guided tour. Here we will focus on *selecting* analysis
 functions and the reasoning that goes into that choice. While this might
 seem like a strange distinction at first glance, this is in fact how
@@ -291,7 +291,7 @@ such analysis functions are required, leaving the implementation of
 
 In point of fact, we saw conditionality on the current column in the
 [previous
-vignette](https://insightsengineering.github.io/rtables/articles/guided_intermediate_translating_shells.md)
+vignette](https://pharmaverse.github.io/rtables/articles/guided_intermediate_translating_shells.md)
 when translating shells with risk difference columns; there the dummy
 `afun` we used calculated count-percent values for facets in the “main
 portion” of the table and displayed a custom string for facets in the
@@ -400,7 +400,7 @@ blank for others.
 
 For this example we repeat the same data preparation as in the Risk
 Difference Columns section [in the previous
-chapter](https://insightsengineering.github.io/rtables/articles/guided_intermediate_translating_shells.md)
+chapter](https://pharmaverse.github.io/rtables/articles/guided_intermediate_translating_shells.md)
 without further comment.
 
 ``` r

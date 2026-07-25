@@ -198,4 +198,4 @@ used.
 
 ## See also
 
-[`facet_colcount()`](https://insightsengineering.github.io/rtables/reference/facet_colcount.md)
+[`facet_colcount()`](https://pharmaverse.github.io/rtables/reference/facet_colcount.md)

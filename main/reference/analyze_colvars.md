@@ -32,9 +32,9 @@ analyze_colvars(
   list will be repped out as needed and matched by position with the
   columns during tabulation. This functions accepts the same parameters
   as
-  [`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md)
+  [`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md)
   like `afun` and `format`. For further information see
-  [additional_fun_params](https://insightsengineering.github.io/rtables/reference/additional_fun_params.md).
+  [additional_fun_params](https://pharmaverse.github.io/rtables/reference/additional_fun_params.md).
 
 - parent_name:
 
@@ -50,7 +50,7 @@ analyze_colvars(
   format associated with this split. Formats can be declared via strings
   (`"xx.x"`) or function. In cases such as `analyze` calls, they can be
   character vectors or lists of functions. See
-  [`formatters::list_valid_format_labels()`](https://insightsengineering.github.io/formatters/latest-tag/reference/list_formats.html)
+  [`formatters::list_valid_format_labels()`](https://rdrr.io/pkg/formatters/man/list_formats.html)
   for a list of all available format strings.
 
 - na_str:
@@ -93,11 +93,11 @@ analyze_colvars(
 
 A `PreDataTableLayouts` object suitable for passing to further layouting
 functions, and to
-[`build_table()`](https://insightsengineering.github.io/rtables/reference/build_table.md).
+[`build_table()`](https://pharmaverse.github.io/rtables/reference/build_table.md).
 
 ## See also
 
-[`split_cols_by_multivar()`](https://insightsengineering.github.io/rtables/reference/split_cols_by_multivar.md)
+[`split_cols_by_multivar()`](https://pharmaverse.github.io/rtables/reference/split_cols_by_multivar.md)
 
 ## Author
 

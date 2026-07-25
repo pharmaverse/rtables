@@ -4,7 +4,7 @@
 arguments stored on a `SplitValue` object. These arguments are forwarded
 to the analysis or content function only for the facet represented by
 that particular split value, making them distinct from
-[`split_exargs()`](https://insightsengineering.github.io/rtables/reference/int_methods.md)
+[`split_exargs()`](https://pharmaverse.github.io/rtables/reference/int_methods.md)
 which applies to *all* children of a split.
 
 ## Usage
@@ -27,7 +27,7 @@ splv_extra(obj) <- value
 
   (`SplitValue`)\
   a split value object, typically produced by
-  [`SplitValue()`](https://insightsengineering.github.io/rtables/reference/SplitValue.md)
+  [`SplitValue()`](https://pharmaverse.github.io/rtables/reference/SplitValue.md)
   or as a result of a splitting operation.
 
 - value:
@@ -43,7 +43,7 @@ splv_extra(obj) <- value
 
 ## See also
 
-[`split_exargs()`](https://insightsengineering.github.io/rtables/reference/int_methods.md)
+[`split_exargs()`](https://pharmaverse.github.io/rtables/reference/int_methods.md)
 for split-level (all-children) extra arguments.
 
 ## Examples

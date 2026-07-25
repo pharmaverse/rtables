@@ -29,7 +29,7 @@ while `list_wrap_df` generates an otherwise identical wrapper function
 whose first argument is named `df`.
 
 We provide both because when using the functions as tabulation in
-[`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md),
+[`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md),
 functions which take `df` as their first argument are passed the full
 subset data frame, while those which accept anything else notably
 including `x` are passed only the relevant subset of the variable being

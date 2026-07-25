@@ -45,7 +45,7 @@ do_base_split(spl, df, vals = NULL, labels = NULL, trim = FALSE)
 
 The result of the split being applied as if it had no custom split
 function. See
-[custom_split_funs](https://insightsengineering.github.io/rtables/reference/custom_split_funs.md).
+[custom_split_funs](https://pharmaverse.github.io/rtables/reference/custom_split_funs.md).
 
 ## Examples
 

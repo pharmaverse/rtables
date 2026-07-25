@@ -1,12 +1,12 @@
 # Additional parameters within analysis and content functions (`afun`/`cfun`)
 
 It is possible to add specific parameters to `afun` and `cfun`, in
-[`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md)
+[`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md)
 and
-[`summarize_row_groups()`](https://insightsengineering.github.io/rtables/reference/summarize_row_groups.md),
+[`summarize_row_groups()`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md),
 respectively. These parameters grant access to relevant information like
 the row split structure (see
-[spl_context](https://insightsengineering.github.io/rtables/reference/spl_context.md))
+[spl_context](https://pharmaverse.github.io/rtables/reference/spl_context.md))
 and the predefined baseline (`.ref_group`).
 
 ## Details
@@ -59,7 +59,7 @@ analysis function below:
 
   `data.frame` where each row gives information about a previous
   'ancestor' split state. See
-  [spl_context](https://insightsengineering.github.io/rtables/reference/spl_context.md).
+  [spl_context](https://pharmaverse.github.io/rtables/reference/spl_context.md).
 
 - .alt_df_row:
 
@@ -73,7 +73,7 @@ analysis function below:
   `data.frame`, `.alt_df_row` but filtered by columns expression. This
   data present the same faceting of main data `df`. This also filters
   `NA`s out if related parameters are set to do so (e.g. `inclNAs` in
-  [`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md)).
+  [`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md)).
   Similarly to `.alt_df_row`, it can be an empty data.frame if all the
   entries are filtered out.
 
@@ -93,7 +93,7 @@ analysis function below:
 
   Vector of integers. Each of them represents the global count for each
   column. It differs if `alt_counts_df` is used (see
-  [`build_table()`](https://insightsengineering.github.io/rtables/reference/build_table.md)).
+  [`build_table()`](https://pharmaverse.github.io/rtables/reference/build_table.md)).
 
 ## Note
 
@@ -101,7 +101,7 @@ If any of these formals is specified incorrectly or not present in the
 tabulation machinery, it will be treated as if missing. For example,
 `.ref_group` will be missing if no baseline is previously defined during
 data splitting (via `ref_group` parameters in, e.g.,
-[`split_rows_by()`](https://insightsengineering.github.io/rtables/reference/split_rows_by.md)).
+[`split_rows_by()`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)).
 Similarly, if no `alt_counts_df` is provided to
-[`build_table()`](https://insightsengineering.github.io/rtables/reference/build_table.md),
+[`build_table()`](https://pharmaverse.github.io/rtables/reference/build_table.md),
 `.alt_df_row` and `.alt_df` will not be present.

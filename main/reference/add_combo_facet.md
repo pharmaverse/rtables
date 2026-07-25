@@ -37,7 +37,7 @@ add_overall_facet(name, label, extra = list())
 ## Value
 
 A function which can be used within the `post` argument in
-[`make_split_fun()`](https://insightsengineering.github.io/rtables/reference/make_split_fun.md).
+[`make_split_fun()`](https://pharmaverse.github.io/rtables/reference/make_split_fun.md).
 
 ## Details
 
@@ -48,14 +48,14 @@ overlapping, data that appears in both will be duplicated.
 
 ## See also
 
-[`make_split_fun()`](https://insightsengineering.github.io/rtables/reference/make_split_fun.md)
+[`make_split_fun()`](https://pharmaverse.github.io/rtables/reference/make_split_fun.md)
 
 Other make_custom_split:
-[`drop_facet_levels()`](https://insightsengineering.github.io/rtables/reference/drop_facet_levels.md),
-[`make_split_fun()`](https://insightsengineering.github.io/rtables/reference/make_split_fun.md),
-[`make_split_result()`](https://insightsengineering.github.io/rtables/reference/make_split_result.md),
-[`restrict_facets()`](https://insightsengineering.github.io/rtables/reference/restrict_facets.md),
-[`trim_levels_in_facets()`](https://insightsengineering.github.io/rtables/reference/trim_levels_in_facets.md)
+[`drop_facet_levels()`](https://pharmaverse.github.io/rtables/reference/drop_facet_levels.md),
+[`make_split_fun()`](https://pharmaverse.github.io/rtables/reference/make_split_fun.md),
+[`make_split_result()`](https://pharmaverse.github.io/rtables/reference/make_split_result.md),
+[`restrict_facets()`](https://pharmaverse.github.io/rtables/reference/restrict_facets.md),
+[`trim_levels_in_facets()`](https://pharmaverse.github.io/rtables/reference/trim_levels_in_facets.md)
 
 ## Examples
 

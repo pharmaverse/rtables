@@ -45,7 +45,7 @@ printed.
 When changing the row labels for content rows, it is important to path
 all the way to the *row*. Paths ending in `"@content"` will not exhibit
 the behavior you want, and are thus an error. See
-[`row_paths()`](https://insightsengineering.github.io/rtables/reference/make_col_row_df.md)
+[`row_paths()`](https://pharmaverse.github.io/rtables/reference/make_col_row_df.md)
 for help determining the full paths to content rows.
 
 ## Examples

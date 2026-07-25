@@ -42,17 +42,17 @@ restrict_facets(
 ## Value
 
 a function suitable for use within the `post` argument of
-[`make_split_fun()`](https://insightsengineering.github.io/rtables/reference/make_split_fun.md).
+[`make_split_fun()`](https://pharmaverse.github.io/rtables/reference/make_split_fun.md).
 
 ## Details
 
 This is a function factory which creates a post-process behavioral
 building block for use in
-[`make_split_fun()`](https://insightsengineering.github.io/rtables/reference/make_split_fun.md).
+[`make_split_fun()`](https://pharmaverse.github.io/rtables/reference/make_split_fun.md).
 
 This factory provides the equivalent of both `keep_split_levels` and
 `remove_split_levels` in a form suitable for use in
-[`make_split_fun()`](https://insightsengineering.github.io/rtables/reference/make_split_fun.md).
+[`make_split_fun()`](https://pharmaverse.github.io/rtables/reference/make_split_fun.md).
 
 When `op` is `"keep"` (the default), resulting facets are restricted to
 only those named in `facets` when the generated function is applied to a
@@ -65,14 +65,14 @@ created with `quiet = FALSE`.
 
 ## See also
 
-[`make_split_fun()`](https://insightsengineering.github.io/rtables/reference/make_split_fun.md)
+[`make_split_fun()`](https://pharmaverse.github.io/rtables/reference/make_split_fun.md)
 
 Other make_custom_split:
-[`add_combo_facet()`](https://insightsengineering.github.io/rtables/reference/add_combo_facet.md),
-[`drop_facet_levels()`](https://insightsengineering.github.io/rtables/reference/drop_facet_levels.md),
-[`make_split_fun()`](https://insightsengineering.github.io/rtables/reference/make_split_fun.md),
-[`make_split_result()`](https://insightsengineering.github.io/rtables/reference/make_split_result.md),
-[`trim_levels_in_facets()`](https://insightsengineering.github.io/rtables/reference/trim_levels_in_facets.md)
+[`add_combo_facet()`](https://pharmaverse.github.io/rtables/reference/add_combo_facet.md),
+[`drop_facet_levels()`](https://pharmaverse.github.io/rtables/reference/drop_facet_levels.md),
+[`make_split_fun()`](https://pharmaverse.github.io/rtables/reference/make_split_fun.md),
+[`make_split_result()`](https://pharmaverse.github.io/rtables/reference/make_split_result.md),
+[`trim_levels_in_facets()`](https://pharmaverse.github.io/rtables/reference/trim_levels_in_facets.md)
 
 ## Examples
 

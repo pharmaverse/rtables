@@ -43,8 +43,8 @@ insert_row_at_path(tt, path, value)
 
 ## See also
 
-[`DataRow()`](https://insightsengineering.github.io/rtables/reference/rowclasses.md),
-[`rrow()`](https://insightsengineering.github.io/rtables/reference/rrow.md)
+[`DataRow()`](https://pharmaverse.github.io/rtables/reference/rowclasses.md),
+[`rrow()`](https://pharmaverse.github.io/rtables/reference/rrow.md)
 
 ## Examples
 

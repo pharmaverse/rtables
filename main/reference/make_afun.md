@@ -72,7 +72,7 @@ make_afun(
 ## Value
 
 A function suitable for use in
-[`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md)
+[`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md)
 with element selection, reformatting, and relabeling performed
 automatically.
 
@@ -87,7 +87,7 @@ structure returned by `fun`. See the final pair of examples below.
 
 ## See also
 
-[`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md)
+[`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md)
 
 ## Examples
 

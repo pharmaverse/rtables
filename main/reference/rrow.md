@@ -32,7 +32,7 @@ rrow(
   (`string`, `function`, or `list`)\
   the format label (string) or formatter function to apply to the cell
   values passed via `...`. See
-  [`formatters::list_valid_format_labels()`](https://insightsengineering.github.io/formatters/latest-tag/reference/list_formats.html)
+  [`formatters::list_valid_format_labels()`](https://rdrr.io/pkg/formatters/man/list_formats.html)
   for currently supported format labels.
 
 - indent:
@@ -43,15 +43,15 @@ rrow(
 
   (`integer(1)`)\
   the table inset for the row or table being constructed. See
-  [`formatters::table_inset()`](https://insightsengineering.github.io/formatters/latest-tag/reference/table_inset.html)
+  [`formatters::table_inset()`](https://rdrr.io/pkg/formatters/man/table_inset.html)
   for details.
 
 - round_type:
 
   (`"iec"`, `"iec_mod"` or `"sas"`)\
   the type of rounding to perform. See
-  [`round_fmt()`](https://insightsengineering.github.io/formatters/latest-tag/reference/round_fmt.html)
-  for details.
+  [`round_fmt()`](https://rdrr.io/pkg/formatters/man/round_fmt.html) for
+  details.
 
 ## Value
 
@@ -60,9 +60,9 @@ A row object of the context-appropriate type (label or data).
 ## See also
 
 Other compatibility:
-[`rheader()`](https://insightsengineering.github.io/rtables/reference/rheader.md),
-[`rrowl()`](https://insightsengineering.github.io/rtables/reference/rrowl.md),
-[`rtable()`](https://insightsengineering.github.io/rtables/reference/rtable.md)
+[`rheader()`](https://pharmaverse.github.io/rtables/reference/rheader.md),
+[`rrowl()`](https://pharmaverse.github.io/rtables/reference/rrowl.md),
+[`rtable()`](https://pharmaverse.github.io/rtables/reference/rtable.md)
 
 ## Examples
 

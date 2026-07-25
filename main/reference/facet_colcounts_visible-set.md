@@ -32,4 +32,4 @@ obj, modified with the desired column count. display behavior
 
 ## See also
 
-[`colcount_visible()`](https://insightsengineering.github.io/rtables/reference/colcount_visible.md)
+[`colcount_visible()`](https://pharmaverse.github.io/rtables/reference/colcount_visible.md)

@@ -102,7 +102,7 @@ The aim of this vignette is to build the following table step by step:
 ## Quick Start
 
 The table above can be achieved via the
-[`qtable()`](https://insightsengineering.github.io/rtables/reference/qtable_layout.md)
+[`qtable()`](https://pharmaverse.github.io/rtables/reference/qtable_layout.md)
 function. If you are new to tabulation with the `rtables` layout
 framework, you can use this convenience wrapper to create many types of
 two-way frequency tables.
@@ -175,12 +175,12 @@ tbl
 In the code above we first described the table and assigned that
 description to a variable `lyt`. We then built the table using the
 actual data with
-[`build_table()`](https://insightsengineering.github.io/rtables/reference/build_table.md).
+[`build_table()`](https://pharmaverse.github.io/rtables/reference/build_table.md).
 The description of a table is called a table layout.
-[`basic_table()`](https://insightsengineering.github.io/rtables/reference/basic_table.md)
+[`basic_table()`](https://pharmaverse.github.io/rtables/reference/basic_table.md)
 is the start of every table layout and contains the information that we
 have in one column representing all data. The
-[`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md)
+[`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md)
 instruction adds to the layout that the `age` variable should be
 analyzed with the [`mean()`](https://rdrr.io/r/base/mean.html) analysis
 function and the result should be rounded to `1` decimal place.
@@ -202,26 +202,26 @@ lyt
 
 The general layouting instructions are summarized below:
 
-- [`basic_table()`](https://insightsengineering.github.io/rtables/reference/basic_table.md)
+- [`basic_table()`](https://pharmaverse.github.io/rtables/reference/basic_table.md)
   is a layout representing a table with zero rows and one column
 - Nested splitting
   - in row space:
-    [`split_rows_by()`](https://insightsengineering.github.io/rtables/reference/split_rows_by.md),
-    [`split_rows_by_multivar()`](https://insightsengineering.github.io/rtables/reference/split_rows_by_multivar.md),
-    [`split_rows_by_cuts()`](https://insightsengineering.github.io/rtables/reference/varcuts.md),
-    [`split_rows_by_cutfun()`](https://insightsengineering.github.io/rtables/reference/varcuts.md),
-    [`split_rows_by_quartiles()`](https://insightsengineering.github.io/rtables/reference/varcuts.md)
+    [`split_rows_by()`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md),
+    [`split_rows_by_multivar()`](https://pharmaverse.github.io/rtables/reference/split_rows_by_multivar.md),
+    [`split_rows_by_cuts()`](https://pharmaverse.github.io/rtables/reference/varcuts.md),
+    [`split_rows_by_cutfun()`](https://pharmaverse.github.io/rtables/reference/varcuts.md),
+    [`split_rows_by_quartiles()`](https://pharmaverse.github.io/rtables/reference/varcuts.md)
   - in column space:
-    [`split_cols_by()`](https://insightsengineering.github.io/rtables/reference/split_cols_by.md),
-    [`split_cols_by_multivar()`](https://insightsengineering.github.io/rtables/reference/split_cols_by_multivar.md),
-    [`split_cols_by_cuts()`](https://insightsengineering.github.io/rtables/reference/varcuts.md),
-    [`split_cols_by_cutfun()`](https://insightsengineering.github.io/rtables/reference/varcuts.md),
-    [`split_cols_by_quartiles()`](https://insightsengineering.github.io/rtables/reference/varcuts.md)
+    [`split_cols_by()`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md),
+    [`split_cols_by_multivar()`](https://pharmaverse.github.io/rtables/reference/split_cols_by_multivar.md),
+    [`split_cols_by_cuts()`](https://pharmaverse.github.io/rtables/reference/varcuts.md),
+    [`split_cols_by_cutfun()`](https://pharmaverse.github.io/rtables/reference/varcuts.md),
+    [`split_cols_by_quartiles()`](https://pharmaverse.github.io/rtables/reference/varcuts.md)
 - Summarizing Groups:
-  [`summarize_row_groups()`](https://insightsengineering.github.io/rtables/reference/summarize_row_groups.md)
+  [`summarize_row_groups()`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md)
 - Analyzing Variables:
-  [`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md),
-  [`analyze_colvars()`](https://insightsengineering.github.io/rtables/reference/analyze_colvars.md)
+  [`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md),
+  [`analyze_colvars()`](https://pharmaverse.github.io/rtables/reference/analyze_colvars.md)
 
 Using those functions, it is possible to create a wide variety of tables
 as we will show in this document.
@@ -247,12 +247,12 @@ tbl
 The resulting table has one column per factor level of `arm`. So the
 data represented by the first column is `df[df$arm == "ARM A", ]`.
 Hence, the
-[`split_cols_by()`](https://insightsengineering.github.io/rtables/reference/split_cols_by.md)
+[`split_cols_by()`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)
 partitions the data among the columns by default.
 
 Column splitting can be done in a recursive/nested manner by adding
 sequential
-[`split_cols_by()`](https://insightsengineering.github.io/rtables/reference/split_cols_by.md)
+[`split_cols_by()`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)
 layout instruction. It’s also possible to add a non-nested split. Here
 we splitting each arm further by the gender:
 
@@ -283,9 +283,9 @@ vignette.
 
 So far, we have created layouts with analysis and column splitting
 instructions,
-i.e. [`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md)
+i.e. [`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md)
 and
-[`split_cols_by()`](https://insightsengineering.github.io/rtables/reference/split_cols_by.md),
+[`split_cols_by()`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md),
 respectively. This resulted with a table with multiple columns and one
 data row. We will add more row structure by stratifying the mean
 analysis by country (i.e. adding a split in the row space):
@@ -382,7 +382,7 @@ on row 2 is a descendant of `CAN` (visible via the indenting, though the
 table has an underlying tree structure that is not of importance for
 this vignette). In order to add content information and turn the `CAN`
 label row into a content row, the
-[`summarize_row_groups()`](https://insightsengineering.github.io/rtables/reference/summarize_row_groups.md)
+[`summarize_row_groups()`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md)
 function is required. By default, the count (`nrows()`) and percentage
 of data relative to the column associated data is calculated:
 

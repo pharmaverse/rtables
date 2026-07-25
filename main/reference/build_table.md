@@ -65,14 +65,14 @@ build_table(
   and body of the table when rendered as text. Defaults to a connected
   horizontal line (unicode 2014) in locals that use a UTF charset, and
   to `-` elsewhere (with a once per session warning). See
-  [`formatters::set_default_hsep()`](https://insightsengineering.github.io/formatters/latest-tag/reference/default_horizontal_sep.html)
+  [`formatters::set_default_hsep()`](https://rdrr.io/pkg/formatters/man/default_horizontal_sep.html)
   for further information.
 
 - round_type:
 
   (`"iec"` (default), `"iec_mod"` or `"sas"`)\
   the type of rounding to perform. See
-  [`formatters::format_value()`](https://insightsengineering.github.io/formatters/latest-tag/reference/format_value.html)
+  [`formatters::format_value()`](https://rdrr.io/pkg/formatters/man/format_value.html)
   for details.
 
 - ...:

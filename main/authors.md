@@ -5,7 +5,7 @@
 We define *authors* as those who are actively maintaining the code base,
 and *contributors* as those who made a significant contribution in the
 past. For all acknowledgements, see the eponymous section in the [Home
-Page](https://insightsengineering.github.io/rtables/).
+Page](https://pharmaverse.github.io/rtables/).
 
 - **Gabriel Becker**. Author.\
   Original creator of the package
@@ -33,7 +33,7 @@ Page](https://insightsengineering.github.io/rtables/).
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/insightsengineering/rtables/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/pharmaverse/rtables/blob/main/DESCRIPTION)
 
 Becker G, Waddell A, Garolini D, de la Rua E, Zhu J (2026). *rtables:
 Reporting Tables*. R package version 0.6.16.9003,

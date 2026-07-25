@@ -71,9 +71,9 @@ their outputs.
 
 ## See also
 
-[`make_split_fun()`](https://insightsengineering.github.io/rtables/reference/make_split_fun.md)
+[`make_split_fun()`](https://pharmaverse.github.io/rtables/reference/make_split_fun.md)
 for the API for creating custom split functions, and
-[split_funcs](https://insightsengineering.github.io/rtables/reference/split_funcs.md)
+[split_funcs](https://pharmaverse.github.io/rtables/reference/split_funcs.md)
 for a variety of pre-defined split functions.
 
 ## Examples

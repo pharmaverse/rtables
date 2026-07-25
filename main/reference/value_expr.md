@@ -22,7 +22,7 @@ value_expr(obj)
 
   (`ValueWrapper` or `ANY`)\
   a split value object, typically a `SplitValue` constructed by
-  [`SplitValue()`](https://insightsengineering.github.io/rtables/reference/SplitValue.md).
+  [`SplitValue()`](https://pharmaverse.github.io/rtables/reference/SplitValue.md).
   Any other object returns `NULL`.
 
 ## Value

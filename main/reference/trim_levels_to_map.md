@@ -33,7 +33,7 @@ to only those still present within this subset of the map representing
 the current hierarchical splitting context.
 
 Splitting is then performed via the
-[`keep_split_levels()`](https://insightsengineering.github.io/rtables/reference/split_funcs.md)
+[`keep_split_levels()`](https://pharmaverse.github.io/rtables/reference/split_funcs.md)
 split function.
 
 Each resulting element of the partition is then further trimmed by
@@ -42,7 +42,7 @@ values allowed under the combination of the previous and current split.
 
 ## See also
 
-[`trim_levels_in_group()`](https://insightsengineering.github.io/rtables/reference/split_funcs.md).
+[`trim_levels_in_group()`](https://pharmaverse.github.io/rtables/reference/split_funcs.md).
 
 ## Examples
 

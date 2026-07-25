@@ -35,9 +35,9 @@ functions. More details from the user perspective can be found in the
 [Split Functions
 vignette](https://insightsengineering.github.io/rtables/latest-tag/articles/split_functions.html)
 and in function documentation like
-[`?split_rows_by`](https://insightsengineering.github.io/rtables/reference/split_rows_by.md)
+[`?split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)
 and
-[`?split_funcs`](https://insightsengineering.github.io/rtables/reference/split_funcs.md).
+[`?split_funcs`](https://pharmaverse.github.io/rtables/reference/split_funcs.md).
 
 The following article will describe how the split machinery works in the
 row domain. Further information on how the split machinery works in the
@@ -185,7 +185,7 @@ objects, is by using `showMethods(check_validsplit)`. The virtual class
 the main parent of the analysis split which we discuss in detail in the
 related vignette [`vignette()`](https://rdrr.io/r/utils/vignette.html)
 (xxx). From this, we can see that the
-[`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md)
+[`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md)
 calls actually mimic split objects as they create different results
 under a specific final split (or node). Now, notice that
 `check_validsplit` is also called in another location, the main
@@ -839,7 +839,7 @@ There are many pre-made split functions included in `rtables`. A list of
 these functions can be found in the [Split Functions
 vignette](https://insightsengineering.github.io/rtables/latest-tag/articles/split_functions.html),
 or via
-[`?split_funcs`](https://insightsengineering.github.io/rtables/reference/split_funcs.md).
+[`?split_funcs`](https://pharmaverse.github.io/rtables/reference/split_funcs.md).
 We leave it to the developer to look into how some of these split
 functions work, in particular `trim_levels_to_map` may be of interest.
 
@@ -850,7 +850,7 @@ system manages error messages. For a general understanding of how custom
 split functions are created, please read the [Custom Split Functions
 section](https://insightsengineering.github.io/rtables/latest-tag/articles/advanced_usage.html#custom-split-functions)
 of the Advanced Usage vignette or see
-[`?custom_split_funs`](https://insightsengineering.github.io/rtables/reference/custom_split_funs.md).
+[`?custom_split_funs`](https://pharmaverse.github.io/rtables/reference/custom_split_funs.md).
 In the following code we use
 [`browser()`](https://rdrr.io/r/base/browser.html) to enter our custom
 split functions. We invite the reader to activate
@@ -982,7 +982,7 @@ simple_table(DM, f_brakes_if(split_col = "STRATA1")) # works!
 Now we will take a moment to dwell on the machinery included in
 `rtables` to create custom split functions. Before doing so, please read
 the relevant documentation at
-[`?make_split_fun`](https://insightsengineering.github.io/rtables/reference/make_split_fun.md).
+[`?make_split_fun`](https://pharmaverse.github.io/rtables/reference/make_split_fun.md).
 Most of the pre-made split functions included in `rtables` are or will
 be written with `make_split_fun` as it is a more stable constructor for
 such functions than was previously used. We invite the reader to take a
@@ -997,7 +997,7 @@ split “column”, thus avoiding showing empty lines.
 
 It is also possible to provide a list of functions, as it can be seen in
 the examples of
-[`?make_split_fun`](https://insightsengineering.github.io/rtables/reference/make_split_fun.md).
+[`?make_split_fun`](https://pharmaverse.github.io/rtables/reference/make_split_fun.md).
 Note that pre- and post-processing requires a list as input to support
 the possibility of combining multiple functions. In contrast, the core
 splitting function must be a single function call as it is not expected
@@ -1206,7 +1206,7 @@ split).
 
 First, we want to see how the `MultiVarSplit` class behaves for an
 example case taken from
-[`?split_rows_by_multivar`](https://insightsengineering.github.io/rtables/reference/split_rows_by_multivar.md).
+[`?split_rows_by_multivar`](https://pharmaverse.github.io/rtables/reference/split_rows_by_multivar.md).
 
 ``` r
 

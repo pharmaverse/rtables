@@ -84,7 +84,7 @@ paginate_table(
   (`font_spec`)\
   a font_spec object specifying the font information to use for
   calculating string widths and heights, as returned by
-  [`font_spec()`](https://insightsengineering.github.io/formatters/latest-tag/reference/font_spec.html).
+  [`font_spec()`](https://rdrr.io/pkg/formatters/man/font_spec.html).
 
 - col_gap:
 
@@ -101,7 +101,7 @@ paginate_table(
 
   (`string`)\
   name of a page type. See
-  [`page_types`](https://insightsengineering.github.io/formatters/latest-tag/reference/page_types.html).
+  [`page_types`](https://rdrr.io/pkg/formatters/man/page_types.html).
   Ignored when `pg_width` and `pg_height` are set directly.
 
 - font_family:

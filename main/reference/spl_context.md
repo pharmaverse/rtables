@@ -2,11 +2,11 @@
 
 `.spl_context` is an optional parameter for any of rtables' special
 functions, i.e. `afun` (analysis function in
-[`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md)),
+[`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md)),
 `cfun` (content or label function in
-[`summarize_row_groups()`](https://insightsengineering.github.io/rtables/reference/summarize_row_groups.md)),
+[`summarize_row_groups()`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md)),
 or `split_fun` (e.g. for
-[`split_rows_by()`](https://insightsengineering.github.io/rtables/reference/split_rows_by.md)).
+[`split_rows_by()`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)).
 
 ## Details
 
@@ -83,4 +83,4 @@ observation counts corresponding to the row-group and row-group x column
 subsets of the data. These numbers will not, and currently cannot,
 reflect alternate column observation counts provided by the
 `alt_counts_df`, `col_counts` or `col_total` arguments to
-[`build_table()`](https://insightsengineering.github.io/rtables/reference/build_table.md).
+[`build_table()`](https://pharmaverse.github.io/rtables/reference/build_table.md).

@@ -25,14 +25,14 @@ basic_table(
 
   (`string`)\
   single string to use as main title
-  ([`formatters::main_title()`](https://insightsengineering.github.io/formatters/latest-tag/reference/title_footer.html)).
+  ([`formatters::main_title()`](https://rdrr.io/pkg/formatters/man/title_footer.html)).
   Ignored for subtables.
 
 - subtitles:
 
   (`character`)\
   a vector of strings to use as subtitles
-  ([`formatters::subtitles()`](https://insightsengineering.github.io/formatters/latest-tag/reference/title_footer.html)),
+  ([`formatters::subtitles()`](https://rdrr.io/pkg/formatters/man/title_footer.html)),
   where every element is printed on a separate line. Ignored for
   subtables.
 
@@ -41,7 +41,7 @@ basic_table(
   (`character`)\
   a vector of strings to use as main global (non-referential) footer
   materials
-  ([`formatters::main_footer()`](https://insightsengineering.github.io/formatters/latest-tag/reference/title_footer.html)),
+  ([`formatters::main_footer()`](https://rdrr.io/pkg/formatters/man/title_footer.html)),
   where every element is printed on a separate line.
 
 - prov_footer:
@@ -49,7 +49,7 @@ basic_table(
   (`character`)\
   a vector of strings to use as provenance-related global footer
   materials
-  ([`formatters::prov_footer()`](https://insightsengineering.github.io/formatters/latest-tag/reference/title_footer.html)),
+  ([`formatters::prov_footer()`](https://rdrr.io/pkg/formatters/man/title_footer.html)),
   where every element is printed on a separate line.
 
 - show_colcounts:
@@ -73,10 +73,10 @@ basic_table(
 
   (`string`)\
   string which will be used to divide the header from the table. See
-  [`header_section_div()`](https://insightsengineering.github.io/rtables/reference/section_div.md)
+  [`header_section_div()`](https://pharmaverse.github.io/rtables/reference/section_div.md)
   for the associated getter and setter. Please consider changing last
   element of
-  [`section_div()`](https://insightsengineering.github.io/rtables/reference/section_div.md)
+  [`section_div()`](https://pharmaverse.github.io/rtables/reference/section_div.md)
   when concatenating tables that require a divider between them.
 
 - top_level_section_div:
@@ -85,7 +85,7 @@ basic_table(
   if assigned a single character, the first (top level) split or
   division of the table will be highlighted by a line made of that
   character. See
-  [section_div](https://insightsengineering.github.io/rtables/reference/section_div.md)
+  [section_div](https://pharmaverse.github.io/rtables/reference/section_div.md)
   for more information.
 
 - inset:
@@ -99,14 +99,14 @@ basic_table(
 
   (`"iec"` (default), `"iec_mod"` or `"sas"`)\
   the type of rounding to perform. See
-  [`formatters::format_value()`](https://insightsengineering.github.io/formatters/latest-tag/reference/format_value.html)
+  [`formatters::format_value()`](https://rdrr.io/pkg/formatters/man/format_value.html)
   for details.
 
 ## Value
 
 A `PreDataTableLayouts` object suitable for passing to further layouting
 functions, and to
-[`build_table()`](https://insightsengineering.github.io/rtables/reference/build_table.md).
+[`build_table()`](https://pharmaverse.github.io/rtables/reference/build_table.md).
 
 ## Details
 
@@ -118,7 +118,7 @@ render the counts exactly as they normally would be, while 2d formats
 which don't include a percent, and all 3d formats result in an error.
 Formats in the form of functions are not supported for `colcount`
 format. See
-[`formatters::list_valid_format_labels()`](https://insightsengineering.github.io/formatters/latest-tag/reference/list_formats.html)
+[`formatters::list_valid_format_labels()`](https://rdrr.io/pkg/formatters/man/list_formats.html)
 for the list of valid format labels to select from.
 
 ## Note
@@ -130,11 +130,11 @@ for the list of valid format labels to select from.
   represent strict subsets of the "all patients" column.
 
 - Note that subtitles
-  ([`formatters::subtitles()`](https://insightsengineering.github.io/formatters/latest-tag/reference/title_footer.html))
+  ([`formatters::subtitles()`](https://rdrr.io/pkg/formatters/man/title_footer.html))
   and footers
-  ([`formatters::main_footer()`](https://insightsengineering.github.io/formatters/latest-tag/reference/title_footer.html)
+  ([`formatters::main_footer()`](https://rdrr.io/pkg/formatters/man/title_footer.html)
   and
-  [`formatters::prov_footer()`](https://insightsengineering.github.io/formatters/latest-tag/reference/title_footer.html))
+  [`formatters::prov_footer()`](https://rdrr.io/pkg/formatters/man/title_footer.html))
   that span more than one line can be supplied as a character vector to
   maintain indentation on multiple lines.
 
@@ -176,7 +176,7 @@ tbl2
 #> 
 #> test footer
 #> 
-#> test.R program, executed at 2026-07-02 10:57:50.748708
+#> test.R program, executed at 2026-07-25 16:46:38.020479
 
 lyt3 <- basic_table(
   show_colcounts = TRUE,

@@ -54,7 +54,7 @@ df
 
 Let’s look at a table that has 3 columns and 3 rows. Each row represents
 a different analysis (functions `foo`, `bar`, `zoo` that return an
-[`rcell()`](https://insightsengineering.github.io/rtables/reference/rcell.md)
+[`rcell()`](https://pharmaverse.github.io/rtables/reference/rcell.md)
 object):
 
                          A         B         C
@@ -74,7 +74,7 @@ df_C <- df |> filter(c1 == "C")
 ```
 
 Let’s do this on the concrete data with
-[`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md):
+[`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md):
 
 ``` r
 
@@ -121,7 +121,7 @@ x_C <- df_C$x
 
 The function passed to `afun` is evaluated using argument matching. If
 `afun` has an argument `x` the analysis variable specified in `vars` in
-[`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md)
+[`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md)
 is passed to the function, and if `afun` has an argument `df` then a
 subset of the dataset is passed to `afun`:
 
@@ -148,7 +148,7 @@ tbl2
 ```
 
 Note that it is also possible that a function returns multiple rows with
-[`in_rows()`](https://insightsengineering.github.io/rtables/reference/in_rows.md):
+[`in_rows()`](https://pharmaverse.github.io/rtables/reference/in_rows.md):
 
 ``` r
 
@@ -356,7 +356,7 @@ tbl7
 
 Note that `foo` has the variable information hard-encoded in the
 function body. Let’s try some alternatives returning to
-[`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md):
+[`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md):
 
 ``` r
 
@@ -664,9 +664,9 @@ content rows at the `r2` split level then we would get:
          range    s_range(<>)    s_range(<>)    s_range(<>)
 
 where `s_cfun_2` is the content function and either returns one row via
-[`rcell()`](https://insightsengineering.github.io/rtables/reference/rcell.md)
-or multiple rows via
-[`in_rows()`](https://insightsengineering.github.io/rtables/reference/in_rows.md).
+[`rcell()`](https://pharmaverse.github.io/rtables/reference/rcell.md) or
+multiple rows via
+[`in_rows()`](https://pharmaverse.github.io/rtables/reference/in_rows.md).
 The data represented by `<>` for the content rows is same data as for
 it’s descendant, i.e. for the `U > u1, A` content row cell it is
 `df |> filter(r1 == "U", r2 == "u1", c1 == "A")`. Note that content

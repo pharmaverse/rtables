@@ -13,7 +13,7 @@ Similarly, footer materials come with two directly specified components:
 main footer and provenance footer, in addition to one that is computed
 when necessary: referential footnotes.
 
-[`basic_table()`](https://insightsengineering.github.io/rtables/reference/basic_table.md)
+[`basic_table()`](https://pharmaverse.github.io/rtables/reference/basic_table.md)
 accepts the values for each static title and footer element during
 layout construction:
 

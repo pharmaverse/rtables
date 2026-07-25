@@ -27,8 +27,8 @@ degenerate substructures within the table.
 ## See also
 
 Other table structure validation functions:
-[`sanitize_table_struct()`](https://insightsengineering.github.io/rtables/reference/sanitize_table_struct.md),
-[`validate_table_struct()`](https://insightsengineering.github.io/rtables/reference/validate_table_struct.md)
+[`sanitize_table_struct()`](https://pharmaverse.github.io/rtables/reference/sanitize_table_struct.md),
+[`validate_table_struct()`](https://pharmaverse.github.io/rtables/reference/validate_table_struct.md)
 
 ## Examples
 

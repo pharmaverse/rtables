@@ -66,7 +66,7 @@ x[i, j, ..., drop = FALSE]
   whether the value in the cell should be returned if one cell is
   selected by the combination of `i` and `j`. It is not possible to
   return a vector of values. To do so please consider using
-  [`cell_values()`](https://insightsengineering.github.io/rtables/reference/cell_values.md).
+  [`cell_values()`](https://pharmaverse.github.io/rtables/reference/cell_values.md).
   Defaults to `FALSE`.
 
 ## Value
@@ -87,16 +87,16 @@ referenced element.
 
 Subsetting always preserve the original order, even if provided indexes
 do not preserve it. If sorting is needed, please consider using
-[`sort_at_path()`](https://insightsengineering.github.io/rtables/reference/sort_at_path.md).
+[`sort_at_path()`](https://pharmaverse.github.io/rtables/reference/sort_at_path.md).
 Also note that `character` indices are treated as paths, not vectors of
 names in both `[` and `[<-`.
 
 ## See also
 
-- [`sort_at_path()`](https://insightsengineering.github.io/rtables/reference/sort_at_path.md)
+- [`sort_at_path()`](https://pharmaverse.github.io/rtables/reference/sort_at_path.md)
   to understand sorting.
 
-- [`summarize_row_groups()`](https://insightsengineering.github.io/rtables/reference/summarize_row_groups.md)
+- [`summarize_row_groups()`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md)
   to understand path structure.
 
 ## Examples

@@ -75,11 +75,11 @@ are not relevant to end users.
 ## See also
 
 Other make_custom_split:
-[`add_combo_facet()`](https://insightsengineering.github.io/rtables/reference/add_combo_facet.md),
-[`drop_facet_levels()`](https://insightsengineering.github.io/rtables/reference/drop_facet_levels.md),
-[`make_split_fun()`](https://insightsengineering.github.io/rtables/reference/make_split_fun.md),
-[`restrict_facets()`](https://insightsengineering.github.io/rtables/reference/restrict_facets.md),
-[`trim_levels_in_facets()`](https://insightsengineering.github.io/rtables/reference/trim_levels_in_facets.md)
+[`add_combo_facet()`](https://pharmaverse.github.io/rtables/reference/add_combo_facet.md),
+[`drop_facet_levels()`](https://pharmaverse.github.io/rtables/reference/drop_facet_levels.md),
+[`make_split_fun()`](https://pharmaverse.github.io/rtables/reference/make_split_fun.md),
+[`restrict_facets()`](https://pharmaverse.github.io/rtables/reference/restrict_facets.md),
+[`trim_levels_in_facets()`](https://pharmaverse.github.io/rtables/reference/trim_levels_in_facets.md)
 
 ## Examples
 

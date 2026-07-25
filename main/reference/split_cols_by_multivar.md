@@ -37,7 +37,7 @@ split_cols_by_multivar(
 
   (`function` or `NULL`)\
   custom splitting function. See
-  [custom_split_funs](https://insightsengineering.github.io/rtables/reference/custom_split_funs.md).
+  [custom_split_funs](https://pharmaverse.github.io/rtables/reference/custom_split_funs.md).
 
 - varlabels:
 
@@ -84,11 +84,11 @@ split_cols_by_multivar(
 
 A `PreDataTableLayouts` object suitable for passing to further layouting
 functions, and to
-[`build_table()`](https://insightsengineering.github.io/rtables/reference/build_table.md).
+[`build_table()`](https://pharmaverse.github.io/rtables/reference/build_table.md).
 
 ## See also
 
-[`analyze_colvars()`](https://insightsengineering.github.io/rtables/reference/analyze_colvars.md)
+[`analyze_colvars()`](https://pharmaverse.github.io/rtables/reference/analyze_colvars.md)
 
 ## Author
 

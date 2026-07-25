@@ -25,12 +25,12 @@ available beyond this guided tour.
 ## Chapters
 
 - [Translating Shells To
-  Layouts](https://insightsengineering.github.io/rtables/articles/guided_intermediate_translating_shells.md) -
+  Layouts](https://pharmaverse.github.io/rtables/articles/guided_intermediate_translating_shells.md) -
   Identifying key structural features in a table shell and mapping them
   to rtables concepts
 - [Identifying Required Analysis
-  Behavior](https://insightsengineering.github.io/rtables/articles/guided_intermediate_afun_reqs.md) -
+  Behavior](https://pharmaverse.github.io/rtables/articles/guided_intermediate_afun_reqs.md) -
   Reasoning about analysis behaviors and choosing an `afun`
 - [Identifying Required Faceting
-  Behavior](https://insightsengineering.github.io/rtables/articles/guided_intermediate_split_reqs.md) -
+  Behavior](https://pharmaverse.github.io/rtables/articles/guided_intermediate_split_reqs.md) -
   Reasoning about faceting and choosing a split function

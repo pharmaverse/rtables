@@ -2,7 +2,7 @@
 
 This function creates a flat tabular file of cell values and
 corresponding paths via
-[`path_enriched_df()`](https://insightsengineering.github.io/rtables/reference/data.frame_export.md).
+[`path_enriched_df()`](https://pharmaverse.github.io/rtables/reference/data.frame_export.md).
 It then writes that data frame out as a `tsv` file.
 
 ## Usage
@@ -78,5 +78,5 @@ will receive only the `data.frame` version back, NOT a `TableTree`.
 
 ## See also
 
-[`path_enriched_df()`](https://insightsengineering.github.io/rtables/reference/data.frame_export.md)
+[`path_enriched_df()`](https://pharmaverse.github.io/rtables/reference/data.frame_export.md)
 for the underlying function that does the work.

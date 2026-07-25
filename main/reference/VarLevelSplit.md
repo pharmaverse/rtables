@@ -78,7 +78,7 @@ VarLevWBaselineSplit(
   `df` as first parameter. Must accept `labelstr` as the second
   argument. Can optionally accept all optional arguments accepted by
   analysis functions. See
-  [`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md).
+  [`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md).
 
 - cformat:
 
@@ -94,7 +94,7 @@ VarLevWBaselineSplit(
 
   (`function` or `NULL`)\
   custom splitting function. See
-  [custom_split_funs](https://insightsengineering.github.io/rtables/reference/custom_split_funs.md).
+  [custom_split_funs](https://pharmaverse.github.io/rtables/reference/custom_split_funs.md).
 
 - split_format:
 

@@ -32,7 +32,7 @@ add_existing_table(lyt, tt, indent_mod = 0)
 
 A `PreDataTableLayouts` object suitable for passing to further layouting
 functions, and to
-[`build_table()`](https://insightsengineering.github.io/rtables/reference/build_table.md).
+[`build_table()`](https://pharmaverse.github.io/rtables/reference/build_table.md).
 
 ## Author
 

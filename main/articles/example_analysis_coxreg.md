@@ -324,7 +324,7 @@ The arguments of our analysis function will be as follows:
   used by this analysis function to determine the name of the
   variable/covariate in the current split. For more details on the
   information stored by `.spl_context` see
-  [`?analyze`](https://insightsengineering.github.io/rtables/reference/analyze.md).
+  [`?analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md).
 - `stat` and `format` - `string`s that indicate which statistic column
   we are currently in and what format should be applied to print the
   statistic.

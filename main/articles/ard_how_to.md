@@ -49,7 +49,7 @@ tbl
 ### Converting the Table to a Result Data Frame (ARD)
 
 The
-[`as_result_df()`](https://insightsengineering.github.io/rtables/reference/data.frame_export.md)
+[`as_result_df()`](https://pharmaverse.github.io/rtables/reference/data.frame_export.md)
 function is used to convert a table to a result data frame. The result
 data frame is a data frame that contains the result of the summary table
 and is ready to be used for quality control purposes. This may be
@@ -59,7 +59,7 @@ Let’s see how we can produce different result `data.frame`s. The
 following outputs can be returned by setting different parameters in the
 `as_results_df()` function, and these results can be transformed back
 into a table using the
-[`df_to_tt()`](https://insightsengineering.github.io/rtables/reference/df_to_tt.md)
+[`df_to_tt()`](https://pharmaverse.github.io/rtables/reference/df_to_tt.md)
 function.
 
 ``` r
@@ -161,7 +161,7 @@ as_result_df(tbl, make_ard = TRUE)
 
 ### Customizing the Output
 
-[`as_result_df()`](https://insightsengineering.github.io/rtables/reference/data.frame_export.md)
+[`as_result_df()`](https://pharmaverse.github.io/rtables/reference/data.frame_export.md)
 and ARDs depend on the content of the table, so it is possible to modify
 the table to customize the output. For example, we can add some
 user-defined statistics with custom names:

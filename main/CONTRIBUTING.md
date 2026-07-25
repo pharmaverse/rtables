@@ -170,5 +170,5 @@ conflicts which create more work for the developer.
 ## Code of Conduct
 
 Please note that this project is released with a [Contributor Code of
-Conduct](https://insightsengineering.github.io/rtables/CODE_OF_CONDUCT.md).
-By participating in this project you agree to abide by its terms.
+Conduct](https://pharmaverse.github.io/rtables/CODE_OF_CONDUCT.md). By
+participating in this project you agree to abide by its terms.

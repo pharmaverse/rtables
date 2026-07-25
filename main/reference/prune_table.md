@@ -49,7 +49,7 @@ A `TableTree` pruned via recursive application of `prune_func`.
 
 ## See also
 
-[`prune_empty_level()`](https://insightsengineering.github.io/rtables/reference/trim_prune_funs.md)
+[`prune_empty_level()`](https://pharmaverse.github.io/rtables/reference/trim_prune_funs.md)
 for details on this and several other basic pruning functions included
 in the `rtables` package.
 

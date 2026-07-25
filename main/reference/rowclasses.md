@@ -99,8 +99,8 @@ ContentRow(...)
 
   (`"iec"`, `"iec_mod"` or `"sas"`)\
   the type of rounding to perform. See
-  [`round_fmt()`](https://insightsengineering.github.io/formatters/latest-tag/reference/round_fmt.html)
-  for details.
+  [`round_fmt()`](https://rdrr.io/pkg/formatters/man/round_fmt.html) for
+  details.
 
 - vals:
 
@@ -123,7 +123,7 @@ ContentRow(...)
   format associated with this split. Formats can be declared via strings
   (`"xx.x"`) or function. In cases such as `analyze` calls, they can be
   character vectors or lists of functions. See
-  [`formatters::list_valid_format_labels()`](https://insightsengineering.github.io/formatters/latest-tag/reference/list_formats.html)
+  [`formatters::list_valid_format_labels()`](https://rdrr.io/pkg/formatters/man/list_formats.html)
   for a list of all available format strings.
 
 - na_str:

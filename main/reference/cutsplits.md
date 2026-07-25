@@ -89,7 +89,7 @@ VarDynCutSplit(
   `df` as first parameter. Must accept `labelstr` as the second
   argument. Can optionally accept all optional arguments accepted by
   analysis functions. See
-  [`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md).
+  [`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md).
 
 - cformat:
 

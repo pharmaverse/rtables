@@ -51,7 +51,7 @@ get_cell_aligns(obj)
 
   (`"iec"` (default), `"iec_mod"` or `"sas"`)\
   the type of rounding to perform. See
-  [`formatters::format_value()`](https://insightsengineering.github.io/formatters/latest-tag/reference/format_value.html)
+  [`formatters::format_value()`](https://rdrr.io/pkg/formatters/man/format_value.html)
   for details.
 
 ## Value

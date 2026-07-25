@@ -20,7 +20,7 @@ trim_rows(tt, criteria = all_zero_or_na)
   (`function`)\
   function which takes a `TableRow` object and returns `TRUE` if that
   row should be removed. Defaults to
-  [`all_zero_or_na()`](https://insightsengineering.github.io/rtables/reference/trim_prune_funs.md).
+  [`all_zero_or_na()`](https://pharmaverse.github.io/rtables/reference/trim_prune_funs.md).
 
 ## Value
 
@@ -30,7 +30,7 @@ The table with rows that have only `NA` or 0 cell values removed.
 
 This function will be deprecated in the future in favor of the more
 elegant and versatile
-[`prune_table()`](https://insightsengineering.github.io/rtables/reference/prune_table.md)
+[`prune_table()`](https://pharmaverse.github.io/rtables/reference/prune_table.md)
 function which can perform the same function as `trim_rows()` but is
 more powerful as it takes table structure into account.
 
@@ -40,12 +40,12 @@ Visible `LabelRow`s are including in this trimming, which can lead to
 either all label rows being trimmed or label rows remaining when all
 data rows have been trimmed, depending on what `criteria` returns when
 called on a `LabelRow` object. To avoid this, use the structurally-aware
-[`prune_table()`](https://insightsengineering.github.io/rtables/reference/prune_table.md)
+[`prune_table()`](https://pharmaverse.github.io/rtables/reference/prune_table.md)
 machinery instead.
 
 ## See also
 
-[`prune_table()`](https://insightsengineering.github.io/rtables/reference/prune_table.md)
+[`prune_table()`](https://pharmaverse.github.io/rtables/reference/prune_table.md)
 
 ## Examples
 

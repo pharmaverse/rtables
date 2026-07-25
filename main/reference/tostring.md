@@ -52,7 +52,7 @@ toString(
   character to repeat to create header/body separator line. If `NULL`,
   the object value will be used. If `" "`, an empty separator will be
   printed. See
-  [`default_hsep()`](https://insightsengineering.github.io/formatters/latest-tag/reference/default_horizontal_sep.html)
+  [`default_hsep()`](https://rdrr.io/pkg/formatters/man/default_horizontal_sep.html)
   for more information.
 
 - indent_size:
@@ -80,7 +80,7 @@ toString(
   (`font_spec`)\
   a font_spec object specifying the font information to use for
   calculating string widths and heights, as returned by
-  [`font_spec()`](https://insightsengineering.github.io/formatters/latest-tag/reference/font_spec.html).
+  [`font_spec()`](https://rdrr.io/pkg/formatters/man/font_spec.html).
 
 - ttype_ok:
 
@@ -94,8 +94,8 @@ toString(
   (`string`)\
   The type of rounding to perform. Allowed values: (`"iec"`, `"iec_mod"`
   or `"sas"`) See
-  [`round_fmt()`](https://insightsengineering.github.io/formatters/latest-tag/reference/round_fmt.html)
-  for details.
+  [`round_fmt()`](https://rdrr.io/pkg/formatters/man/round_fmt.html) for
+  details.
 
 ## Value
 
@@ -111,7 +111,7 @@ above.
 
 ## See also
 
-[`wrap_string()`](https://insightsengineering.github.io/formatters/latest-tag/reference/wrap_string.html)
+[`wrap_string()`](https://rdrr.io/pkg/formatters/man/wrap_string.html)
 
 ## Examples
 

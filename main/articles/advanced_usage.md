@@ -165,7 +165,7 @@ more-than-one-columns case.
 ### What Is `.spl_context`?
 
 `.spl_context` (see
-[`?spl_context`](https://insightsengineering.github.io/rtables/reference/spl_context.md))
+[`?spl_context`](https://pharmaverse.github.io/rtables/reference/spl_context.md))
 is a mechanism by which the `rtables` tabulation machinery gives custom
 split, analysis or content (row-group summary) functions information
 about the overarching facet-structure the splits or cells they generate

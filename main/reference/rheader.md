@@ -13,9 +13,9 @@ rheader(..., format = "xx", .lst = NULL)
 - ...:
 
   row specifications, either as character vectors or the output from
-  [`rrow()`](https://insightsengineering.github.io/rtables/reference/rrow.md),
-  [`DataRow()`](https://insightsengineering.github.io/rtables/reference/rowclasses.md),
-  [`LabelRow()`](https://insightsengineering.github.io/rtables/reference/rowclasses.md),
+  [`rrow()`](https://pharmaverse.github.io/rtables/reference/rrow.md),
+  [`DataRow()`](https://pharmaverse.github.io/rtables/reference/rowclasses.md),
+  [`LabelRow()`](https://pharmaverse.github.io/rtables/reference/rowclasses.md),
   etc.
 
 - format:
@@ -23,7 +23,7 @@ rheader(..., format = "xx", .lst = NULL)
   (`string`, `function`, or `list`)\
   the format label (string) or formatter function to apply to the cell
   values passed via `...`. See
-  [`formatters::list_valid_format_labels()`](https://insightsengineering.github.io/formatters/latest-tag/reference/list_formats.html)
+  [`formatters::list_valid_format_labels()`](https://rdrr.io/pkg/formatters/man/list_formats.html)
   for currently supported format labels.
 
 - .lst:
@@ -40,9 +40,9 @@ A `InstantiatedColumnInfo` object.
 ## See also
 
 Other compatibility:
-[`rrow()`](https://insightsengineering.github.io/rtables/reference/rrow.md),
-[`rrowl()`](https://insightsengineering.github.io/rtables/reference/rrowl.md),
-[`rtable()`](https://insightsengineering.github.io/rtables/reference/rtable.md)
+[`rrow()`](https://pharmaverse.github.io/rtables/reference/rrow.md),
+[`rrowl()`](https://pharmaverse.github.io/rtables/reference/rrowl.md),
+[`rtable()`](https://pharmaverse.github.io/rtables/reference/rtable.md)
 
 ## Examples
 

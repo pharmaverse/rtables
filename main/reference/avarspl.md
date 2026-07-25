@@ -86,7 +86,7 @@ AnalyzeMultiVars(
   analysis function. Must accept `x` or `df` as its first parameter. Can
   optionally take other parameters which will be populated by the
   tabulation framework. See Details in
-  [`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md).
+  [`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md).
 
 - defrowlab:
 
@@ -100,7 +100,7 @@ AnalyzeMultiVars(
   `df` as first parameter. Must accept `labelstr` as the second
   argument. Can optionally accept all optional arguments accepted by
   analysis functions. See
-  [`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md).
+  [`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md).
 
 - cformat:
 

@@ -24,7 +24,7 @@ Viewer(x, y = NULL, ...)
 - ...:
 
   arguments passed to
-  [`as_html()`](https://insightsengineering.github.io/rtables/reference/as_html.md).
+  [`as_html()`](https://pharmaverse.github.io/rtables/reference/as_html.md).
 
 ## Value
 

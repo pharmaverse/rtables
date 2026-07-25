@@ -3,7 +3,7 @@
 Adding *analyzed variables* to our table layout defines the primary
 tabulation to be performed. We do this by adding calls to `analyze`
 and/or
-[`analyze_colvars()`](https://insightsengineering.github.io/rtables/reference/analyze_colvars.md)
+[`analyze_colvars()`](https://pharmaverse.github.io/rtables/reference/analyze_colvars.md)
 into our layout pipeline. As with adding further splitting, the
 tabulation will occur at the current/next level of nesting by default.
 
@@ -74,7 +74,7 @@ analyze(
   format associated with this split. Formats can be declared via strings
   (`"xx.x"`) or function. In cases such as `analyze` calls, they can be
   character vectors or lists of functions. See
-  [`formatters::list_valid_format_labels()`](https://insightsengineering.github.io/formatters/latest-tag/reference/list_formats.html)
+  [`formatters::list_valid_format_labels()`](https://rdrr.io/pkg/formatters/man/list_formats.html)
   for a list of all available format strings.
 
 - formats_var:
@@ -151,7 +151,7 @@ analyze(
 
 A `PreDataTableLayouts` object suitable for passing to further layouting
 functions, and to
-[`build_table()`](https://insightsengineering.github.io/rtables/reference/build_table.md).
+[`build_table()`](https://pharmaverse.github.io/rtables/reference/build_table.md).
 
 ## Details
 
@@ -166,12 +166,12 @@ cases.
 ## Note
 
 None of the arguments described in
-[additional_fun_params](https://insightsengineering.github.io/rtables/reference/additional_fun_params.md)
+[additional_fun_params](https://pharmaverse.github.io/rtables/reference/additional_fun_params.md)
 can be overridden via `extra_args` or when calling
-[`make_afun()`](https://insightsengineering.github.io/rtables/reference/make_afun.md).
+[`make_afun()`](https://pharmaverse.github.io/rtables/reference/make_afun.md).
 `.N_col` and `.N_total` can be overridden via the `col_counts` argument
 to
-[`build_table()`](https://insightsengineering.github.io/rtables/reference/build_table.md).
+[`build_table()`](https://pharmaverse.github.io/rtables/reference/build_table.md).
 Alternative values for the others must be calculated within `afun` based
 on a combination of extra arguments and the unmodified values provided
 by the tabulation framework.
@@ -191,7 +191,7 @@ but will be overridden by formats specified within `rcell` calls in
 `afun`.
 
 `format` can accept a format label string (see
-[`formatters::list_valid_format_labels()`](https://insightsengineering.github.io/formatters/latest-tag/reference/list_formats.html)),
+[`formatters::list_valid_format_labels()`](https://rdrr.io/pkg/formatters/man/list_formats.html)),
 a formatting function, an unnamed list, or a named list.
 
 When `format` is an unnamed list - or a named list where not all values
@@ -259,7 +259,7 @@ In addition to differentiation on the first argument, the analysis
 function can optionally accept a number of other parameters which, *if
 and only if* present in the formals, will be passed to the function by
 the tabulation machinery. These are listed and described in
-[additional_fun_params](https://insightsengineering.github.io/rtables/reference/additional_fun_params.md).
+[additional_fun_params](https://pharmaverse.github.io/rtables/reference/additional_fun_params.md).
 
 ## Author
 

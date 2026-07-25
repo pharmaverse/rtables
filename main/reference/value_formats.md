@@ -40,9 +40,9 @@ whose formats are always `NULL`).
 
 ## See also
 
-[`table_shell()`](https://insightsengineering.github.io/rtables/reference/table_shell.md)
+[`table_shell()`](https://pharmaverse.github.io/rtables/reference/table_shell.md)
 and
-[`table_shell_str()`](https://insightsengineering.github.io/rtables/reference/table_shell.md)
+[`table_shell_str()`](https://pharmaverse.github.io/rtables/reference/table_shell.md)
 for information on the table format structure.
 
 ## Examples

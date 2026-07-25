@@ -34,7 +34,7 @@ No return value.
 ## See also
 
 Other conventions:
-[`compat_args()`](https://insightsengineering.github.io/rtables/reference/compat_args.md),
-[`constr_args()`](https://insightsengineering.github.io/rtables/reference/constr_args.md),
-[`gen_args()`](https://insightsengineering.github.io/rtables/reference/gen_args.md),
-[`lyt_args()`](https://insightsengineering.github.io/rtables/reference/lyt_args.md)
+[`compat_args()`](https://pharmaverse.github.io/rtables/reference/compat_args.md),
+[`constr_args()`](https://pharmaverse.github.io/rtables/reference/constr_args.md),
+[`gen_args()`](https://pharmaverse.github.io/rtables/reference/gen_args.md),
+[`lyt_args()`](https://pharmaverse.github.io/rtables/reference/lyt_args.md)

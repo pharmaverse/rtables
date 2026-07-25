@@ -550,7 +550,7 @@ back pocket.
 Thus we’ve achieved the column structure we wanted. Now we need an
 analysis function with the correct *column-conditional behavior* (see
 [the previous
-chapter](https://insightsengineering.github.io/rtables/articles/guided_intermediate_afun_reqs.md))
+chapter](https://pharmaverse.github.io/rtables/articles/guided_intermediate_afun_reqs.md))
 and we will have our output.
 
 Without discussing how we construct it (as that will be covered in the

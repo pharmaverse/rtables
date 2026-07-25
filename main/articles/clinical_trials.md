@@ -36,10 +36,10 @@ Demographic tables summarize the variables content for different
 population subsets (encoded in the columns).
 
 One feature of
-[`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md)
+[`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md)
 that we have not introduced in the previous vignette is that the
 analysis function `afun` can specify multiple rows with the
-[`in_rows()`](https://insightsengineering.github.io/rtables/reference/in_rows.md)
+[`in_rows()`](https://pharmaverse.github.io/rtables/reference/in_rows.md)
 function:
 
 ``` r
@@ -64,7 +64,7 @@ tbl
 ```
 
 Multiple variables can be analyzed in one
-[`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md)
+[`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md)
 call:
 
 ``` r
@@ -170,7 +170,7 @@ summary_tbl
 ```
 
 Note that
-[`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md)
+[`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md)
 can also be called multiple times in sequence:
 
 ``` r
@@ -208,7 +208,7 @@ In clinical trials analyses the number of patients per column is often
 referred to as `N` (rather than the overall population which outside of
 clinical trials is commonly referred to as `N`). Column `N`s are added
 by setting the `show_colcounts` argument in
-[`basic_table()`](https://insightsengineering.github.io/rtables/reference/basic_table.md)
+[`basic_table()`](https://pharmaverse.github.io/rtables/reference/basic_table.md)
 to `TRUE`:
 
 ``` r
@@ -386,9 +386,9 @@ table. This is because tabulation respects the factor levels and level
 order, exactly as the `split` and `table` function do. If empty levels
 should be dropped then `rtables` needs to know that at splitting time
 via the `split_fun` argument in
-[`split_rows_by()`](https://insightsengineering.github.io/rtables/reference/split_rows_by.md).
+[`split_rows_by()`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md).
 There are a number of predefined functions. For this example
-[`drop_split_levels()`](https://insightsengineering.github.io/rtables/reference/split_funcs.md)
+[`drop_split_levels()`](https://pharmaverse.github.io/rtables/reference/split_funcs.md)
 is required to drop the empty levels at splitting time. Splitting is a
 big topic and will be eventually addressed in a specific package
 vignette.
@@ -474,7 +474,7 @@ tbl4
 
 For the next table variation we only stratify by gender for the `AGE`
 analysis. To do this the `nested` argument has to be set to `FALSE` in
-[`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md)
+[`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md)
 call:
 
 ``` r
@@ -561,7 +561,7 @@ Here it is not easy to see how many females and males there are in each
 arm as `n` represents the number of non-missing data elements in the
 variables. Groups within rows that are defined by splitting can be
 summarized with
-[`summarize_row_groups()`](https://insightsengineering.github.io/rtables/reference/summarize_row_groups.md),
+[`summarize_row_groups()`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md),
 for example:
 
 ``` r
@@ -604,7 +604,7 @@ There are a couple of things to note here:
 - Conceptually the content rows summarize the patient population which
   is analyzed and hence are often the count & group percentages (default
   behavior of
-  [`summarize_row_groups()`](https://insightsengineering.github.io/rtables/reference/summarize_row_groups.md)).
+  [`summarize_row_groups()`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md)).
 
 We can recreate this default behavior (count percentage) by defining a
 `cfun` for illustrative purposes here as it results in the same table as
@@ -645,7 +645,7 @@ tbl8
 ```
 
 Note that `cfun`, like `afun` (which is used in
-[`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md)),
+[`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md)),
 can operate on either variables, passed via the `x` argument, or
 `data.frame`s or `tibble`s, which are passed via the `df` argument
 (`afun` can optionally request `df` too). Unlike `afun`, `cfun` must
@@ -912,12 +912,12 @@ s_events_patients(x = c("id 1", "id 1", "id 2"), .N_col = 5)
 ```
 
 The `.N_col` argument is a special keyword argument by which
-[`build_table()`](https://insightsengineering.github.io/rtables/reference/build_table.md)
+[`build_table()`](https://pharmaverse.github.io/rtables/reference/build_table.md)
 passes the population size for each respective column. For a list of
 keyword arguments for the functions passed to `afun` in
-[`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md),
+[`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md),
 refer to the documentation with
-[`?analyze`](https://insightsengineering.github.io/rtables/reference/analyze.md).
+[`?analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md).
 
 We now use the `s_events_patients` summary function in a tabulation:
 
@@ -944,7 +944,7 @@ of patients per column/arm which is usually taken from `ADSL` (var
 
 `rtables` handles this by allowing us to override how the column counts
 are computed. We can specify an `alt_counts_df` in
-[`build_table()`](https://insightsengineering.github.io/rtables/reference/build_table.md).
+[`build_table()`](https://pharmaverse.github.io/rtables/reference/build_table.md).
 When we do this, `rtables` calculates the column counts by applying the
 same column faceting to `alt_counts_df` as it does to the primary data
 during tabulation:
@@ -962,7 +962,7 @@ adae_adsl_tbl
 
 Alternatively, if the desired column counts are already calculated, they
 can be specified directly via the `col_counts` argument to
-[`build_table()`](https://insightsengineering.github.io/rtables/reference/build_table.md),
+[`build_table()`](https://pharmaverse.github.io/rtables/reference/build_table.md),
 though specifying an `alt_counts_df` is the preferred mechanism (the
 number of rows will be used, but no duplicate checking!!!).
 
@@ -999,7 +999,7 @@ adae_soc_tbl
 
 We now have to add a count table of `AEDECOD` for each `AEBODSYS`. The
 default
-[`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md)
+[`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md)
 behavior for a factor is to create the count table per level (using
 `rtab_inner`):
 
@@ -1201,7 +1201,7 @@ adae_soc_tbl3
 
 Note that we are missing the overall summary in the first two rows. This
 can be added with an initial
-[`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md)
+[`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md)
 call.
 
 ``` r
@@ -1282,7 +1282,7 @@ adae_soc_tbl4
 ```
 
 Finally, if we wanted to prune the 0 count rows we can do that with the
-[`trim_rows()`](https://insightsengineering.github.io/rtables/reference/trim_rows.md)
+[`trim_rows()`](https://pharmaverse.github.io/rtables/reference/trim_rows.md)
 function:
 
 ``` r
@@ -1784,7 +1784,7 @@ rsp_tbl
 ```
 
 Note that we did set the `ref_group` argument in
-[`split_cols_by()`](https://insightsengineering.github.io/rtables/reference/split_cols_by.md)
+[`split_cols_by()`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)
 which for the current table had no effect as we only use the cell data
 for the responder and non-responder counts. The `ref_group` argument is
 needed for the part 2 and 3 of the table.
@@ -2041,7 +2041,7 @@ four parts:
 4.  Time-to-event analysis
 
 The table is constructed by sequential use of the
-[`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md)
+[`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md)
 function, with four custom analysis functions corresponding to each of
 the four parts listed above. In addition the table includes referential
 footnotes relevant to the table contents. The table will be faceted
@@ -2207,19 +2207,19 @@ tbl_tte <- build_table(lyt, adtte2)
 ```
 
 We set the `show_colcounts` argument of
-[`basic_table()`](https://insightsengineering.github.io/rtables/reference/basic_table.md)
+[`basic_table()`](https://pharmaverse.github.io/rtables/reference/basic_table.md)
 to `TRUE` to first print the total subject counts for each column. Next
 we use
-[`split_cols_by()`](https://insightsengineering.github.io/rtables/reference/split_cols_by.md)
+[`split_cols_by()`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)
 to split the table into three columns corresponding to the three
 different levels of `ARM`, and specify that the first arm, `"A: Drug X"`
 should act as the reference group to be compared against - this
 reference group is used for the Cox P-H analysis. Then we call
-[`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md)
+[`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md)
 sequentially using each of the four custom analysis functions as
 argument `afun` and specifying additional arguments where necessary.
 Then we use
-[`build_table()`](https://insightsengineering.github.io/rtables/reference/build_table.md)
+[`build_table()`](https://pharmaverse.github.io/rtables/reference/build_table.md)
 to construct our `rtable` using the `adtte2` dataset.
 
 Finally, we annotate the table using the `fnotes_at_path()` function to

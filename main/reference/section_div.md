@@ -2,13 +2,13 @@
 
 `section_div` can be used to set or get the section divider for a table
 object produced by
-[`build_table()`](https://insightsengineering.github.io/rtables/reference/build_table.md).
+[`build_table()`](https://pharmaverse.github.io/rtables/reference/build_table.md).
 When assigned in post-processing (`section_div<-`) the table can have a
 section divider after every row, each assigned independently. If
 assigning during layout creation, only
-[`split_rows_by()`](https://insightsengineering.github.io/rtables/reference/split_rows_by.md)
+[`split_rows_by()`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)
 (and its related row-wise splits) and
-[`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md)
+[`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md)
 have a `section_div` parameter that will produce separators between
 split sections and data subgroups, respectively. These two approaches
 generally should not be mixed (see Details).
@@ -178,9 +178,9 @@ only one value is inserted, only the first split will be affected. If
 produced from the table construction, the section divider will be set
 for all the splits and eventually analyses, but not for the header or
 each row of the table. This can be set with `header_section_div` in
-[`basic_table()`](https://insightsengineering.github.io/rtables/reference/basic_table.md)
+[`basic_table()`](https://pharmaverse.github.io/rtables/reference/basic_table.md)
 or, eventually, with `hsep` in
-[`build_table()`](https://insightsengineering.github.io/rtables/reference/build_table.md).
+[`build_table()`](https://pharmaverse.github.io/rtables/reference/build_table.md).
 If `only_sep_sections` is `FALSE`, "section" dividers will be set for
 each row in the table *including content and label rows*.
 
@@ -232,7 +232,7 @@ directly during creation.
 
 ## See also
 
-[`basic_table()`](https://insightsengineering.github.io/rtables/reference/basic_table.md)
+[`basic_table()`](https://pharmaverse.github.io/rtables/reference/basic_table.md)
 parameter `header_section_div` and `top_level_section_div` for global
 section dividers.
 

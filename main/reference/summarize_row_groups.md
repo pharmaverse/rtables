@@ -43,7 +43,7 @@ summarize_row_groups(
   format associated with this split. Formats can be declared via strings
   (`"xx.x"`) or function. In cases such as `analyze` calls, they can be
   character vectors or lists of functions. See
-  [`formatters::list_valid_format_labels()`](https://insightsengineering.github.io/formatters/latest-tag/reference/list_formats.html)
+  [`formatters::list_valid_format_labels()`](https://rdrr.io/pkg/formatters/man/list_formats.html)
   for a list of all available format strings.
 
 - na_str:
@@ -59,7 +59,7 @@ summarize_row_groups(
   `df` as first parameter. Must accept `labelstr` as the second
   argument. Can optionally accept all optional arguments accepted by
   analysis functions. See
-  [`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md).
+  [`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md).
 
 - indent_mod:
 
@@ -81,7 +81,7 @@ summarize_row_groups(
 
 A `PreDataTableLayouts` object suitable for passing to further layouting
 functions, and to
-[`build_table()`](https://insightsengineering.github.io/rtables/reference/build_table.md).
+[`build_table()`](https://pharmaverse.github.io/rtables/reference/build_table.md).
 
 ## Details
 
@@ -97,11 +97,11 @@ the row- and column-splitting for the cell being calculated. Must accept
 `labelstr` as the second parameter, which accepts the `label` of the
 level of the parent split currently being summarized. Can additionally
 take any optional argument supported by analysis functions. (see
-[`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md)).
+[`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md)).
 
 In addition, if complex custom functions are needed, we suggest checking
 the available
-[additional_fun_params](https://insightsengineering.github.io/rtables/reference/additional_fun_params.md)
+[additional_fun_params](https://pharmaverse.github.io/rtables/reference/additional_fun_params.md)
 that can be used in `cfun`.
 
 ## Author

@@ -2,7 +2,7 @@
 
 This function will *only* add an overall column at the *top* level of
 splitting, NOT within existing column splits. See
-[`add_overall_level()`](https://insightsengineering.github.io/rtables/reference/add_overall_level.md)
+[`add_overall_level()`](https://pharmaverse.github.io/rtables/reference/add_overall_level.md)
 for the recommended way to add overall columns more generally within
 existing splits.
 
@@ -28,11 +28,11 @@ add_overall_col(lyt, label)
 
 A `PreDataTableLayouts` object suitable for passing to further layouting
 functions, and to
-[`build_table()`](https://insightsengineering.github.io/rtables/reference/build_table.md).
+[`build_table()`](https://pharmaverse.github.io/rtables/reference/build_table.md).
 
 ## See also
 
-[`add_overall_level()`](https://insightsengineering.github.io/rtables/reference/add_overall_level.md)
+[`add_overall_level()`](https://pharmaverse.github.io/rtables/reference/add_overall_level.md)
 
 ## Examples
 

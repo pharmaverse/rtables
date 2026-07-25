@@ -69,10 +69,10 @@ fnotes_at_path(obj, rowpath = NULL, colpath = NULL, reset_idx = TRUE) <- value
 
 ## See also
 
-[`row_paths()`](https://insightsengineering.github.io/rtables/reference/make_col_row_df.md),
-[`col_paths()`](https://insightsengineering.github.io/rtables/reference/make_col_row_df.md),
-[`row_paths_summary()`](https://insightsengineering.github.io/rtables/reference/row_paths_summary.md),
-[`col_paths_summary()`](https://insightsengineering.github.io/rtables/reference/row_paths_summary.md)
+[`row_paths()`](https://pharmaverse.github.io/rtables/reference/make_col_row_df.md),
+[`col_paths()`](https://pharmaverse.github.io/rtables/reference/make_col_row_df.md),
+[`row_paths_summary()`](https://pharmaverse.github.io/rtables/reference/row_paths_summary.md),
+[`col_paths_summary()`](https://pharmaverse.github.io/rtables/reference/row_paths_summary.md)
 
 ## Examples
 

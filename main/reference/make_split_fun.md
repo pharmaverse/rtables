@@ -69,7 +69,7 @@ Core splitting functions override the fundamental splitting procedure,
 and are only necessary in rare cases. These must accept `spl`, `df`,
 `vals`, `labels`, and can optionally accept `.spl_context`. They should
 return a split result object constructed via
-[`make_split_result()`](https://insightsengineering.github.io/rtables/reference/make_split_result.md).
+[`make_split_result()`](https://pharmaverse.github.io/rtables/reference/make_split_result.md).
 
 In particular, if the custom split function will be used in column
 space, subsetting expressions (e.g., as returned by
@@ -90,15 +90,15 @@ order they appear in the list passed to the relevant argument (`pre` and
 
 ## See also
 
-[custom_split_funs](https://insightsengineering.github.io/rtables/reference/custom_split_funs.md)
+[custom_split_funs](https://pharmaverse.github.io/rtables/reference/custom_split_funs.md)
 for a more detailed discussion on what custom split functions do.
 
 Other make_custom_split:
-[`add_combo_facet()`](https://insightsengineering.github.io/rtables/reference/add_combo_facet.md),
-[`drop_facet_levels()`](https://insightsengineering.github.io/rtables/reference/drop_facet_levels.md),
-[`make_split_result()`](https://insightsengineering.github.io/rtables/reference/make_split_result.md),
-[`restrict_facets()`](https://insightsengineering.github.io/rtables/reference/restrict_facets.md),
-[`trim_levels_in_facets()`](https://insightsengineering.github.io/rtables/reference/trim_levels_in_facets.md)
+[`add_combo_facet()`](https://pharmaverse.github.io/rtables/reference/add_combo_facet.md),
+[`drop_facet_levels()`](https://pharmaverse.github.io/rtables/reference/drop_facet_levels.md),
+[`make_split_result()`](https://pharmaverse.github.io/rtables/reference/make_split_result.md),
+[`restrict_facets()`](https://pharmaverse.github.io/rtables/reference/restrict_facets.md),
+[`trim_levels_in_facets()`](https://pharmaverse.github.io/rtables/reference/trim_levels_in_facets.md)
 
 ## Examples
 

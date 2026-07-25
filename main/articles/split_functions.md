@@ -36,7 +36,7 @@ faceting behavior). They include:
 
 The first four of these are fairly self-describing and for brevity, we
 refer our readers to
-[`?split_funcs`](https://insightsengineering.github.io/rtables/reference/split_funcs.md)
+[`?split_funcs`](https://pharmaverse.github.io/rtables/reference/split_funcs.md)
 for details including working examples.
 
 ### Controlling Combinations of Levels Across Multiple Variables
@@ -181,7 +181,7 @@ not include the perfectly valid `"auto"`, `"suv"` combination.
 
 To restrict level combinations to those which are valid *regardless of
 whether the combination was observed*, we must use
-[`trim_levels_to_map()`](https://insightsengineering.github.io/rtables/reference/trim_levels_to_map.md)
+[`trim_levels_to_map()`](https://pharmaverse.github.io/rtables/reference/trim_levels_to_map.md)
 instead.
 
 #### `trim_levels_to_map`
@@ -347,7 +347,7 @@ split functions and split function factories `rtables` provides, we can
 also fully customize every aspect of splitting behavior by creating our
 own split functions. While it is possible to do so by hand, the primary
 way we do this is via the
-[`make_split_fun()`](https://insightsengineering.github.io/rtables/reference/make_split_fun.md)
+[`make_split_fun()`](https://pharmaverse.github.io/rtables/reference/make_split_fun.md)
 function, which accepts functions implementing different component
 behaviors and combines them into a split function which can be used in a
 layout.
@@ -366,7 +366,7 @@ the combination of 3 steps:
     removing them, etc.
 
 The
-[`make_split_fun()`](https://insightsengineering.github.io/rtables/reference/make_split_fun.md)
+[`make_split_fun()`](https://pharmaverse.github.io/rtables/reference/make_split_fun.md)
 function allows us to specify custom behaviors for each of these steps
 independently when defining custom splitting behavior via the `pre`,
 `core_split`, and `post` arguments, which dictate the above steps,
@@ -387,9 +387,9 @@ on observed counts, etc.
 
 For a more detailed discussion on what custom split functions do, and an
 example of a custom split function not implemented via
-[`make_split_fun()`](https://insightsengineering.github.io/rtables/reference/make_split_fun.md),
+[`make_split_fun()`](https://pharmaverse.github.io/rtables/reference/make_split_fun.md),
 see
-[`?custom_split_funs`](https://insightsengineering.github.io/rtables/reference/custom_split_funs.md).
+[`?custom_split_funs`](https://pharmaverse.github.io/rtables/reference/custom_split_funs.md).
 
 ### An Example Custom Split Function
 

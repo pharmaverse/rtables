@@ -23,10 +23,10 @@ A list of paths to each row/column within `x`.
 
 ## See also
 
-[`cell_values()`](https://insightsengineering.github.io/rtables/reference/cell_values.md),
+[`cell_values()`](https://pharmaverse.github.io/rtables/reference/cell_values.md),
 `fnotes_at_path<-`,
-[`row_paths_summary()`](https://insightsengineering.github.io/rtables/reference/row_paths_summary.md),
-[`col_paths_summary()`](https://insightsengineering.github.io/rtables/reference/row_paths_summary.md)
+[`row_paths_summary()`](https://pharmaverse.github.io/rtables/reference/row_paths_summary.md),
+[`col_paths_summary()`](https://pharmaverse.github.io/rtables/reference/row_paths_summary.md)
 
 ## Examples
 

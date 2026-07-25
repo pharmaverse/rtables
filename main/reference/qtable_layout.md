@@ -91,14 +91,14 @@ qtable(
 
   (`string`)\
   single string to use as main title
-  ([`formatters::main_title()`](https://insightsengineering.github.io/formatters/latest-tag/reference/title_footer.html)).
+  ([`formatters::main_title()`](https://rdrr.io/pkg/formatters/man/title_footer.html)).
   Ignored for subtables.
 
 - subtitles:
 
   (`character`)\
   a vector of strings to use as subtitles
-  ([`formatters::subtitles()`](https://insightsengineering.github.io/formatters/latest-tag/reference/title_footer.html)),
+  ([`formatters::subtitles()`](https://rdrr.io/pkg/formatters/man/title_footer.html)),
   where every element is printed on a separate line. Ignored for
   subtables.
 
@@ -107,7 +107,7 @@ qtable(
   (`character`)\
   a vector of strings to use as main global (non-referential) footer
   materials
-  ([`formatters::main_footer()`](https://insightsengineering.github.io/formatters/latest-tag/reference/title_footer.html)),
+  ([`formatters::main_footer()`](https://rdrr.io/pkg/formatters/man/title_footer.html)),
   where every element is printed on a separate line.
 
 - prov_footer:
@@ -115,7 +115,7 @@ qtable(
   (`character`)\
   a vector of strings to use as provenance-related global footer
   materials
-  ([`formatters::prov_footer()`](https://insightsengineering.github.io/formatters/latest-tag/reference/title_footer.html)),
+  ([`formatters::prov_footer()`](https://rdrr.io/pkg/formatters/man/title_footer.html)),
   where every element is printed on a separate line.
 
 - show_colcounts:
@@ -149,7 +149,7 @@ qtable(
 
 - `qtable_layout` returns a `PreDataTableLayouts` object declaring the
   structure of the desired table, suitable for passing to
-  [`build_table()`](https://insightsengineering.github.io/rtables/reference/build_table.md).
+  [`build_table()`](https://pharmaverse.github.io/rtables/reference/build_table.md).
 
 ## Details
 

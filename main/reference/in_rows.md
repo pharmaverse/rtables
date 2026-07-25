@@ -66,7 +66,7 @@ in_rows(
 
   (`character` or `NULL`)\
   alignments for the cells. Standard for `NULL` is `"center"`. See
-  [`formatters::list_valid_aligns()`](https://insightsengineering.github.io/formatters/latest-tag/reference/list_formats.html)
+  [`formatters::list_valid_aligns()`](https://rdrr.io/pkg/formatters/man/list_formats.html)
   for currently supported alignments.
 
 - .format_na_strs:
@@ -93,7 +93,7 @@ and column paths with `fnotes_at_path<-`.
 
 ## See also
 
-[`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md)
+[`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md)
 
 ## Examples
 

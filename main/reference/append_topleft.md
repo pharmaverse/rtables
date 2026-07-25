@@ -25,7 +25,7 @@ append_topleft(lyt, newlines)
 
 A `PreDataTableLayouts` object suitable for passing to further layouting
 functions, and to
-[`build_table()`](https://insightsengineering.github.io/rtables/reference/build_table.md).
+[`build_table()`](https://pharmaverse.github.io/rtables/reference/build_table.md).
 
 ## Details
 
@@ -48,7 +48,7 @@ are subject to change in future versions.
 
 ## See also
 
-[`top_left()`](https://insightsengineering.github.io/rtables/reference/top_left.md)
+[`top_left()`](https://pharmaverse.github.io/rtables/reference/top_left.md)
 
 ## Examples
 

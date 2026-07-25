@@ -69,7 +69,7 @@ simply the sum of the counts for all of its children.
 
 ## See also
 
-[`col_counts()`](https://insightsengineering.github.io/rtables/reference/col_accessors.md)
+[`col_counts()`](https://pharmaverse.github.io/rtables/reference/col_accessors.md)
 
 ## Examples
 

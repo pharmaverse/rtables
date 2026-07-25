@@ -40,8 +40,8 @@ A `SplitValue` object.
 
 ## See also
 
-[`splv_extra()`](https://insightsengineering.github.io/rtables/reference/splv_extra.md),
-[`value_expr()`](https://insightsengineering.github.io/rtables/reference/value_expr.md)
+[`splv_extra()`](https://pharmaverse.github.io/rtables/reference/splv_extra.md),
+[`value_expr()`](https://pharmaverse.github.io/rtables/reference/value_expr.md)
 
 ## Examples
 

@@ -4,10 +4,10 @@
 current levels in the split. Similarly, `add_combo_levels` uses a
 user-provided `data.frame` to define the combine the levels to be added.
 If you need a single overall column, after all splits, please check
-[`add_overall_col()`](https://insightsengineering.github.io/rtables/reference/add_overall_col.md).
+[`add_overall_col()`](https://pharmaverse.github.io/rtables/reference/add_overall_col.md).
 Consider also defining your custom split function if you need more
 flexibility (see
-[custom_split_funs](https://insightsengineering.github.io/rtables/reference/custom_split_funs.md)).
+[custom_split_funs](https://pharmaverse.github.io/rtables/reference/custom_split_funs.md)).
 
 ## Usage
 
@@ -84,9 +84,9 @@ be used within the tabulation framework.
 
 ## See also
 
-[custom_split_funs](https://insightsengineering.github.io/rtables/reference/custom_split_funs.md)
+[custom_split_funs](https://pharmaverse.github.io/rtables/reference/custom_split_funs.md)
 and
-[split_funcs](https://insightsengineering.github.io/rtables/reference/split_funcs.md).
+[split_funcs](https://pharmaverse.github.io/rtables/reference/split_funcs.md).
 
 ## Examples
 

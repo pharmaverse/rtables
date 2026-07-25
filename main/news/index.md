@@ -20,8 +20,7 @@ CRAN release: 2025-12-14
 ### New Features
 
 - Allow table objects to have `round_type` instead of needing to specify
-  on export
-  [\#1040](https://github.com/insightsengineering/rtables/issues/1040)
+  on export [\#1040](https://github.com/pharmaverse/rtables/issues/1040)
 - New `obj_round_type` getter and setter methods.
 
 ## rtables 0.6.14
@@ -46,61 +45,60 @@ CRAN release: 2025-06-19
 ### New Features
 
 - All elements of a table’s row structure are now guaranteed to be
-  pathable.
-  [\#1024](https://github.com/insightsengineering/rtables/issues/1024)
+  pathable. [\#1024](https://github.com/pharmaverse/rtables/issues/1024)
   by [@gmbecker](https://github.com/gmbecker)
 - Direct siblings anywhere in a table’s tree (row) structure are now
   guaranteed to have unique names, with a message if de-duplication (by
   adding “\[i\]” to duplicates) was required.
-  [\#1024](https://github.com/insightsengineering/rtables/issues/1024)
-  by [@gmbecker](https://github.com/gmbecker)
+  [\#1024](https://github.com/pharmaverse/rtables/issues/1024) by
+  [@gmbecker](https://github.com/gmbecker)
 - Added `parent_name` argument to `split_rows_by*` and `analyze*`
   functions to manually control names of (and thus paths to) the
   subtables created.
-  [\#1024](https://github.com/insightsengineering/rtables/issues/1024)
-  by [@gmbecker](https://github.com/gmbecker)
+  [\#1024](https://github.com/pharmaverse/rtables/issues/1024) by
+  [@gmbecker](https://github.com/gmbecker)
 - Added `tt_row_path_exists`, which determines whether a path exists
   within a table’s row structure, optionally restricted to resolving to
   a particular type of node (row, table, elementary table).
-  [\#1024](https://github.com/insightsengineering/rtables/issues/1024)
-  by [@gmbecker](https://github.com/gmbecker)
+  [\#1024](https://github.com/pharmaverse/rtables/issues/1024) by
+  [@gmbecker](https://github.com/gmbecker)
 - Added `tt_normalize_row_path` which resolves a path including the “\*”
   wild card to all existing paths within a table, optionally restricted
   to resolving to a particular type.
-  [\#1024](https://github.com/insightsengineering/rtables/issues/1024)
-  by [@gmbecker](https://github.com/gmbecker)
+  [\#1024](https://github.com/pharmaverse/rtables/issues/1024) by
+  [@gmbecker](https://github.com/gmbecker)
 - Added documentation of basic pathing concepts
-  ([`?pathing`](https://insightsengineering.github.io/rtables/reference/tt_row_path_exists.md))
+  ([`?pathing`](https://pharmaverse.github.io/rtables/reference/tt_row_path_exists.md))
   to the man page for the above functions.
 - Added new `pathing` vignette. [@gmbecker](https://github.com/gmbecker)
 - When `make_row_df` is called on a `VTableTree` the returned df now
   includes new `sect_div_from_path` and `self_section_div` columns.
-  [\#1024](https://github.com/insightsengineering/rtables/issues/1024)
-  by [@gmbecker](https://github.com/gmbecker)
+  [\#1024](https://github.com/pharmaverse/rtables/issues/1024) by
+  [@gmbecker](https://github.com/gmbecker)
 - Added `section_div_info` convenience function which returns portions
   of `make_row_df`’s result relevant to section dividers.
-  [\#1024](https://github.com/insightsengineering/rtables/issues/1024)
-  by [@gmbecker](https://github.com/gmbecker)
+  [\#1024](https://github.com/pharmaverse/rtables/issues/1024) by
+  [@gmbecker](https://github.com/gmbecker)
 - Added `section_div_at_path` and `section_div_at_path<-` for getting
   and setting section dividers for substructures within the table. The
   latter supports “\*” wildcards for flexible usage.
-  [\#1024](https://github.com/insightsengineering/rtables/issues/1024)
-  by [@gmbecker](https://github.com/gmbecker)
+  [\#1024](https://github.com/pharmaverse/rtables/issues/1024) by
+  [@gmbecker](https://github.com/gmbecker)
 - Documentation regarding section dividers
-  ([`?section_div`](https://insightsengineering.github.io/rtables/reference/section_div.md))
+  ([`?section_div`](https://pharmaverse.github.io/rtables/reference/section_div.md))
   updated and expanded.
-  [\#1024](https://github.com/insightsengineering/rtables/issues/1024)
-  by [@gmbecker](https://github.com/gmbecker)
+  [\#1024](https://github.com/pharmaverse/rtables/issues/1024) by
+  [@gmbecker](https://github.com/gmbecker)
 - Updated `as_result_df` to “de-uniqify” names that were altered for
   pathability when determining group values in the result dataframe/ard.
-  [\#1024](https://github.com/insightsengineering/rtables/issues/1024)
-  by [@gmbecker](https://github.com/gmbecker)
+  [\#1024](https://github.com/pharmaverse/rtables/issues/1024) by
+  [@gmbecker](https://github.com/gmbecker)
 - Warning given when `section_div<-` with `only_sep_sections = TRUE`
   more values than levels of nesting present is now more informative,
   and occurs regardless of whether `only_sep_sections` was set manually
   or automatically (`length(value) < nrow(tt)`).
-  [\#1024](https://github.com/insightsengineering/rtables/issues/1024)
-  by [@gmbecker](https://github.com/gmbecker)
+  [\#1024](https://github.com/pharmaverse/rtables/issues/1024) by
+  [@gmbecker](https://github.com/gmbecker)
 
 ### Bug Fixes
 
@@ -108,23 +106,23 @@ CRAN release: 2025-06-19
   siblings in their row structure (e.g., when unnested structure is
   added via `nested = FALSE` or adding a row splitting after an
   `analyze` call).
-  [\#1024](https://github.com/insightsengineering/rtables/issues/1024)
-  by [@gmbecker](https://github.com/gmbecker)
+  [\#1024](https://github.com/pharmaverse/rtables/issues/1024) by
+  [@gmbecker](https://github.com/gmbecker)
 - `section_div<-` with `only_sep_sections = FALSE` is now consistent
   regarding which value is set when `analyze` calls occur at different
   levels of nesting within the corresponding layout, particularly as
   top-level non-nested siblings.
-  [\#1024](https://github.com/insightsengineering/rtables/issues/1024)
-  by [@gmbecker](https://github.com/gmbecker)
+  [\#1024](https://github.com/pharmaverse/rtables/issues/1024) by
+  [@gmbecker](https://github.com/gmbecker)
 - `section_div<-` no longer sets a section div on non-visible label rows
   when setting a section divider for a content row on the same group.
-  [\#1024](https://github.com/insightsengineering/rtables/issues/1024)
-  by [@gmbecker](https://github.com/gmbecker)
+  [\#1024](https://github.com/pharmaverse/rtables/issues/1024) by
+  [@gmbecker](https://github.com/gmbecker)
 - `section_div<-` when given a full-length (`nrow(tt)`) vector now sets
   ‘section dividers’ on label rows and content rows correctly when both
   are visible for the same facet.
-  [\#1024](https://github.com/insightsengineering/rtables/issues/1024)
-  by [@gmbecker](https://github.com/gmbecker)
+  [\#1024](https://github.com/pharmaverse/rtables/issues/1024) by
+  [@gmbecker](https://github.com/gmbecker)
 - Correctly exported `[` methods with signatures involving `character`
   and `missing`. [@gmbecker](https://github.com/gmbecker)
 - Updated path resolution logic for `[` methods to gracefully handle new
@@ -145,7 +143,7 @@ CRAN release: 2025-04-11
 - Added `stat_string` to `as_result_df(make_ard = TRUE)` to preserve the
   original string representation of the statistics.
 - Added `add_tbl_name_split` to
-  [`as_result_df()`](https://insightsengineering.github.io/rtables/reference/data.frame_export.md)
+  [`as_result_df()`](https://pharmaverse.github.io/rtables/reference/data.frame_export.md)
   to handle split levels constituted by different table names.
 - Analysis and content functions can now accept `.alt_df_full` which
   will always be the full `alt_counts_df` data.frame.
@@ -156,11 +154,11 @@ CRAN release: 2025-04-11
 ### Bug Fixes
 
 - Fixed issue with
-  [`split_cols_by_multivar()`](https://insightsengineering.github.io/rtables/reference/split_cols_by_multivar.md)
+  [`split_cols_by_multivar()`](https://pharmaverse.github.io/rtables/reference/split_cols_by_multivar.md)
   when having more than one value. Now `as_result_df(make_ard = TRUE)`
   adds a predefined split name for each of the `multivar` splits.
 - Fixed a bug with
-  [`tt_at_path()`](https://insightsengineering.github.io/rtables/reference/ttap.md)
+  [`tt_at_path()`](https://pharmaverse.github.io/rtables/reference/ttap.md)
   caused by the impossibility to solve multiple branches with identical
   names.
 - Fixed bug happening when format functions were changing the number of
@@ -191,11 +189,11 @@ CRAN release: 2025-04-11
 - Improved error messaging for cases where `tt_at_path` used a path
   based on row labels instead of row names.
 - Added more informative error message when
-  [`keep_split_levels()`](https://insightsengineering.github.io/rtables/reference/split_funcs.md)
+  [`keep_split_levels()`](https://pharmaverse.github.io/rtables/reference/split_funcs.md)
   is used to keep absent values.
 - Improved error message when selecting 0 columns from a table with `[`.
 - Added safe condition for
-  [`keep_split_levels()`](https://insightsengineering.github.io/rtables/reference/split_funcs.md)
+  [`keep_split_levels()`](https://pharmaverse.github.io/rtables/reference/split_funcs.md)
   when branch is empty `(character(0))`.
 
 ## rtables 0.6.11
@@ -205,11 +203,11 @@ CRAN release: 2025-01-10
 ### New Features
 
 - Initialized vignette about quality control outputs of
-  [`as_result_df()`](https://insightsengineering.github.io/rtables/reference/data.frame_export.md).
+  [`as_result_df()`](https://pharmaverse.github.io/rtables/reference/data.frame_export.md).
 - Completed parameter `make_ard` output for single-line statistical
   outputs.
 - Added `stat_names` to
-  [`rcell()`](https://insightsengineering.github.io/rtables/reference/rcell.md)
+  [`rcell()`](https://pharmaverse.github.io/rtables/reference/rcell.md)
   to be used by `as_result_df(make_ard = TRUE)`.
 
 ### Miscellaneous
@@ -217,19 +215,19 @@ CRAN release: 2025-01-10
 - Split `docx` document generation to the new package
   [`rtables.officer`](https://github.com/insightsengineering/rtables.officer).
 - Refactored
-  [`as_result_df()`](https://insightsengineering.github.io/rtables/reference/data.frame_export.md)
+  [`as_result_df()`](https://pharmaverse.github.io/rtables/reference/data.frame_export.md)
   parameters `as_strings` and `as_viewer` into
   `data_format = c("full_precision", "strings", "numeric")` following
   the same outputs.
 - Refactored
-  [`as_result_df()`](https://insightsengineering.github.io/rtables/reference/data.frame_export.md)
+  [`as_result_df()`](https://pharmaverse.github.io/rtables/reference/data.frame_export.md)
   to have a standard behavior, with all the relevant parameters, and a
   possibility to add personalized `spec`.
 - Removed `result_df_specs()`, because
-  [`as_result_df()`](https://insightsengineering.github.io/rtables/reference/data.frame_export.md)
+  [`as_result_df()`](https://pharmaverse.github.io/rtables/reference/data.frame_export.md)
   was a too shallow wrapper.
 - Merged behavior of
-  [`as_result_df()`](https://insightsengineering.github.io/rtables/reference/data.frame_export.md)
+  [`as_result_df()`](https://pharmaverse.github.io/rtables/reference/data.frame_export.md)
   parameters `as_is` and `simplify` parameters to remove structural
   information.
 
@@ -258,7 +256,7 @@ CRAN release: 2024-09-20
 ### Enhancements
 
 - Modified
-  [`reorder_split_levels()`](https://insightsengineering.github.io/rtables/reference/split_funcs.md)
+  [`reorder_split_levels()`](https://pharmaverse.github.io/rtables/reference/split_funcs.md)
   to cover more edge cases and be more stringent in the allowed inputs.
 - Removed table tree `tt` input from `theme_docx_default()` and added
   code to handle row classes and number of columns internally.
@@ -270,7 +268,7 @@ CRAN release: 2024-09-20
 - Fixed `"\n"` newline issues in `as_html` by relying onto output
   devices for newline handling. Added `expand_newlines = FALSE` default
   to allow previous behavior.
-- [`keep_split_levels()`](https://insightsengineering.github.io/rtables/reference/split_funcs.md)
+- [`keep_split_levels()`](https://pharmaverse.github.io/rtables/reference/split_funcs.md)
   throws now an error if the user requests to keep levels that are not
   present in data.
 - Fixed issue with removal of horizontal lines in `tt_as_flextable()`
@@ -333,11 +331,11 @@ CRAN release: 2024-06-20
   structures (all facets in column space uniquely reachable via pathing)
   [@gmbecker](https://github.com/gmbecker).
 - Display of higher order (non-leaf) column counts is now supported
-  ([\#135](https://github.com/insightsengineering/rtables/issues/135))
+  ([\#135](https://github.com/pharmaverse/rtables/issues/135))
   [@gmbecker](https://github.com/gmbecker).
 - Column count visibility and format can be set independently for each
   block of sibling facets
-  ([\#752](https://github.com/insightsengineering/rtables/issues/752))
+  ([\#752](https://github.com/pharmaverse/rtables/issues/752))
   [@gmbecker](https://github.com/gmbecker).
 - `split_cols_by*` functions now accept `show_colcounts` and
   `colcount_format` arguments.
@@ -431,7 +429,7 @@ CRAN release: 2023-12-08
 - Added `na_str` argument to `analyze_colvars` to set custom string to
   print in place of missing values.
 - Added flat `data.frame` outputs for
-  [`as_result_df()`](https://insightsengineering.github.io/rtables/reference/data.frame_export.md)
+  [`as_result_df()`](https://pharmaverse.github.io/rtables/reference/data.frame_export.md)
   via flag parameters `as_viewer`, `as_strings`, and `expand_colnames`.
 - Migrated `export_as_pdf` function to `formatters`.
 
@@ -441,7 +439,7 @@ CRAN release: 2023-12-08
   used at the same time.
 - Fixed a bug in `as_result_df` causing misalignment of column names.
 - Fixed a bug that was not allowing path indexing as
-  [`row_paths()`](https://insightsengineering.github.io/rtables/reference/make_col_row_df.md)
+  [`row_paths()`](https://pharmaverse.github.io/rtables/reference/make_col_row_df.md)
   was giving a different path due to it being made of named values.
 - Fixed a bug in `as_result_df` when called on tables with less than 3
   rows.
@@ -542,9 +540,9 @@ CRAN release: 2023-08-30
   ([\#685](https://github.com/insightsengineering/rtables/issues/685))
 - Custom appearance vignette updated with decimal alignment support.
 - Alignment checks have been moved into `formatters`:
-  [`formatters::check_aligns`](https://insightsengineering.github.io/formatters/latest-tag/reference/check_formats.html)
+  [`formatters::check_aligns`](https://rdrr.io/pkg/formatters/man/check_formats.html)
   superseded internal function `chk_rtables_align` and
-  [`formatters::list_valid_aligns`](https://insightsengineering.github.io/formatters/latest-tag/reference/list_formats.html)
+  [`formatters::list_valid_aligns`](https://rdrr.io/pkg/formatters/man/list_formats.html)
   superseded `rtables_aligns`.
 
 ## rtables 0.6.2
@@ -686,7 +684,7 @@ CRAN release: 2023-03-02
   support of `na_str`s with `NA_character_` values
 - `paginate_table` now takes page dimension and font information and
   uses
-  [`formatters::page_lcpp`](https://insightsengineering.github.io/formatters/latest-tag/reference/page_lcpp.html)
+  [`formatters::page_lcpp`](https://rdrr.io/pkg/formatters/man/page_lcpp.html)
   to calculate `lpp` and `cpp` automatically when those are provided.
 - Increase versioned dependency on `formatters` to `>= 0.3.3.2` for
   `page_lcpp`
@@ -877,8 +875,8 @@ backwards compatibility layer with the `rtable`, `rcell`, `rrow`,
 `rheader`, and `rtabulate` family of functions. However the table data
 structure and main tabulation framework have changed. We provide
 extensive documentation in the manuals
-[`help(package = "rtables")`](https://insightsengineering.github.io/rtables/latest-tag/reference)
-and vignettes `vignette(package = "rtables")` of the package.
+[`help(package = "rtables")`](https://rdrr.io/pkg/rtables/man) and
+vignettes `vignette(package = "rtables")` of the package.
 
 The changes to `rtables` have been undertaken to better meet the
 requirements of creating and analyzing & reporting tables in the context

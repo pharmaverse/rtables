@@ -53,8 +53,8 @@ subject to change in future releases.
 ## See also
 
 Other table structure validation functions:
-[`find_degen_struct()`](https://insightsengineering.github.io/rtables/reference/find_degen_struct.md),
-[`sanitize_table_struct()`](https://insightsengineering.github.io/rtables/reference/sanitize_table_struct.md)
+[`find_degen_struct()`](https://pharmaverse.github.io/rtables/reference/find_degen_struct.md),
+[`sanitize_table_struct()`](https://pharmaverse.github.io/rtables/reference/sanitize_table_struct.md)
 
 ## Examples
 

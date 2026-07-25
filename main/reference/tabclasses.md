@@ -116,7 +116,7 @@ TableTree(
   format associated with this split. Formats can be declared via strings
   (`"xx.x"`) or function. In cases such as `analyze` calls, they can be
   character vectors or lists of functions. See
-  [`formatters::list_valid_format_labels()`](https://insightsengineering.github.io/formatters/latest-tag/reference/list_formats.html)
+  [`formatters::list_valid_format_labels()`](https://rdrr.io/pkg/formatters/man/list_formats.html)
   for a list of all available format strings.
 
 - na_str:
@@ -137,14 +137,14 @@ TableTree(
 
   (`string`)\
   single string to use as main title
-  ([`formatters::main_title()`](https://insightsengineering.github.io/formatters/latest-tag/reference/title_footer.html)).
+  ([`formatters::main_title()`](https://rdrr.io/pkg/formatters/man/title_footer.html)).
   Ignored for subtables.
 
 - subtitles:
 
   (`character`)\
   a vector of strings to use as subtitles
-  ([`formatters::subtitles()`](https://insightsengineering.github.io/formatters/latest-tag/reference/title_footer.html)),
+  ([`formatters::subtitles()`](https://rdrr.io/pkg/formatters/man/title_footer.html)),
   where every element is printed on a separate line. Ignored for
   subtables.
 
@@ -153,7 +153,7 @@ TableTree(
   (`character`)\
   a vector of strings to use as main global (non-referential) footer
   materials
-  ([`formatters::main_footer()`](https://insightsengineering.github.io/formatters/latest-tag/reference/title_footer.html)),
+  ([`formatters::main_footer()`](https://rdrr.io/pkg/formatters/man/title_footer.html)),
   where every element is printed on a separate line.
 
 - prov_footer:
@@ -161,17 +161,17 @@ TableTree(
   (`character`)\
   a vector of strings to use as provenance-related global footer
   materials
-  ([`formatters::prov_footer()`](https://insightsengineering.github.io/formatters/latest-tag/reference/title_footer.html)),
+  ([`formatters::prov_footer()`](https://rdrr.io/pkg/formatters/man/title_footer.html)),
   where every element is printed on a separate line.
 
 - header_section_div:
 
   (`string`)\
   string which will be used to divide the header from the table. See
-  [`header_section_div()`](https://insightsengineering.github.io/rtables/reference/section_div.md)
+  [`header_section_div()`](https://pharmaverse.github.io/rtables/reference/section_div.md)
   for the associated getter and setter. Please consider changing last
   element of
-  [`section_div()`](https://insightsengineering.github.io/rtables/reference/section_div.md)
+  [`section_div()`](https://pharmaverse.github.io/rtables/reference/section_div.md)
   when concatenating tables that require a divider between them.
 
 - hsep:
@@ -181,7 +181,7 @@ TableTree(
   and body of the table when rendered as text. Defaults to a connected
   horizontal line (unicode 2014) in locals that use a UTF charset, and
   to `-` elsewhere (with a once per session warning). See
-  [`formatters::set_default_hsep()`](https://insightsengineering.github.io/formatters/latest-tag/reference/default_horizontal_sep.html)
+  [`formatters::set_default_hsep()`](https://rdrr.io/pkg/formatters/man/default_horizontal_sep.html)
   for further information.
 
 - trailing_section_div:
@@ -205,7 +205,7 @@ TableTree(
 
   (`"iec"` (default), `"iec_mod"` or `"sas"`)\
   the type of rounding to perform. See
-  [`formatters::format_value()`](https://insightsengineering.github.io/formatters/latest-tag/reference/format_value.html)
+  [`formatters::format_value()`](https://rdrr.io/pkg/formatters/man/format_value.html)
   for details.
 
 - cont:

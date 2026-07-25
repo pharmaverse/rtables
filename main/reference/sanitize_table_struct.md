@@ -38,8 +38,8 @@ generating a table guaranteed to be non-degenerate.
 ## See also
 
 Other table structure validation functions:
-[`find_degen_struct()`](https://insightsengineering.github.io/rtables/reference/find_degen_struct.md),
-[`validate_table_struct()`](https://insightsengineering.github.io/rtables/reference/validate_table_struct.md)
+[`find_degen_struct()`](https://pharmaverse.github.io/rtables/reference/find_degen_struct.md),
+[`validate_table_struct()`](https://pharmaverse.github.io/rtables/reference/validate_table_struct.md)
 
 ## Examples
 

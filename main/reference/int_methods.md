@@ -1137,7 +1137,7 @@ show(object)
   `df` as first parameter. Must accept `labelstr` as the second
   argument. Can optionally accept all optional arguments accepted by
   analysis functions. See
-  [`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md).
+  [`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md).
 
 - child_labels:
 
@@ -1239,7 +1239,7 @@ show(object)
   format associated with this split. Formats can be declared via strings
   (`"xx.x"`) or function. In cases such as `analyze` calls, they can be
   character vectors or lists of functions. See
-  [`formatters::list_valid_format_labels()`](https://insightsengineering.github.io/formatters/latest-tag/reference/list_formats.html)
+  [`formatters::list_valid_format_labels()`](https://rdrr.io/pkg/formatters/man/list_formats.html)
   for a list of all available format strings.
 
 - na_str:
@@ -1320,7 +1320,7 @@ show(object)
   whether the value in the cell should be returned if one cell is
   selected by the combination of `i` and `j`. It is not possible to
   return a vector of values. To do so please consider using
-  [`cell_values()`](https://insightsengineering.github.io/rtables/reference/cell_values.md).
+  [`cell_values()`](https://pharmaverse.github.io/rtables/reference/cell_values.md).
   Defaults to `FALSE`.
 
 ## Value

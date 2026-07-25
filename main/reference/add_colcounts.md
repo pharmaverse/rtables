@@ -21,20 +21,20 @@ add_colcounts(lyt, format = "(N=xx)")
   format associated with this split. Formats can be declared via strings
   (`"xx.x"`) or function. In cases such as `analyze` calls, they can be
   character vectors or lists of functions. See
-  [`formatters::list_valid_format_labels()`](https://insightsengineering.github.io/formatters/latest-tag/reference/list_formats.html)
+  [`formatters::list_valid_format_labels()`](https://rdrr.io/pkg/formatters/man/list_formats.html)
   for a list of all available format strings.
 
 ## Value
 
 A `PreDataTableLayouts` object suitable for passing to further layouting
 functions, and to
-[`build_table()`](https://insightsengineering.github.io/rtables/reference/build_table.md).
+[`build_table()`](https://pharmaverse.github.io/rtables/reference/build_table.md).
 
 ## Details
 
 It is often the case that the the column counts derived from the input
 data to
-[`build_table()`](https://insightsengineering.github.io/rtables/reference/build_table.md)
+[`build_table()`](https://pharmaverse.github.io/rtables/reference/build_table.md)
 is not representative of the population counts. For example, if events
 are counted in the table and the header should display the number of
 subjects and not the total number of events.

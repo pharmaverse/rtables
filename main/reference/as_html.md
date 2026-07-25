@@ -86,8 +86,8 @@ as_html(
 
   (`"iec"`, `"iec_mod"` or `"sas"`)\
   the type of rounding to perform. See
-  [`round_fmt()`](https://insightsengineering.github.io/formatters/latest-tag/reference/round_fmt.html)
-  for details.
+  [`round_fmt()`](https://rdrr.io/pkg/formatters/man/round_fmt.html) for
+  details.
 
 ## Value
 

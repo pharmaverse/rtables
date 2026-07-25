@@ -51,7 +51,7 @@ table_shell_str(
   character to repeat to create header/body separator line. If `NULL`,
   the object value will be used. If `" "`, an empty separator will be
   printed. See
-  [`default_hsep()`](https://insightsengineering.github.io/formatters/latest-tag/reference/default_horizontal_sep.html)
+  [`default_hsep()`](https://rdrr.io/pkg/formatters/man/default_horizontal_sep.html)
   for more information.
 
 - tf_wrap:
@@ -78,7 +78,7 @@ table_shell_str(
 
 ## See also
 
-[`value_formats()`](https://insightsengineering.github.io/rtables/reference/value_formats.md)
+[`value_formats()`](https://pharmaverse.github.io/rtables/reference/value_formats.md)
 for a matrix of formats for each cell in a table.
 
 ## Examples

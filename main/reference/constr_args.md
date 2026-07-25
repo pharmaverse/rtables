@@ -123,14 +123,14 @@ constr_args(
 
   (`string`)\
   single string to use as main title
-  ([`formatters::main_title()`](https://insightsengineering.github.io/formatters/latest-tag/reference/title_footer.html)).
+  ([`formatters::main_title()`](https://rdrr.io/pkg/formatters/man/title_footer.html)).
   Ignored for subtables.
 
 - subtitles:
 
   (`character`)\
   a vector of strings to use as subtitles
-  ([`formatters::subtitles()`](https://insightsengineering.github.io/formatters/latest-tag/reference/title_footer.html)),
+  ([`formatters::subtitles()`](https://rdrr.io/pkg/formatters/man/title_footer.html)),
   where every element is printed on a separate line. Ignored for
   subtables.
 
@@ -139,7 +139,7 @@ constr_args(
   (`character`)\
   a vector of strings to use as main global (non-referential) footer
   materials
-  ([`formatters::main_footer()`](https://insightsengineering.github.io/formatters/latest-tag/reference/title_footer.html)),
+  ([`formatters::main_footer()`](https://rdrr.io/pkg/formatters/man/title_footer.html)),
   where every element is printed on a separate line.
 
 - prov_footer:
@@ -147,7 +147,7 @@ constr_args(
   (`character`)\
   a vector of strings to use as provenance-related global footer
   materials
-  ([`formatters::prov_footer()`](https://insightsengineering.github.io/formatters/latest-tag/reference/title_footer.html)),
+  ([`formatters::prov_footer()`](https://rdrr.io/pkg/formatters/man/title_footer.html)),
   where every element is printed on a separate line.
 
 - footnotes:
@@ -212,10 +212,10 @@ constr_args(
 
   (`string`)\
   string which will be used to divide the header from the table. See
-  [`header_section_div()`](https://insightsengineering.github.io/rtables/reference/section_div.md)
+  [`header_section_div()`](https://pharmaverse.github.io/rtables/reference/section_div.md)
   for the associated getter and setter. Please consider changing last
   element of
-  [`section_div()`](https://insightsengineering.github.io/rtables/reference/section_div.md)
+  [`section_div()`](https://pharmaverse.github.io/rtables/reference/section_div.md)
   when concatenating tables that require a divider between them.
 
 ## Value
@@ -225,7 +225,7 @@ No return value.
 ## See also
 
 Other conventions:
-[`compat_args()`](https://insightsengineering.github.io/rtables/reference/compat_args.md),
-[`gen_args()`](https://insightsengineering.github.io/rtables/reference/gen_args.md),
-[`lyt_args()`](https://insightsengineering.github.io/rtables/reference/lyt_args.md),
-[`sf_args()`](https://insightsengineering.github.io/rtables/reference/sf_args.md)
+[`compat_args()`](https://pharmaverse.github.io/rtables/reference/compat_args.md),
+[`gen_args()`](https://pharmaverse.github.io/rtables/reference/gen_args.md),
+[`lyt_args()`](https://pharmaverse.github.io/rtables/reference/lyt_args.md),
+[`sf_args()`](https://pharmaverse.github.io/rtables/reference/sf_args.md)

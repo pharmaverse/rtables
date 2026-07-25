@@ -122,7 +122,7 @@ lyt_args(
   format associated with this split. Formats can be declared via strings
   (`"xx.x"`) or function. In cases such as `analyze` calls, they can be
   character vectors or lists of functions. See
-  [`formatters::list_valid_format_labels()`](https://insightsengineering.github.io/formatters/latest-tag/reference/list_formats.html)
+  [`formatters::list_valid_format_labels()`](https://rdrr.io/pkg/formatters/man/list_formats.html)
   for a list of all available format strings.
 
 - cfun:
@@ -132,7 +132,7 @@ lyt_args(
   `df` as first parameter. Must accept `labelstr` as the second
   argument. Can optionally accept all optional arguments accepted by
   analysis functions. See
-  [`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md).
+  [`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md).
 
 - cformat:
 
@@ -148,7 +148,7 @@ lyt_args(
 
   (`function` or `NULL`)\
   custom splitting function. See
-  [custom_split_funs](https://insightsengineering.github.io/rtables/reference/custom_split_funs.md).
+  [custom_split_funs](https://pharmaverse.github.io/rtables/reference/custom_split_funs.md).
 
 - split_name:
 
@@ -168,7 +168,7 @@ lyt_args(
   analysis function. Must accept `x` or `df` as its first parameter. Can
   optionally take other parameters which will be populated by the
   tabulation framework. See Details in
-  [`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md).
+  [`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md).
 
 - inclNAs:
 
@@ -304,7 +304,7 @@ lyt_args(
   (`string` or `NULL`)\
   alignment the value should be rendered with. Defaults to `"center"` if
   `NULL` is used. See
-  [`formatters::list_valid_aligns()`](https://insightsengineering.github.io/formatters/latest-tag/reference/list_formats.html)
+  [`formatters::list_valid_aligns()`](https://rdrr.io/pkg/formatters/man/list_formats.html)
   for all currently supported alignments.
 
 - page_by:
@@ -386,7 +386,7 @@ No return value.
 ## See also
 
 Other conventions:
-[`compat_args()`](https://insightsengineering.github.io/rtables/reference/compat_args.md),
-[`constr_args()`](https://insightsengineering.github.io/rtables/reference/constr_args.md),
-[`gen_args()`](https://insightsengineering.github.io/rtables/reference/gen_args.md),
-[`sf_args()`](https://insightsengineering.github.io/rtables/reference/sf_args.md)
+[`compat_args()`](https://pharmaverse.github.io/rtables/reference/compat_args.md),
+[`constr_args()`](https://pharmaverse.github.io/rtables/reference/constr_args.md),
+[`gen_args()`](https://pharmaverse.github.io/rtables/reference/gen_args.md),
+[`sf_args()`](https://pharmaverse.github.io/rtables/reference/sf_args.md)

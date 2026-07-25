@@ -172,7 +172,7 @@ If we continue inside `build_table`, we see `.make_ctab` used to make a
 root split. This is a general procedure that generates the initial root
 split as a content row. `ctab` is applied to this content row, which is
 a row that contains only a label. From
-[`?summarize_row_groups`](https://insightsengineering.github.io/rtables/reference/summarize_row_groups.md),
+[`?summarize_row_groups`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md),
 you know that this is how `rtables` defines label rows, i.e. as content
 rows. `.make_ctab` is very similar to the function that actual creates
 the table rows, `.make_tablerows`. Note that this function uses

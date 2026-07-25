@@ -17,9 +17,9 @@ library(dplyr)
 
 It is possible to align the content by assigning `"left"`, `"center"`
 (default), and `"right"` to `.aligns` and `align` arguments in
-[`in_rows()`](https://insightsengineering.github.io/rtables/reference/in_rows.md)
+[`in_rows()`](https://pharmaverse.github.io/rtables/reference/in_rows.md)
 and
-[`rcell()`](https://insightsengineering.github.io/rtables/reference/rcell.md),
+[`rcell()`](https://pharmaverse.github.io/rtables/reference/rcell.md),
 respectively. It is also possible to use `decimal`, `dec_right`, and
 `dec_left` for decimal alignments. The first takes all numerical values
 and aligns the decimal character `.` in every value of the column that
@@ -30,14 +30,13 @@ present empty spaces at left or right, it pushes values towards left or
 right taking the one value that has most decimal characters, if right,
 or non-decimal values if left. For more details, please read the related
 documentation page
-[`help("decimal_align")`](https://insightsengineering.github.io/formatters/latest-tag/reference/decimal_align.html).
+[`help("decimal_align")`](https://rdrr.io/pkg/formatters/man/decimal_align.html).
 
 Please consider using
-[`?in_rows`](https://insightsengineering.github.io/rtables/reference/in_rows.md)
-and
-[`?rcell`](https://insightsengineering.github.io/rtables/reference/rcell.md)
+[`?in_rows`](https://pharmaverse.github.io/rtables/reference/in_rows.md)
+and [`?rcell`](https://pharmaverse.github.io/rtables/reference/rcell.md)
 for further clarifications on the two arguments, and use
-[`formatters::list_valid_aligns()`](https://insightsengineering.github.io/formatters/latest-tag/reference/list_formats.html)
+[`formatters::list_valid_aligns()`](https://rdrr.io/pkg/formatters/man/list_formats.html)
 to see all available alignment options.
 
 In the following we show two simplified examples that use `align` and
@@ -145,7 +144,7 @@ The sequence of strings printed in the area between the column header
 display and the first row label can be modified during pre-processing
 using label position argument in row splits `split_rows_by`, with the
 `append_topleft` function, and during post-processing using the
-[`top_left()`](https://insightsengineering.github.io/rtables/reference/top_left.md)
+[`top_left()`](https://pharmaverse.github.io/rtables/reference/top_left.md)
 function. Note: Indenting is automatically added
 `label_pos = "topleft"`.
 
@@ -215,7 +214,7 @@ build_table(lyt, DM)
 ```
 
 Post-processing using the
-[`top_left()`](https://insightsengineering.github.io/rtables/reference/top_left.md)
+[`top_left()`](https://pharmaverse.github.io/rtables/reference/top_left.md)
 function:
 
 ``` r
@@ -275,9 +274,9 @@ lyt
 Table title, table body, referential footnotes and and main footers can
 be inset from the left alignment of the titles and provenance footer
 materials. This can be modified within the layout initializer
-[`basic_table()`](https://insightsengineering.github.io/rtables/reference/basic_table.md)
+[`basic_table()`](https://pharmaverse.github.io/rtables/reference/basic_table.md)
 using the `inset` argument or during post-processing with
-[`table_inset()`](https://insightsengineering.github.io/formatters/latest-tag/reference/table_inset.html).
+[`table_inset()`](https://rdrr.io/pkg/formatters/man/table_inset.html).
 
 Using the layout initializer:
 
@@ -958,7 +957,7 @@ wide_tbl
 ```
 
 In the following sections we will use the
-[`toString()`](https://insightsengineering.github.io/formatters/latest-tag/reference/tostring.html)
+[`toString()`](https://rdrr.io/pkg/formatters/man/tostring.html)
 function to render the table in string form. This resulting string
 representation is ready to be printed or written to a plain text file,
 but we will use the [`strsplit()`](https://rdrr.io/r/base/strsplit.html)
@@ -971,7 +970,7 @@ rendered wrapped table in matrix form within this vignette.
 The width of a rendered table can be customized by wrapping column
 widths. This is done by setting custom width values via the `widths`
 argument of the
-[`toString()`](https://insightsengineering.github.io/formatters/latest-tag/reference/tostring.html)
+[`toString()`](https://rdrr.io/pkg/formatters/man/tostring.html)
 function. The length of the vector passed to the `widths` argument must
 be equal to the total number of columns in the table, including the row
 labels column, with each value of the vector corresponding to the
@@ -980,11 +979,11 @@ right.
 
 Similarly, wrapping can be applied when exporting a table via one of the
 four `export_as_*` functions and when implementing pagination via the
-[`paginate_table()`](https://insightsengineering.github.io/rtables/reference/paginate.md)
+[`paginate_table()`](https://pharmaverse.github.io/rtables/reference/paginate.md)
 function from the `rtables` package. In these cases, the rendered column
 widths are set using the `colwidths` argument which takes input in the
 same format as the `widths` argument of
-[`toString()`](https://insightsengineering.github.io/formatters/latest-tag/reference/tostring.html).
+[`toString()`](https://rdrr.io/pkg/formatters/man/tostring.html).
 
 For example, `wide_tbl` has four columns (1 row label column and 3
 content columns) which we will set the widths of below to use in the
@@ -994,8 +993,8 @@ characters. Any words longer than the specified width are broken and
 continued on the following line. By default there are 3 spaces
 separating each of the columns in the rendered table but this can be
 customized via the `col_gap` argument to
-[`toString()`](https://insightsengineering.github.io/formatters/latest-tag/reference/tostring.html)
-if further width customization is desired.
+[`toString()`](https://rdrr.io/pkg/formatters/man/tostring.html) if
+further width customization is desired.
 
 ``` r
 
@@ -1055,12 +1054,12 @@ the titles and footers remain wider than the rendered table.
 
 In addition to wrapping column widths, titles and footers can be wrapped
 by setting `tf_wrap = TRUE` in
-[`toString()`](https://insightsengineering.github.io/formatters/latest-tag/reference/tostring.html)
-and setting the `max_width` argument of
-[`toString()`](https://insightsengineering.github.io/formatters/latest-tag/reference/tostring.html)
-to the maximum width (in characters) allowed for titles/footers. The
-four `export_as_*` functions and
-[`paginate_table()`](https://insightsengineering.github.io/rtables/reference/paginate.md)
+[`toString()`](https://rdrr.io/pkg/formatters/man/tostring.html) and
+setting the `max_width` argument of
+[`toString()`](https://rdrr.io/pkg/formatters/man/tostring.html) to the
+maximum width (in characters) allowed for titles/footers. The four
+`export_as_*` functions and
+[`paginate_table()`](https://pharmaverse.github.io/rtables/reference/paginate.md)
 can also wrap titles/footers by setting the same two arguments. In the
 following code, we set `max_width = 43` so that the rendered table and
 all of its annotations have a maximum width of 43 characters.

@@ -21,12 +21,12 @@ If row names are not defined in `df` (or they are simple numbers), then
 the row names are taken from the column `label_name`, if it exists. If
 `label_name` exists, then it is also removed from the original data.
 This behavior is compatible with
-[`as_result_df()`](https://insightsengineering.github.io/rtables/reference/data.frame_export.md),
+[`as_result_df()`](https://pharmaverse.github.io/rtables/reference/data.frame_export.md),
 when `as_is = TRUE` and the row names are not unique.
 
 ## See also
 
-[`as_result_df()`](https://insightsengineering.github.io/rtables/reference/data.frame_export.md)
+[`as_result_df()`](https://pharmaverse.github.io/rtables/reference/data.frame_export.md)
 for the inverse operation.
 
 ## Examples

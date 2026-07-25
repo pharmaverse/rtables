@@ -53,7 +53,7 @@ split_rows_by(
 
   (`function` or `NULL`)\
   custom splitting function. See
-  [custom_split_funs](https://insightsengineering.github.io/rtables/reference/custom_split_funs.md).
+  [custom_split_funs](https://pharmaverse.github.io/rtables/reference/custom_split_funs.md).
 
 - parent_name:
 
@@ -69,7 +69,7 @@ split_rows_by(
   format associated with this split. Formats can be declared via strings
   (`"xx.x"`) or function. In cases such as `analyze` calls, they can be
   character vectors or lists of functions. See
-  [`formatters::list_valid_format_labels()`](https://insightsengineering.github.io/formatters/latest-tag/reference/list_formats.html)
+  [`formatters::list_valid_format_labels()`](https://rdrr.io/pkg/formatters/man/list_formats.html)
   for a list of all available format strings.
 
 - na_str:
@@ -136,7 +136,7 @@ split_rows_by(
 
 A `PreDataTableLayouts` object suitable for passing to further layouting
 functions, and to
-[`build_table()`](https://insightsengineering.github.io/rtables/reference/build_table.md).
+[`build_table()`](https://pharmaverse.github.io/rtables/reference/build_table.md).
 
 ## Note
 

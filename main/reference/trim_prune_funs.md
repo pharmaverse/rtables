@@ -74,7 +74,7 @@ true:
   practice, when the default summary/content function is used, this
   represents pruning any subtable which corresponds to an empty set of
   the input data (e.g. because a factor variable was used in
-  [`split_rows_by()`](https://insightsengineering.github.io/rtables/reference/split_rows_by.md)
+  [`split_rows_by()`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)
   but not all levels were present in the data).
 
 `prune_empty_level` combines `all_zero_or_na` behavior for `TableRow`
@@ -93,8 +93,8 @@ values per cell there are) against `min`.
 
 ## See also
 
-[`prune_table()`](https://insightsengineering.github.io/rtables/reference/prune_table.md),
-[`trim_rows()`](https://insightsengineering.github.io/rtables/reference/trim_rows.md)
+[`prune_table()`](https://pharmaverse.github.io/rtables/reference/prune_table.md),
+[`trim_rows()`](https://pharmaverse.github.io/rtables/reference/trim_rows.md)
 
 ## Examples
 

@@ -362,7 +362,7 @@ modified. Also consider looking at `section_div` getter and tests in
 `test-accessors.R` to have more insights on the structure. Also to
 understand exactly how this is bound to output, please check the result
 of
-[`make_row_df()`](https://insightsengineering.github.io/formatters/latest-tag/reference/make_row_df.html)
+[`make_row_df()`](https://rdrr.io/pkg/formatters/man/make_row_df.html)
 for the column `trailing_sep`. Indeed, an alternative and iterative
 method is used by `make_row_df` to retrieve the information about the
 separators for each table row. Being it a trailing separator by
@@ -372,4 +372,4 @@ of `basic_table`, so to possibly add an empty line after the header
 separator, but it is a separator that is added after the header. To
 close the circle, please check how `trailing_sep` and
 `header_section_div` is propagated and printed/used in
-[`formatters::toString`](https://insightsengineering.github.io/formatters/latest-tag/reference/tostring.html).
+[`formatters::toString`](https://rdrr.io/pkg/formatters/man/tostring.html).

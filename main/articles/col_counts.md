@@ -263,7 +263,7 @@ versions without warning.
 #### Advanced Settings
 
 By using
-[`make_col_df()`](https://insightsengineering.github.io/rtables/reference/make_col_df.md)
+[`make_col_df()`](https://pharmaverse.github.io/rtables/reference/make_col_df.md)
 we can see the full path to any column count. One example application is
 to add a `NA` value that would print to the default value is `""`, that
 will show nothing. To change (for now uniformly only) the output string

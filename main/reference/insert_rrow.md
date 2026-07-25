@@ -39,9 +39,9 @@ A `TableTree` of the same specific class as `tbl`.
 
 This function is deprecated and will be removed in a future release of
 `rtables`. Please use
-[`insert_row_at_path()`](https://insightsengineering.github.io/rtables/reference/insert_row_at_path.md)
+[`insert_row_at_path()`](https://pharmaverse.github.io/rtables/reference/insert_row_at_path.md)
 or
-[`label_at_path()`](https://insightsengineering.github.io/rtables/reference/label_at_path.md)
+[`label_at_path()`](https://pharmaverse.github.io/rtables/reference/label_at_path.md)
 instead.
 
 ## Note

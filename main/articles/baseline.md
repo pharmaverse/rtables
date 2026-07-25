@@ -50,9 +50,9 @@ displayed in the first column.
 
 In cases where we want cells to be blank in the reference column, (e.g.,
 “B: Placebo”) we use
-[`non_ref_rcell()`](https://insightsengineering.github.io/rtables/reference/rcell.md)
+[`non_ref_rcell()`](https://pharmaverse.github.io/rtables/reference/rcell.md)
 instead of
-[`rcell()`](https://insightsengineering.github.io/rtables/reference/rcell.md),
+[`rcell()`](https://pharmaverse.github.io/rtables/reference/rcell.md),
 and pass `.in_ref_col` as the second argument:
 
 ``` r
@@ -100,7 +100,7 @@ tbl4
     # another row                 aaa                        aaa
 
 You can see which arguments are available for `afun` in the manual for
-[`analyze()`](https://insightsengineering.github.io/rtables/reference/analyze.md).
+[`analyze()`](https://pharmaverse.github.io/rtables/reference/analyze.md).
 
 ## Row Splitting
 
