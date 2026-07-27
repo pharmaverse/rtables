@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Disclaimer
 
-This article is intended for use by developers only and will contain low-level explanations of the topics covered. For user-friendly vignettes, please see the [Articles](https://insightsengineering.github.io/rtables/latest-tag/articles/index.html) page on the `rtables` website.
+This article is intended for use by developers only and will contain low-level explanations of the topics covered. For user-friendly vignettes, please see the [Articles](https://pharmaverse.github.io/rtables/latest-tag/articles/index.html) page on the `rtables` website.
 
 Any code or prose which appears in the version of this article on the `main` branch of the repository may reflect a specific state of things that can be more or less recent. This guide describes very important aspects of table hierarchy that are unlikely to change. Regardless, we invite the reader to keep in mind that the current repository code may have drifted from the following material in this document, and it is always the best practice to read the code directly on `main`.
 

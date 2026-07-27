@@ -89,7 +89,7 @@ coltree_structure(tbl)
 ```
 
 Further information about the column structure can be found in the vignette on
-[`col_counts`](https://insightsengineering.github.io/rtables/latest-tag/articles/col_counts.html).
+[`col_counts`](https://pharmaverse.github.io/rtables/latest-tag/articles/col_counts.html).
 
 The `make_row_df()` and `make_col_df()` functions each create a `data.frame` with a variety of information about
 the table's structure. Most useful for introspection purposes are the `label`, `name`, `abs_rownumber`, `path` and
@@ -160,11 +160,11 @@ value_formats(tbl)
 ## Applications
 
 Knowing the structure of an `rtable` object is helpful for retrieving specific values from the table.
-For examples, see the [Path Based Cell Value Accessing](https://insightsengineering.github.io/rtables/latest-tag/articles/subsetting_tables.html#path-based-cell-value-accessing)
+For examples, see the [Path Based Cell Value Accessing](https://pharmaverse.github.io/rtables/latest-tag/articles/subsetting_tables.html#path-based-cell-value-accessing)
 section of the Subsetting and Manipulating Table Contents vignette.
 
 Understanding table structure is also important for post-processing processes such as sorting and pruning. More details
-on this are covered in the [Pruning and Sorting Tables vignette](https://insightsengineering.github.io/rtables/latest-tag/articles/sorting_pruning.html)
+on this are covered in the [Pruning and Sorting Tables vignette](https://pharmaverse.github.io/rtables/latest-tag/articles/sorting_pruning.html)
 vignette.
 
 ## Summary

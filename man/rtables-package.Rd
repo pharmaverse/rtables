@@ -13,9 +13,9 @@ Reporting tables often have structure that goes beyond simple rectangular data. 
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/insightsengineering/rtables}
-  \item \url{https://insightsengineering.github.io/rtables/}
-  \item Report bugs at \url{https://github.com/insightsengineering/rtables/issues}
+  \item \url{https://github.com/pharmaverse/rtables}
+  \item \url{https://pharmaverse.github.io/rtables/}
+  \item Report bugs at \url{https://github.com/pharmaverse/rtables/issues}
 }
 
 }
@@ -33,7 +33,7 @@ Authors:
 
 Other contributors:
 \itemize{
-  \item Daniel Sabanés Bové \email{daniel.sabanes_bove@rconis.com} [contributor]
+  \item Daniel Saban<U+00E9>s Bov<U+00E9> \email{daniel.sabanes_bove@rconis.com} [contributor]
   \item Maximilian Mordig \email{maximilian_oliver.mordig@roche.com} [contributor]
   \item Abinaya Yogasekaram \email{ayogasek@gmail.com} (\href{https://orcid.org/0009-0005-2083-1105}{ORCID}) [contributor]
   \item David Munoz Tord \email{david.munoztord@mailbox.org} [contributor]

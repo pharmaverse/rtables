@@ -22,6 +22,6 @@ Score functions for sorting \code{TableTrees}
 }
 \seealso{
 For examples and details, please read the documentation for \code{\link[=sort_at_path]{sort_at_path()}} and the
-\href{https://insightsengineering.github.io/rtables/latest-tag/articles/sorting_pruning.html}{Sorting and Pruning}
+\href{https://pharmaverse.github.io/rtables/latest-tag/articles/sorting_pruning.html}{Sorting and Pruning}
 vignette.
 }

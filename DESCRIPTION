@@ -30,9 +30,9 @@ Description: Reporting tables often have structure that goes beyond simple
     declaring table layouts and the corresponding computations, and then
     applying them to data.
 License: Apache License 2.0 | file LICENSE
-URL: https://github.com/insightsengineering/rtables,
-    https://insightsengineering.github.io/rtables/
-BugReports: https://github.com/insightsengineering/rtables/issues
+URL: https://github.com/pharmaverse/rtables,
+    https://pharmaverse.github.io/rtables/
+BugReports: https://github.com/pharmaverse/rtables/issues
 Depends:
     formatters (>= 0.5.12),
     methods,
@@ -60,7 +60,7 @@ Suggests:
 VignetteBuilder:
     knitr,
     rmarkdown
-Config/Needs/verdepcheck: insightsengineering/formatters, mllg/checkmate,
+Config/Needs/verdepcheck: pharmaverse/formatters, mllg/checkmate,
     rstudio/htmltools, gagolews/stringi, tidymodels/broom, cran/car,
     tidyverse/dplyr, davidgohel/flextable, yihui/knitr, r-lib/lifecycle,
     davidgohel/officer, Merck/r2rtf, rstudio/rmarkdown, therneau/survival,

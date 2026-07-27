@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Disclaimer
 
-This article is intended for use by developers only and will contain low-level explanations of the topics covered. For user-friendly vignettes, please see the [Articles](https://insightsengineering.github.io/rtables/latest-tag/articles/index.html) page on the `rtables` website.
+This article is intended for use by developers only and will contain low-level explanations of the topics covered. For user-friendly vignettes, please see the [Articles](https://pharmaverse.github.io/rtables/latest-tag/articles/index.html) page on the `rtables` website.
 
 Any code or prose which appears in the version of this article on the `main` branch of the repository may reflect a specific state of things that can be more or less recent. This guide describes very important pieces of the split machinery that are unlikely to change. Regardless, we invite the reader to keep in mind that the current repository code may have drifted from the following material in this document, and it is always the best practice to read the code directly on `main`.
 
@@ -23,13 +23,13 @@ Being that this a working document that may be subjected to both deprecation and
 
 ## Introduction
 
-The scope of this article is understanding how `rtables` creates facets by splitting the incoming data into hierarchical groups that go from the root node to singular `rcell`s. The latter level, also called the leaf-level, contains the final partition that is subjected to analysis functions. More details from the user perspective can be found in the [Split Functions vignette](https://insightsengineering.github.io/rtables/latest-tag/articles/split_functions.html) and in function documentation like `?split_rows_by` and `?split_funcs`.
+The scope of this article is understanding how `rtables` creates facets by splitting the incoming data into hierarchical groups that go from the root node to singular `rcell`s. The latter level, also called the leaf-level, contains the final partition that is subjected to analysis functions. More details from the user perspective can be found in the [Split Functions vignette](https://pharmaverse.github.io/rtables/latest-tag/articles/split_functions.html) and in function documentation like `?split_rows_by` and `?split_funcs`.
 
 The following article will describe how the split machinery works in the row domain. Further information on how the split machinery works in the column domain will be covered in a separate article.
 
 ## Process and Methods
 
-Beforehand, we encourage the reader to familiarize themselves with the [Debugging in {rtables} article](https://insightsengineering.github.io/rtables/latest-tag/articles/dev-guide/dg_debug_rtables.html) from the `rtables` Developers Guide. This document is generally valid for R programming, but has been tailored to study and understand complex packages that rely heavily on S3 and S4 object programming like `rtables`.
+Beforehand, we encourage the reader to familiarize themselves with the [Debugging in {rtables} article](https://pharmaverse.github.io/rtables/latest-tag/articles/dev-guide/dg_debug_rtables.html) from the `rtables` Developers Guide. This document is generally valid for R programming, but has been tailored to study and understand complex packages that rely heavily on S3 and S4 object programming like `rtables`.
 
 Here, we explore and study the split machinery with a growing amount of complexity, following relevant functions and methods throughout their execution. By going from basic to complex and by discussing important and special cases, we hope to be able to give you a good understanding of how the split machinery works.
 
@@ -128,7 +128,7 @@ We will see where and how input parameters are used. The most important paramete
 
 We will start by looking at the first function called from `do_split`. This will give us a good overview of how the split itself is defined. This function is, of course, the check function (`check_validsplit`) that is used to verify if the split is valid for the data. In the following we will describe the split-class hierarchy step-by-step, but we invite the reader to explore this further on their own as well.
 
-Let's first search the package for `check_validsplit`. You will find that it is defined as a generic in `R/split_funs.R`, where it is applied to the following "split" classes: `VarLevelSplit`, `MultiVarSplit`, `VAnalyzeSplit`, `CompoundSplit`, and `Split`. Another way to find this information, which is more useful for more spread out and complicated objects, is by using `showMethods(check_validsplit)`. The virtual class `VAnalyzeSplit` (by convention virtual classes start with "V") defines the main parent of the analysis split which we discuss in detail in the related vignette `vignette()` (xxx). From this, we can see that the `analyze()` calls actually mimic split objects as they create different results under a specific final split (or node). Now, notice that `check_validsplit` is also called in another location, the main `R/tt_dotabulation.R` source file. This is again something related to making "analyze" rows as it mainly checks for `VAnalyzeSplit`. See the [Tabulation article](https://insightsengineering.github.io/rtables/latest-tag/articles/dev-guide/dg_tabulation.html) for more details. We will discuss the other classes as they appear in our examples. See more about class hierarchy in the [Table Hierarchy article](https://insightsengineering.github.io/rtables/latest-tag/articles/dev-guide/dg_table_hierarchy.html).
+Let's first search the package for `check_validsplit`. You will find that it is defined as a generic in `R/split_funs.R`, where it is applied to the following "split" classes: `VarLevelSplit`, `MultiVarSplit`, `VAnalyzeSplit`, `CompoundSplit`, and `Split`. Another way to find this information, which is more useful for more spread out and complicated objects, is by using `showMethods(check_validsplit)`. The virtual class `VAnalyzeSplit` (by convention virtual classes start with "V") defines the main parent of the analysis split which we discuss in detail in the related vignette `vignette()` (xxx). From this, we can see that the `analyze()` calls actually mimic split objects as they create different results under a specific final split (or node). Now, notice that `check_validsplit` is also called in another location, the main `R/tt_dotabulation.R` source file. This is again something related to making "analyze" rows as it mainly checks for `VAnalyzeSplit`. See the [Tabulation article](https://pharmaverse.github.io/rtables/latest-tag/articles/dev-guide/dg_tabulation.html) for more details. We will discuss the other classes as they appear in our examples. See more about class hierarchy in the [Table Hierarchy article](https://pharmaverse.github.io/rtables/latest-tag/articles/dev-guide/dg_table_hierarchy.html).
 
 For the moment, we see with `class(spl)` (from the main `do_split` function) that we are dealing with an `AllSplit` object. By calling `showMethods(check_validsplit)` we produce the following:
 
@@ -192,7 +192,7 @@ AllSplit <- function(split_label = "",
 }
 ```
 
-We can also print this information by calling `getClass("AllSplit")` for the general slot definition, or by calling `getClass(spl)`. Note that the first call will give also a lot of information about the class hierarchy. For more information regarding class hierarchy, please refer to the relevant article [here](https://insightsengineering.github.io/rtables/latest-tag/articles/dev-guide/dg_talbe_hierarchy.html). We will discuss the majority of the slots by the end of this document. Now, let's see if we can find some of the values described in the constructor within our object. To do so, we will show the more compact representation given by `str`. When there are multiple and hierarchical slots that contain objects themselves, calling `str` will be much less or not at all informative if the maximum level of nesting is not set (e.g. `max.level = 2`).
+We can also print this information by calling `getClass("AllSplit")` for the general slot definition, or by calling `getClass(spl)`. Note that the first call will give also a lot of information about the class hierarchy. For more information regarding class hierarchy, please refer to the relevant article [here](https://pharmaverse.github.io/rtables/latest-tag/articles/dev-guide/dg_talbe_hierarchy.html). We will discuss the majority of the slots by the end of this document. Now, let's see if we can find some of the values described in the constructor within our object. To do so, we will show the more compact representation given by `str`. When there are multiple and hierarchical slots that contain objects themselves, calling `str` will be much less or not at all informative if the maximum level of nesting is not set (e.g. `max.level = 2`).
 
 ```c
 # rtables 0.6.2
@@ -601,11 +601,11 @@ function(df,
 }
 ```
 
-There are many pre-made split functions included in `rtables`. A list of these functions can be found in the [Split Functions vignette](https://insightsengineering.github.io/rtables/latest-tag/articles/split_functions.html), or via `?split_funcs`. We leave it to the developer to look into how some of these split functions work, in particular `trim_levels_to_map` may be of interest.
+There are many pre-made split functions included in `rtables`. A list of these functions can be found in the [Split Functions vignette](https://pharmaverse.github.io/rtables/latest-tag/articles/split_functions.html), or via `?split_funcs`. We leave it to the developer to look into how some of these split functions work, in particular `trim_levels_to_map` may be of interest.
 
 ### Creating Custom Split Functions
 
-Now we will create a custom split function. Firstly, we will see how the system manages error messages. For a general understanding of how custom split functions are created, please read the [Custom Split Functions section](https://insightsengineering.github.io/rtables/latest-tag/articles/advanced_usage.html#custom-split-functions) of the Advanced Usage vignette or see `?custom_split_funs`. In the following code we use `browser()` to enter our custom split functions. We invite the reader to activate `options(error = recover)` to investigate cases where we encounter an error. Note that you can revert to default behavior by restarting your `R` session, by caching the default option value, or by using `callr` to retrieve the default as follows: `default_opts <- callr::r(function(){options()}); options(error = default_opts$error)`.
+Now we will create a custom split function. Firstly, we will see how the system manages error messages. For a general understanding of how custom split functions are created, please read the [Custom Split Functions section](https://pharmaverse.github.io/rtables/latest-tag/articles/advanced_usage.html#custom-split-functions) of the Advanced Usage vignette or see `?custom_split_funs`. In the following code we use `browser()` to enter our custom split functions. We invite the reader to activate `options(error = recover)` to investigate cases where we encounter an error. Note that you can revert to default behavior by restarting your `R` session, by caching the default option value, or by using `callr` to retrieve the default as follows: `default_opts <- callr::r(function(){options()}); options(error = default_opts$error)`.
 
 ```{r}
 # rtables 0.6.2
@@ -693,7 +693,7 @@ It is also possible to provide a list of functions, as it can be seen in the exa
 
 #### `.spl_context` - Adding Context to Our Splits
 
-The best way to understand what split context does, and how to use it, is to read the [Leveraging `.spl_context` section](https://insightsengineering.github.io/rtables/latest-tag/articles/advanced_usage.html#leveraging--spl_context) of the Advanced Usage vignette, and to use `browser()` within a split function to see how it is structured. As `.spl_context` is needed for rewriting core functions, we propose a wrapper of `do_base_split` here, which is a handy redirection to the standard `do_split` without the split function part (i.e. it is a wrapper of `.apply_split_inner`, the real core splitting machinery). Out of curiosity, we set `trim = TRUE` here. This trimming only works when there is a mixed table (some values are 0s and some have content), for which it will trim 0s. This is rarely the case, and we encourage using the replacement functions `trim_levels_to_group` and `trim_levels_to_map` for trimming. Nowadays, it should even be impossible to set it differently from `trim = FALSE`.
+The best way to understand what split context does, and how to use it, is to read the [Leveraging `.spl_context` section](https://pharmaverse.github.io/rtables/latest-tag/articles/advanced_usage.html#leveraging--spl_context) of the Advanced Usage vignette, and to use `browser()` within a split function to see how it is structured. As `.spl_context` is needed for rewriting core functions, we propose a wrapper of `do_base_split` here, which is a handy redirection to the standard `do_split` without the split function part (i.e. it is a wrapper of `.apply_split_inner`, the real core splitting machinery). Out of curiosity, we set `trim = TRUE` here. This trimming only works when there is a mixed table (some values are 0s and some have content), for which it will trim 0s. This is rarely the case, and we encourage using the replacement functions `trim_levels_to_group` and `trim_levels_to_map` for trimming. Nowadays, it should even be impossible to set it differently from `trim = FALSE`.
 
 (write an issue informative error for not list xxx).
 ```{r, eval=FALSE}
@@ -750,7 +750,7 @@ Here we can see what the split column variable is (`split`, first column) at thi
 
 ### Extra Arguments: `extra_args`
 
-This functionality is well-known and used in the setting of analysis functions (a somewhat complicated example of this can be found in the [Example Complex Analysis Function vignette](https://insightsengineering.github.io/rtables/latest-tag/articles/example_analysis_coxreg.html#constructing-the-table)), but we will show here how this can also apply to splits.
+This functionality is well-known and used in the setting of analysis functions (a somewhat complicated example of this can be found in the [Example Complex Analysis Function vignette](https://pharmaverse.github.io/rtables/latest-tag/articles/example_analysis_coxreg.html#constructing-the-table)), but we will show here how this can also apply to splits.
 
 ```{r, eval=FALSE}
 # rtables 0.6.2
@@ -905,7 +905,7 @@ tbl
 
 For both row split cases (`*_cuts` and `*_cutfun`), we have empty levels that are not dropped. This is to be expected and can be avoided by using a dedicated split function. Intentionally looking at the future split is possible in order to determine if an element is present in it. At the moment it is not possible to add `spl_fun` to dedicated split functions like `split_rows_by_cuts`.
 
-Note that in the previous table we only used `summarize_row_groups`, with no `analyze` calls. This rendered the table nicely, but it is not the standard method to use as `summarize_row_groups` is intended *only* to decorate row groups, i.e. rows with labels. Internally, these rows are called content rows and that is why analysis functions in `summarize_row_groups` are called `cfun` instead of `afun`. Indeed, the tabulation machinery also presents these two differently as is described in the [Tabulation with Row Structure section](https://insightsengineering.github.io/rtables/latest-tag/articles/tabulation_concepts.html#tabulation-with-row-structure) of the Tabulation vignette.
+Note that in the previous table we only used `summarize_row_groups`, with no `analyze` calls. This rendered the table nicely, but it is not the standard method to use as `summarize_row_groups` is intended *only* to decorate row groups, i.e. rows with labels. Internally, these rows are called content rows and that is why analysis functions in `summarize_row_groups` are called `cfun` instead of `afun`. Indeed, the tabulation machinery also presents these two differently as is described in the [Tabulation with Row Structure section](https://pharmaverse.github.io/rtables/latest-tag/articles/tabulation_concepts.html#tabulation-with-row-structure) of the Tabulation vignette.
 
 We can try to construct the split function for cuts manually with `make_split_fun`:
 

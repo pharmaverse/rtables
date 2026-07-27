@@ -165,7 +165,7 @@ NULL
   if (are(vals, "SplitValue") && !are(vals, "LevelComboSplitValue")) {
     if (!is.null(extr)) {
       ## in_ref_cols is in here for some reason even though its already in the SplitValue object.
-      ## https://github.com/insightsengineering/rtables/issues/707#issuecomment-1678810598
+      ## https://github.com/pharmaverse/rtables/issues/707#issuecomment-1678810598
       ## the if is a bandaid.
       ## XXX FIXME RIGHT
       sq <- seq_along(vals)
