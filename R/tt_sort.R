@@ -23,7 +23,7 @@ cont_n_allcols <- function(tt) {
 #' @param j (`numeric(1)`)\cr index of column used for scoring.
 #'
 #' @seealso For examples and details, please read the documentation for [sort_at_path()] and the
-#' [Sorting and Pruning](https://insightsengineering.github.io/rtables/latest-tag/articles/sorting_pruning.html)
+#' [Sorting and Pruning](https://pharmaverse.github.io/rtables/latest-tag/articles/sorting_pruning.html)
 #' vignette.
 #'
 #' @export
@@ -101,7 +101,7 @@ match_fun_args <- function(fun, ...) {
 #'
 #' Note that sorting needs a deeper understanding of table structure in `rtables`. Please consider reading the related
 #' vignette
-#' ([Sorting and Pruning](https://insightsengineering.github.io/rtables/latest-tag/articles/sorting_pruning.html))
+#' ([Sorting and Pruning](https://pharmaverse.github.io/rtables/latest-tag/articles/sorting_pruning.html))
 #' and explore table structure with useful functions like [table_structure()] and [row_paths_summary()]. It is also
 #' very important to understand the difference between "content" rows and "data" rows. The first one analyzes and
 #' describes the split variable generally and is generated with [summarize_row_groups()], while the second one is

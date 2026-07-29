@@ -26,7 +26,7 @@ knitr::opts_chunk$set(comment = "#")
 Users of the `rtables` package can specify the format in which the
 numbers in the reporting tables are printed. Formatting functionality
 is provided by the
-[`formatters`](https://insightsengineering.github.io/formatters/) R
+[`formatters`](https://pharmaverse.github.io/formatters/) R
 package. See `formatters::list_valid_format_labels()` for a list of 
 all available formats. The format can be
 specified by the user in a few different places. It may happen that,
@@ -46,7 +46,7 @@ ADSL <- ex_adsl
 
 Note that all `ex_*` data which is currently attached to the `rtables`
 package is provided by the
-[`formatters`](https://insightsengineering.github.io/formatters/)
+[`formatters`](https://pharmaverse.github.io/formatters/)
 package and was created using the publicly available
 [`random.cdisc.data`](https://insightsengineering.github.io/random.cdisc.data/)
 R package.

@@ -13,9 +13,9 @@ Reporting tables often have structure that goes beyond simple rectangular data. 
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/insightsengineering/rtables}
-  \item \url{https://insightsengineering.github.io/rtables/}
-  \item Report bugs at \url{https://github.com/insightsengineering/rtables/issues}
+  \item \url{https://github.com/pharmaverse/rtables}
+  \item \url{https://pharmaverse.github.io/rtables/}
+  \item Report bugs at \url{https://github.com/pharmaverse/rtables/issues}
 }
 
 }

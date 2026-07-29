@@ -70,7 +70,7 @@ summary given by \code{\link[=table_structure]{table_structure()}}.
 
 Note that sorting needs a deeper understanding of table structure in \code{rtables}. Please consider reading the related
 vignette
-(\href{https://insightsengineering.github.io/rtables/latest-tag/articles/sorting_pruning.html}{Sorting and Pruning})
+(\href{https://pharmaverse.github.io/rtables/latest-tag/articles/sorting_pruning.html}{Sorting and Pruning})
 and explore table structure with useful functions like \code{\link[=table_structure]{table_structure()}} and \code{\link[=row_paths_summary]{row_paths_summary()}}. It is also
 very important to understand the difference between "content" rows and "data" rows. The first one analyzes and
 describes the split variable generally and is generated with \code{\link[=summarize_row_groups]{summarize_row_groups()}}, while the second one is
