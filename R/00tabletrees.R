@@ -2206,13 +2206,13 @@ print.RowsVerticalSection <- function(x, ...) {
   invisible(x)
 }
 
-#' Combine RowsVerticalSection objects
+#' Combine `RowsVerticalSection` objects
 #'
-#' Combine two or more RowsVerticalSection objects (as returned
+#' Combine two or more `RowsVerticalSection` objects (as returned
 #' by [in_rows()]) into a single object
 #'
-#' @param ... RowsVerticalSection objects
-#' @returns A single RowsVerticalSection object containing all
+#' @param ... `RowsVerticalSection` objects
+#' @returns A single `RowsVerticalSection` object containing all
 #'   row sections from the objects passed to `...`
 #' @export
 c.RowsVerticalSection <- function(...) {
