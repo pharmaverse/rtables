@@ -32,5 +32,5 @@ for `tt`, to be used when sorting.
 For examples and details, please read the documentation for
 [`sort_at_path()`](https://pharmaverse.github.io/rtables/reference/sort_at_path.md)
 and the [Sorting and
-Pruning](https://insightsengineering.github.io/rtables/latest-tag/articles/sorting_pruning.html)
+Pruning](https://pharmaverse.github.io/rtables/latest-tag/articles/sorting_pruning.html)
 vignette.

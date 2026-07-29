@@ -10,11 +10,10 @@ to analyze the treatment effect of the `ARM` variable and any
 covariate/interaction effects for a survival analysis. For a Cox
 regression analysis function with more customization options and the
 capability of fitting multivariable Cox regression models, see the
-[`summarize_coxreg()`](https://insightsengineering.github.io/tern/main/reference/cox_regression.html)
+[`summarize_coxreg()`](https://pharmaverse.github.io/tern/main/reference/cox_regression.html)
 function from the
-[`tern`](https://insightsengineering.github.io/tern/main/index.html)
-package, which builds upon the concepts used in the construction of this
-example.
+[`tern`](https://pharmaverse.github.io/tern/main/index.html) package,
+which builds upon the concepts used in the construction of this example.
 
 The packages used in this vignette are:
 

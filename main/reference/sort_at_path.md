@@ -104,7 +104,7 @@ from the summary given by
 
 Note that sorting needs a deeper understanding of table structure in
 `rtables`. Please consider reading the related vignette ([Sorting and
-Pruning](https://insightsengineering.github.io/rtables/latest-tag/articles/sorting_pruning.html))
+Pruning](https://pharmaverse.github.io/rtables/latest-tag/articles/sorting_pruning.html))
 and explore table structure with useful functions like
 [`table_structure()`](https://pharmaverse.github.io/rtables/reference/table_structure.md)
 and

@@ -507,7 +507,7 @@ qtable(
 # S2         61           67             76      
 # ———————————————————————————————————————————————
 # 
-# Date: 2026-07-25
+# Date: 2026-07-29
 ```
 
 ## Summary
@@ -527,5 +527,5 @@ As the intended use of
 is for exploratory data analysis, there is limited functionality for
 building very complex tables. For details on how to get started with the
 core `rtables` layout functionality see the
-[`introduction`](https://insightsengineering.github.io/rtables/latest-release/articles/rtables.html)
+[`introduction`](https://pharmaverse.github.io/rtables/latest-release/articles/rtables.html)
 vignette.

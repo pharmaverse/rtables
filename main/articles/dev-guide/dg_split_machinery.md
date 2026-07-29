@@ -5,7 +5,7 @@
 This article is intended for use by developers only and will contain
 low-level explanations of the topics covered. For user-friendly
 vignettes, please see the
-[Articles](https://insightsengineering.github.io/rtables/latest-tag/articles/index.html)
+[Articles](https://pharmaverse.github.io/rtables/latest-tag/articles/index.html)
 page on the `rtables` website.
 
 Any code or prose which appears in the version of this article on the
@@ -33,7 +33,7 @@ root node to singular `rcell`s. The latter level, also called the
 leaf-level, contains the final partition that is subjected to analysis
 functions. More details from the user perspective can be found in the
 [Split Functions
-vignette](https://insightsengineering.github.io/rtables/latest-tag/articles/split_functions.html)
+vignette](https://pharmaverse.github.io/rtables/latest-tag/articles/split_functions.html)
 and in function documentation like
 [`?split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)
 and
@@ -47,7 +47,7 @@ column domain will be covered in a separate article.
 
 Beforehand, we encourage the reader to familiarize themselves with the
 [Debugging in {rtables}
-article](https://insightsengineering.github.io/rtables/latest-tag/articles/dev-guide/dg_debug_rtables.html)
+article](https://pharmaverse.github.io/rtables/latest-tag/articles/dev-guide/dg_debug_rtables.html)
 from the `rtables` Developers Guide. This document is generally valid
 for R programming, but has been tailored to study and understand complex
 packages that rely heavily on S3 and S4 object programming like
@@ -192,10 +192,10 @@ under a specific final split (or node). Now, notice that
 `R/tt_dotabulation.R` source file. This is again something related to
 making “analyze” rows as it mainly checks for `VAnalyzeSplit`. See the
 [Tabulation
-article](https://insightsengineering.github.io/rtables/latest-tag/articles/dev-guide/dg_tabulation.html)
+article](https://pharmaverse.github.io/rtables/latest-tag/articles/dev-guide/dg_tabulation.html)
 for more details. We will discuss the other classes as they appear in
 our examples. See more about class hierarchy in the [Table Hierarchy
-article](https://insightsengineering.github.io/rtables/latest-tag/articles/dev-guide/dg_table_hierarchy.html).
+article](https://pharmaverse.github.io/rtables/latest-tag/articles/dev-guide/dg_table_hierarchy.html).
 
 For the moment, we see with `class(spl)` (from the main `do_split`
 function) that we are dealing with an `AllSplit` object. By calling
@@ -274,7 +274,7 @@ the general slot definition, or by calling `getClass(spl)`. Note that
 the first call will give also a lot of information about the class
 hierarchy. For more information regarding class hierarchy, please refer
 to the relevant article
-[here](https://insightsengineering.github.io/rtables/latest-tag/articles/dev-guide/dg_talbe_hierarchy.html).
+[here](https://pharmaverse.github.io/rtables/latest-tag/articles/dev-guide/dg_talbe_hierarchy.html).
 We will discuss the majority of the slots by the end of this document.
 Now, let’s see if we can find some of the values described in the
 constructor within our object. To do so, we will show the more compact
@@ -837,7 +837,7 @@ function(df,
 
 There are many pre-made split functions included in `rtables`. A list of
 these functions can be found in the [Split Functions
-vignette](https://insightsengineering.github.io/rtables/latest-tag/articles/split_functions.html),
+vignette](https://pharmaverse.github.io/rtables/latest-tag/articles/split_functions.html),
 or via
 [`?split_funcs`](https://pharmaverse.github.io/rtables/reference/split_funcs.md).
 We leave it to the developer to look into how some of these split
@@ -848,7 +848,7 @@ functions work, in particular `trim_levels_to_map` may be of interest.
 Now we will create a custom split function. Firstly, we will see how the
 system manages error messages. For a general understanding of how custom
 split functions are created, please read the [Custom Split Functions
-section](https://insightsengineering.github.io/rtables/latest-tag/articles/advanced_usage.html#custom-split-functions)
+section](https://pharmaverse.github.io/rtables/latest-tag/articles/advanced_usage.html#custom-split-functions)
 of the Advanced Usage vignette or see
 [`?custom_split_funs`](https://pharmaverse.github.io/rtables/reference/custom_split_funs.md).
 In the following code we use
@@ -1015,7 +1015,7 @@ core split only works in the row space at the moment.
 
 The best way to understand what split context does, and how to use it,
 is to read the [Leveraging `.spl_context`
-section](https://insightsengineering.github.io/rtables/latest-tag/articles/advanced_usage.html#leveraging--spl_context)
+section](https://pharmaverse.github.io/rtables/latest-tag/articles/advanced_usage.html#leveraging--spl_context)
 of the Advanced Usage vignette, and to use
 [`browser()`](https://rdrr.io/r/base/browser.html) within a split
 function to see how it is structured. As `.spl_context` is needed for
@@ -1103,7 +1103,7 @@ becomes apparent.
 This functionality is well-known and used in the setting of analysis
 functions (a somewhat complicated example of this can be found in the
 [Example Complex Analysis Function
-vignette](https://insightsengineering.github.io/rtables/latest-tag/articles/example_analysis_coxreg.html#constructing-the-table)),
+vignette](https://pharmaverse.github.io/rtables/latest-tag/articles/example_analysis_coxreg.html#constructing-the-table)),
 but we will show here how this can also apply to splits.
 
 ``` r
@@ -1322,7 +1322,7 @@ are called content rows and that is why analysis functions in
 `summarize_row_groups` are called `cfun` instead of `afun`. Indeed, the
 tabulation machinery also presents these two differently as is described
 in the [Tabulation with Row Structure
-section](https://insightsengineering.github.io/rtables/latest-tag/articles/tabulation_concepts.html#tabulation-with-row-structure)
+section](https://pharmaverse.github.io/rtables/latest-tag/articles/tabulation_concepts.html#tabulation-with-row-structure)
 of the Tabulation vignette.
 
 We can try to construct the split function for cuts manually with

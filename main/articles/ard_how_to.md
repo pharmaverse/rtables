@@ -9,7 +9,7 @@ This vignette is a work in progress and subject to change.
 In order to generate an ARD (Analysis Results Dataset), we first need to
 create a table from which all the necessary information will be
 retrieved. We will borrow a simple table from [this
-vignette](https://insightsengineering.github.io/rtables/latest-tag/articles/clinical_trials.html)
+vignette](https://pharmaverse.github.io/rtables/latest-tag/articles/clinical_trials.html)
 about clinical trials.
 
 ``` r

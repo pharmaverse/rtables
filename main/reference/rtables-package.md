@@ -15,11 +15,11 @@ to data.
 
 Useful links:
 
-- <https://github.com/insightsengineering/rtables>
+- <https://github.com/pharmaverse/rtables>
 
-- <https://insightsengineering.github.io/rtables/>
+- <https://pharmaverse.github.io/rtables/>
 
-- Report bugs at <https://github.com/insightsengineering/rtables/issues>
+- Report bugs at <https://github.com/pharmaverse/rtables/issues>
 
 ## Author
 

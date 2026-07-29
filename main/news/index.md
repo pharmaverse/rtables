@@ -528,16 +528,16 @@ CRAN release: 2023-08-30
   build time.
 - Removed superfluous warning which arose for custom split functions
   when reference group is is set
-  (<https://github.com/insightsengineering/rtables/issues/707#issuecomment-1678810598>).
+  (<https://github.com/pharmaverse/rtables/issues/707#issuecomment-1678810598>).
 - Fixed `qtable` labeling via `row_labels`
-  ([\#698](https://github.com/insightsengineering/rtables/issues/698)).
+  ([\#698](https://github.com/pharmaverse/rtables/issues/698)).
 - Error catching and test coverage for cases where `alt_counts_df`
   presents different splits from `df`.
 
 ### Miscellaneous
 
 - Cleaned up spelling in documentation
-  ([\#685](https://github.com/insightsengineering/rtables/issues/685))
+  ([\#685](https://github.com/pharmaverse/rtables/issues/685))
 - Custom appearance vignette updated with decimal alignment support.
 - Alignment checks have been moved into `formatters`:
   [`formatters::check_aligns`](https://rdrr.io/pkg/formatters/man/check_formats.html)
@@ -703,8 +703,8 @@ CRAN release: 2023-03-02
 - Updated versioned dependency on `formatters` to `>=0.3.2.3`
 - Equivalent split functions with different enclosing environments
   (e.g., 2 identical calls to `add_combo_levels`
-  [\#340](https://github.com/insightsengineering/rtables/issues/304)) no
-  longer block `rbind`ing
+  [\#340](https://github.com/pharmaverse/rtables/issues/304)) no longer
+  block `rbind`ing
 - Fixed various documentation bugs where description section was being
   added to header.
 
@@ -716,7 +716,7 @@ CRAN release: 2023-03-02
 
 - Throw informative error messages when custom analysis, content or
   split functions fail
-  ([\#329](https://github.com/insightsengineering/rtables/issues/329))
+  ([\#329](https://github.com/pharmaverse/rtables/issues/329))
 
 ## rtables 0.5.1.2
 
@@ -730,7 +730,7 @@ CRAN release: 2023-03-02
   error message (character and factor cases).
 - fixed bug in handling of column extra arguments that was preventing
   `cbind`ing tables from working correctly
-  (\[#324\]\](<https://github.com/insightsengineering/rtables/issues/324>))
+  (\[#324\]\](<https://github.com/pharmaverse/rtables/issues/324>))
 
 ## rtables 0.5.1
 
@@ -738,7 +738,7 @@ CRAN release: 2022-05-21
 
 - empty factor levels are now *not* dropped for column splits when
   ref_group is set
-  ([\#323](https://github.com/insightsengineering/rtables/issues/323))
+  ([\#323](https://github.com/pharmaverse/rtables/issues/323))
 - `linesep` argument to `toString` and related functions renamed to
   `hsep`
 - Increase versioned dependency on `formatters` to `>=0.3.0`
@@ -750,7 +750,7 @@ CRAN release: 2022-05-21
   tables, the latter of which is mandatorily recursive.
 - `split_rows_by(var, child_labels="hidden")` no longer removes the
   structural subtable corresponding to levels of `var`
-  ([\#314](https://github.com/insightsengineering/rtables/issues/314))
+  ([\#314](https://github.com/pharmaverse/rtables/issues/314))
 
 ## rtables 0.5.0
 
@@ -764,9 +764,9 @@ CRAN release: 2022-04-01
 ## rtables 0.4.1.0004
 
 - Fix bug when function format combined with NULL `cfun` caused error
-  ([\#307](https://github.com/insightsengineering/rtables/issues/307))
+  ([\#307](https://github.com/pharmaverse/rtables/issues/307))
 - Fix bug in `path_enriched_df` (which powers `tsv` export), related to
-  ([\#308](https://github.com/insightsengineering/rtables/issues/308))
+  ([\#308](https://github.com/pharmaverse/rtables/issues/308))
 
 ## rtables 0.4.1.0002
 
@@ -805,7 +805,7 @@ CRAN release: 2021-10-06
 
 - new `trim_levels_to_map` split function based on
   `[@wwojciech](https://github.com/wwojciech)`’s work in
-  [\#203](https://github.com/insightsengineering/rtables/issues/203)
+  [\#203](https://github.com/pharmaverse/rtables/issues/203)
 - support for column referential footnotes
 - support for adding footnotes to existing table via `fnotes_at_path<-`
   function
@@ -830,15 +830,15 @@ CRAN release: 2021-07-13
   any cell values contain newlines.
 - Fix bug where tables output using `as_html` (or viewed in `Viewer`)
   were missing the table class attribute
-  ([\#194](https://github.com/insightsengineering/rtables/issues/194))
+  ([\#194](https://github.com/pharmaverse/rtables/issues/194))
 - inserting a `DataRow` with incorrect number of columns is now an error
-  ([\#199](https://github.com/insightsengineering/rtables/issues/199))
+  ([\#199](https://github.com/pharmaverse/rtables/issues/199))
 - Referential footer machinery now works in `colspan` case.
 - Fix extraneous footnote attribute bug
-  ([\#198](https://github.com/insightsengineering/rtables/issues/198))
+  ([\#198](https://github.com/pharmaverse/rtables/issues/198))
 - Fix max -Inf warning when content rows appear at positions whose
   children have 0 visible rows
-  ([\#200](https://github.com/insightsengineering/rtables/issues/200))
+  ([\#200](https://github.com/pharmaverse/rtables/issues/200))
 - Resync `NEWS.md` file
 - Introduce titles and footnotes
 - Support automatic population of top-left
@@ -846,7 +846,7 @@ CRAN release: 2021-07-13
 - Added `vars_in_layout` to list (explicitly named only) variables used
   in a layout
 - Fix column label ordering bug when value label variable is a factor
-  ([\#173](https://github.com/insightsengineering/rtables/issues/173))
+  ([\#173](https://github.com/pharmaverse/rtables/issues/173))
 
 ## rtables 0.3.7
 
@@ -875,8 +875,8 @@ backwards compatibility layer with the `rtable`, `rcell`, `rrow`,
 `rheader`, and `rtabulate` family of functions. However the table data
 structure and main tabulation framework have changed. We provide
 extensive documentation in the manuals
-[`help(package = "rtables")`](https://rdrr.io/pkg/rtables/man) and
-vignettes `vignette(package = "rtables")` of the package.
+[`help(package = "rtables")`](https://insightsengineering.github.io/rtables/latest-tag/reference)
+and vignettes `vignette(package = "rtables")` of the package.
 
 The changes to `rtables` have been undertaken to better meet the
 requirements of creating and analyzing & reporting tables in the context
@@ -952,7 +952,7 @@ of clinical trials.
 - `rrow` constructor no longer interprets cell formats a row format when
   they are the same across all cells. Fixes bug in “correct way” code
   discussed in
-  [\#112](https://github.com/insightsengineering/rtables/issues/112)
+  [\#112](https://github.com/pharmaverse/rtables/issues/112)
 
 ## rtables 0.3.2.17.9033
 

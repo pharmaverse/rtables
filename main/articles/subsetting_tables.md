@@ -66,7 +66,7 @@ The `[` and `[<-` accessor functions operate largely the same as their
 currently be used to reorder columns or rows. Note in general the result
 of such an ordering is unlikely to be structurally valid. To change the
 order of values, please read [sorting and
-pruning](https://insightsengineering.github.io/rtables/latest-tag/articles/sorting_pruning.html)
+pruning](https://pharmaverse.github.io/rtables/latest-tag/articles/sorting_pruning.html)
 vignette or relevant function
 ([`sort_at_path()`](https://pharmaverse.github.io/rtables/reference/sort_at_path.md)). -
 `character` indices are treated as paths, not vectors of names in both
@@ -222,7 +222,7 @@ tbl[1:3, 3, keep_topleft = TRUE]
 If the referenced entry is present in the subsetting, also the
 referential footnote will appear. Please consider reading relevant
 vignette about [referential
-footnotes](https://insightsengineering.github.io/rtables/latest-tag/articles/title_footer.html#referential-footnotes).
+footnotes](https://pharmaverse.github.io/rtables/latest-tag/articles/title_footer.html#referential-footnotes).
 In case of subsetting, the referential footnotes are by default indexed
 again, as if the produced table is a new one.
 

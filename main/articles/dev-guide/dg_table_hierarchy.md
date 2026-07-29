@@ -5,7 +5,7 @@
 This article is intended for use by developers only and will contain
 low-level explanations of the topics covered. For user-friendly
 vignettes, please see the
-[Articles](https://insightsengineering.github.io/rtables/latest-tag/articles/index.html)
+[Articles](https://pharmaverse.github.io/rtables/latest-tag/articles/index.html)
 page on the `rtables` website.
 
 Any code or prose which appears in the version of this article on the

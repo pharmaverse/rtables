@@ -5,8 +5,7 @@
 Users of the `rtables` package can specify the format in which the
 numbers in the reporting tables are printed. Formatting functionality is
 provided by the
-[`formatters`](https://insightsengineering.github.io/formatters/) R
-package. See
+[`formatters`](https://pharmaverse.github.io/formatters/) R package. See
 [`formatters::list_valid_format_labels()`](https://rdrr.io/pkg/formatters/man/list_formats.html)
 for a list of all available formats. The format can be specified by the
 user in a few different places. It may happen that, for a single table
@@ -27,8 +26,8 @@ ADSL <- ex_adsl
 
 Note that all `ex_*` data which is currently attached to the `rtables`
 package is provided by the
-[`formatters`](https://insightsengineering.github.io/formatters/)
-package and was created using the publicly available
+[`formatters`](https://pharmaverse.github.io/formatters/) package and
+was created using the publicly available
 [`random.cdisc.data`](https://insightsengineering.github.io/random.cdisc.data/)
 R package.
 

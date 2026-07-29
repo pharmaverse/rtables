@@ -109,7 +109,7 @@ two-way frequency tables.
 
 The purpose of `qtable` is to enable quick exploratory data analysis.
 See the
-[`exploratory_analysis`](https://insightsengineering.github.io/rtables/latest-tag/articles/exploratory_analysis.html)
+[`exploratory_analysis`](https://pharmaverse.github.io/rtables/latest-tag/articles/exploratory_analysis.html)
 vignette for more details.
 
 Here is the code to recreate the table above:
@@ -276,7 +276,7 @@ The first column represents the data in `df` where
 in `df` where `df$arm == "A" & df$gender == "Male"`, and so on.
 
 More information on column structure can be found in the
-[`col_counts`](https://insightsengineering.github.io/rtables/latest-tag/articles/col_counts.html)
+[`col_counts`](https://pharmaverse.github.io/rtables/latest-tag/articles/col_counts.html)
 vignette.
 
 ## Adding Row Structure
@@ -523,6 +523,6 @@ In this vignette you have learned:
 The other vignettes in the `rtables` package will provide more detailed
 information about the `rtables` package. We recommend that you continue
 with the
-[`tabulation_dplyr`](https://insightsengineering.github.io/rtables/latest-tag/articles/tabulation_dplyr.html)
+[`tabulation_dplyr`](https://pharmaverse.github.io/rtables/latest-tag/articles/tabulation_dplyr.html)
 vignette which compares the information derived by the table in this
 vignette using `dplyr`.

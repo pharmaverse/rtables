@@ -437,7 +437,7 @@ cont_n_allcols
 #     }
 #     sum(sapply(row_values(tree_children(ctab)[[1]]), function(cv) cv[1]))
 # }
-# <bytecode: 0x5630b61ba478>
+# <bytecode: 0x56101082c378>
 # <environment: namespace:rtables>
 ```
 
@@ -870,7 +870,7 @@ cont_n_onecol
 #         row_values(tree_children(ctab)[[1]])[[j]][1]
 #     }
 # }
-# <bytecode: 0x5630bef4dd50>
+# <bytecode: 0x5610197ddba0>
 # <environment: namespace:rtables>
 ```
 

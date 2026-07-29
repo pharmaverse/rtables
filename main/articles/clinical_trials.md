@@ -16,8 +16,8 @@ relations that are commonly found when analyzing clinical trials data.
 Note that all the data is created using random number generators. All
 `ex_*` data which is currently attached to the `rtables` package is
 provided by the
-[`formatters`](https://insightsengineering.github.io/formatters/)
-package and was created using the publicly available
+[`formatters`](https://pharmaverse.github.io/formatters/) package and
+was created using the publicly available
 [`random.cdisc.data`](https://insightsengineering.github.io/random.cdisc.data/)
 R package.
 
@@ -1322,7 +1322,7 @@ trim_rows(adae_soc_tbl4)
 ```
 
 Pruning is a larger topic with a [separate `rtables` package
-vignette](https://insightsengineering.github.io/rtables/latest-tag/articles/sorting_pruning.html).
+vignette](https://pharmaverse.github.io/rtables/latest-tag/articles/sorting_pruning.html).
 
 ### Adverse Events By ID and By Grade
 

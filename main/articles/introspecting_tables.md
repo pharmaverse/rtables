@@ -145,7 +145,7 @@ coltree_structure(tbl)
 
 Further information about the column structure can be found in the
 vignette on
-[`col_counts`](https://insightsengineering.github.io/rtables/latest-tag/articles/col_counts.html).
+[`col_counts`](https://pharmaverse.github.io/rtables/latest-tag/articles/col_counts.html).
 
 The
 [`make_row_df()`](https://rdrr.io/pkg/formatters/man/make_row_df.html)
@@ -383,13 +383,13 @@ value_formats(tbl)
 Knowing the structure of an `rtable` object is helpful for retrieving
 specific values from the table. For examples, see the [Path Based Cell
 Value
-Accessing](https://insightsengineering.github.io/rtables/latest-tag/articles/subsetting_tables.html#path-based-cell-value-accessing)
+Accessing](https://pharmaverse.github.io/rtables/latest-tag/articles/subsetting_tables.html#path-based-cell-value-accessing)
 section of the Subsetting and Manipulating Table Contents vignette.
 
 Understanding table structure is also important for post-processing
 processes such as sorting and pruning. More details on this are covered
 in the [Pruning and Sorting Tables
-vignette](https://insightsengineering.github.io/rtables/latest-tag/articles/sorting_pruning.html)
+vignette](https://pharmaverse.github.io/rtables/latest-tag/articles/sorting_pruning.html)
 vignette.
 
 ## Summary

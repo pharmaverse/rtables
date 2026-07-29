@@ -5,7 +5,7 @@
 This article is intended for use by developers only and will contain
 low-level explanations of the topics covered. For user-friendly
 vignettes, please see the
-[Articles](https://insightsengineering.github.io/rtables/latest-tag/articles/index.html)
+[Articles](https://pharmaverse.github.io/rtables/latest-tag/articles/index.html)
 page on the `rtables` website.
 
 Any code or prose which appears in the version of this article on the
@@ -37,7 +37,7 @@ occasionally use functions and methods that are present in other files,
 like `colby_construction.R` or `make_subset_expr.R`. We assume the
 reader is already familiar with the documentation for `build_table`. We
 suggest reading the [Split Machinery
-article](https://insightsengineering.github.io/rtables/latest-tag/articles/dev-guide/dg_split_machinery.html)
+article](https://pharmaverse.github.io/rtables/latest-tag/articles/dev-guide/dg_split_machinery.html)
 prior to this one, as it is instrumental in understanding how the layout
 object, which is essentially built out of splits, is tabulated when data
 is supplied.
@@ -105,7 +105,7 @@ layouts inherit from. Virtual classes are handy for group classes that
 need to share things like labels or functions that need to be applicable
 to their relative classes. See more information about the `rtables`
 class hierarchy in the dedicated article
-[here](https://insightsengineering.github.io/rtables/latest-tag/articles/dev-guide/dg_table_hierarchy.html).
+[here](https://pharmaverse.github.io/rtables/latest-tag/articles/dev-guide/dg_table_hierarchy.html).
 
 Now, we continue with `build_table`. After the checks, we notice
 `TreePos()` which is a constructor for an object that retains a

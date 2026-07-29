@@ -14,7 +14,7 @@ content.
 Using `dplyr` to summarize data and `gt` to visualize the table is a
 good way if the tabulation is of a certain nature or complexity.
 However, there are tables such as the table created in the
-[`introduction`](https://insightsengineering.github.io/rtables/latest-release/articles/rtables.html)
+[`introduction`](https://pharmaverse.github.io/rtables/latest-release/articles/rtables.html)
 vignette that take some effort to create with `dplyr`. Part of the
 effort is due to fact that when using `dplyr` the table data is stored
 in `data.frame`s or `tibble`s which is not the most natural way to
@@ -30,7 +30,7 @@ library(dplyr)
 ```
 
 Here is the table and data used in the
-[`introduction`](https://insightsengineering.github.io/rtables/latest-release/articles/rtables.html)
+[`introduction`](https://pharmaverse.github.io/rtables/latest-release/articles/rtables.html)
 vignette:
 
 ``` r
@@ -80,7 +80,7 @@ tbl
 
 We will start by deriving the first data cell on row 3 (note, row 1 and
 2 have content cells, see the
-[`introduction`](https://insightsengineering.github.io/rtables/latest-release/articles/rtables.html)
+[`introduction`](https://pharmaverse.github.io/rtables/latest-release/articles/rtables.html)
 vignette). Cell 3,1 contains the mean age for left handed & female
 Canadians in “Arm A”:
 
@@ -394,5 +394,5 @@ In this vignette learned that:
 - `rtables` streamlines the construction of complex tables
 
 We recommend that you continue reading the
-[`clinical_trials`](https://insightsengineering.github.io/rtables/latest-tag/articles/clinical_trials.html)
+[`clinical_trials`](https://pharmaverse.github.io/rtables/latest-tag/articles/clinical_trials.html)
 vignette where we create a number of more advanced tables using layouts.
