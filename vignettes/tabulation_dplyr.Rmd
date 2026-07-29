@@ -41,7 +41,7 @@ In this vignette, we would like to discuss the similarities and differences betw
 
 Much of the `rtables` framework focuses on tabulation/summarizing of data and then the visualization of the table. In this vignette, we focus on summarizing data using `dplyr` and contrast it to `rtables`. We won't pay attention to the table visualization/markup and just derive the cell content.
 
-Using `dplyr` to summarize data and `gt` to visualize the table is a good way if the tabulation is of a certain nature or complexity. However, there are tables such as the table created in the [`introduction`](https://insightsengineering.github.io/rtables/latest-release/articles/rtables.html) vignette that take some effort to create with `dplyr`. Part of the effort is due to fact that when using `dplyr` the table data is stored in `data.frame`s or `tibble`s which is not the most natural way to represent a table as we will show in this vignette.
+Using `dplyr` to summarize data and `gt` to visualize the table is a good way if the tabulation is of a certain nature or complexity. However, there are tables such as the table created in the [`introduction`](https://pharmaverse.github.io/rtables/latest-release/articles/rtables.html) vignette that take some effort to create with `dplyr`. Part of the effort is due to fact that when using `dplyr` the table data is stored in `data.frame`s or `tibble`s which is not the most natural way to represent a table as we will show in this vignette.
 
 If you know a more elegant way of deriving the table content with `dplyr` please let us know and we will update the vignette.
 
@@ -51,7 +51,7 @@ library(rtables)
 library(dplyr)
 ```
 
-Here is the table and data used in the [`introduction`](https://insightsengineering.github.io/rtables/latest-release/articles/rtables.html) vignette:
+Here is the table and data used in the [`introduction`](https://pharmaverse.github.io/rtables/latest-release/articles/rtables.html) vignette:
 
 ```{r}
 n <- 400
@@ -84,7 +84,7 @@ tbl
 
 ## Getting Started
 
-We will start by deriving the first data cell on row 3 (note, row 1 and 2 have content cells, see the [`introduction`](https://insightsengineering.github.io/rtables/latest-release/articles/rtables.html) vignette). Cell 3,1 contains the mean age for left handed & female Canadians in "Arm A":
+We will start by deriving the first data cell on row 3 (note, row 1 and 2 have content cells, see the [`introduction`](https://pharmaverse.github.io/rtables/latest-release/articles/rtables.html) vignette). Cell 3,1 contains the mean age for left handed & female Canadians in "Arm A":
 
 
 ```{r}
@@ -244,4 +244,4 @@ In this vignette learned that:
 * if tables have group summaries then repeating of information is required
 * `rtables` streamlines the construction of complex tables
 
-We recommend that you continue reading the [`clinical_trials`](https://insightsengineering.github.io/rtables/latest-tag/articles/clinical_trials.html) vignette where we create a number of more advanced tables using layouts.
+We recommend that you continue reading the [`clinical_trials`](https://pharmaverse.github.io/rtables/latest-tag/articles/clinical_trials.html) vignette where we create a number of more advanced tables using layouts.

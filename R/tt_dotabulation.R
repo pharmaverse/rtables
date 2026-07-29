@@ -108,7 +108,7 @@ gen_onerv <- function(csub, col, count, cextr, cpath,
     alt_dfpart_fil <- alt_dfpart
   }
 
-  ## workaround for https://github.com/insightsengineering/rtables/issues/159
+  ## workaround for https://github.com/pharmaverse/rtables/issues/159
   if (NROW(dfpart) > 0) {
     inds <- eval(csub, envir = dfpart)
     dat <- dfpart[inds, , drop = FALSE]

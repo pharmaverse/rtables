@@ -27,7 +27,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-In this vignette we will demonstrate how a complex analysis function can be constructed in order to build highly-customized tables with `rtables`. This example will detail the steps in creating an analysis function to calculate a basic univariable Cox regression summary table to analyze the treatment effect of the `ARM` variable and any covariate/interaction effects for a survival analysis. For a Cox regression analysis function with more customization options and the capability of fitting multivariable Cox regression models, see the [`summarize_coxreg()`](https://insightsengineering.github.io/tern/main/reference/cox_regression.html) function from the [`tern`](https://insightsengineering.github.io/tern/main/index.html) package, which builds upon the concepts used in the construction of this example.
+In this vignette we will demonstrate how a complex analysis function can be constructed in order to build highly-customized tables with `rtables`. This example will detail the steps in creating an analysis function to calculate a basic univariable Cox regression summary table to analyze the treatment effect of the `ARM` variable and any covariate/interaction effects for a survival analysis. For a Cox regression analysis function with more customization options and the capability of fitting multivariable Cox regression models, see the [`summarize_coxreg()`](https://pharmaverse.github.io/tern/main/reference/cox_regression.html) function from the [`tern`](https://pharmaverse.github.io/tern/main/index.html) package, which builds upon the concepts used in the construction of this example.
 
 The packages used in this vignette are:
 
