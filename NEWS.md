@@ -5,7 +5,7 @@
  * Exported previously internal `make_subset_expr` for use when constructing custom splitting behavior
  * Exported previously internal `splv_extra` and `splv_extra<-` accessors for getting and setting child-specific extra arguments on `SplitValue` objects.
  * Exported previously internal `value_expr` accessor for retrieving the subsetting expression from a `SplitValue` or `ValueWrapper` object.
- * Added accessor methods for RowsVerticalSection objects: `row_cells`, `obj_format`, `obj_format<-`, `obj_na_str`, `obj_na_str<-`, `cell_values`
+ * Added accessor methods for `RowsVerticalSection objects`: `row_cells`, `obj_format`, `obj_format<-`, `obj_na_str`, `obj_na_str<-`, `cell_values`
  * Added `c` method for directly combining `RowsVerticalSection` objects
  * Added vignette: Guided Tour (Advanced) @gmbecker
  * Added vignette: Guided Tour (Advanced) - Custom Analysis And Summary Functions @gmbecker
@@ -22,7 +22,7 @@
  * Added vignette: Guided Tour (Advanced) - (stub) `TableTree` Objects - (stub) Custom Pruning Functions @gmbecker
  
 ### Bug Fixes
- * `indent_mod<-` RowsVerticalSection method now correctly recycles length 1 values @gmbecker
+ * `indent_mod<-` `RowsVerticalSection` method now correctly recycles length 1 values @gmbecker
 
 ## rtables 0.6.15
 
