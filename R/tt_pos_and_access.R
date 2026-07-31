@@ -755,7 +755,7 @@ setMethod(
       }
 
       if (labelrow_visible(x)) {
-        counter <<- counter + 1
+        counter <<- counter + 1 # nolint: assignment_linter.
         if (counter %in% i) {
           nxtval <- value[[1]]
           if (is(nxtval, "LabelRow")) {
@@ -768,7 +768,7 @@ setMethod(
           }
           ## we're done with this one move to
           ## the next
-          value <<- value[-1]
+          value <<- value[-1] # nolint: assignment_linter.
         }
       }
       if (is(x, "TableTree") && nrow(content_table(x)) > 0) {
@@ -785,7 +785,7 @@ setMethod(
         for (pos in seq_along(kids)) {
           curkid <- kids[[pos]]
           if (is(curkid, "TableRow")) {
-            counter <<- counter + 1
+            counter <<- counter + 1 # nolint: assignment_linter.
             if (counter %in% i) {
               nxtval <- value[[1]]
               if (is(nxtval, class(curkid))) {
@@ -1143,7 +1143,7 @@ setMethod(
       newkids <- kids
       for (i in seq_along(newkids)) {
         if (is(newkids[[i]], "LayoutColLeaf")) {
-          counter <<- counter + 1
+          counter <<- counter + 1 # nolint: assignment_linter.
           if (!(counter %in% j)) {
             newkids[[i]] <- list()
           } ## NULL removes the position entirely
@@ -1198,7 +1198,7 @@ subset_by_rownum <- function(tt,
     }
 
     if (labelrow_visible(x)) {
-      counter <<- counter + 1
+      counter <<- counter + 1 # nolint: assignment_linter.
       if (!(counter %in% i)) {
         ## XXX this should do whatever
         ## is required to 'remove' the Label Row
@@ -1224,7 +1224,7 @@ subset_by_rownum <- function(tt,
     } else if (length(kids) > 0) {
       for (pos in seq_along(kids)) {
         if (is(kids[[pos]], "TableRow")) {
-          counter <<- counter + 1
+          counter <<- counter + 1 # nolint: assignment_linter.
           if (!(counter %in% i)) {
             kids[[pos]] <- list()
           }
