@@ -117,7 +117,7 @@ gen_onerv <- function(csub, col, count, cextr, cpath,
 
   ## firstarg will be df or x (col vec), dat will always be the df
   firstarg <- dat
-  
+
   fullrefcoldat <- cextr$.ref_full
   if (!is.null(fullrefcoldat)) {
     cextr$.ref_full <- NULL
@@ -141,8 +141,8 @@ gen_onerv <- function(csub, col, count, cextr, cpath,
   ## replace alt_df (potential) args with their df versions if alt_counts_df not set
   ## in build_table call
   if (is.null(alt_df_full)) {
-    alt_df_full <- if (NROW(spl_context) > 0 ) spl_context$full_parent_df[[1]] else dfpart
-    alt_dfpart <- dfpart 
+    alt_df_full <- if (NROW(spl_context) > 0) spl_context$full_parent_df[[1]] else dfpart
+    alt_dfpart <- dfpart
     alt_dfpart_fil <- dat
   }
 

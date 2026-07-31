@@ -379,7 +379,6 @@ test_that("full alt_counts_df is accessible from afun/cfun via .alt_df_full", {
 })
 
 test_that(".alt_df* argument behavior is correct when alt_counts_df is not set", {
-
   check_alt_dfs <- function(df, .df_row, .alt_df_row, .alt_df, .alt_df_full) {
     expect_identical(df, .alt_df)
     expect_identical(.df_row, .alt_df_row)
