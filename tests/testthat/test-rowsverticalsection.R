@@ -72,3 +72,45 @@ test_that("print and combine method for RVS objects work", {
   ## never gets to our method. Fundamental limitation of custom c methods.
   expect_error(c(minrvs, 5))
 })
+
+test_that("row_cells accessor works for RowsVerticalSection", {
+  cells <- row_cells(fullrvs)
+  expect_true(is.list(cells))
+  expect_identical(length(cells), length(fullrvs))
+})
+
+test_that("obj_format<- setter works for RowsVerticalSection", {
+  rvs <- in_rows(a = 1, b = 2)
+  obj_format(rvs) <- c("xx.x", "xx.x")
+  expect_identical(obj_format(rvs), c("xx.x", "xx.x"))
+
+  obj_format(rvs) <- c("xx", "xx.x")
+  expect_identical(obj_format(rvs), c("xx", "xx.x"))
+})
+
+test_that("obj_na_str<- setter works for RowsVerticalSection", {
+  rvs <- in_rows(a = 1, b = 2)
+  obj_na_str(rvs) <- c("NA", "NA")
+  expect_identical(obj_na_str(rvs), c("NA", "NA"))
+
+  obj_na_str(rvs) <- c("N/A", "missing")
+  expect_identical(obj_na_str(rvs), c("N/A", "missing"))
+})
+
+test_that("cell_values works for RowsVerticalSection", {
+  rvs <- in_rows(a = 1, b = 2)
+  vals <- cell_values(rvs)
+  expect_true(is.list(vals))
+  expect_identical(length(vals), length(rvs))
+})
+
+test_that("indent_mod<- recycles length-1 value for RowsVerticalSection", {
+  rvs <- in_rows(a = 1, b = 2, c = 3)
+  indent_mod(rvs) <- 2L
+  expect_identical(attr(rvs, "indent_mods"), c(2L, 2L, 2L))
+
+  indent_mod(rvs) <- c(0L, 1L, 2L)
+  expect_identical(attr(rvs, "indent_mods"), c(0L, 1L, 2L))
+
+  expect_error(indent_mod(rvs) <- c(1L, 2L))
+})
