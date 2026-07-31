@@ -181,9 +181,11 @@
 \alias{spanned_values<-,TableRow-method}
 \alias{spanned_values<-,LabelRow-method}
 \alias{obj_na_str<-,CellValue-method}
+\alias{obj_na_str<-,RowsVerticalSection-method}
 \alias{obj_na_str<-,VTableNodeInfo-method}
 \alias{obj_na_str<-,Split-method}
 \alias{obj_na_str,VTableNodeInfo-method}
+\alias{obj_na_str,RowsVerticalSection-method}
 \alias{set_format_recursive}
 \alias{set_format_recursive,TableRow-method}
 \alias{set_format_recursive,LabelRow-method}
@@ -375,6 +377,7 @@
 \alias{[,VTableTree,missing,numeric-method}
 \alias{[,VTableTree,numeric,numeric-method}
 \alias{cell_values,VTableTree-method}
+\alias{cell_values,RowsVerticalSection-method}
 \alias{cell_values,TableRow-method}
 \alias{cell_values,LabelRow-method}
 \alias{value_at,TableRow-method}
@@ -785,11 +788,15 @@ spanned_values(obj) <- value
 
 \S4method{obj_na_str}{CellValue}(obj) <- value
 
+\S4method{obj_na_str}{RowsVerticalSection}(obj) <- value
+
 \S4method{obj_na_str}{VTableNodeInfo}(obj) <- value
 
 \S4method{obj_na_str}{Split}(obj) <- value
 
 \S4method{obj_na_str}{VTableNodeInfo}(obj)
+
+\S4method{obj_na_str}{RowsVerticalSection}(obj)
 
 set_format_recursive(obj, format, na_str, override = FALSE)
 
@@ -1172,6 +1179,8 @@ obj_stat_names(obj) <- value
 \S4method{[}{VTableTree,numeric,numeric}(x, i, j, ..., drop = FALSE)
 
 \S4method{cell_values}{VTableTree}(tt, rowpath = NULL, colpath = NULL, omit_labrows = TRUE)
+
+\S4method{cell_values}{RowsVerticalSection}(tt, rowpath = NULL, colpath = NULL, omit_labrows = TRUE)
 
 \S4method{cell_values}{TableRow}(tt, rowpath = NULL, colpath = NULL, omit_labrows = TRUE)
 

@@ -1,0 +1,56 @@
+---
+title: "Advanced rtables - Understanding and Interacting With `TableTree` Objects"
+subtitle: Contributed by Johnson & Johnson Innovative Medicine
+date: "2025-10-22"
+author:
+- Gabriel Becker
+- Dan Hofstaedter
+output:
+    rmarkdown::html_document:
+        theme: "spacelab"
+        highlight: "kate"
+        toc: true
+        toc_float: true
+        code_folding: show
+vignette: >
+  %\VignetteIndexEntry{Advanced rtables - Understanding and Interacting With TableTree Objects}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options:
+  markdown:
+      wrap: 72
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+suggested_dependent_pkgs <- c("dplyr")
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = all(vapply(
+    suggested_dependent_pkgs,
+    requireNamespace,
+    logical(1),
+    quietly = TRUE
+  ))
+)
+```
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(comment = "#")
+```
+
+# Coming Soon
+
+  - [Table Structure and Pathing](./pathing.html) Table structure and
+    describing locations within a table via pathing (existing
+    vignette)
+  - [Accessing Values Within A
+    Table](./guided_advanced_tt_access.html) Retrieving values
+    from a table
+  - [Writing Custom Scoring Functions For
+    Sorting](./guided_advanced_tt_score_funs.html) Writing custom
+    scoring functions for use with `sort_at_path`
+  - [Writing Custom Pruning
+    Functions](./guided_advanced_tt_prune_funs.html) Writing custom
+    pruning functions for use with `prune_table`

@@ -10,7 +10,7 @@ trim_levels_in_facets(innervar)
 \item{innervar}{(\code{character})\cr the variable(s) to trim (remove unobserved levels) independently within each facet.}
 }
 \value{
-A function suitable for use in the \code{pre} (list) argument of \code{make_split_fun}.
+A function suitable for use in the \code{post} (list) argument of \code{make_split_fun}.
 }
 \description{
 Trim levels of another variable from each facet (post-processing split step)

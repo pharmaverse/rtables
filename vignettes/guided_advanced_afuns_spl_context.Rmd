@@ -1,0 +1,264 @@
+---
+title: "Advanced rtables - Structure-Conditional Behavior In `afun`s With `.spl_context`"
+subtitle: Contributed by Johnson & Johnson Innovative Medicine
+date: "2025-10-22"
+author:
+- Gabriel Becker
+- Dan Hofstaedter
+output:
+    rmarkdown::html_document:
+        theme: "spacelab"
+        highlight: "kate"
+        toc: true
+        toc_float: true
+        code_folding: show
+vignette: >
+  %\VignetteIndexEntry{Advanced rtables - Structure-Conditional Behavior In afuns With .spl_context}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options:
+  markdown:
+      wrap: 72
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+suggested_dependent_pkgs <- c("dplyr")
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = all(vapply(
+    suggested_dependent_pkgs,
+    requireNamespace,
+    logical(1),
+    quietly = TRUE
+  ))
+)
+```
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(comment = "#")
+library(rtables)
+```
+
+# Split Context
+
+The split context (i.e., the optional `.spl_context` argument to a/c
+functions) provides analysis functions the ability to know what
+substructure of the table it is calculating cell values for, the data
+(sub)set corresponding to that substructure, and the steps - both in
+terms of faceting structure and corresponding data subsetting - taken
+by the tabulation engine to arrive where it is now.
+
+This allows us to program custom analysis functions which have
+behavior *conditional on which row or column facet they are currently
+calculating cell values for*, as we will see further down in this
+document.
+
+The *split context* is a `data.frame` with one row per faceting step
+in row space up to and including the one the analysis function is
+being called within, and the following columns which vary across
+context rows:
+
+- **`split`** (`character`) - name of the split represented by each
+  row of the split context
+- **`value`** (`character`) - string representation of the value of
+  the split for each row of the context
+- **`full_parent_df`** (`list` of `data.frame`s) - the full data
+  (across all columns) corresponding to each row faceting step
+- **`all_cols_n`** (`integer`) - the observation count for each row
+  faceting step (across all columns)
+- **`<column names>`** (one `list` column per column in the table) -
+  logical vectors corresponding to the subset of `full_parent_df` for
+  the named column for each faceting step. Named by
+  `names(col_exprs(tab))`.
+
+In addition, the context contains the following columns which are
+constant across context rows:
+
+- **`cur_col_id`** (`character`) - identifier for the current column
+- **`cur_col_expr`** (`list` of `expresssion` objects) - symbolic
+  expression for subset corresponding to current column.
+- **`cur_col_n`** (`integer`) - column count for the current column
+- **`cur_col_split`** (`list` of `character`) - vector of split names from the
+  path which resolves to the current column.
+- **`cur_col_split_value`** (`list` of `character`) - vector of split
+  values from the path which resolves to the current column.
+  
+Interleaving `cur_col_split` and `cur_col_split_value` will recreate
+the full unique column path for the current column.
+  
+
+# Designing Conditional Behavior in `afun`s
+
+Recall that table contents are (typically) calculated by repeated
+calling the analysis or content function for a given row facet - once
+per individual column within the table structure.
+
+## Conditional-On-Column Behavior in `afun`s
+
+If we want our table to have different *types* of content in
+different cells of the same row, we need an `afun` that
+
+1. can determine where in column space it is calculating cells for, and
+2. implements two or more behaviors which it selects between based on (1)
+
+**Note** it is *mandatory* that the calls to our analysis or content
+function result in the same number of rows within each column. This
+can involve padding the results with blank cells in some columns.
+
+### Determining Column-Space Position Within An `afun`
+
+We can use the `cur_col_*` elements of the split context - all of
+which are constant across rows - to determine where in the column
+structure we are creating cells for, as we saw in the [Translating
+Shells](./guided_intermediate_translating_Shells.html) portion of the
+intermediate guided tour. In that function we used `cur_col_id` to indicate column, but using `cur_col_split` and/or `cur_col_split_value` is more robust, as follows:
+
+```{r}
+in_risk_diff <- function(spl_context) {
+  any(grepl("Risk Differences", spl_context$cur_col_split_value[1]))
+}
+```
+
+We can use the first element of the `cur_col_id` column of the split
+context because as noted above, the column information columns are
+constant across rows in the context.
+
+The `cur_col_id` value in the split context is currently computed by
+pasting the split values of the column path to the current column.
+
+### General Template For Column Aware `afun`
+
+Assuming two desired behaviors depending on column position (e.g.,
+primary or risk difference column), a general template for a
+conditional-on-column `afun` is:
+
+
+```{r, eval = FALSE}
+col_condition <- function(spl_context) {
+  ## return TRUE or FALSE
+}
+
+col_cond_afun_template1 <- function(df, .var, ..., .spl_context) {
+  ## shared processing
+
+  if (col_condition(.spl_context)) {
+    ## alternate behavior
+
+    ## data processing
+
+    ## value calculation
+
+    ## determine cell formats, etc
+  } else {
+    ## primary behavior
+
+    ## data processing
+
+    ## value calculation
+
+    ## determine cell formats, etc
+  }
+
+  ## label calculation, etc if necessary
+
+  in_rows(val_list, .labels = lbl_vector, .formats = format_vector)
+}
+```
+
+Or, alternatively if we have two existing `afun`s that each fully
+encapsulate the desired behavior for one of the conditions,
+
+```{r, eval = FALSE}
+col_cond_afun_template2 <- function(df, .var, ..., .spl_context) {
+  if (col_condition(.spl_context)) {
+    alt_behavior_afun(df, .var, ..., .spl_context = .spl_context)
+  } else {
+    main_behavior_afun(df, .var, ..., .spl_context = .spl_context)
+  }
+}
+```
+
+We note that both of the approaches above would be straightforward to
+extend to more than two conditional behaviors by utilizing a condition
+function which could return more than two values, and a `switch` call
+or `if`/`ifelse`/`else` block. We leave this as an exercise for the
+reader.
+
+
+## Using Row Faceting Information Within `afun`s
+
+The split context is a data frame with a row for each preceding row
+faceting (splitting) step; in particular, as described above, we have
+access to the full data, split name, and split value for each of these
+steps.
+
+Some illustrative examples of code extracting information from the
+split context are:
+
+| code                                                   | context row    | faceting step      | what it extracts                                 |
+|+------------------------------------------------------+|+--------------+|+------------------+|+------------------------------------------------+|
+| `.split_context$full_parent_df[[1]]`                   | first          | root (no faceting) | full data (that was passed to `build_table`      |
+| `.split_context$split[NROW(.split_context)]`           | last           | current facet      | name of the current split (typically a var name) |
+| `.split_context$split_value[NROW(.split_context) - 1]` | second to last | parent facet       | facet value of parent facet                      |
+
+We often want to retrieve reference group information for use in model
+fitting or risk difference calculations. In practice this translates
+to a different column facet's intersection with our current row facet
+than the column we are currently operating within.
+
+Given a `ref_path`, which can be passed as an extra argument in the
+`analyze` call if it's constant or set as an extra argument on each
+split value by a custom split function if not (see `junco`'s
+`grouped_cols_w_diffs` function for an example of this), we can
+extract the relevant data.
+
+We will use the fact that the column subsetting vectors are included
+in the split context by their "col ids", which currently are
+constructed by pasting the split values (only) collapsed with ".":
+
+```{r}
+basic_get_ref <- function(ref_path, spl_context) {
+  facet_dat <- spl_context$full_parent_df[[NROW(spl_context)]]
+
+  ref_col_id <- paste(ref_path[seq(2, length(ref_path), by = 2)])
+
+  ref_subset_vec <- spl_context[[ref_col_id]][[NROW(spl_context)]]
+
+  ref_dat <- facet_dat[ref_subset_vec, ]
+
+  list(ref_group = ref_dat, in_ref_col = ref_col_id == spl_context$cur_col_id[[1]])
+}
+```
+
+We can see that this is working via a diagnostic table that shows us what is coming out of that function:
+
+
+
+```{r}
+diag_afun <- function(df, .spl_context, ref_path) {
+  ref_info <- basic_get_ref(ref_path, .spl_context)
+
+  in_rows(
+    data_dim = dim(df),
+    ref_dim = dim(ref_info$ref_group),
+    in_ref_col = ref_info$in_ref_col,
+    .formats = c(
+      data_dim = "xx, xx",
+      ref_dim = "xx, xx",
+      in_ref_col = "xx"
+    )
+  )
+}
+
+
+lyt <- basic_table() |>
+  split_cols_by("ARM") |>
+  split_rows_by("STRATA1") |>
+  split_rows_by("SEX", split_fun = keep_split_levels(c("F", "M"))) |>
+  analyze("AGE", diag_afun, extra_args = list(ref_path = c("ARM", "B: Placebo")))
+
+
+build_table(lyt, ex_adsl)
+```

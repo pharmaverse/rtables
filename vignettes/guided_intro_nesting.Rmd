@@ -1,0 +1,89 @@
+---
+title: "Introductory rtables - Facet And Analysis Nesting"
+author: "Gabriel Becker"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introductory rtables - Facet And Analysis Nesting}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options:
+  chunk_output_type: console
+---
+
+# Introduction
+
+
+`rtables` models data-summarizing tables as *faceted data
+visualizations*, analogous to a `ggplot2` plot using `facet_grid` or a
+`lattice` plot conditioned on multiple factors.
+
+We saw in the previous section that we use:
+
+- `split_cols_by` to declare *columns*,
+- `split_rows_by` to declare *groups of individual rows*,
+- `summarize_row_groups` to declare *marginal summary rows* for groups
+  of individual rows, and
+- `analyze` to declare (sets of) *individual rows*.
+
+Combining a single call each to `split_cols_by`, `split_rows_by` and
+`analyze` creates a rectangular table, while adding
+`summarize_row_groups` after the `split_rows_by` adds marginal summary
+rows for each group.
+
+Often we need tables with more complex structure, whether it is
+multiple top-level sections of the table; tables which analyze
+multiple variables simultaneously; nested faceting in row structure,
+column structure, or both; or combinations of all three of these.
+
+We achieve all of these by leveraging *nesting* of layout instructions.
+
+# Nesting
+
+*Nesting* is how we talk about *where* a layout instruction fits with
+respect to the existing state of the layout. We say an instruction is
+*nested within* a preceding faceting instruction (`split_rows_by` or
+`split_cols_by`) if the new instruction *should be applied separately
+within each facet generated during tabulation from the previous
+instruction. This is analogous to what we see with `facet_*` in
+`ggplot2` when we give multiple variables for a single faceting
+dimension.
+
+By default, each layout instruction is nested within the directly
+preceding layout instruction - if any - in its dimension (row or
+column), with a couple caveats we discuss later. We see this default
+behavior below:
+
+```{r}
+library(rtables)
+lyt <- basic_table() |>
+  split_cols_by("ARM") |>
+  split_cols_by("STRATA1") |>
+  split_rows_by("SEX") |>
+  split_rows_by("BMRKR2") |>
+  analyze("AGE")
+build_table(lyt, ex_adsl)
+```
+
+When `analyze` instructions are 'nested within' another `analyze`, the
+analyses are bundled into a 'multi-analysis' parent structure. This
+parent structure as a whole, then, has the nesting behavior that an
+single `analyze` call would have in its place.
+
+```{r}
+lyt2 <- basic_table() |>
+  split_cols_by("ARM") |>
+  split_cols_by("STRATA1") |>
+  split_rows_by("SEX") |>
+  split_rows_by("BMRKR2") |>
+  analyze("AGE") |>
+  analyze("BMRKR1")
+head(build_table(lyt2, ex_adsl), 32)
+```
+
+
+By default:
+
+- `analyze` calls nest within the most recently preceding
+  `split_rows_by` or instruction
+  - multiple `analyze` calls that nest within the 

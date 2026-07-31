@@ -284,5 +284,5 @@ Here is what we have learned in this vignette:
 As the intended use of `qtable()` is for exploratory data analysis,
 there is limited functionality for building very complex tables. For
 details on how to get started with the core `rtables` layout
-functionality see the [`introduction`](https://insightsengineering.github.io/rtables/latest-release/articles/rtables.html)
+functionality see the [`introduction`](https://pharmaverse.github.io/rtables/latest-release/articles/rtables.html)
 vignette.

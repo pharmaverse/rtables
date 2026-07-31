@@ -1,44 +1,44 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# rtables <a href='https://github.com/insightsengineering/rtables'><img src="man/figures/logo.svg" align="right" height="200" width="200"/></a>
+# rtables <a href='https://github.com/pharmaverse/rtables'><img src="man/figures/logo.svg" align="right" height="200" width="200"/></a>
 
 <!-- start badges -->
 
 [![Check
-🛠](https://github.com/insightsengineering/rtables/actions/workflows/check.yaml/badge.svg)](https://github.com/insightsengineering/rtables/actions/workflows/check.yaml)
+🛠](https://github.com/pharmaverse/rtables/actions/workflows/check.yaml/badge.svg)](https://github.com/pharmaverse/rtables/actions/workflows/check.yaml)
 [![Docs
-📚](https://github.com/insightsengineering/rtables/actions/workflows/docs.yaml/badge.svg)](https://insightsengineering.github.io/rtables/)
+📚](https://github.com/pharmaverse/rtables/actions/workflows/docs.yaml/badge.svg)](https://pharmaverse.github.io/rtables/)
 [![Code Coverage
-📔](https://raw.githubusercontent.com/insightsengineering/rtables/_xml_coverage_reports/data/main/badge.svg)](https://raw.githubusercontent.com/insightsengineering/rtables/_xml_coverage_reports/data/main/coverage.xml)
+📔](https://raw.githubusercontent.com/pharmaverse/rtables/_xml_coverage_reports/data/main/badge.svg)](https://raw.githubusercontent.com/pharmaverse/rtables/_xml_coverage_reports/data/main/coverage.xml)
 
 ![GitHub
-forks](https://img.shields.io/github/forks/insightsengineering/rtables?style=social)
+forks](https://img.shields.io/github/forks/pharmaverse/rtables?style=social)
 ![GitHub repo
-stars](https://img.shields.io/github/stars/insightsengineering/rtables?style=social)
+stars](https://img.shields.io/github/stars/pharmaverse/rtables?style=social)
 
 ![GitHub commit
-activity](https://img.shields.io/github/commit-activity/m/insightsengineering/rtables)
+activity](https://img.shields.io/github/commit-activity/m/pharmaverse/rtables)
 ![GitHub
-contributors](https://img.shields.io/github/contributors/insightsengineering/rtables)
+contributors](https://img.shields.io/github/contributors/pharmaverse/rtables)
 ![GitHub last
-commit](https://img.shields.io/github/last-commit/insightsengineering/rtables)
+commit](https://img.shields.io/github/last-commit/pharmaverse/rtables)
 ![GitHub pull
-requests](https://img.shields.io/github/issues-pr/insightsengineering/rtables)
+requests](https://img.shields.io/github/issues-pr/pharmaverse/rtables)
 ![GitHub repo
-size](https://img.shields.io/github/repo-size/insightsengineering/rtables)
+size](https://img.shields.io/github/repo-size/pharmaverse/rtables)
 ![GitHub language
-count](https://img.shields.io/github/languages/count/insightsengineering/rtables)
+count](https://img.shields.io/github/languages/count/pharmaverse/rtables)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Open
-Issues](https://img.shields.io/github/issues-raw/insightsengineering/rtables?color=red&label=open%20issues)](https://github.com/insightsengineering/rtables/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc)
+Issues](https://img.shields.io/github/issues-raw/pharmaverse/rtables?color=red&label=open%20issues)](https://github.com/pharmaverse/rtables/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc)
 
 [![CRAN
 Version](https://www.r-pkg.org/badges/version/rtables)](https://CRAN.R-project.org/package=rtables)
 [![Current
-Version](https://img.shields.io/github/r-package/v/insightsengineering/rtables/main?color=purple&label=Development%20Version)](https://github.com/insightsengineering/rtables/tree/main)
+Version](https://img.shields.io/github/r-package/v/pharmaverse/rtables/main?color=purple&label=Development%20Version)](https://github.com/pharmaverse/rtables/tree/main)
 <!-- end badges -->
 
 ## Reporting Tables with R
@@ -87,21 +87,21 @@ with:
 
 ``` r
 # install.packages("pak")
-pak::pak("insightsengineering/rtables")
+pak::pak("pharmaverse/rtables")
 ```
 
 Packaged releases (both those on CRAN and those between official CRAN
 releases) can be found in the [releases
-list](https://github.com/insightsengineering/rtables/releases).
+list](https://github.com/pharmaverse/rtables/releases).
 
 To understand how to use this package, please refer to the [Introduction
 to
-`rtables`](https://insightsengineering.github.io/rtables/main/articles/rtables.html)
+`rtables`](https://pharmaverse.github.io/rtables/main/articles/rtables.html)
 article, which provides multiple examples of code implementation.
 
 ## Cheatsheet
 
-<a href="https://github.com/insightsengineering/rtables/blob/main/inst/cheatsheet/rtables_cheatsheet_01-24.pdf"><img src="https://raw.githubusercontent.com/insightsengineering/rtables/main/inst/cheatsheet/rtables_cheatsheet_01-24_thumbs.png" width="630" height="247"/></a>
+<a href="https://github.com/pharmaverse/rtables/blob/main/inst/cheatsheet/rtables_cheatsheet_01-24.pdf"><img src="https://raw.githubusercontent.com/pharmaverse/rtables/main/inst/cheatsheet/rtables_cheatsheet_01-24_thumbs.png" width="630" height="247"/></a>
 
 ## Usage
 
@@ -216,17 +216,17 @@ Nick Paszty, Nina Qi, Jana Stoilova, Heng Wang, Godwin Yung
 - R Medicine Virtual Conference 2023
   \[[Video](https://www.youtube.com/watch?v=sxFsavKI7s4)\]
 - Advanced rtables Training 2023 \[[Part 1
-  Slides](https://github.com/insightsengineering/rtables/blob/main/inst/extdata/Advanced_rtables_part1.pdf)\]
+  Slides](https://github.com/pharmaverse/rtables/blob/main/inst/extdata/Advanced_rtables_part1.pdf)\]
   \[[Part 2
-  Slides](https://github.com/insightsengineering/rtables/blob/main/inst/extdata/Advances_rtables_part2.pdf)\]
+  Slides](https://github.com/pharmaverse/rtables/blob/main/inst/extdata/Advances_rtables_part2.pdf)\]
 - R in Pharma 2022 - Creating Submission-Quality Clinical Trial
   Reporting Tables in R with rtables
-  \[[Slides](https://github.com/insightsengineering/rtables/blob/main/inst/extdata/Clinical_Trial_Reporting_Tables_in_R.pdf)\]
+  \[[Slides](https://github.com/pharmaverse/rtables/blob/main/inst/extdata/Clinical_Trial_Reporting_Tables_in_R.pdf)\]
   \[[Video](https://www.youtube.com/watch?v=zBm_NZ0VtKs)\]
 - R Consortium 2022
   - R Adoption Series - Reporting Table Creation in R
     \[[Video](https://www.youtube.com/watch?v=1i6vOId2h4A)\]
-    \[[Slides](https://github.com/insightsengineering/rtables/blob/main/inst/extdata/r_adoption_slides.pdf)\]
+    \[[Slides](https://github.com/pharmaverse/rtables/blob/main/inst/extdata/r_adoption_slides.pdf)\]
   - Tables in Clinical Trials with R
     \[[Book](https://rconsortium.github.io/rtrs-wg/)\]
 - useR! 2020 - rtables Layouting and Tabulation Framework
