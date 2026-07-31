@@ -142,7 +142,7 @@ gen_onerv <- function(csub, col, count, cextr, cpath,
   ## in build_table call
   if (is.null(alt_df_full)) {
     alt_df_full <- if (NROW(spl_context) > 0 ) spl_context$full_parent_df[[1]] else dfpart
-    alt_df_row <- dfpart 
+    alt_dfpart <- dfpart 
     alt_dfpart_fil <- dat
   }
 
@@ -1412,14 +1412,6 @@ build_table <- function(lyt, df,
   lyt <- set_def_child_ord(lyt, df)
   lyt <- fix_analyze_vis(lyt)
   df <- fix_split_vars(lyt, df, char_ok = is.null(col_counts))
-  alt_params <- check_afun_cfun_params(lyt, c(".alt_df", ".alt_df_row"))
-  if (any(alt_params) && is.null(alt_counts_df)) {
-    stop(
-      "Layout contains afun/cfun functions that have optional parameters ",
-      ".alt_df and/or .alt_df_row, but no alt_counts_df was provided in ",
-      "build_table()."
-    )
-  }
 
   rtpos <- TreePos()
   cinfo <- create_colinfo(lyt, df, rtpos,

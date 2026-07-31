@@ -5,6 +5,7 @@
  * Exported previously internal `make_subset_expr` for use when constructing custom splitting behavior
  * Exported previously internal `splv_extra` and `splv_extra<-` accessors for getting and setting child-specific extra arguments on `SplitValue` objects.
  * Exported previously internal `value_expr` accessor for retrieving the subsetting expression from a `SplitValue` or `ValueWrapper` object.
+ * The `.alt_df*` family of afun arguments now receive subsets of `df` when `alt_counts_df` is not specified in the `build_table` call; previously resulted in an error.
 
 ## rtables 0.6.15
 
