@@ -17,6 +17,7 @@ repos:
           - lifecycle
           - stats
           - stringi
+          - roxygen2
       - id: use-tidy-description
       - id: spell-check
         exclude: >

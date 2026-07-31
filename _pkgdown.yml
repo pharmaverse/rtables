@@ -64,10 +64,25 @@ articles:
   - title: Guided Tour
     navbar: Guided Tour
     contents:
+    - guided_intro_basics
+    - guided_intro_nesting
     - guided_intermediate
     - guided_intermediate_translating_shells
     - guided_intermediate_afun_reqs
     - guided_intermediate_split_reqs
+    - guided_advanced
+    - guided_advanced_afuns
+    - guided_advanced_afuns_spl_context
+    - guided_advanced_afuns_rowsverticalsection
+    - guided_advanced_afuns_building_blocks
+    - guided_advanced_split_funs
+    - guided_advanced_split_funs_make_split_fun
+    - guided_advanced_split_funs_new_bbbs
+    - guided_advanced_split_funs_worked_ex
+    - guided_advanced_tt
+    - guided_advanced_tt_access
+    - guided_advanced_tt_score_funs
+    - guided_advanced_tt_prune_funs
 
   - title: Clinical Trials
     navbar: Clinical Trials
@@ -326,3 +341,4 @@ reference:
     - length,CellValue-method
     - names,VTableNodeInfo-method
     - insert_rrow
+    - c.RowsVerticalSection

@@ -17,9 +17,11 @@
 \alias{obj_format,VTableNodeInfo-method}
 \alias{obj_format,CellValue-method}
 \alias{obj_format,Split-method}
+\alias{obj_format,RowsVerticalSection-method}
 \alias{obj_format<-,VTableNodeInfo-method}
 \alias{obj_format<-,Split-method}
 \alias{obj_format<-,CellValue-method}
+\alias{obj_format<-,RowsVerticalSection-method}
 \alias{obj_na_str,Split-method}
 \alias{main_title,VTitleFooter-method}
 \alias{main_title<-,VTitleFooter-method}
@@ -86,11 +88,15 @@
 
 \S4method{obj_format}{Split}(obj)
 
+\S4method{obj_format}{RowsVerticalSection}(obj)
+
 \S4method{obj_format}{VTableNodeInfo}(obj) <- value
 
 \S4method{obj_format}{Split}(obj) <- value
 
 \S4method{obj_format}{CellValue}(obj) <- value
+
+\S4method{obj_format}{RowsVerticalSection}(obj) <- value
 
 \S4method{obj_na_str}{Split}(obj)
 

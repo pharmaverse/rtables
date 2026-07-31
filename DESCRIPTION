@@ -66,7 +66,6 @@ Config/Needs/verdepcheck: pharmaverse/formatters, mllg/checkmate,
     davidgohel/officer, Merck/r2rtf, rstudio/rmarkdown, therneau/survival,
     r-lib/testthat, tidyverse/tibble, tidyverse/tidyr, r-lib/withr,
     r-lib/xml2
-Config/roxygen2/version: 8.0.0
 Encoding: UTF-8
 Language: en-US
 LazyData: true
@@ -104,3 +103,4 @@ Collate:
     'tt_from_df.R'
     'validate_table_struct.R'
     'zzz_constants.R'
+Config/roxygen2/version: 8.0.0

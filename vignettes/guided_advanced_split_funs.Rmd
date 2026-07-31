@@ -1,0 +1,55 @@
+---
+title: "Advanced rtables - Custom Split Functions"
+subtitle: Contributed by Johnson & Johnson Innovative Medicine
+date: "2025-10-22"
+author:
+- Gabriel Becker
+- Dan Hofstaedter
+output:
+    rmarkdown::html_document:
+        theme: "spacelab"
+        highlight: "kate"
+        toc: true
+        toc_float: true
+        code_folding: show
+vignette: >
+  %\VignetteIndexEntry{Advanced rtables - Custom Split Functions}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options:
+  markdown:
+      wrap: 72
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+suggested_dependent_pkgs <- c("dplyr")
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = all(vapply(
+    suggested_dependent_pkgs,
+    requireNamespace,
+    logical(1),
+    quietly = TRUE
+  ))
+)
+```
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(comment = "#")
+```
+
+# Coming Soon
+
+  - [`make_split_fun` and Its Effective
+    Use](./guided_advanced_split_funs_make_split_fun.html) `make_split_fun` and
+    recognizing when to specify `pre`, `core`, and `post` behavior
+    customizations
+  - [Combining And Creating Behavior Building
+    Blocks](./guided_advanced_split_funs_new_bbbs.html) The split function
+    behavior building blocks provided by `rtables`, how to use and
+    combine them, and how to create your own
+  - [Some Complex Worked
+    Examples](./guided_advanced_split_funs_worked_ex.html) Combining
+    these topics to create complex custom split functions

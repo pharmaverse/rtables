@@ -394,7 +394,7 @@ add_overall_facet <- function(name, label, extra = list()) {
 #'
 #' @param innervar (`character`)\cr the variable(s) to trim (remove unobserved levels) independently within each facet.
 #'
-#' @return A function suitable for use in the `pre` (list) argument of `make_split_fun`.
+#' @return A function suitable for use in the `post` (list) argument of `make_split_fun`.
 #'
 #' @seealso [make_split_fun()]
 #'

@@ -1000,6 +1000,10 @@ setGeneric("row_cells", function(obj) standardGeneric("row_cells"))
 setMethod("row_cells", "TableRow", function(obj) obj@leaf_value)
 
 #' @rdname row_accessors
+#' @exportMethod row_cells
+setMethod("row_cells", "RowsVerticalSection", function(obj) as(obj, "list", strict = TRUE))
+
+#' @rdname row_accessors
 setGeneric("row_cells<-", function(obj, value) standardGeneric("row_cells<-"))
 
 #' @rdname row_accessors
@@ -1016,7 +1020,6 @@ setGeneric("row_values", function(obj) standardGeneric("row_values"))
 #' @rdname row_accessors
 #' @exportMethod row_values
 setMethod("row_values", "TableRow", function(obj) rawvalues(obj@leaf_value))
-
 
 #' @rdname row_accessors
 #' @exportMethod row_values<-
@@ -1155,10 +1158,15 @@ setMethod("obj_format", "Split", function(obj) obj@split_format)
 
 #' @rdname formatters_methods
 #' @export
+setMethod("obj_format", "RowsVerticalSection", function(obj) attr(obj, "row_formats", exact = TRUE))
+
+#' @rdname formatters_methods
+#' @export
 setMethod("obj_format<-", "VTableNodeInfo", function(obj, value) {
   obj@format <- value
   obj
 })
+
 
 #' @rdname formatters_methods
 #' @export
@@ -1174,10 +1182,24 @@ setMethod("obj_format<-", "CellValue", function(obj, value) {
   obj
 })
 
+#' @rdname formatters_methods
+#' @export
+setMethod("obj_format<-", "RowsVerticalSection", function(obj, value) {
+  attr(obj, "row_formats") <- value
+  obj
+})
+
 #' @rdname int_methods
 #' @export
 setMethod("obj_na_str<-", "CellValue", function(obj, value) {
   attr(obj, "format_na_str") <- value
+  obj
+})
+
+#' @rdname int_methods
+#' @export
+setMethod("obj_na_str<-", "RowsVerticalSection", function(obj, value) {
+  attr(obj, "row_na_strs") <- value
   obj
 })
 
@@ -1198,6 +1220,10 @@ setMethod("obj_na_str<-", "Split", function(obj, value) {
 #' @rdname int_methods
 #' @export
 setMethod("obj_na_str", "VTableNodeInfo", function(obj) obj@na_str)
+
+#' @rdname int_methods
+#' @export
+setMethod("obj_na_str", "RowsVerticalSection", function(obj) attr(obj, "row_na_strs", exact = TRUE))
 
 #' @rdname formatters_methods
 #' @export
@@ -1678,7 +1704,7 @@ setMethod(
         "must have length 1 or the number of rows"
       )
     }
-    attr(obj, "indent_mods") <- as.integer(value)
+    attr(obj, "indent_mods") <- rep(as.integer(value), length.out = length(obj))
     obj
 
     ## obj@indent_mods <- value

@@ -2206,6 +2206,44 @@ print.RowsVerticalSection <- function(x, ...) {
   invisible(x)
 }
 
+#' Combine `RowsVerticalSection` objects
+#'
+#' Combine two or more `RowsVerticalSection` objects (as returned
+#' by [in_rows()]) into a single object
+#'
+#' @param ... `RowsVerticalSection` objects
+#' @returns A single `RowsVerticalSection` object containing all
+#'   row sections from the objects passed to `...`
+#' @export
+c.RowsVerticalSection <- function(...) {
+  lst <- list(...)
+  if (!all(vapply(lst, function(x) inherits(x, "RowsVerticalSection"), TRUE))) {
+    stop("Cannot use c() to combine RowsVerticalSection objects with objects of other classes")
+  }
+
+  out <- NextMethod(generic = "c")
+  out <- RowsVerticalSection(
+    out,
+    names = comb_attr_w_dflt(lst, "row_names"),
+    labels = comb_attr_w_dflt(lst, "row_labels"),
+    indent_mods = comb_attr_w_dflt(lst, "indent_mods", 0L),
+    formats = comb_attr_w_dflt(lst, "row_formats", "xx"),
+    footnotes = comb_attr_w_dflt(lst, "row_footnotes"),
+    format_na_strs = comb_attr_w_dflt(lst, "row_na_strs", NA_character_)
+  )
+  out
+}
+
+comb_attr_w_dflt <- function(lst, attrname, dflt = NULL) {
+  unlist(
+    lapply(lst, function(x) {
+      attr(x, attrname, exact = TRUE) %||% rep(dflt, length(x))
+    }),
+    recursive = FALSE,
+    use.names = FALSE
+  )
+}
+
 #### Empty default objects to avoid repeated calls
 ## EmptyColInfo <- InstantiatedColumnInfo()
 ## EmptyElTable <- ElementaryTable()
