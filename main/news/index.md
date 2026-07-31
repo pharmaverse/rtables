@@ -5,6 +5,7 @@
 ### New Features
 
 - Added `restrict_facets` function factory for use with `make_split_fun`
+  [@gmbecker](https://github.com/gmbecker)
 - Exported previously internal `make_subset_expr` for use when
   constructing custom splitting behavior
 - Exported previously internal `splv_extra` and `splv_extra<-` accessors
@@ -12,6 +13,43 @@
   objects.
 - Exported previously internal `value_expr` accessor for retrieving the
   subsetting expression from a `SplitValue` or `ValueWrapper` object.
+- Added accessor methods for `RowsVerticalSection objects`: `row_cells`,
+  `obj_format`, `obj_format<-`, `obj_na_str`, `obj_na_str<-`,
+  `cell_values`
+- Added `c` method for directly combining `RowsVerticalSection` objects
+- Added vignette: Guided Tour (Advanced)
+  [@gmbecker](https://github.com/gmbecker)
+- Added vignette: Guided Tour (Advanced) - Custom Analysis And Summary
+  Functions [@gmbecker](https://github.com/gmbecker)
+- Added vignette: Guided Tour (Advanced) - Analysis Functions - Split
+  Context [@gmbecker](https://github.com/gmbecker)
+- Added vignette: Guided Tour (Advanced) - Analysis Functions -
+  Combining Existing `afun`s [@gmbecker](https://github.com/gmbecker)
+- Added vignette: Guided Tour (Advanced) - Analysis Functions - (stub)
+  Useful Building Blocks [@gmbecker](https://github.com/gmbecker)
+- Added vignette: Guided Tour (Advanced) - Custom Split Functions
+  [@gmbecker](https://github.com/gmbecker)
+- Added vignette: Guided Tour (Advanced) - Custom Split Functions -
+  (stub) `make_split_fun` [@gmbecker](https://github.com/gmbecker)
+- Added vignette: Guided Tour (Advanced) - Custom Split Functions -
+  Behavioral Building Block [@gmbecker](https://github.com/gmbecker)
+- Added vignette: Guided Tour (Advanced) - Custom Split Functions -
+  (stub) Worked Examples [@gmbecker](https://github.com/gmbecker)
+- Added vignette: Guided Tour (Advanced) - (stub) `TableTree` Objects
+  [@gmbecker](https://github.com/gmbecker)
+- Added vignette: Guided Tour (Advanced) - (stub) `TableTree` Objects -
+  (stub) Accessing Table Values [@gmbecker](https://github.com/gmbecker)
+- Added vignette: Guided Tour (Advanced) - (stub) `TableTree` Objects -
+  (stub) Custom Scoring Functions For Sorting
+  [@gmbecker](https://github.com/gmbecker)
+- Added vignette: Guided Tour (Advanced) - (stub) `TableTree` Objects -
+  (stub) Custom Pruning Functions
+  [@gmbecker](https://github.com/gmbecker)
+
+### Bug Fixes
+
+- `indent_mod<-` `RowsVerticalSection` method now correctly recycles
+  length 1 values [@gmbecker](https://github.com/gmbecker)
 
 ## rtables 0.6.15
 

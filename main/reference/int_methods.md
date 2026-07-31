@@ -530,6 +530,9 @@ spanned_values(obj) <- value
 # S4 method for class 'CellValue'
 obj_na_str(obj) <- value
 
+# S4 method for class 'RowsVerticalSection'
+obj_na_str(obj) <- value
+
 # S4 method for class 'VTableNodeInfo'
 obj_na_str(obj) <- value
 
@@ -537,6 +540,9 @@ obj_na_str(obj) <- value
 obj_na_str(obj) <- value
 
 # S4 method for class 'VTableNodeInfo'
+obj_na_str(obj)
+
+# S4 method for class 'RowsVerticalSection'
 obj_na_str(obj)
 
 set_format_recursive(obj, format, na_str, override = FALSE)
@@ -1068,6 +1074,9 @@ x[i, j, ..., drop = FALSE]
 x[i, j, ..., drop = FALSE]
 
 # S4 method for class 'VTableTree'
+cell_values(tt, rowpath = NULL, colpath = NULL, omit_labrows = TRUE)
+
+# S4 method for class 'RowsVerticalSection'
 cell_values(tt, rowpath = NULL, colpath = NULL, omit_labrows = TRUE)
 
 # S4 method for class 'TableRow'

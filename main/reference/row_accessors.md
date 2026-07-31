@@ -18,6 +18,9 @@ row_cells(obj)
 # S4 method for class 'TableRow'
 row_cells(obj)
 
+# S4 method for class 'RowsVerticalSection'
+row_cells(obj)
+
 row_cells(obj) <- value
 
 # S4 method for class 'TableRow'

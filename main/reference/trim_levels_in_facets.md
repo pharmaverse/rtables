@@ -19,7 +19,7 @@ trim_levels_in_facets(innervar)
 
 ## Value
 
-A function suitable for use in the `pre` (list) argument of
+A function suitable for use in the `post` (list) argument of
 `make_split_fun`.
 
 ## See also

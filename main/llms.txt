@@ -829,6 +829,10 @@ objects
 
 ### Guided Tour
 
+- [Introductory rtables - Basic Table Layout
+  Instructions](https://pharmaverse.github.io/rtables/articles/guided_intro_basics.md):
+- [Introductory rtables - Facet And Analysis
+  Nesting](https://pharmaverse.github.io/rtables/articles/guided_intro_nesting.md):
 - [A Guided Tour of rtables -
   Intermediate](https://pharmaverse.github.io/rtables/articles/guided_intermediate.md):
 - [Intermediate rtables - Translating Shells To
@@ -837,6 +841,33 @@ objects
   Behavior](https://pharmaverse.github.io/rtables/articles/guided_intermediate_afun_reqs.md):
 - [Intermediate rtables - Identifying Required Faceting
   Behavior](https://pharmaverse.github.io/rtables/articles/guided_intermediate_split_reqs.md):
+- [A Guided Tour of rtables -
+  Advanced](https://pharmaverse.github.io/rtables/articles/guided_advanced.md):
+- [Advanced rtables - Custom Analysis and Group Summary
+  Functions](https://pharmaverse.github.io/rtables/articles/guided_advanced_afuns.md):
+- [Advanced rtables - Structure-Conditional Behavior In \`afun\`s With
+  \`.spl_context\`](https://pharmaverse.github.io/rtables/articles/guided_advanced_afuns_spl_context.md):
+- [Advanced rtables - Calling Existing afuns Within Custom
+  afuns](https://pharmaverse.github.io/rtables/articles/guided_advanced_afuns_rowsverticalsection.md):
+- [Advanced rtables - Useful Behavioral Building Blocks For Complex
+  Custom
+  afuns](https://pharmaverse.github.io/rtables/articles/guided_advanced_afuns_building_blocks.md):
+- [Advanced rtables - Custom Split
+  Functions](https://pharmaverse.github.io/rtables/articles/guided_advanced_split_funs.md):
+- [Advanced rtables - Using \`make_split_fun\`
+  Effectively](https://pharmaverse.github.io/rtables/articles/guided_advanced_split_funs_make_split_fun.md):
+- [Advanced rtables - Writing Reusable Behavior Building
+  Blocks](https://pharmaverse.github.io/rtables/articles/guided_advanced_split_funs_new_bbbs.md):
+- [Advanced rtables - Some Complex Split Function Worked
+  Examples](https://pharmaverse.github.io/rtables/articles/guided_advanced_split_funs_worked_ex.md):
+- [Advanced rtables - Understanding and Interacting With \`TableTree\`
+  Objects](https://pharmaverse.github.io/rtables/articles/guided_advanced_tt.md):
+- [Advanced rtables - Accessing Values Within a
+  Table](https://pharmaverse.github.io/rtables/articles/guided_advanced_tt_access.md):
+- [Advanced rtables - Writing Custom Scoring Functions For
+  Sorting](https://pharmaverse.github.io/rtables/articles/guided_advanced_tt_score_funs.md):
+- [Advanced rtables - Writing Custom Pruning
+  Functions](https://pharmaverse.github.io/rtables/articles/guided_advanced_tt_prune_funs.md):
 
 ### Clinical Trials
 

@@ -54,6 +54,9 @@ obj_format(obj)
 # S4 method for class 'Split'
 obj_format(obj)
 
+# S4 method for class 'RowsVerticalSection'
+obj_format(obj)
+
 # S4 method for class 'VTableNodeInfo'
 obj_format(obj) <- value
 
@@ -61,6 +64,9 @@ obj_format(obj) <- value
 obj_format(obj) <- value
 
 # S4 method for class 'CellValue'
+obj_format(obj) <- value
+
+# S4 method for class 'RowsVerticalSection'
 obj_format(obj) <- value
 
 # S4 method for class 'Split'
