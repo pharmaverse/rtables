@@ -36,13 +36,13 @@ Source:
 [`DESCRIPTION`](https://github.com/pharmaverse/rtables/blob/main/DESCRIPTION)
 
 Becker G, Waddell A, Garolini D, de la Rua E, Zhu J (2026). *rtables:
-Reporting Tables*. R package version 0.6.16.9003,
+Reporting Tables*. R package version 0.6.16.9005,
 <https://github.com/pharmaverse/rtables>.
 
     @Manual{,
       title = {rtables: Reporting Tables},
       author = {Gabriel Becker and Adrian Waddell and Davide Garolini and Emily {de la Rua} and Joe Zhu},
       year = {2026},
-      note = {R package version 0.6.16.9003},
+      note = {R package version 0.6.16.9005},
       url = {https://github.com/pharmaverse/rtables},
     }
