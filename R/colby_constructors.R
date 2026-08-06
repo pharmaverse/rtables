@@ -1044,7 +1044,11 @@ NULL
 #'   \item{.all_col_exprs}{List of expressions. Each of them represents a different column splitting.}
 #'   \item{.all_col_counts}{Vector of integers. Each of them represents the global count for each column. It differs
 #'     if `alt_counts_df` is used (see [build_table()]).}
-#' }
+#'
+#' For the `.alt_df*` family of parameters, these will be passed data
+#' subsets based on `df` if no `alt_counts_df` is specified in the
+#' `build_table` call. In `rtables` versions `<= 0.6.13`, this instead
+#' resulted in an error.  }
 #'
 #' @note If any of these formals is specified incorrectly or not present in the tabulation machinery, it will be
 #'   treated as if missing. For example, `.ref_group` will be missing if no baseline is previously defined during

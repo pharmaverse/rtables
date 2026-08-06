@@ -166,9 +166,6 @@ test_that(".spl_context and afun extra parameters contain information about comb
 
   # NB: If you add keep_levels = c("all_X") to add_combo_levels the other
   #     column expressions are missing -> Expected!
-  expect_error(lyt |> build_table(DM),
-    regexp = "Layout contains afun\\/cfun functions that have optional*"
-  )
 
   tbl <- lyt |> build_table(DM, alt_counts_df = ex_adsl)
 
@@ -353,10 +350,6 @@ test_that(".alt_df_row appears in cfun but not in afun.", {
     analyze("BMRKR1", afun = afun_tmp)
 
   expect_error(
-    lyt |> build_table(ex_adsl),
-    "Layout contains afun/cfun functions that have optional*"
-  )
-  expect_error(
     lyt |> build_table(ex_adsl, alt_counts_df = DM),
     "alt_counts_df appears incompatible with column-split*"
   )
@@ -383,4 +376,32 @@ test_that("full alt_counts_df is accessible from afun/cfun via .alt_df_full", {
   tbl <- build_table(lyt, ex_adae[1:3, ], alt_counts_df = ex_adsl)
   cvals <- unlist(cell_values(tbl))
   expect_true(all(cvals == "ok"))
+})
+
+test_that(".alt_df* argument behavior is correct when alt_counts_df is not set", {
+  check_alt_dfs <- function(df, .df_row, .alt_df_row, .alt_df, .alt_df_full) {
+    expect_identical(df, .alt_df)
+    expect_identical(.df_row, .alt_df_row)
+    expect_false(is.null(.alt_df_full))
+    TRUE
+  }
+
+  afun <- function(df, .df_row, .alt_df_row, .alt_df, .alt_df_full) {
+    res <- check_alt_dfs(df, .df_row, .alt_df_row, .alt_df, .alt_df_full)
+    in_rows("afun result" = "OK")
+  }
+  cfun <- function(df, labelstr, .df_row, .alt_df_row, .alt_df, .alt_df_full) {
+    res <- check_alt_dfs(df, .df_row, .alt_df_row, .alt_df, .alt_df_full)
+    in_rows("cfun result" = "OK", .formats = list("cfun result" = "xx"))
+  }
+
+  first_2_levs <- function(vec) levels(vec)[1:2]
+
+  lyt <- basic_table() |>
+    split_cols_by("ARM", split_fun = keep_split_levels(first_2_levs(ex_adsl$ARM))) |>
+    split_rows_by("STRATA1", split_fun = keep_split_levels(first_2_levs(ex_adsl$STRATA1))) |>
+    summarize_row_groups("STRATA1", cfun = cfun) |>
+    analyze("AGE", afun = afun)
+
+  expect_no_error(build_table(lyt, ex_adsl))
 })
