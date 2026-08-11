@@ -466,7 +466,7 @@ MultiVarSplit <- function(vars,
                           colcount_format = NULL) {
   check_ok_label(split_label)
   ## no topleft allowed
-  label_pos <- match.arg(label_pos, label_pos_values[-3])
+  label_pos <- match.arg(label_pos, label_pos_values[-4])
   child_labels <- match.arg(child_labels)
   if (length(vars) == 1 && grepl(":", vars)) {
     vars <- strsplit(vars, ":")[[1]]
