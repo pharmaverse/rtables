@@ -124,11 +124,11 @@ silly_table
 \seealso{
 \link{custom_split_funs} for a more detailed discussion on what custom split functions do.
 
-Other make_custom_split: 
-\code{\link{add_combo_facet}()},
-\code{\link{drop_facet_levels}()},
-\code{\link{make_split_result}()},
-\code{\link{restrict_facets}()},
-\code{\link{trim_levels_in_facets}()}
+Other make_custom_split:
+\code{\link[=add_combo_facet]{add_combo_facet()}},
+\code{\link[=drop_facet_levels]{drop_facet_levels()}},
+\code{\link[=make_split_result]{make_split_result()}},
+\code{\link[=restrict_facets]{restrict_facets()}},
+\code{\link[=trim_levels_in_facets]{trim_levels_in_facets()}}
 }
 \concept{make_custom_split}
