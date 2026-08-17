@@ -162,7 +162,7 @@ first_spl_name <- function(splvectree) {
   } else {
     spl <- unlist(splvectree, recursive = TRUE)[[1]]
   }
-  obj_name(spl)
+  deuniqify_path_elements(obj_name(spl))
 }
 
 
@@ -175,12 +175,11 @@ extract_dup_pos <- function(str) {
 
 }
 
-branch_above_split <- function(splvec, newspl, at_sibling) {
-  nms <- vapply(splvec, first_spl_name, "")
-  found <- match(deuniqify_path_elements(at_sibling), nms) ## strip [n] from the end ofname before matching
-  dup_pos <- extract_dup_pos(at_sibling)
-  len <- length(nms)
+find_branch_pos <- function(splvec, at_sibling) {
 
+  nms <- vapply(splvec, first_spl_name, "")
+  found <- match(deuniqify_path_elements(at_sibling), nms) ## strip [n] from the end of names before matching
+  dup_pos <- extract_dup_pos(at_sibling)
 
   if (is.na(found)) {
     stop("Unable to find structural element '", at_sibling, "' to add siblings for.\n",
@@ -189,15 +188,27 @@ branch_above_split <- function(splvec, newspl, at_sibling) {
     stop("Found only ", length(found), " eligible elements named '",
          deuniqify_path_elements(at_sibling),
          "', but at_sibling was '", at_sibling, "'")
-  } else {
-    branch_pos <- found[dup_pos]
   }
+    branch_pos <- found[dup_pos]
+    print(branch_pos)
+  branch_pos
+}
+
+branch_is_root <- function(splv, at_sibling)  find_branch_pos(splv, at_sibling) == 1
+
+branch_above_split <- function(splvec, newspl, at_sibling) {
+  branch_pos <- find_branch_pos(splvec, at_sibling)
   lastel <- splvec[[branch_pos]]
+
+  len <- length(splvec)
 
   endontree <- is(lastel, "SplitVectorTree")
   if (endontree &&
       (is.null(at_sibling) || at_sibling == first_spl_name(lastel))) {
     splvec[[branch_pos]] <- SplitVectorTree(lst = c(lastel, list(SplitVector(newspl))))
+  } else if (has_force_pag(lastel)) {
+    stop("at_sibling pointed to a split with forced pagination (page_by = TRUE).",
+         " This is not supported.")
   } else {
     ## are_spls <- which(!vapply(splvec, is, "VAnalyzeSplit", FUN.VALUE = TRUE))
     ## branch_pos <- max(0, are_spls) ## ensure no -Inf warning
@@ -205,28 +216,34 @@ branch_above_split <- function(splvec, newspl, at_sibling) {
       label_position(splvec[[branch_pos]]) <- "visible"
     }
     lst <-  c(
-            if(branch_pos > 1) splvec[seq(1, branch_pos - 1)],
+            if (branch_pos > 1) splvec[seq(1, branch_pos - 1)],
             list(SplitVectorTree(lst = list(SplitVector(lst = splvec[seq(branch_pos, len)]),
-                                       SplitVector(newspl))))
+                                            SplitVector(newspl))))
     )
     splvec <- SplitVector(lst = lst)
   }
   splvec
 }
 
+
 #' @rdname int_methods
 setMethod(
   "split_rows", "PreDataRowLayout",
   function(lyt, spl, pos, cmpnd_fun = AnalyzeMultiVars, at_sibling = NULL) {
     stopifnot(is.na(pos) || (pos > 0 && pos <= length(lyt) + 1))
+    root_branching <- FALSE
     if (!is.null(at_sibling)) {
       oldval <- lyt[[pos]]
-      if (is(oldval, "SplitVectorTree")) {
+      ## if we at_sibling a top level element we need to handle as nested = FALSE  
+      if (branch_is_root(oldval, at_sibling)) {
+        tmp <- SplitVector(spl)
+        pos <- length(lyt) + 1 ## pos when nested = FALSE
+      } else if (is(oldval, "SplitVectorTree")) {
           tmp <- SplitVectorTree(lst = c(oldval, list(SplitVector(spl))))
       } else if (is(oldval, "SplitVector")) {
           tmp <- branch_above_split(oldval, spl, at_sibling)
       } else {
-          stop("split_rows failed with at_sibling ['", at_sibling, "']and oldval class '",
+          stop("split_rows failed with at_sibling ['", at_sibling, "'] and oldval class '",
                class(oldval),
                "'. This should not happen, contact the maintianer.")
       }
@@ -250,16 +267,11 @@ is_analysis_spl <- function(spl) {
 }
 
 ## note "pos" is ignored here because it is for which nest-chain
-## spl should be placed in, NOIT for where in that chain it should go
+## spl should be placed in, NOT for where in that chain it should go
 #' @rdname int_methods
 setMethod(
   "split_rows", "SplitVector",
   function(lyt, spl, pos, cmpnd_fun = AnalyzeMultiVars, at_sibling = NULL) {
-    ## if(is_analysis_spl(spl) &&
-    ##    is_analysis_spl(last_rowsplit(lyt))) {
-    ##     return(cmpnd_last_rowsplit(lyt, spl, cmpnd_fun))
-    ## }
-
     if (has_force_pag(spl) && length(lyt) > 0 && !has_force_pag(lyt[[length(lyt)]])) {
       stop("page_by splits cannot be nested within non-page_by splits",
         call. = FALSE

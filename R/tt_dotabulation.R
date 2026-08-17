@@ -896,8 +896,7 @@ setMethod(
            cinfo, ## used for sanity check
            baselines, ## used to calc new baselines
            spl_context) {
-
-  ret <- lapply(
+   ret <- lapply(
     spl,
     function(splvecii) {
       recursive_applysplit(
@@ -1219,7 +1218,7 @@ recursive_applysplit <- function(df,
   }
 
   if (is(splvec, "SplitVectorTree")) {
-    return(
+   return(
       unlist(
           lapply(
             seq_along(splvec),

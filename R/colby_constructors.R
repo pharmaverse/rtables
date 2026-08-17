@@ -1319,6 +1319,31 @@ setMethod(
 
 #' @rdname int_methods
 setMethod(
+  ".add_row_summary", "SplitVectorTree",
+  function(lyt,
+           label,
+           cfun,
+           child_labels = c("default", "visible", "hidden"),
+           cformat = NULL,
+           cna_str = "-",
+           indent_mod = 0L,
+           cvar = "",
+           extra_args = list()) {
+  len <- length(lyt)
+  lyt[[len]] <- .add_row_summary(lyt[[len]],
+                                 label = label,
+                                 cfun = cfun,
+                                 child_labels = child_labels,
+                                 cformat = cformat,
+                                 cna_str = cna_str,
+                                 indent_mod = indent_mod,
+                                 cvar = cvar,
+                                 extra_args = extra_args)
+  lyt
+})
+
+#' @rdname int_methods
+setMethod(
   ".add_row_summary", "Split",
   function(lyt,
            label,
