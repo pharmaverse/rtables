@@ -40,6 +40,10 @@ functions. See \code{\link[formatters:list_valid_format_labels]{formatters::list
 \emph{if possible} (\code{TRUE}, the default) or as a new top-level element (\code{FALSE}). Ignored if it would nest a split
 underneath analyses, which is not allowed.}
 
+\item{at_sibling}{(\code{charactere(1)} or \code{NULL})\cr If non-null, a preceding
+split or analyze this instruction should be placed as a sibling to. Cannot
+select an instruction that was itself placed with non-null \code{at_sibling}.}
+
 \item{extra_args}{(\code{list})\cr extra arguments to be passed to the tabulation function. Element position in the list
 corresponds to the children of this split. Named elements in the child-specific lists are ignored if they do
 not match a formal argument of the tabulation function.}

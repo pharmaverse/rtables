@@ -61,6 +61,10 @@ Cannot be used simultaneously with \code{format}. Cannot be used if \code{format
 \emph{if possible} (\code{TRUE}, the default) or as a new top-level element (\code{FALSE}). Ignored if it would nest a split
 underneath analyses, which is not allowed.}
 
+\item{at_sibling}{(\code{charactere(1)} or \code{NULL})\cr If non-null, a preceding
+split or analyze this instruction should be placed as a sibling to. Cannot
+select an instruction that was itself placed with non-null \code{at_sibling}.}
+
 \item{inclNAs}{(\code{logical})\cr whether NA observations in the \code{var} variable(s) should be included when performing
 the analysis. Defaults to \code{FALSE}.}
 

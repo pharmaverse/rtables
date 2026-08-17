@@ -3,12 +3,12 @@
 \name{brackets}
 \alias{brackets}
 \alias{[<-,VTableTree,ANY,ANY,list-method}
-\alias{[,VTableTree,logical,logical,ANY-method}
+\alias{[,VTableTree,logical,logical-method}
 \title{Retrieve and assign elements of a \code{TableTree}}
 \usage{
 \S4method{[}{VTableTree,ANY,ANY,list}(x, i, j, ...) <- value
 
-\S4method{[}{VTableTree,logical,logical,ANY}(x, i, j, ..., drop = FALSE)
+\S4method{[}{VTableTree,logical,logical}(x, i, j, ..., drop = FALSE)
 }
 \arguments{
 \item{x}{(\code{TableTree})\cr a \code{TableTree} object.}

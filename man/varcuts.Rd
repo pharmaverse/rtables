@@ -133,6 +133,10 @@ functions. See \code{\link[formatters:list_valid_format_labels]{formatters::list
 
 \item{na_str}{(\code{string})\cr string that should be displayed when the value of \code{x} is missing. Defaults to \code{"NA"}.}
 
+\item{at_sibling}{(\code{charactere(1)} or \code{NULL})\cr If non-null, a preceding
+split or analyze this instruction should be placed as a sibling to. Cannot
+select an instruction that was itself placed with non-null \code{at_sibling}.}
+
 \item{label_pos}{(\code{string})\cr location where the variable label should be displayed. Accepts \code{"hidden"}
 (default for non-analyze row splits), \code{"visible"}, \code{"topleft"}, and \code{"default"} (for analyze splits only). For
 \code{analyze} calls, \code{"default"} indicates that the variable should be visible if and only if multiple variables are
