@@ -35,6 +35,60 @@ test_that("deeply nested and uneven column layouts work", {
   expect_identical(ncol(tbl2), 12L)
 })
 
+
+
+test_that("at_sibling creates intermediate row nesting", {
+  lyt <- basic_table() |>
+    split_rows_by("RACE") |>
+    split_rows_by("FACTOR2") |>
+    analyze("AGE") |>
+    split_rows_by("SEX", at_sibling = "FACTOR2") |>
+    analyze("AGE")
+  tbl <- build_table(lyt, rawdat)
+  paths <- row_paths(tbl)
+  has_path <- function(path) any(vapply(paths, identical, logical(1), path))
+
+  expect_true(has_path(c("RACE", "WHITE", "FACTOR2", "A", "AGE", "Mean")))
+  expect_true(has_path(c("RACE", "WHITE", "SEX", "M", "AGE", "Mean")))
+  expect_false(has_path(c("RACE", "WHITE", "FACTOR2", "A", "SEX", "M", "AGE", "Mean")))
+  expect_true(all(c("FACTOR2", "SEX") %in% row.names(tbl)))
+
+  sibling_analysis <- basic_table() |>
+    split_rows_by("RACE") |>
+    split_rows_by("FACTOR2") |>
+    analyze("AGE") |>
+    analyze("AGE", at_sibling = "FACTOR2") |>
+    build_table(rawdat)
+  expect_true(any(vapply(
+    row_paths(sibling_analysis),
+    identical,
+    logical(1),
+    c("RACE", "WHITE", "AGE", "Mean")
+  )))
+})
+
+test_that("at_sibling shows dynamic cut split labels", {
+  lyt <- basic_table() |>
+    split_rows_by("RACE") |>
+    split_rows_by("FACTOR2") |>
+    analyze("AGE") |>
+    split_rows_by_cutfun("AGE", at_sibling = "FACTOR2") |>
+    analyze("AGE")
+  tbl <- build_table(lyt, rawdat)
+  paths <- row_paths(tbl)
+
+  expect_true(any(vapply(
+    paths,
+    identical,
+    logical(1),
+    c("RACE", "WHITE", "AGE", "1st qrtile", "AGE", "Mean")
+  )))
+  expect_true("AGE" %in% row.names(tbl))
+})
+
+
+
+
 test_that("intermediate nesting works correctly", {
 
   ## analyze nested at "proper" (non top level) split
@@ -162,15 +216,11 @@ test_that("intermediate nesting works correctly", {
     analyze("AGE") |>  
     split_rows_by("RACE", split_fun = keep_2_levels("RACE"), nested = TRUE, at_sibling = "AGE") |>
     analyze("AGE") |>
-    split_rows_by("COUNTRY", split_fun = keep_2_levels("COUNTRY"), nested = TRUE, at_sibling = "RACE") |>
+    split_rows_by("COUNTRY", split_fun = keep_2_levels("COUNTRY"), nested = TRUE, at_sibling = "AGE") |>
     analyze("AGE") |>
-    split_rows_by("BMRKR2", split_fun = keep_2_levels("BMRKR2"), nested = TRUE, at_sibling = "SEX")
+    split_rows_by("BMRKR2", split_fun = keep_2_levels("BMRKR2"), nested = TRUE, at_sibling = "SEX") |>
     analyze("AGE")
 
   build_table(lyt6, ex_adsl)
-    
-    
 
-
-  
 })
