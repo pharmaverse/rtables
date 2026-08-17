@@ -20,7 +20,7 @@ rrowl(
 \item{...}{values in vector/list form.}
 
 \item{format}{(\code{string}, \code{function}, or \code{list})\cr the format label (string) or formatter function to apply to the
-cell values passed via \code{...}. See \code{\link[formatters:list_formats]{formatters::list_valid_format_labels()}} for currently supported format labels.}
+cell values passed via \code{...}. See \code{\link[formatters:list_valid_format_labels]{formatters::list_valid_format_labels()}} for currently supported format labels.}
 
 \item{indent}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 
@@ -28,7 +28,7 @@ cell values passed via \code{...}. See \code{\link[formatters:list_formats]{form
 \code{\link[formatters:table_inset]{formatters::table_inset()}} for details.}
 
 \item{round_type}{(\code{"iec"}, \code{"iec_mod"} or \code{"sas"})\cr the type of rounding to perform.
-See \code{\link[formatters:round_fmt]{formatters::round_fmt()}} for details.}
+See \code{\link[formatters:round_fmt]{round_fmt()}} for details.}
 }
 \value{
 A row object of the context-appropriate type (label or data).
@@ -54,9 +54,9 @@ rrow(row.name = "row 2", c(1, 2), c(3, 4))
 
 }
 \seealso{
-Other compatibility: 
-\code{\link{rheader}()},
-\code{\link{rrow}()},
-\code{\link{rtable}()}
+Other compatibility:
+\code{\link[=rheader]{rheader()}},
+\code{\link[=rrow]{rrow()}},
+\code{\link[=rtable]{rtable()}}
 }
 \concept{compatibility}

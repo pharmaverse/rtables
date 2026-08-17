@@ -36,7 +36,7 @@ in_rows(
 \item{.row_footnotes}{(\code{list})\cr referential footnotes messages to be associated by name with \emph{rows}.}
 
 \item{.aligns}{(\code{character} or \code{NULL})\cr alignments for the cells. Standard for \code{NULL} is \code{"center"}.
-See \code{\link[formatters:list_formats]{formatters::list_valid_aligns()}} for currently supported alignments.}
+See \code{\link[formatters:list_valid_aligns]{formatters::list_valid_aligns()}} for currently supported alignments.}
 
 \item{.format_na_strs}{(\code{character} or \code{NULL})\cr NA strings for the cells.}
 

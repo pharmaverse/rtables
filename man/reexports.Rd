@@ -41,6 +41,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{formatters}{\code{\link[formatters]{export_as_pdf}}, \code{\link[formatters]{export_as_txt}}}
+  \item{formatters}{\code{\link[formatters:export_as_pdf]{export_as_pdf()}}, \code{\link[formatters:export_as_txt]{export_as_txt()}}}
 }}
 
