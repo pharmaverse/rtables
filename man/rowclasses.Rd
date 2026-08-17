@@ -70,7 +70,7 @@ or \code{NA_character_} for none (the default). When generated via layouting, th
 \code{section_div} of the split under which this table represents a single facet.}
 
 \item{round_type}{(\code{"iec"}, \code{"iec_mod"} or \code{"sas"})\cr the type of rounding to perform.
-See \code{\link[formatters:round_fmt]{formatters::round_fmt()}} for details.}
+See \code{\link[formatters:round_fmt]{round_fmt()}} for details.}
 
 \item{vals}{(\code{list})\cr cell values for the row.}
 
@@ -80,7 +80,7 @@ See \code{\link[formatters:round_fmt]{formatters::round_fmt()}} for details.}
 
 \item{format}{(\code{string}, \code{function}, or \code{list})\cr format associated with this split. Formats can be declared via
 strings (\code{"xx.x"}) or function. In cases such as \code{analyze} calls, they can be character vectors or lists of
-functions. See \code{\link[formatters:list_formats]{formatters::list_valid_format_labels()}} for a list of all available format strings.}
+functions. See \code{\link[formatters:list_valid_format_labels]{formatters::list_valid_format_labels()}} for a list of all available format strings.}
 
 \item{na_str}{(\code{string})\cr string that should be displayed when the value of \code{x} is missing. Defaults to \code{"NA"}.}
 

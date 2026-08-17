@@ -81,9 +81,9 @@ Built-in score functions are \code{\link[=cont_n_allcols]{cont_n_allcols()}} and
 useful descriptor and accessor functions (coming from related vignette):
 \itemize{
 \item \code{\link[=cell_values]{cell_values()}} - Retrieves a named list of a \code{TableRow} or \code{TableTree} object's values.
-\item \code{\link[formatters:lab_name]{formatters::obj_name()}} - Retrieves the name of an object. Note this can differ from the label that is
+\item \code{\link[formatters:obj_name]{formatters::obj_name()}} - Retrieves the name of an object. Note this can differ from the label that is
 displayed (if any is)  when printing.
-\item \code{\link[formatters:lab_name]{formatters::obj_label()}} - Retrieves the display label of an object. Note this can differ from the name that
+\item \code{\link[formatters:obj_label]{formatters::obj_label()}} - Retrieves the display label of an object. Note this can differ from the name that
 appears in the path.
 \item \code{\link[=content_table]{content_table()}} - Retrieves a \code{TableTree} object's content table (which contains its summary rows).
 \item \code{\link[=tree_children]{tree_children()}} - Retrieves a \code{TableTree} object's direct children (either subtables, rows or possibly a mix

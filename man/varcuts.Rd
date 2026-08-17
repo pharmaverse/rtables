@@ -33,7 +33,7 @@ split_rows_by_cuts(
   nested = TRUE,
   at_sibling = NULL,
   cumulative = FALSE,
-  label_pos = if (!is.null(at_sibling)) "default" else "visible",
+  label_pos = if (!is.null(at_sibling)) "visible" else "default",
   section_div = NA_character_
 )
 
@@ -74,7 +74,7 @@ split_rows_by_quartiles(
   extra_args = list(),
   cumulative = FALSE,
   indent_mod = 0L,
-  label_pos = if (!is.null(at_sibling)) "default" else "visible",
+  label_pos = if (!is.null(at_sibling)) "visible" else "default",
   section_div = NA_character_
 )
 
@@ -93,7 +93,7 @@ split_rows_by_cutfun(
   extra_args = list(),
   cumulative = FALSE,
   indent_mod = 0L,
-  label_pos = if (!is.null(at_sibling)) "default" else "visible",
+  label_pos = if (!is.null(at_sibling)) "visible" else "default",
   section_div = NA_character_
 )
 }
@@ -129,7 +129,7 @@ analyzing a single variable.}
 
 \item{format}{(\code{string}, \code{function}, or \code{list})\cr format associated with this split. Formats can be declared via
 strings (\code{"xx.x"}) or function. In cases such as \code{analyze} calls, they can be character vectors or lists of
-functions. See \code{\link[formatters:list_formats]{formatters::list_valid_format_labels()}} for a list of all available format strings.}
+functions. See \code{\link[formatters:list_valid_format_labels]{formatters::list_valid_format_labels()}} for a list of all available format strings.}
 
 \item{na_str}{(\code{string})\cr string that should be displayed when the value of \code{x} is missing. Defaults to \code{"NA"}.}
 

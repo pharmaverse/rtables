@@ -20,11 +20,11 @@ directly by end users.
 \seealso{
 \code{\link[=make_split_fun]{make_split_fun()}}
 
-Other make_custom_split: 
-\code{\link{add_combo_facet}()},
-\code{\link{make_split_fun}()},
-\code{\link{make_split_result}()},
-\code{\link{restrict_facets}()},
-\code{\link{trim_levels_in_facets}()}
+Other make_custom_split:
+\code{\link[=add_combo_facet]{add_combo_facet()}},
+\code{\link[=make_split_fun]{make_split_fun()}},
+\code{\link[=make_split_result]{make_split_result()}},
+\code{\link[=restrict_facets]{restrict_facets()}},
+\code{\link[=trim_levels_in_facets]{trim_levels_in_facets()}}
 }
 \concept{make_custom_split}

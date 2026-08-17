@@ -48,11 +48,11 @@ tbl <- build_table(lyt, DM)
 \seealso{
 \code{\link[=make_split_fun]{make_split_fun()}}
 
-Other make_custom_split: 
-\code{\link{drop_facet_levels}()},
-\code{\link{make_split_fun}()},
-\code{\link{make_split_result}()},
-\code{\link{restrict_facets}()},
-\code{\link{trim_levels_in_facets}()}
+Other make_custom_split:
+\code{\link[=drop_facet_levels]{drop_facet_levels()}},
+\code{\link[=make_split_fun]{make_split_fun()}},
+\code{\link[=make_split_result]{make_split_result()}},
+\code{\link[=restrict_facets]{restrict_facets()}},
+\code{\link[=trim_levels_in_facets]{trim_levels_in_facets()}}
 }
 \concept{make_custom_split}

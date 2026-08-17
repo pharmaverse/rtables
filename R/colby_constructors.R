@@ -538,7 +538,7 @@ split_rows_by_cuts <- function(lyt, var, cuts,
                                nested = TRUE,
                                at_sibling = NULL,
                                cumulative = FALSE,
-                               label_pos = if (!is.null(at_sibling)) "default" else "visible",
+                               label_pos = if (!is.null(at_sibling)) "visible" else "default",
                                section_div = NA_character_) {
   label_pos <- match.arg(label_pos, label_pos_values)
   ##    VarStaticCutSplit(
@@ -634,7 +634,7 @@ split_rows_by_quartiles <- function(lyt, var, split_label = var,
                                     extra_args = list(),
                                     cumulative = FALSE,
                                     indent_mod = 0L,
-                                    label_pos = if (!is.null(at_sibling)) "default" else "visible",
+                                    label_pos = if (!is.null(at_sibling)) "visible" else "default",
                                     section_div = NA_character_) {
   split_rows_by_cutfun(
     lyt = lyt,
@@ -690,7 +690,7 @@ split_rows_by_cutfun <- function(lyt, var,
                                  extra_args = list(),
                                  cumulative = FALSE,
                                  indent_mod = 0L,
-                                 label_pos = if (!is.null(at_sibling)) "default" else "visible",
+                                 label_pos = if (!is.null(at_sibling)) "visible" else "default",
                                  section_div = NA_character_) {
   label_pos <- match.arg(label_pos, label_pos_values)
   child_labels <- match.arg(child_labels)

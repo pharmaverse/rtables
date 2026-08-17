@@ -71,16 +71,16 @@ summaries.}
 \item{child_names}{(\code{character})\cr names to be given to the subsplits contained by a compound split (typically
 an \code{AnalyzeMultiVars} split object).}
 
-\item{title}{(\code{string})\cr single string to use as main title (\code{\link[formatters:title_footer]{formatters::main_title()}}). Ignored for subtables.}
+\item{title}{(\code{string})\cr single string to use as main title (\code{\link[formatters:main_title]{formatters::main_title()}}). Ignored for subtables.}
 
-\item{subtitles}{(\code{character})\cr a vector of strings to use as subtitles (\code{\link[formatters:title_footer]{formatters::subtitles()}}), where every
+\item{subtitles}{(\code{character})\cr a vector of strings to use as subtitles (\code{\link[formatters:subtitles]{formatters::subtitles()}}), where every
 element is printed on a separate line. Ignored for subtables.}
 
 \item{main_footer}{(\code{character})\cr a vector of strings to use as main global (non-referential) footer materials
-(\code{\link[formatters:title_footer]{formatters::main_footer()}}), where every element is printed on a separate line.}
+(\code{\link[formatters:main_footer]{formatters::main_footer()}}), where every element is printed on a separate line.}
 
 \item{prov_footer}{(\code{character})\cr a vector of strings to use as provenance-related global footer materials
-(\code{\link[formatters:title_footer]{formatters::prov_footer()}}), where every element is printed on a separate line.}
+(\code{\link[formatters:prov_footer]{formatters::prov_footer()}}), where every element is printed on a separate line.}
 
 \item{footnotes}{(\code{list} or \code{NULL})\cr referential footnotes to be applied at current level. In post-processing,
 this can be achieved with \code{\link{fnotes_at_path<-}}.}
@@ -119,11 +119,11 @@ No return value.
 Constructor argument conventions
 }
 \seealso{
-Other conventions: 
-\code{\link{compat_args}()},
-\code{\link{gen_args}()},
-\code{\link{lyt_args}()},
-\code{\link{sf_args}()}
+Other conventions:
+\code{\link[=compat_args]{compat_args()}},
+\code{\link[=gen_args]{gen_args()}},
+\code{\link[=lyt_args]{lyt_args()}},
+\code{\link[=sf_args]{sf_args()}}
 }
 \concept{conventions}
 \keyword{internal}

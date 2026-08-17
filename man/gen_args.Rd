@@ -80,7 +80,7 @@ the children of a split/table.}
 
 \item{hsep}{(\code{string})\cr set of characters to be repeated as the separator between the header and body of
 the table when rendered as text. Defaults to a connected horizontal line (unicode 2014) in locals that use a UTF
-charset, and to \code{-} elsewhere (with a once per session warning). See \code{\link[formatters:default_horizontal_sep]{formatters::set_default_hsep()}} for further
+charset, and to \code{-} elsewhere (with a once per session warning). See \code{\link[formatters:set_default_hsep]{formatters::set_default_hsep()}} for further
 information.}
 
 \item{indent_size}{(\code{numeric(1)})\cr number of spaces to use per indent level. Defaults to 2.}
@@ -116,11 +116,11 @@ No return value.
 General argument conventions
 }
 \seealso{
-Other conventions: 
-\code{\link{compat_args}()},
-\code{\link{constr_args}()},
-\code{\link{lyt_args}()},
-\code{\link{sf_args}()}
+Other conventions:
+\code{\link[=compat_args]{compat_args()}},
+\code{\link[=constr_args]{constr_args()}},
+\code{\link[=lyt_args]{lyt_args()}},
+\code{\link[=sf_args]{sf_args()}}
 }
 \concept{conventions}
 \keyword{internal}
