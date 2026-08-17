@@ -35,25 +35,25 @@ x[i, j, ..., drop = FALSE]
 
   `keep_topleft`
 
-  :   (`flag`) (`[` only) whether the top-left material for the table
-      should be retained after subsetting. Defaults to `TRUE` if all
-      rows are included (i.e. subsetting was by column), and drops it
-      otherwise.
+  : (`flag`) (`[` only) whether the top-left material for the table
+    should be retained after subsetting. Defaults to `TRUE` if all rows
+    are included (i.e. subsetting was by column), and drops it
+    otherwise.
 
   `keep_titles`
 
-  :   (`flag`) whether title information should be retained. Defaults to
-      `FALSE`.
+  : (`flag`) whether title information should be retained. Defaults to
+    `FALSE`.
 
   `keep_footers`
 
-  :   (`flag`) whether non-referential footer information should be
-      retained. Defaults to `keep_titles`.
+  : (`flag`) whether non-referential footer information should be
+    retained. Defaults to `keep_titles`.
 
   `reindex_refs`
 
-  :   (`flag`) whether referential footnotes should be re-indexed as if
-      the resulting subset is the entire table. Defaults to `TRUE`.
+  : (`flag`) whether referential footnotes should be re-indexed as if
+    the resulting subset is the entire table. Defaults to `TRUE`.
 
 - value:
 

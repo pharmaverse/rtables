@@ -176,7 +176,7 @@ tbl2
 #> 
 #> test footer
 #> 
-#> test.R program, executed at 2026-08-05 01:12:25.430072
+#> test.R program, executed at 2026-08-17 12:54:55.530428
 
 lyt3 <- basic_table(
   show_colcounts = TRUE,

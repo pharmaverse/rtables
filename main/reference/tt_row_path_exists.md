@@ -81,7 +81,6 @@ instruction, and are addressed via `@content` instead of their name.
 
 For example, given the code
 
-
     lyt <- basic_table() |>
       split_rows_by("ARM") |>
       split_rows_by("RACE") |>
