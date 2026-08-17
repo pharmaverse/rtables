@@ -36,7 +36,6 @@ test_that("deeply nested and uneven column layouts work", {
 })
 
 
-
 test_that("at_sibling creates intermediate row nesting", {
   lyt <- basic_table() |>
     split_rows_by("RACE") |>
@@ -87,10 +86,7 @@ test_that("at_sibling shows dynamic cut split labels", {
 })
 
 
-
-
 test_that("intermediate nesting works correctly", {
-
   ## analyze nested at "proper" (non top level) split
   lyt <- basic_table() |>
     split_cols_by("ARM") |>
@@ -103,13 +99,19 @@ test_that("intermediate nesting works correctly", {
 
   bmrkr_rpaths <- tt_normalize_row_path(tbl, c("STRATA1", "*", "BMRKR2"))
 
-  expect_identical(bmrkr_rpaths,
-                   list(A = c("STRATA1", "A", "BMRKR2"),
-                        B = c("STRATA1", "B", "BMRKR2"),
-                        C = c("STRATA1", "C", "BMRKR2")))
+  expect_identical(
+    bmrkr_rpaths,
+    list(
+      A = c("STRATA1", "A", "BMRKR2"),
+      B = c("STRATA1", "B", "BMRKR2"),
+      C = c("STRATA1", "C", "BMRKR2")
+    )
+  )
 
-  expect_equal(length(bmrkr_rpaths),
-               length(tt_normalize_row_path(tbl, c("STRATA1", "*", "SEX"))))
+  expect_equal(
+    length(bmrkr_rpaths),
+    length(tt_normalize_row_path(tbl, c("STRATA1", "*", "SEX")))
+  )
 
   ## split nested at "proper" (non top level) split
   ## summarize_row_groups on a nest at_sibling row split
@@ -125,24 +127,30 @@ test_that("intermediate nesting works correctly", {
   tbl2 <- build_table(lyt2, ex_adsl)
   ## each facet of BMRKR2 split has (non-empty) content, ie
   ## summarize_row_groups attached to the right place
-  expect_equal(length(tt_normalize_row_path(tbl2, c("STRATA1", "*", "BMRKR2", "*", "@content"))),
-               9L)
+  expect_equal(
+    length(tt_normalize_row_path(tbl2, c("STRATA1", "*", "BMRKR2", "*", "@content"))),
+    9L
+  )
 
   ## SEX didn't have a summarize row groups instruction
   ## tt_normalize_row_path says c(...,  "@content") path doesn't exist
   ## if content table is empty (no rows) or NULL
-  expect_equal(length(tt_normalize_row_path(tbl2, c("STRATA1", "*", "SEX", "*", "@content"))),
-               0L)
+  expect_equal(
+    length(tt_normalize_row_path(tbl2, c("STRATA1", "*", "SEX", "*", "@content"))),
+    0L
+  )
 
 
   tmpdat <- subset(ex_adsl, STRATA1 == "A" & BMRKR2 == "LOW")
-  expect_identical(cell_values(tbl2, c("STRATA1", "A", "BMRKR2", "LOW", "AGE")),
-                   ## tapply insists on making an array which trips up waldo/testthat
-                   lapply(split(tmpdat$AGE, tmpdat$ARM), mean))
+  expect_identical(
+    cell_values(tbl2, c("STRATA1", "A", "BMRKR2", "LOW", "AGE")),
+    ## tapply insists on making an array which trips up waldo/testthat
+    lapply(split(tmpdat$AGE, tmpdat$ARM), mean)
+  )
 
 
   ## at_sibling = <top-level-split> gracefully works as nested = FALSE
-  ## we are intentionally strict using expect_identical for these  
+  ## we are intentionally strict using expect_identical for these
   lyt3 <- basic_table() |>
     split_cols_by("ARM") |>
     split_rows_by("STRATA1") |>
@@ -167,7 +175,7 @@ test_that("intermediate nesting works correctly", {
     split_rows_by("STRATA1") |>
     split_rows_by("SEX", split_fun = keep_split_levels(c("F", "M"))) |>
     analyze("AGE") |>
-    ## NB this here, currently different default label behavior. Is that good or bad??  
+    ## NB this here, currently different default label behavior. Is that good or bad??
     split_rows_by("BMRKR2", nested = TRUE, at_sibling = "STRATA1", label_pos = "hidden") |>
     summarize_row_groups("BMRKR2") |>
     analyze("AGE")
@@ -187,40 +195,128 @@ test_that("intermediate nesting works correctly", {
   expect_identical(tbl4, tbl4b)
 
   ## Useful error for bad at_sibling
-  expect_error({
-    basic_table() |>
-      split_cols_by("ARM") |>
-      split_rows_by("STRATA1") |>
-      split_rows_by("SEX", split_fun = keep_split_levels(c("F", "M"))) |>
-      analyze("AGE") |>
-      analyze("BMRKR2", at_sibling = "whaaaaat?")
-  }, "Unable to find structural element")
+  expect_error(
+    {
+      basic_table() |>
+        split_cols_by("ARM") |>
+        split_rows_by("STRATA1") |>
+        split_rows_by("SEX", split_fun = keep_split_levels(c("F", "M"))) |>
+        analyze("AGE") |>
+        analyze("BMRKR2", at_sibling = "whaaaaat?")
+    },
+    "Unable to find structural element"
+  )
 
-  expect_error({
-    basic_table() |>
-      split_cols_by("ARM") |>
-      split_rows_by("STRATA1") |>
-      split_rows_by("SEX", split_fun = keep_split_levels(c("F", "M"))) |>
-      analyze("AGE") |>
-      split_rows_by("BMRKR2", at_sibling = "whaaaaat?")
-  }, "Unable to find structural element")
-
-  ## "Full On" INSANEO STYLE
+  expect_error(
+    {
+      basic_table() |>
+        split_cols_by("ARM") |>
+        split_rows_by("STRATA1") |>
+        split_rows_by("SEX", split_fun = keep_split_levels(c("F", "M"))) |>
+        analyze("AGE") |>
+        split_rows_by("BMRKR2", at_sibling = "whaaaaat?")
+    },
+    "Unable to find structural element"
+  )
 
   keep_2_levels <- function(varnm, dat = ex_adsl) keep_split_levels(levels(dat[[varnm]])[1:2])
 
-  lyt6 <- basic_table() |>
+  ## "Full On" INSANEO STYLE
+  ##  STRATA1 -> SEX -> | AGE
+  ##                    | DCSREAS -> COUNTRY ->  AGE
+  ##                    | Race -> | COUNTRY -> BMRKR1
+  ##                              | BMRKR2 -> AGE
+
+  lyt7 <- basic_table() |>
     split_cols_by("ARM") |>
     split_rows_by("STRATA1") |>
     split_rows_by("SEX", split_fun = keep_2_levels("SEX")) |>
-    analyze("AGE") |>  
-    split_rows_by("RACE", split_fun = keep_2_levels("RACE"), nested = TRUE, at_sibling = "AGE") |>
     analyze("AGE") |>
-    split_rows_by("COUNTRY", split_fun = keep_2_levels("COUNTRY"), nested = TRUE, at_sibling = "AGE") |>
-    analyze("AGE") |>
-    split_rows_by("BMRKR2", split_fun = keep_2_levels("BMRKR2"), nested = TRUE, at_sibling = "SEX") |>
+    split_rows_by("DCSREAS", split_fun = keep_2_levels("DCSREAS"), nested = TRUE, at_sibling = "AGE") |>
+    split_rows_by("COUNTRY", split_fun = keep_2_levels("COUNTRY")) |> ## its a trap!
+    analyze("AGE") |> ## its a trap redux
+    split_rows_by("RACE", split_fun = keep_2_levels("RACE"), nested = TRUE, at_sibling = "AGE") |> ## tricky fish AGE == AGE[[1]]
+    split_rows_by("COUNTRY", split_fun = keep_2_levels("COUNTRY"), nested = TRUE) |>
+    analyze("BMRKR1") |>
+    split_rows_by("BMRKR2", split_fun = keep_2_levels("BMRKR2"), nested = TRUE, at_sibling = "COUNTRY") |> ## did we get the right one?
     analyze("AGE")
 
-  build_table(lyt6, ex_adsl)
+  tbl_is <- build_table(lyt7, ex_adsl)
 
+  path_count <- function(tt, pth) length(tt_normalize_row_path(tt, pth))
+
+  ## should exist
+  expect_equal(
+    path_count(tbl_is, c("STRATA1", "*", "SEX", "*", "AGE")),
+    6L
+  )
+  expect_equal(
+    path_count(tbl_is, c("STRATA1", "*", "SEX", "*", "RACE", "*", "COUNTRY", "*", "BMRKR1")),
+    24L
+  ) # 3 strata 2 sex 2 race 2 country
+  expect_equal(
+    path_count(tbl_is, c("STRATA1", "*", "SEX", "*", "RACE", "*", "BMRKR2", "*", "AGE")),
+    24L
+  )
+
+  ## should not exist
+  expect_equal(
+    path_count(tbl_is, c("STRATA1", "*", "SEX", "*", "RACE", "*", "AGE")),
+    0L
+  )
+
+  ## trap 1: does BMRKR2 go to the right COUNTRY
+  expect_equal(
+    path_count(tbl_is, c("STRATA1", "*", "SEX", "*", "DCSREAS", "*", "BMRKR2")),
+    0L
+  )
+
+  ## trap 2: does RACE go to the right AGE
+  expect_equal(
+    path_count(tbl_is, c("STRATA1", "*", "SEX", "*", "DCSREAS", "*", "COUNTRY", "*", "RACE")),
+    0L
+  )
+
+  ## "Full On" INSANEO STYLE v2
+  ##  STRATA1 -> SEX -> | AGE
+  ##                    | DCSREAS -> COUNTRY ->  | AGE
+  ##                    | ---------------------- | Race -> BMRKR2 -> BMRKR1
+  ##                    | BMRKR2 -> AGE
+
+  lyt7b <- basic_table() |>
+    split_rows_by("STRATA1", split_fun = keep_2_levels("STRATA1")) |>
+    split_rows_by("SEX", split_fun = keep_2_levels("SEX")) |>
+    analyze("AGE") |>
+    split_rows_by("DCSREAS", split_fun = keep_2_levels("DCSREAS"), nested = TRUE, at_sibling = "AGE") |>
+    split_rows_by("COUNTRY", split_fun = keep_2_levels("COUNTRY")) |> ## its a trap!
+    analyze("AGE") |> ## its a trap redux
+    split_rows_by("RACE", split_fun = keep_2_levels("RACE"), nested = TRUE, at_sibling = "AGE[2]") |> ## tricky fish AGE == AGE[1]
+    split_rows_by("BMRKR2", split_fun = keep_2_levels("BMRKR2"), nested = TRUE) |>
+    analyze("BMRKR1") |>
+    split_rows_by("BMRKR2", split_fun = keep_2_levels("BMRKR2"), nested = TRUE, at_sibling = "AGE") |> ## did we get the right one?
+    analyze("AGE")
+
+  tbl_is2 <- build_table(lyt7b, ex_adsl)
+
+  expect_equal(
+    path_count(
+      tbl_is2,
+      c("STRATA1", "*", "SEX", "*", "DCSREAS", "*", "COUNTRY", "*", "AGE")
+    ),
+    16L
+  )
+  expect_equal(
+    path_count(
+      tbl_is2,
+      c("STRATA1", "*", "SEX", "*", "DCSREAS", "*", "COUNTRY", "*", "RACE", "*", "BMRKR2", "*", "BMRKR1")
+    ),
+    64L
+  )
+  expect_equal(
+    path_count(
+      tbl_is2,
+      c("STRATA1", "*", "SEX", "*", "BMRKR2", "*", "AGE")
+    ),
+    8L
+  )
 })

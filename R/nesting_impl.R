@@ -166,7 +166,7 @@ first_spl_name <- function(splvectree) {
 }
 
 
-brack_regex <- "\\[([[:digit:]]+)\\]"
+brack_regex <- "[^[]+\\[([[:digit:]]+)\\]"
 extract_dup_pos <- function(str) {
   havebracks <- grepl(brack_regex, str)
   out <- gsub(brack_regex, "\\1", str)
@@ -175,29 +175,92 @@ extract_dup_pos <- function(str) {
 
 }
 
-find_branch_pos <- function(splvec, at_sibling) {
-
-  nms <- vapply(splvec, first_spl_name, "")
-  found <- match(deuniqify_path_elements(at_sibling), nms) ## strip [n] from the end of names before matching
-  dup_pos <- extract_dup_pos(at_sibling)
-
-  if (is.na(found)) {
-    stop("Unable to find structural element '", at_sibling, "' to add siblings for.\n",
-         "Eligible elements: ", paste(collapse = ", ", paste("'", nms, "'")))
-  } else if (dup_pos > length(found)) {
-    stop("Found only ", length(found), " eligible elements named '",
-         deuniqify_path_elements(at_sibling),
-         "', but at_sibling was '", at_sibling, "'")
-  }
-    branch_pos <- found[dup_pos]
-    print(branch_pos)
-  branch_pos
+## for
+## split_rows_by("STRATA1") |>
+## split_rows_by("SEX") |>
+##   analyze("AGE") |>
+##   split_rows_by("RACE", at_sibling = "SEX") |>
+##   split_rows_by("BMRKR2") |>
+##   analyze("AGE") |>
+##   analyze("BMRKR1", at_sibling = "BMRKR2")
+##
+## this should give: STRATA1, list(SEX, RACE), BMRKR2, BMRKR1 as valid at_sibling targets
+get_names_list <- function(splvec) {
+    unlist(lapply(splvec, function(x) {
+        if (is(x, "SplitVectorTree")) {
+            c(
+                ## use this cause it does deuniqify
+                list(vapply(x, rtables:::first_spl_name, "")),
+                ## ignore first name of last branch, we use name from first branch for matching here
+                get_names_list(x[[length(x)]][-1])
+            )
+        } else { ## Split case
+            rtables:::first_spl_name(x)
+        }
+    }), recursive = FALSE)
 }
 
-branch_is_root <- function(splv, at_sibling)  find_branch_pos(splv, at_sibling) == 1
+find_branch_pos2 <- function(splvec, at_sibling, preceding = NULL) {
+    nmlst <- get_names_list(splvec)
 
-branch_above_split <- function(splvec, newspl, at_sibling) {
-  branch_pos <- find_branch_pos(splvec, at_sibling)
+    atsib <- deuniqify_path_elements(at_sibling)
+    dup_pos <- extract_dup_pos(at_sibling)
+    found_lgl <- vapply(nmlst, function(lst) atsib %in% deuniqify_path_elements(lst), FALSE)
+    found <- which(found_lgl)
+    
+    ## i <- 1
+    ## found <- numeric()
+    ## while (i <= length(nmlst) && !found) {
+    ##     if (deuniqify_path_elements(at_sibling) %in%
+    ##         deuniqify_path_elements(nmlst[[i]])) {
+    ##     found <- c(found, i)
+    ##   }
+    ##   i <- i + 1
+          
+    ## }
+
+    if (length(found) == 0) {
+      stop("Unable to find structural element '", at_sibling, "' to add siblings for.\n",
+           "Eligible elements: ",
+           paste(
+             collapse = ", ",
+             paste0(
+               "'",
+               unlist(c(preceding, nmlst)),
+               "'"
+             )
+           )
+      )
+    } else if (dup_pos > length(found)) {
+      stop("Found only ", length(found), " eligible elements named '",
+           deuniqify_path_elements(at_sibling),
+           "', but at_sibling was '", at_sibling, "'")      
+    }
+    found[dup_pos]
+}
+
+branch_is_root <- function(splv, at_sibling)  find_branch_pos2(splv, at_sibling) == 1
+
+## its recursive all the way down ... as always
+
+branch_above_split <- function(splvec, newspl, at_sibling, branch_pos = find_branch_pos2(splvec, at_sibling, preceding = preceding), preceding = NULL) {
+  svlen <- length(splvec)  
+  if (branch_pos > svlen) {
+      stopifnot(is(splvec[[svlen]], "SplitVectorTree"))
+      lasttree <- splvec[[svlen]]
+      treelen <- length(lasttree)
+      lasttree[[treelen]] <-  branch_above_split(lasttree[[treelen]],
+                                            newspl,
+                                            at_sibling = at_sibling, ## not used in this path
+                                            ## +1 is b/c the first split for this branch
+                                            ## was already matched against, otherwise we
+                                            ## are double-counting it
+                                            branch_pos = branch_pos - svlen + 1, 
+                                            preceding = c(preceding,
+                                                          vapply(splvec, first_spl_name, "")))
+      splvec[[svlen]] <- lasttree
+      return(splvec)
+  }
   lastel <- splvec[[branch_pos]]
 
   len <- length(splvec)
@@ -224,7 +287,6 @@ branch_above_split <- function(splvec, newspl, at_sibling) {
   }
   splvec
 }
-
 
 #' @rdname int_methods
 setMethod(
