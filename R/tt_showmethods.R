@@ -42,6 +42,12 @@ setMethod(
 )
 
 setMethod(
+  "ploads_to_str", "SplitVectorTree",
+  function(x, collapse = ":") {
+    sapply(x, ploads_to_str, collapse = collapse)
+})
+
+setMethod(
   "ploads_to_str", "CompoundSplit",
   function(x, collapse = ":") {
     paste(sapply(spl_payload(x), ploads_to_str),
@@ -258,6 +264,11 @@ setMethod(
   function(obj) "** col-var analysis **"
 )
 
+setMethod(
+  "spltype_abbrev", "SplitVectorTree",
+  function(obj) ""
+)
+
 docat_splitvec <- function(object, indent = 0) {
   if (indent > 0) {
     cat(rep(" ", times = indent), sep = "")
@@ -269,6 +280,9 @@ docat_splitvec <- function(object, indent = 0) {
       nrow(tab), ncol(tab)
     )
   } else {
+    if (is(object, "SplitVectorTree")) {
+      return(lapply(object, docat_splitvec))
+    }
     plds <- ploads_to_str(object) ## lapply(object, spl_payload))
 
     tabbrev <- sapply(object, spltype_abbrev)

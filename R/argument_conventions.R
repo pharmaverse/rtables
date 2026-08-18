@@ -150,6 +150,9 @@ gen_args <- function(df, alt_counts_df, spl, pos, tt, tr, verbose, colwidths, ob
 #'   to the *split* or *group of sibling analyses*, for `split_rows_by*` and
 #' `analyze*` when analyzing more than one variable, respectively. Ignored when
 #' analyzing a single variable.
+#' @param at_sibling (`charactere(1)` or `NULL`)\cr If non-null, a preceding
+#'   split or analyze this instruction should be placed as a sibling to. Cannot
+#'   select an instruction that was itself placed with non-null `at_sibling`.
 #'
 #' @inherit gen_args return
 #'
@@ -165,7 +168,8 @@ lyt_args <- function(lyt, var, vars, label, labels_var, varlabels, varnames, spl
                      var_labels, cvar,
                      table_names, topleft, align, page_by, page_prefix,
                      format_na_str, section_div, na_str, show_colcounts,
-                     colcount_format, parent_name, formats_var, na_strs_var) {
+                     colcount_format, parent_name, formats_var, na_strs_var,
+                     at_sibling) {
   NULL
 }
 

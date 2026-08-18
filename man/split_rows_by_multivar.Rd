@@ -14,6 +14,7 @@ split_rows_by_multivar(
   format = NULL,
   na_str = NA_character_,
   nested = TRUE,
+  at_sibling = NULL,
   child_labels = c("default", "visible", "hidden"),
   indent_mod = 0L,
   section_div = NA_character_,
@@ -46,6 +47,10 @@ functions. See \code{\link[formatters:list_valid_format_labels]{formatters::list
 \item{nested}{(\code{logical})\cr whether this layout instruction should be applied within the existing layout structure
 \emph{if possible} (\code{TRUE}, the default) or as a new top-level element (\code{FALSE}). Ignored if it would nest a split
 underneath analyses, which is not allowed.}
+
+\item{at_sibling}{(\code{charactere(1)} or \code{NULL})\cr If non-null, a preceding
+split or analyze this instruction should be placed as a sibling to. Cannot
+select an instruction that was itself placed with non-null \code{at_sibling}.}
 
 \item{child_labels}{(\code{string})\cr the display behavior for the labels (i.e. label rows) of the children of this
 split. Accepts \code{"default"}, \code{"visible"}, and \code{"hidden"}. Defaults to \code{"default"} which flags the label row as

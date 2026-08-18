@@ -27,9 +27,9 @@ check_ok_label <- function(lbl, multi_ok = FALSE) {
 }
 
 valid_lbl_pos <- c("default", "visible", "hidden", "topleft")
-.labelkids_helper <- function(charval) {
+.labelkids_helper <- function(charval, na_ok = TRUE) {
   ret <- switch(charval,
-    "default" = NA,
+    "default" = if (na_ok) NA else FALSE,
     "visible" = TRUE,
     "hidden" = FALSE,
     "topleft" = FALSE,
@@ -466,7 +466,7 @@ MultiVarSplit <- function(vars,
                           colcount_format = NULL) {
   check_ok_label(split_label)
   ## no topleft allowed
-  label_pos <- match.arg(label_pos, label_pos_values[-3])
+  label_pos <- match.arg(label_pos, label_pos_values[-4])
   child_labels <- match.arg(child_labels)
   if (length(vars) == 1 && grepl(":", vars)) {
     vars <- strsplit(vars, ":")[[1]]
@@ -1656,8 +1656,7 @@ uniqify_child_names <- function(kidlst) {
       paste(val_to_fix, " -> {", paste(c(val_to_fix, newnms), collapse = ", "), "}]\n"),
       "  To control table names use split_rows_by*(, parent_name =.) or ",
       " analyze(., table_names = .) when analyzing a single variable, or ",
-      "analyze(., parent_name = .) when analyzing multiple variables in a single call.",
-      call. = FALSE
+      "analyze(., parent_name = .) when analyzing multiple variables in a single call."
     )
     names(kidlst)[inds] <- newnms
   }
@@ -1914,6 +1913,10 @@ TableTree <- function(kids = list(),
 ## a pre-existing TableTree/ElementaryTable.
 ## This is used for add_existing_table in colby_constructors.R
 
+split_or_splitvectree <- function(object) {
+    is(object, "Split") || is(object, "SplitVectorTree")
+}
+
 setClass("SplitVector",
   contains = "list",
   validity = function(object) {
@@ -1922,8 +1925,8 @@ setClass("SplitVector",
     } else {
       lst <- NULL
     }
-    all(sapply(head(object, -1), is, "Split")) &&
-      (is.null(lst) || is(lst, "Split") || is(lst, "VTableNodeInfo"))
+    all(sapply(head(object, -1), split_or_splitvectree)) &&
+      (is.null(lst) || split_or_splitvectree(lst) || is(lst, "VTableNodeInfo"))
   }
 )
 
@@ -1936,7 +1939,26 @@ SplitVector <- function(x = NULL,
   new("SplitVector", lst)
 }
 
+setClass("SplitVectorTree",
+         contains = "list",
+         validity = function(object) {
+    all(vapply(object, function(x) is(x, "SplitVector") || is(x, "SplitVectorTree"), TRUE))
+})
+
+SplitVectorTree <- function(x = NULL,
+                            ...,
+                            lst = list(...)) {
+    if (is.null(x))
+        xlst <- NULL
+    else
+        xlst <- list(x)
+    new("SplitVectorTree", c(xlst, lst))
+}
+
 avar_noneorlast <- function(vec) {
+  if (is(vec, "SplitVectorTree")) {
+    return(all(sapply(vec, avar_noneorlast)))
+  }
   if (!is(vec, "SplitVector")) {
     return(FALSE)
   }
