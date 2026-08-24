@@ -37,6 +37,8 @@ test_that("deeply nested and uneven column layouts work", {
 
 
 test_that("at_sibling creates intermediate row nesting", {
+  path_count <- function(tt, pth) length(tt_normalize_row_path(tt, pth))
+
   lyt <- basic_table() |>
     split_rows_by("RACE") |>
     split_rows_by("FACTOR2") |>
@@ -44,12 +46,10 @@ test_that("at_sibling creates intermediate row nesting", {
     split_rows_by("SEX", at_sibling = "FACTOR2") |>
     analyze("AGE")
   tbl <- build_table(lyt, rawdat)
-  paths <- row_paths(tbl)
-  has_path <- function(path) any(vapply(paths, identical, logical(1), path))
 
-  expect_true(has_path(c("RACE", "WHITE", "FACTOR2", "A", "AGE", "Mean")))
-  expect_true(has_path(c("RACE", "WHITE", "SEX", "M", "AGE", "Mean")))
-  expect_false(has_path(c("RACE", "WHITE", "FACTOR2", "A", "SEX", "M", "AGE", "Mean")))
+  expect_gt(path_count(tbl, c("RACE", "WHITE", "FACTOR2", "A", "AGE", "Mean")), 0L)
+  expect_gt(path_count(tbl, c("RACE", "WHITE", "SEX", "M", "AGE", "Mean")), 0L)
+  expect_equal(path_count(tbl, c("RACE", "WHITE", "FACTOR2", "A", "SEX", "M", "AGE", "Mean")), 0L)
   expect_true(all(c("FACTOR2", "SEX") %in% row.names(tbl)))
 
   sibling_analysis <- basic_table() |>
@@ -58,15 +58,12 @@ test_that("at_sibling creates intermediate row nesting", {
     analyze("AGE") |>
     analyze("AGE", at_sibling = "FACTOR2") |>
     build_table(rawdat)
-  expect_true(any(vapply(
-    row_paths(sibling_analysis),
-    identical,
-    logical(1),
-    c("RACE", "WHITE", "AGE", "Mean")
-  )))
+  expect_gt(path_count(sibling_analysis, c("RACE", "WHITE", "AGE", "Mean")), 0L)
 })
 
 test_that("at_sibling shows dynamic cut split labels", {
+  path_count <- function(tt, pth) length(tt_normalize_row_path(tt, pth))
+
   lyt <- basic_table() |>
     split_rows_by("RACE") |>
     split_rows_by("FACTOR2") |>
@@ -74,14 +71,8 @@ test_that("at_sibling shows dynamic cut split labels", {
     split_rows_by_cutfun("AGE", at_sibling = "FACTOR2") |>
     analyze("AGE")
   tbl <- build_table(lyt, rawdat)
-  paths <- row_paths(tbl)
 
-  expect_true(any(vapply(
-    paths,
-    identical,
-    logical(1),
-    c("RACE", "WHITE", "AGE", "1st qrtile", "AGE", "Mean")
-  )))
+  expect_gt(path_count(tbl, c("RACE", "WHITE", "AGE", "1st qrtile", "AGE", "Mean")), 0L)
   expect_true("AGE" %in% row.names(tbl))
 })
 
