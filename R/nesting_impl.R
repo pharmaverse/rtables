@@ -1,4 +1,3 @@
-
 #' @param for_analyze (`flag`) whether split is an analyze split.
 #' @rdname int_methods
 setGeneric("next_rpos", function(obj, nested = TRUE, for_analyze = FALSE, at_sibling = NULL) standardGeneric("next_rpos"))
@@ -14,7 +13,7 @@ setMethod(
     FALSE
   } else {
     ## can always nest analyze splits (almost? what about colvars noncolvars mixing? prolly ok?)
-    for_analyze || !is.null(at_sibling) || 
+    for_analyze || !is.null(at_sibling) ||
       ## If its not an analyze split it can't go under an analyze split
       !(is(last_rowsplit(obj), "VAnalyzeSplit") ||
         is(last_rowsplit(obj), "AnalyzeMultiVars")) ## should this be CompoundSplit? # nolint
@@ -172,7 +171,6 @@ extract_dup_pos <- function(str) {
   out <- gsub(brack_regex, "\\1", str)
   out[!havebracks] <- 1
   as.numeric(out)
-
 }
 
 ## for
@@ -186,80 +184,86 @@ extract_dup_pos <- function(str) {
 ##
 ## this should give: STRATA1, list(SEX, RACE), BMRKR2, BMRKR1 as valid at_sibling targets
 get_names_list <- function(splvec) {
-    unlist(lapply(splvec, function(x) {
-        if (is(x, "SplitVectorTree")) {
-            c(
-                ## use this cause it does deuniqify
-                list(vapply(x, rtables:::first_spl_name, "")),
-                ## ignore first name of last branch, we use name from first branch for matching here
-                get_names_list(x[[length(x)]][-1])
-            )
-        } else { ## Split case
-            rtables:::first_spl_name(x)
-        }
-    }), recursive = FALSE)
+  unlist(lapply(splvec, function(x) {
+    if (is(x, "SplitVectorTree")) {
+      c(
+        ## use this cause it does deuniqify
+        list(vapply(x, rtables:::first_spl_name, "")),
+        ## ignore first name of last branch, we use name from first branch for matching here
+        get_names_list(x[[length(x)]][-1])
+      )
+    } else { ## Split case
+      rtables:::first_spl_name(x)
+    }
+  }), recursive = FALSE)
 }
 
 find_branch_pos2 <- function(splvec, at_sibling, preceding = NULL) {
-    nmlst <- get_names_list(splvec)
+  nmlst <- get_names_list(splvec)
 
-    atsib <- deuniqify_path_elements(at_sibling)
-    dup_pos <- extract_dup_pos(at_sibling)
-    found_lgl <- vapply(nmlst, function(lst) atsib %in% deuniqify_path_elements(lst), FALSE)
-    found <- which(found_lgl)
-    
-    ## i <- 1
-    ## found <- numeric()
-    ## while (i <= length(nmlst) && !found) {
-    ##     if (deuniqify_path_elements(at_sibling) %in%
-    ##         deuniqify_path_elements(nmlst[[i]])) {
-    ##     found <- c(found, i)
-    ##   }
-    ##   i <- i + 1
-          
-    ## }
+  atsib <- deuniqify_path_elements(at_sibling)
+  dup_pos <- extract_dup_pos(at_sibling)
+  found_lgl <- vapply(nmlst, function(lst) atsib %in% deuniqify_path_elements(lst), FALSE)
+  found <- which(found_lgl)
 
-    if (length(found) == 0) {
-      stop("Unable to find structural element '", at_sibling, "' to add siblings for.\n",
-           "Eligible elements: ",
-           paste(
-             collapse = ", ",
-             paste0(
-               "'",
-               unlist(c(preceding, nmlst)),
-               "'"
-             )
-           )
+  ## i <- 1
+  ## found <- numeric()
+  ## while (i <= length(nmlst) && !found) {
+  ##     if (deuniqify_path_elements(at_sibling) %in%
+  ##         deuniqify_path_elements(nmlst[[i]])) {
+  ##     found <- c(found, i)
+  ##   }
+  ##   i <- i + 1
+
+  ## }
+
+  if (length(found) == 0) {
+    stop(
+      "Unable to find structural element '", at_sibling, "' to add siblings for.\n",
+      "Eligible elements: ",
+      paste(
+        collapse = ", ",
+        paste0(
+          "'",
+          unlist(c(preceding, nmlst)),
+          "'"
+        )
       )
-    } else if (dup_pos > length(found)) {
-      stop("Found only ", length(found), " eligible elements named '",
-           deuniqify_path_elements(at_sibling),
-           "', but at_sibling was '", at_sibling, "'")      
-    }
-    found[dup_pos]
+    )
+  } else if (dup_pos > length(found)) {
+    stop(
+      "Found only ", length(found), " eligible elements named '",
+      deuniqify_path_elements(at_sibling),
+      "', but at_sibling was '", at_sibling, "'"
+    )
+  }
+  found[dup_pos]
 }
 
-branch_is_root <- function(splv, at_sibling)  find_branch_pos2(splv, at_sibling) == 1
+branch_is_root <- function(splv, at_sibling) find_branch_pos2(splv, at_sibling) == 1
 
 ## its recursive all the way down ... as always
 
 branch_above_split <- function(splvec, newspl, at_sibling, branch_pos = find_branch_pos2(splvec, at_sibling, preceding = preceding), preceding = NULL) {
-  svlen <- length(splvec)  
+  svlen <- length(splvec)
   if (branch_pos > svlen) {
-      stopifnot(is(splvec[[svlen]], "SplitVectorTree"))
-      lasttree <- splvec[[svlen]]
-      treelen <- length(lasttree)
-      lasttree[[treelen]] <-  branch_above_split(lasttree[[treelen]],
-                                            newspl,
-                                            at_sibling = at_sibling, ## not used in this path
-                                            ## +1 is b/c the first split for this branch
-                                            ## was already matched against, otherwise we
-                                            ## are double-counting it
-                                            branch_pos = branch_pos - svlen + 1, 
-                                            preceding = c(preceding,
-                                                          vapply(splvec, first_spl_name, "")))
-      splvec[[svlen]] <- lasttree
-      return(splvec)
+    stopifnot(is(splvec[[svlen]], "SplitVectorTree"))
+    lasttree <- splvec[[svlen]]
+    treelen <- length(lasttree)
+    lasttree[[treelen]] <- branch_above_split(lasttree[[treelen]],
+      newspl,
+      at_sibling = at_sibling, ## not used in this path
+      ## +1 is b/c the first split for this branch
+      ## was already matched against, otherwise we
+      ## are double-counting it
+      branch_pos = branch_pos - svlen + 1,
+      preceding = c(
+        preceding,
+        vapply(splvec, first_spl_name, "")
+      )
+    )
+    splvec[[svlen]] <- lasttree
+    return(splvec)
   }
   lastel <- splvec[[branch_pos]]
 
@@ -267,21 +271,25 @@ branch_above_split <- function(splvec, newspl, at_sibling, branch_pos = find_bra
 
   endontree <- is(lastel, "SplitVectorTree")
   if (endontree &&
-      (is.null(at_sibling) || at_sibling == first_spl_name(lastel))) {
+    (is.null(at_sibling) || at_sibling == first_spl_name(lastel))) {
     splvec[[branch_pos]] <- SplitVectorTree(lst = c(lastel, list(SplitVector(newspl))))
   } else if (has_force_pag(lastel)) {
-    stop("at_sibling pointed to a split with forced pagination (page_by = TRUE).",
-         " This is not supported.")
+    stop(
+      "at_sibling pointed to a split with forced pagination (page_by = TRUE).",
+      " This is not supported."
+    )
   } else {
     ## are_spls <- which(!vapply(splvec, is, "VAnalyzeSplit", FUN.VALUE = TRUE))
     ## branch_pos <- max(0, are_spls) ## ensure no -Inf warning
     if (branch_pos > 0 && label_position(splvec[[branch_pos]]) == "default") {
       label_position(splvec[[branch_pos]]) <- "visible"
     }
-    lst <-  c(
-            if (branch_pos > 1) splvec[seq(1, branch_pos - 1)],
-            list(SplitVectorTree(lst = list(SplitVector(lst = splvec[seq(branch_pos, len)]),
-                                            SplitVector(newspl))))
+    lst <- c(
+      if (branch_pos > 1) splvec[seq(1, branch_pos - 1)],
+      list(SplitVectorTree(lst = list(
+        SplitVector(lst = splvec[seq(branch_pos, len)]),
+        SplitVector(newspl)
+      )))
     )
     splvec <- SplitVector(lst = lst)
   }
@@ -296,18 +304,20 @@ setMethod(
     root_branching <- FALSE
     if (!is.null(at_sibling)) {
       oldval <- lyt[[pos]]
-      ## if we at_sibling a top level element we need to handle as nested = FALSE  
+      ## if we at_sibling a top level element we need to handle as nested = FALSE
       if (branch_is_root(oldval, at_sibling)) {
         tmp <- SplitVector(spl)
         pos <- length(lyt) + 1 ## pos when nested = FALSE
       } else if (is(oldval, "SplitVectorTree")) {
-          tmp <- SplitVectorTree(lst = c(oldval, list(SplitVector(spl))))
+        tmp <- SplitVectorTree(lst = c(oldval, list(SplitVector(spl))))
       } else if (is(oldval, "SplitVector")) {
-          tmp <- branch_above_split(oldval, spl, at_sibling)
+        tmp <- branch_above_split(oldval, spl, at_sibling)
       } else {
-          stop("split_rows failed with at_sibling ['", at_sibling, "'] and oldval class '",
-               class(oldval),
-               "'. This should not happen, contact the maintianer.")
+        stop(
+          "split_rows failed with at_sibling ['", at_sibling, "'] and oldval class '",
+          class(oldval),
+          "'. This should not happen, contact the maintianer."
+        )
       }
     } else if (pos <= length(lyt)) {
       tmp <- split_rows(lyt[[pos]], spl, pos, cmpnd_fun = cmpnd_fun, at_sibling = at_sibling)
@@ -340,7 +350,7 @@ setMethod(
       )
     }
     len <- length(lyt)
-    
+
     ## now that we have branching we need to recursively replace
     if (len > 0 && is(lyt[[len]], "SplitVectorTree")) {
       lyt[[len]] <- split_rows(lyt[[len]], spl = spl, pos = pos, cmpnd_fun = cmpnd_fun, at_sibling = at_sibling)
@@ -362,7 +372,8 @@ setMethod(
     stopifnot(len > 0)
     lyt[[len]] <- split_rows(lyt[[len]], spl = spl, pos = pos, cmpnd_fun = cmpnd_fun, at_sibling = at_sibling)
     lyt
-})
+  }
+)
 
 #' @rdname int_methods
 setMethod(
