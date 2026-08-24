@@ -152,7 +152,7 @@ lyt3b <- basic_table(top_level_section_div = "-") |>
   analyze("AGE", afun = nice_mean)
 
 tbl3b <- build_table(lyt3b, trim_adsl)
-head(tbl3b, 
+head(tbl3b) 
 ```
 
 Here the faceting on `RACE` occurs *nested within* the faceting on
