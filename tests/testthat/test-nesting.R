@@ -226,10 +226,12 @@ test_that("intermediate nesting works correctly", {
     split_rows_by("DCSREAS", split_fun = keep_2_levels("DCSREAS"), nested = TRUE, at_sibling = "AGE") |>
     split_rows_by("COUNTRY", split_fun = keep_2_levels("COUNTRY")) |> ## its a trap!
     analyze("AGE") |> ## its a trap redux
-    split_rows_by("RACE", split_fun = keep_2_levels("RACE"), nested = TRUE, at_sibling = "AGE") |> ## tricky fish AGE == AGE[[1]]
+    ## tricky fish AGE == AGE[[1]]
+    split_rows_by("RACE", split_fun = keep_2_levels("RACE"), nested = TRUE, at_sibling = "AGE") |>
     split_rows_by("COUNTRY", split_fun = keep_2_levels("COUNTRY"), nested = TRUE) |>
     analyze("BMRKR1") |>
-    split_rows_by("BMRKR2", split_fun = keep_2_levels("BMRKR2"), nested = TRUE, at_sibling = "COUNTRY") |> ## did we get the right one?
+    ## did we get the right one?
+    split_rows_by("BMRKR2", split_fun = keep_2_levels("BMRKR2"), nested = TRUE, at_sibling = "COUNTRY") |>
     analyze("AGE")
 
   tbl_is <- build_table(lyt7, ex_adsl)
@@ -281,10 +283,12 @@ test_that("intermediate nesting works correctly", {
     split_rows_by("DCSREAS", split_fun = keep_2_levels("DCSREAS"), nested = TRUE, at_sibling = "AGE") |>
     split_rows_by("COUNTRY", split_fun = keep_2_levels("COUNTRY")) |> ## its a trap!
     analyze("AGE") |> ## its a trap redux
-    split_rows_by("RACE", split_fun = keep_2_levels("RACE"), nested = TRUE, at_sibling = "AGE[2]") |> ## tricky fish AGE == AGE[1]
+    ## tricky fish AGE == AGE[1]
+    split_rows_by("RACE", split_fun = keep_2_levels("RACE"), nested = TRUE, at_sibling = "AGE[2]") |>
     split_rows_by("BMRKR2", split_fun = keep_2_levels("BMRKR2"), nested = TRUE) |>
     analyze("BMRKR1") |>
-    split_rows_by("BMRKR2", split_fun = keep_2_levels("BMRKR2"), nested = TRUE, at_sibling = "AGE") |> ## did we get the right one?
+    ## did we get the right one?
+    split_rows_by("BMRKR2", split_fun = keep_2_levels("BMRKR2"), nested = TRUE, at_sibling = "AGE") |>
     analyze("AGE")
 
   tbl_is2 <- build_table(lyt7b, ex_adsl)

@@ -140,7 +140,7 @@ with the first two `analyze` calls replaced with
 ```{r}
 nice_mean_cfun <- function(x, labelstr) {
   lbl <- paste0(labelstr, " (Ave. Age)")
-  in_rows(mean(x), .labels = lbl, .formats = "xx.x")  
+  in_rows(mean(x), .labels = lbl, .formats = "xx.x")
 }
 
 lyt3b <- basic_table(top_level_section_div = "-") |>
@@ -152,7 +152,7 @@ lyt3b <- basic_table(top_level_section_div = "-") |>
   analyze("AGE", afun = nice_mean)
 
 tbl3b <- build_table(lyt3b, trim_adsl)
-head(tbl3b) 
+head(tbl3b)
 ```
 
 Here the faceting on `RACE` occurs *nested within* the faceting on
@@ -220,7 +220,7 @@ lyt4 <- basic_table() |>
   split_rows_by("STRATA1") |>
   split_rows_by("SEX", split_fun = keep_split_levels(c("F", "M"))) |>
   analyze("AGE") |>
-  analyze("BMRKR2", at_sibling = "SEX") 
+  analyze("BMRKR2", at_sibling = "SEX")
 
 tbl <- build_table(lyt4, ex_adsl)
 
@@ -229,7 +229,7 @@ lyt4b <- basic_table() |>
   split_rows_by("STRATA1") |>
   split_rows_by("SEX", split_fun = keep_split_levels(c("F", "M"))) |>
   analyze("AGE") |>
-  analyze("BMRKR2", at_sibling = "STRATA1") 
+  analyze("BMRKR2", at_sibling = "STRATA1")
 
 tbl4b <- build_table(lyt4b, ex_adsl)
 
@@ -244,7 +244,7 @@ lyt5 <- basic_table() |>
   split_rows_by("SEX", split_fun = keep_split_levels(c("F", "M"))) |>
   analyze("AGE") |>
   split_rows_by("RACE", split_fun = keep_split_levels(levels(ex_adsl$RACE)[1:2]), at_sibling = "SEX") |>
-  analyze("AGE")  
+  analyze("AGE")
 
 tbl <- build_table(lyt5, ex_adsl)
-
+```

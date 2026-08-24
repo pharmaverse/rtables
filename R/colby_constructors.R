@@ -172,7 +172,7 @@ setMethod(
   function(lyt) {
     sum(vapply(lyt, function(x) label_position(x) == "topleft", TRUE)) - 1L
   }
-) ## length(lyt)  - 1L)
+) ## length(lyt) - 1L)
 
 .tl_indent <- function(lyt, nested = TRUE) {
   if (!nested) {
@@ -1020,7 +1020,7 @@ analyze <- function(lyt,
   )
 
   if (nested && is.null(at_sibling) &&
-    (is(last_rowsplit(lyt), "VAnalyzeSplit") || is(last_rowsplit(lyt), "AnalyzeMultiVars"))) {
+        (is(last_rowsplit(lyt), "VAnalyzeSplit") || is(last_rowsplit(lyt), "AnalyzeMultiVars"))) {
     cmpnd_last_rowsplit(lyt, spl, AnalyzeMultiVars)
   } else {
     ## analysis compounding now done in split_rows

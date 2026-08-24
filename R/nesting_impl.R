@@ -1,11 +1,16 @@
 #' @param for_analyze (`flag`) whether split is an analyze split.
 #' @rdname int_methods
-setGeneric("next_rpos", function(obj, nested = TRUE, for_analyze = FALSE, at_sibling = NULL) standardGeneric("next_rpos"))
+setGeneric(
+  "next_rpos",
+  function(obj, nested = TRUE, for_analyze = FALSE, at_sibling = NULL) standardGeneric("next_rpos")
+)
 
 #' @rdname int_methods
 setMethod(
   "next_rpos", "PreDataTableLayouts",
-  function(obj, nested, for_analyze = FALSE, at_sibling = NULL) next_rpos(rlayout(obj), nested, for_analyze = for_analyze, at_sibling = at_sibling)
+  function(obj, nested, for_analyze = FALSE, at_sibling = NULL) {
+    next_rpos(rlayout(obj), nested, for_analyze = for_analyze, at_sibling = at_sibling)
+  }
 )
 
 .check_if_nest <- function(obj, nested, for_analyze, at_sibling) {
@@ -188,12 +193,12 @@ get_names_list <- function(splvec) {
     if (is(x, "SplitVectorTree")) {
       c(
         ## use this cause it does deuniqify
-        list(vapply(x, rtables:::first_spl_name, "")),
+        list(vapply(x, first_spl_name, "")),
         ## ignore first name of last branch, we use name from first branch for matching here
         get_names_list(x[[length(x)]][-1])
       )
     } else { ## Split case
-      rtables:::first_spl_name(x)
+      first_spl_name(x)
     }
   }), recursive = FALSE)
 }
@@ -244,7 +249,9 @@ branch_is_root <- function(splv, at_sibling) find_branch_pos2(splv, at_sibling) 
 
 ## its recursive all the way down ... as always
 
-branch_above_split <- function(splvec, newspl, at_sibling, branch_pos = find_branch_pos2(splvec, at_sibling, preceding = preceding), preceding = NULL) {
+branch_above_split <- function(splvec, newspl, at_sibling,
+                               branch_pos = find_branch_pos2(splvec, at_sibling, preceding = preceding),
+                               preceding = NULL) {
   svlen <- length(splvec)
   if (branch_pos > svlen) {
     stopifnot(is(splvec[[svlen]], "SplitVectorTree"))
@@ -271,7 +278,7 @@ branch_above_split <- function(splvec, newspl, at_sibling, branch_pos = find_bra
 
   endontree <- is(lastel, "SplitVectorTree")
   if (endontree &&
-    (is.null(at_sibling) || at_sibling == first_spl_name(lastel))) {
+        (is.null(at_sibling) || at_sibling == first_spl_name(lastel))) {
     splvec[[branch_pos]] <- SplitVectorTree(lst = c(lastel, list(SplitVector(newspl))))
   } else if (has_force_pag(lastel)) {
     stop(
