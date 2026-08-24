@@ -278,7 +278,7 @@ branch_above_split <- function(splvec, newspl, at_sibling,
 
   endontree <- is(lastel, "SplitVectorTree")
   if (endontree &&
-        (is.null(at_sibling) || at_sibling == first_spl_name(lastel))) {
+    (is.null(at_sibling) || at_sibling == first_spl_name(lastel))) {
     splvec[[branch_pos]] <- SplitVectorTree(lst = c(lastel, list(SplitVector(newspl))))
   } else if (has_force_pag(lastel)) {
     stop(
