@@ -1020,7 +1020,7 @@ analyze <- function(lyt,
   )
 
   if (nested && is.null(at_sibling) &&
-      (is(last_rowsplit(lyt), "VAnalyzeSplit") || is(last_rowsplit(lyt), "AnalyzeMultiVars"))) {
+    (is(last_rowsplit(lyt), "VAnalyzeSplit") || is(last_rowsplit(lyt), "AnalyzeMultiVars"))) {
     cmpnd_last_rowsplit(lyt, spl, AnalyzeMultiVars)
   } else {
     ## analysis compounding now done in split_rows
@@ -1329,18 +1329,20 @@ setMethod(
            indent_mod = 0L,
            cvar = "",
            extra_args = list()) {
-  len <- length(lyt)
-  lyt[[len]] <- .add_row_summary(lyt[[len]],
-                                 label = label,
-                                 cfun = cfun,
-                                 child_labels = child_labels,
-                                 cformat = cformat,
-                                 cna_str = cna_str,
-                                 indent_mod = indent_mod,
-                                 cvar = cvar,
-                                 extra_args = extra_args)
-  lyt
-})
+    len <- length(lyt)
+    lyt[[len]] <- .add_row_summary(lyt[[len]],
+      label = label,
+      cfun = cfun,
+      child_labels = child_labels,
+      cformat = cformat,
+      cna_str = cna_str,
+      indent_mod = indent_mod,
+      cvar = cvar,
+      extra_args = extra_args
+    )
+    lyt
+  }
+)
 
 #' @rdname int_methods
 setMethod(
