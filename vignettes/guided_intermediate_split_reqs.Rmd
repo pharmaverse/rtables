@@ -417,7 +417,6 @@ An toy example of this would be
 library(tibble)
 
 tpose_afun <- function(x, .var, .spl_context) {
-  spldf <<- .spl_context
   mycol <- tail(tail(.spl_context$cur_col_split_val, 1)[[1]], 1)
   cell <- switch(mycol,
     n = rcell(length(x), format = "xx"),
