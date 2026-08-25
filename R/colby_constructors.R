@@ -1019,8 +1019,8 @@ analyze <- function(lyt,
     na_strs_var = na_strs_var
   )
 
-  if (nested && is.null(at_sibling) &&
-        (is(last_rowsplit(lyt), "VAnalyzeSplit") || is(last_rowsplit(lyt), "AnalyzeMultiVars"))) {
+  is_analyze_spl <- is(last_rowsplit(lyt), "VAnalyzeSplit") || is(last_rowsplit(lyt), "AnalyzeMultiVars")
+  if (nested && is.null(at_sibling) && is_analyze_spl) {
     cmpnd_last_rowsplit(lyt, spl, AnalyzeMultiVars)
   } else {
     ## analysis compounding now done in split_rows
