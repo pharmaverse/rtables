@@ -232,7 +232,6 @@ lyt4b <- basic_table() |>
   analyze("BMRKR2", at_sibling = "STRATA1")
 
 tbl4b <- build_table(lyt4b, ex_adsl)
-
 ```
 
 
