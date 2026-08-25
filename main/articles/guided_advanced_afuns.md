@@ -39,68 +39,11 @@ Key points to recall about `a/cfun`s:
 Due to the last key point listed above, we can template a function that
 can be used as both an analysis and summary function:
 
-``` r
-
-library(rtables)
-# Loading required package: formatters
-# 
-# Attaching package: 'formatters'
-# The following object is masked from 'package:base':
-# 
-#     %||%
-# 
-# Attaching package: 'rtables'
-# The following object is masked from 'package:utils':
-# 
-#     str
-
-template_acfun <- function(x,
-                           labelstr = NULL,
-                           ## <optional special args>,
-                           ## <additional args>,
-                           ...) {
-  if (is.null(labelstr)) {
-    ## 'calculate' label(s) for afun-usage case
-    lbl <- "cool label, bro"
-  } else {
-    ## calculate label(s) from labelstr for cfun-usage case
-    lbl <- labelstr
-  }
-
-  ## whatever calculations we want
-  out <- rcell(sample(c("what?", "huh?", "eh?"), 1), format = "xx")
-
-  ## return our value(s) via in_rows
-  in_rows(.list = list(ok = out), .labels = c(ok = lbl))
-}
-```
+[`library`](https://rdrr.io/r/base/library.html)`(`[`rtables`](https://github.com/pharmaverse/rtables)`)`` ``# Loading required package: formatters`` ``# `` ``# Attaching package: 'formatters'`` ``# The following object is masked from 'package:base':`` ``# `` ``# %||%`` ``# `` ``# Attaching package: 'rtables'`` ``# The following object is masked from 'package:utils':`` ``# `` ``# str`` `` ``template_acfun`` ``<-`` ``function``(``x``,`` `` ``labelstr`` ``=`` ``NULL``,`` `` ``## <optional special args>,`` `` ``## <additional args>,`` `` ``...``)`` ``{`` `` ``if`` ``(`[`is.null`](https://rdrr.io/r/base/NULL.html)`(``labelstr``)``)`` ``{`` `` ``## 'calculate' label(s) for afun-usage case`` `` ``lbl`` ``<-`` ``"cool label, bro"`` `` ``}`` ``else`` ``{`` `` ``## calculate label(s) from labelstr for cfun-usage case`` `` ``lbl`` ``<-`` ``labelstr`` `` ``}`` `` `` ``## whatever calculations we want`` `` ``out`` ``<-`` `[`rcell`](https://pharmaverse.github.io/rtables/reference/rcell.md)`(`[`sample`](https://rdrr.io/r/base/sample.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"what?"``, ``"huh?"``, ``"eh?"``)``, ``1``)``, format ``=`` ``"xx"``)`` `` `` ``## return our value(s) via in_rows`` `` `[`in_rows`](https://pharmaverse.github.io/rtables/reference/in_rows.md)`(``.list ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``ok ``=`` ``out``)``, .labels ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``ok ``=`` ``lbl``)``)`` ``}`
 
 We can then use this function in either capacity:
 
-``` r
-
-lyt <- basic_table() |>
-  split_cols_by("ARM") |>
-  split_rows_by("STRATA1", split_fun = keep_split_levels(c("A", "B"))) |>
-  summarize_row_groups("STRATA1", cfun = template_acfun) |>
-  split_rows_by("SEX", split_fun = keep_split_levels(c("F", "M"))) |>
-  summarize_row_groups("SEX", cfun = template_acfun) |>
-  analyze("AGE", afun = template_acfun)
-
-build_table(lyt, ex_adsl)
-#                       A: Drug X   B: Placebo   C: Combination
-# —————————————————————————————————————————————————————————————
-# A                       what?        eh?            eh?      
-#   F                     what?        huh?           eh?      
-#     cool label, bro      eh?         eh?            huh?     
-#   M                     what?       what?          what?     
-#     cool label, bro      eh?         eh?           what?     
-# B                       huh?         huh?           eh?      
-#   F                      eh?         huh?           eh?      
-#     cool label, bro     what?       what?          what?     
-#   M                     huh?         huh?           eh?      
-#     cool label, bro      eh?         huh?           eh?
-```
+`lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"STRATA1"``, split_fun ``=`` `[`keep_split_levels`](https://pharmaverse.github.io/rtables/reference/split_funcs.md)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"A"``, ``"B"``)``)``)`` ``|>`` `` `[`summarize_row_groups`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md)`(``"STRATA1"``, cfun ``=`` ``template_acfun``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"SEX"``, split_fun ``=`` `[`keep_split_levels`](https://pharmaverse.github.io/rtables/reference/split_funcs.md)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"F"``, ``"M"``)``)``)`` ``|>`` `` `[`summarize_row_groups`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md)`(``"SEX"``, cfun ``=`` ``template_acfun``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"AGE"``, afun ``=`` ``template_acfun``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt``, ``ex_adsl``)`` ``# A: Drug X B: Placebo C: Combination`` ``# —————————————————————————————————————————————————————————————`` ``# A what? eh? eh? `` ``# F what? huh? eh? `` ``# cool label, bro eh? eh? huh? `` ``# M what? what? what? `` ``# cool label, bro eh? eh? what? `` ``# B huh? huh? eh? `` ``# F eh? huh? eh? `` ``# cool label, bro what? what? what? `` ``# M huh? huh? eh? `` ``# cool label, bro eh? huh? eh?`
 
 In light of the above, we will - without loss of generality - discuss
 analysis functions exclusively for the remainder of this guide with the

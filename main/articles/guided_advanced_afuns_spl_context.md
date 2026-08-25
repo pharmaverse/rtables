@@ -86,12 +86,7 @@ portion of the intermediate guided tour. In that function we used
 `cur_col_id` to indicate column, but using `cur_col_split` and/or
 `cur_col_split_value` is more robust, as follows:
 
-``` r
-
-in_risk_diff <- function(spl_context) {
-  any(grepl("Risk Differences", spl_context$cur_col_split_value[1]))
-}
-```
+`in_risk_diff`` ``<-`` ``function``(``spl_context``)`` ``{`` `` `[`any`](https://rdrr.io/r/base/any.html)`(`[`grepl`](https://rdrr.io/r/base/grep.html)`(``"Risk Differences"``, ``spl_context``$``cur_col_split_value``[``1``]``)``)`` ``}`
 
 We can use the first element of the `cur_col_id` column of the split
 context because as noted above, the column information columns are
@@ -106,52 +101,12 @@ Assuming two desired behaviors depending on column position (e.g.,
 primary or risk difference column), a general template for a
 conditional-on-column `afun` is:
 
-``` r
-
-col_condition <- function(spl_context) {
-  ## return TRUE or FALSE
-}
-
-col_cond_afun_template1 <- function(df, .var, ..., .spl_context) {
-  ## shared processing
-
-  if (col_condition(.spl_context)) {
-    ## alternate behavior
-
-    ## data processing
-
-    ## value calculation
-
-    ## determine cell formats, etc
-  } else {
-    ## primary behavior
-
-    ## data processing
-
-    ## value calculation
-
-    ## determine cell formats, etc
-  }
-
-  ## label calculation, etc if necessary
-
-  in_rows(val_list, .labels = lbl_vector, .formats = format_vector)
-}
-```
+`col_condition`` ``<-`` ``function``(``spl_context``)`` ``{`` `` ``## return TRUE or FALSE`` ``}`` `` ``col_cond_afun_template1`` ``<-`` ``function``(``df``, ``.var``, ``...``, ``.spl_context``)`` ``{`` `` ``## shared processing`` `` `` ``if`` ``(``col_condition``(``.spl_context``)``)`` ``{`` `` ``## alternate behavior`` `` `` ``## data processing`` `` `` ``## value calculation`` `` `` ``## determine cell formats, etc`` `` ``}`` ``else`` ``{`` `` ``## primary behavior`` `` `` ``## data processing`` `` `` ``## value calculation`` `` `` ``## determine cell formats, etc`` `` ``}`` `` `` ``## label calculation, etc if necessary`` `` `` `[`in_rows`](https://pharmaverse.github.io/rtables/reference/in_rows.md)`(``val_list``, .labels ``=`` ``lbl_vector``, .formats ``=`` ``format_vector``)`` ``}`
 
 Or, alternatively if we have two existing `afun`s that each fully
 encapsulate the desired behavior for one of the conditions,
 
-``` r
-
-col_cond_afun_template2 <- function(df, .var, ..., .spl_context) {
-  if (col_condition(.spl_context)) {
-    alt_behavior_afun(df, .var, ..., .spl_context = .spl_context)
-  } else {
-    main_behavior_afun(df, .var, ..., .spl_context = .spl_context)
-  }
-}
-```
+`col_cond_afun_template2`` ``<-`` ``function``(``df``, ``.var``, ``...``, ``.spl_context``)`` ``{`` `` ``if`` ``(``col_condition``(``.spl_context``)``)`` ``{`` `` ``alt_behavior_afun``(``df``, ``.var``, ``...``, .spl_context ``=`` ``.spl_context``)`` `` ``}`` ``else`` ``{`` `` ``main_behavior_afun``(``df``, ``.var``, ``...``, .spl_context ``=`` ``.spl_context``)`` `` ``}`` ``}`
 
 We note that both of the approaches above would be straightforward to
 extend to more than two conditional behaviors by utilizing a condition
@@ -193,77 +148,9 @@ We will use the fact that the column subsetting vectors are included in
 the split context by their “col ids”, which currently are constructed by
 pasting the split values (only) collapsed with “.”:
 
-``` r
-
-basic_get_ref <- function(ref_path, spl_context) {
-  facet_dat <- spl_context$full_parent_df[[NROW(spl_context)]]
-
-  ref_col_id <- paste(ref_path[seq(2, length(ref_path), by = 2)])
-
-  ref_subset_vec <- spl_context[[ref_col_id]][[NROW(spl_context)]]
-
-  ref_dat <- facet_dat[ref_subset_vec, ]
-
-  list(ref_group = ref_dat, in_ref_col = ref_col_id == spl_context$cur_col_id[[1]])
-}
-```
+`basic_get_ref`` ``<-`` ``function``(``ref_path``, ``spl_context``)`` ``{`` `` ``facet_dat`` ``<-`` ``spl_context``$``full_parent_df``[[`[`NROW`](https://rdrr.io/r/base/nrow.html)`(``spl_context``)``]``]`` `` `` ``ref_col_id`` ``<-`` `[`paste`](https://rdrr.io/r/base/paste.html)`(``ref_path``[`[`seq`](https://rdrr.io/r/base/seq.html)`(``2``, `[`length`](https://rdrr.io/r/base/length.html)`(``ref_path``)``, by ``=`` ``2``)``]``)`` `` `` ``ref_subset_vec`` ``<-`` ``spl_context``[[``ref_col_id``]``]``[[`[`NROW`](https://rdrr.io/r/base/nrow.html)`(``spl_context``)``]``]`` `` `` ``ref_dat`` ``<-`` ``facet_dat``[``ref_subset_vec``, ``]`` `` `` `[`list`](https://rdrr.io/r/base/list.html)`(``ref_group ``=`` ``ref_dat``, in_ref_col ``=`` ``ref_col_id`` ``==`` ``spl_context``$``cur_col_id``[[``1``]``]``)`` ``}`
 
 We can see that this is working via a diagnostic table that shows us
 what is coming out of that function:
 
-``` r
-
-diag_afun <- function(df, .spl_context, ref_path) {
-  ref_info <- basic_get_ref(ref_path, .spl_context)
-
-  in_rows(
-    data_dim = dim(df),
-    ref_dim = dim(ref_info$ref_group),
-    in_ref_col = ref_info$in_ref_col,
-    .formats = c(
-      data_dim = "xx, xx",
-      ref_dim = "xx, xx",
-      in_ref_col = "xx"
-    )
-  )
-}
-
-
-lyt <- basic_table() |>
-  split_cols_by("ARM") |>
-  split_rows_by("STRATA1") |>
-  split_rows_by("SEX", split_fun = keep_split_levels(c("F", "M"))) |>
-  analyze("AGE", diag_afun, extra_args = list(ref_path = c("ARM", "B: Placebo")))
-
-
-build_table(lyt, ex_adsl)
-#                  A: Drug X   B: Placebo   C: Combination
-# ————————————————————————————————————————————————————————
-# A                                                       
-#   F                                                     
-#     data_dim      21, 31       24, 31         18, 31    
-#     ref_dim       24, 31       24, 31         24, 31    
-#     in_ref_col     FALSE        TRUE          FALSE     
-#   M                                                     
-#     data_dim      16, 31       19, 31         20, 31    
-#     ref_dim       19, 31       19, 31         19, 31    
-#     in_ref_col     FALSE        TRUE          FALSE     
-# B                                                       
-#   F                                                     
-#     data_dim      25, 31       27, 31         21, 31    
-#     ref_dim       27, 31       27, 31         27, 31    
-#     in_ref_col     FALSE        TRUE          FALSE     
-#   M                                                     
-#     data_dim      21, 31       17, 31         21, 31    
-#     ref_dim       17, 31       17, 31         17, 31    
-#     in_ref_col     FALSE        TRUE          FALSE     
-# C                                                       
-#   F                                                     
-#     data_dim      33, 31       26, 31         27, 31    
-#     ref_dim       26, 31       26, 31         26, 31    
-#     in_ref_col     FALSE        TRUE          FALSE     
-#   M                                                     
-#     data_dim      14, 31       19, 31         19, 31    
-#     ref_dim       19, 31       19, 31         19, 31    
-#     in_ref_col     FALSE        TRUE          FALSE
-```
+`diag_afun`` ``<-`` ``function``(``df``, ``.spl_context``, ``ref_path``)`` ``{`` `` ``ref_info`` ``<-`` ``basic_get_ref``(``ref_path``, ``.spl_context``)`` `` `` `[`in_rows`](https://pharmaverse.github.io/rtables/reference/in_rows.md)`(`` `` data_dim ``=`` `[`dim`](https://rdrr.io/r/base/dim.html)`(``df``)``,`` `` ref_dim ``=`` `[`dim`](https://rdrr.io/r/base/dim.html)`(``ref_info``$``ref_group``)``,`` `` in_ref_col ``=`` ``ref_info``$``in_ref_col``,`` `` .formats ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(`` `` data_dim ``=`` ``"xx, xx"``,`` `` ref_dim ``=`` ``"xx, xx"``,`` `` in_ref_col ``=`` ``"xx"`` `` ``)`` `` ``)`` ``}`` `` `` ``lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"STRATA1"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"SEX"``, split_fun ``=`` `[`keep_split_levels`](https://pharmaverse.github.io/rtables/reference/split_funcs.md)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"F"``, ``"M"``)``)``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"AGE"``, ``diag_afun``, extra_args ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``ref_path ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"ARM"``, ``"B: Placebo"``)``)``)`` `` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt``, ``ex_adsl``)`` ``# A: Drug X B: Placebo C: Combination`` ``# ————————————————————————————————————————————————————————`` ``# A `` ``# F `` ``# data_dim 21, 31 24, 31 18, 31 `` ``# ref_dim 24, 31 24, 31 24, 31 `` ``# in_ref_col FALSE TRUE FALSE `` ``# M `` ``# data_dim 16, 31 19, 31 20, 31 `` ``# ref_dim 19, 31 19, 31 19, 31 `` ``# in_ref_col FALSE TRUE FALSE `` ``# B `` ``# F `` ``# data_dim 25, 31 27, 31 21, 31 `` ``# ref_dim 27, 31 27, 31 27, 31 `` ``# in_ref_col FALSE TRUE FALSE `` ``# M `` ``# data_dim 21, 31 17, 31 21, 31 `` ``# ref_dim 17, 31 17, 31 17, 31 `` ``# in_ref_col FALSE TRUE FALSE `` ``# C `` ``# F `` ``# data_dim 33, 31 26, 31 27, 31 `` ``# ref_dim 26, 31 26, 31 26, 31 `` ``# in_ref_col FALSE TRUE FALSE `` ``# M `` ``# data_dim 14, 31 19, 31 19, 31 `` ``# ref_dim 19, 31 19, 31 19, 31 `` ``# in_ref_col FALSE TRUE FALSE`

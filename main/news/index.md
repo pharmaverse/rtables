@@ -1,6 +1,6 @@
 # Changelog
 
-## rtables 0.6.16.9006
+## rtables 0.6.16.9007
 
 ### New Features
 

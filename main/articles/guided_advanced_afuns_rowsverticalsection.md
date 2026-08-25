@@ -36,53 +36,11 @@ passing these to the `RowsVerticalSection` constructor directly. For
 those using earlier versions of `rtables` we provide example
 `RowsVerticalSection` combination code in Appendix A.
 
-``` r
+[`library`](https://rdrr.io/r/base/library.html)`(`[`rtables`](https://github.com/pharmaverse/rtables)`)`` ``# Loading required package: formatters`` ``# `` ``# Attaching package: 'formatters'`` ``# The following object is masked from 'package:base':`` ``# `` ``# %||%`` ``# `` ``# Attaching package: 'rtables'`` ``# The following object is masked from 'package:utils':`` ``# `` ``# str`` ``rvs1`` ``<-`` `[`in_rows`](https://pharmaverse.github.io/rtables/reference/in_rows.md)`(``what ``=`` ``17.123``, .formats ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``what ``=`` ``"xx.x"``)``)`` ``rvs1`` ``# RowsVerticalSection (in_rows) object print method:`` ``# ----------------------------`` ``# row_name formatted_cell indent_mod row_label`` ``# 1 what 17.1 0 what`
 
-library(rtables)
-# Loading required package: formatters
-# 
-# Attaching package: 'formatters'
-# The following object is masked from 'package:base':
-# 
-#     %||%
-# 
-# Attaching package: 'rtables'
-# The following object is masked from 'package:utils':
-# 
-#     str
-rvs1 <- in_rows(what = 17.123, .formats = c(what = "xx.x"))
-rvs1
-# RowsVerticalSection (in_rows) object print method:
-# ----------------------------
-#   row_name formatted_cell indent_mod row_label
-# 1     what           17.1          0      what
-```
+`rvs2`` ``<-`` `[`in_rows`](https://pharmaverse.github.io/rtables/reference/in_rows.md)`(`` `` ok ``=`` ``"hi"``,`` `` nah ``=`` ``"bye"``,`` `` .indent_mods ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``ok ``=`` ``1``, nah ``=`` ``-``1``)``, .row_footnotes ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``nah ``=`` ``"I guess not ..."``)`` ``)`` ``rvs2`` ``# RowsVerticalSection (in_rows) object print method:`` ``# ----------------------------`` ``# row_name formatted_cell indent_mod row_label`` ``# 1 ok hi 1 ok`` ``# 2 nah bye -1 nah`
 
-``` r
-
-rvs2 <- in_rows(
-  ok = "hi",
-  nah = "bye",
-  .indent_mods = c(ok = 1, nah = -1), .row_footnotes = list(nah = "I guess not ...")
-)
-rvs2
-# RowsVerticalSection (in_rows) object print method:
-# ----------------------------
-#   row_name formatted_cell indent_mod row_label
-# 1       ok             hi          1        ok
-# 2      nah            bye         -1       nah
-```
-
-``` r
-
-c(rvs1, rvs2)
-# RowsVerticalSection (in_rows) object print method:
-# ----------------------------
-#   row_name formatted_cell indent_mod row_label
-# 1     what           17.1          0      what
-# 2       ok             hi          1        ok
-# 3      nah            bye         -1       nah
-```
+[`c`](https://rdrr.io/r/base/c.html)`(``rvs1``, ``rvs2``)`` ``# RowsVerticalSection (in_rows) object print method:`` ``# ----------------------------`` ``# row_name formatted_cell indent_mod row_label`` ``# 1 what 17.1 0 what`` ``# 2 ok hi 1 ok`` ``# 3 nah bye -1 nah`
 
 ## Combining Existing Analysis Functions
 
@@ -106,61 +64,7 @@ Our first form of combining existing analysis functions is to simply
 selectively call one or the other depending on column position. We can
 build a risk difference harness using this method:
 
-``` r
-
-library(rtables)
-placeholder_rd_afun <- function(df, .var, .spl_context, ref_path) {
-  val <- tail(.spl_context$cur_col_split_val[[1]], 1)
-  levs <- levels(df[[.var]])
-  len <- length(levs)
-
-  lst <- setNames(rep(val, len), levs)
-  in_rows(.list = lst, .formats = setNames(rep("xx", len), levs))
-}
-
-comb_afun <- function(df, .var, .spl_context, ref_path) {
-  if (grepl("difference", .spl_context$cur_col_id[[1]], ignore.case = TRUE)) {
-    ret <- placeholder_rd_afun(df, .var, .spl_context, ref_path)
-  } else {
-    ret <- simple_analysis(df[[.var]])
-  }
-  ret
-}
-
-adsl <- ex_adsl
-adae <- ex_adae
-
-adsl$trt_span <- ifelse(adsl$ARM == "B: Placebo", " ", "Active Treatment")
-adae$trt_span <- ifelse(adae$ARM == "B: Placebo", " ", "Active Treatment")
-adsl$rr_header <- "Risk Differences"
-adae$rr_header <- "Risk Differences"
-adsl$rr_label <- paste(adsl$ARM, "vs B: Placebo")
-adae$rr_label <- paste(adae$ARM, "vs B: Placebo")
-
-trtmap <- data.frame(
-  rr_header = c("Active Treatment", "Active Treatment", " "),
-  ARM = c("A: Drug X", "C: Combination", "B: Placebo")
-)
-
-lyt <- basic_table() |>
-  split_cols_by("trt_span", split_fun = trim_levels_in_group("ARM")) |>
-  split_cols_by("ARM") |>
-  split_cols_by("rr_header", nested = FALSE) |>
-  split_cols_by("rr_label", split_fun = remove_split_levels("B: Placebo vs B: Placebo")) |>
-  analyze("AEBODSYS", afun = comb_afun, extra_args = list(ref_path = c("ARM", "B: Placebo")))
-
-build_table(lyt, adae, adsl)
-#               Active Treatment                                        Risk Differences                   
-#          A: Drug X   C: Combination   B: Placebo   A: Drug X vs B: Placebo   C: Combination vs B: Placebo
-# —————————————————————————————————————————————————————————————————————————————————————————————————————————
-# cl A.1      132           160            130       A: Drug X vs B: Placebo   C: Combination vs B: Placebo
-# cl B.1      56             62             60       A: Drug X vs B: Placebo   C: Combination vs B: Placebo
-# cl B.2      129           143            138       A: Drug X vs B: Placebo   C: Combination vs B: Placebo
-# cl C.1      55             64             63       A: Drug X vs B: Placebo   C: Combination vs B: Placebo
-# cl C.2      48             65             53       A: Drug X vs B: Placebo   C: Combination vs B: Placebo
-# cl D.1      127           135            106       A: Drug X vs B: Placebo   C: Combination vs B: Placebo
-# cl D.2      62             74             72       A: Drug X vs B: Placebo   C: Combination vs B: Placebo
-```
+[`library`](https://rdrr.io/r/base/library.html)`(`[`rtables`](https://github.com/pharmaverse/rtables)`)`` ``placeholder_rd_afun`` ``<-`` ``function``(``df``, ``.var``, ``.spl_context``, ``ref_path``)`` ``{`` `` ``val`` ``<-`` `[`tail`](https://pharmaverse.github.io/rtables/reference/head_tail.md)`(``.spl_context``$``cur_col_split_val``[[``1``]``]``, ``1``)`` `` ``levs`` ``<-`` `[`levels`](https://rdrr.io/r/base/levels.html)`(``df``[[``.var``]``]``)`` `` ``len`` ``<-`` `[`length`](https://rdrr.io/r/base/length.html)`(``levs``)`` `` `` ``lst`` ``<-`` `[`setNames`](https://rdrr.io/r/stats/setNames.html)`(`[`rep`](https://rdrr.io/r/base/rep.html)`(``val``, ``len``)``, ``levs``)`` `` `[`in_rows`](https://pharmaverse.github.io/rtables/reference/in_rows.md)`(``.list ``=`` ``lst``, .formats ``=`` `[`setNames`](https://rdrr.io/r/stats/setNames.html)`(`[`rep`](https://rdrr.io/r/base/rep.html)`(``"xx"``, ``len``)``, ``levs``)``)`` ``}`` `` ``comb_afun`` ``<-`` ``function``(``df``, ``.var``, ``.spl_context``, ``ref_path``)`` ``{`` `` ``if`` ``(`[`grepl`](https://rdrr.io/r/base/grep.html)`(``"difference"``, ``.spl_context``$``cur_col_id``[[``1``]``]``, ignore.case ``=`` ``TRUE``)``)`` ``{`` `` ``ret`` ``<-`` ``placeholder_rd_afun``(``df``, ``.var``, ``.spl_context``, ``ref_path``)`` `` ``}`` ``else`` ``{`` `` ``ret`` ``<-`` `[`simple_analysis`](https://pharmaverse.github.io/rtables/reference/rtinner.md)`(``df``[[``.var``]``]``)`` `` ``}`` `` ``ret`` ``}`` `` ``adsl`` ``<-`` ``ex_adsl`` ``adae`` ``<-`` ``ex_adae`` `` ``adsl``$``trt_span`` ``<-`` `[`ifelse`](https://rdrr.io/r/base/ifelse.html)`(``adsl``$``ARM`` ``==`` ``"B: Placebo"``, ``" "``, ``"Active Treatment"``)`` ``adae``$``trt_span`` ``<-`` `[`ifelse`](https://rdrr.io/r/base/ifelse.html)`(``adae``$``ARM`` ``==`` ``"B: Placebo"``, ``" "``, ``"Active Treatment"``)`` ``adsl``$``rr_header`` ``<-`` ``"Risk Differences"`` ``adae``$``rr_header`` ``<-`` ``"Risk Differences"`` ``adsl``$``rr_label`` ``<-`` `[`paste`](https://rdrr.io/r/base/paste.html)`(``adsl``$``ARM``, ``"vs B: Placebo"``)`` ``adae``$``rr_label`` ``<-`` `[`paste`](https://rdrr.io/r/base/paste.html)`(``adae``$``ARM``, ``"vs B: Placebo"``)`` `` ``trtmap`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(`` `` rr_header ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"Active Treatment"``, ``"Active Treatment"``, ``" "``)``,`` `` ARM ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"A: Drug X"``, ``"C: Combination"``, ``"B: Placebo"``)`` ``)`` `` ``lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"trt_span"``, split_fun ``=`` `[`trim_levels_in_group`](https://pharmaverse.github.io/rtables/reference/split_funcs.md)`(``"ARM"``)``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"rr_header"``, nested ``=`` ``FALSE``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"rr_label"``, split_fun ``=`` `[`remove_split_levels`](https://pharmaverse.github.io/rtables/reference/split_funcs.md)`(``"B: Placebo vs B: Placebo"``)``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"AEBODSYS"``, afun ``=`` ``comb_afun``, extra_args ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``ref_path ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"ARM"``, ``"B: Placebo"``)``)``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt``, ``adae``, ``adsl``)`` ``# Active Treatment Risk Differences `` ``# A: Drug X C: Combination B: Placebo A: Drug X vs B: Placebo C: Combination vs B: Placebo`` ``# —————————————————————————————————————————————————————————————————————————————————————————————————————————`` ``# cl A.1 132 160 130 A: Drug X vs B: Placebo C: Combination vs B: Placebo`` ``# cl B.1 56 62 60 A: Drug X vs B: Placebo C: Combination vs B: Placebo`` ``# cl B.2 129 143 138 A: Drug X vs B: Placebo C: Combination vs B: Placebo`` ``# cl C.1 55 64 63 A: Drug X vs B: Placebo C: Combination vs B: Placebo`` ``# cl C.2 48 65 53 A: Drug X vs B: Placebo C: Combination vs B: Placebo`` ``# cl D.1 127 135 106 A: Drug X vs B: Placebo C: Combination vs B: Placebo`` ``# cl D.2 62 74 72 A: Drug X vs B: Placebo C: Combination vs B: Placebo`
 
 Note: while we constructed the spanning variables, risk difference
 labels, treatment map and column structure layout instructions manually
@@ -177,75 +81,9 @@ example analysis functions to stack here, this approach only really
 makes sense when at least one analysis function is pre-existing, such as
 those provided by `tern` and `junco`.
 
-``` r
+`afun_1`` ``<-`` ``function``(``df``, ``.var``)`` ``{`` `` ``dat_vec`` ``<-`` ``df``[[``.var``]``]`` `` `[`in_rows`](https://pharmaverse.github.io/rtables/reference/in_rows.md)`(``"Total Events"`` ``=`` `[`sum`](https://rdrr.io/r/base/sum.html)`(``!`[`is.na`](https://rdrr.io/r/base/NA.html)`(``dat_vec``)``)``)`` ``}`` `` ``afun_2`` ``<-`` ``function``(``df``, ``.var``, ``.N_col``, ``id``)`` ``{`` `` ``non_na`` ``<-`` ``!`[`is.na`](https://rdrr.io/r/base/NA.html)`(``df``[[``.var``]``]``)`` `` ``count`` ``<-`` `[`length`](https://rdrr.io/r/base/length.html)`(`[`unique`](https://rdrr.io/r/base/unique.html)`(``df``[[``id``]``]``)``)`` `` `[`in_rows`](https://pharmaverse.github.io/rtables/reference/in_rows.md)`(``"Unique Patients"`` ``=`` ``count`` ``*`` `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``1`` ``/`` ``.N_col``)``, .formats ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"Unique Patients"`` ``=`` ``"xx (xx.x%)"``)``)`` ``}`` `` ``stacked_afun`` ``<-`` ``function``(``df``, ``.var``, ``.N_col``, ``id``)`` ``{`` `` ``events_rvs`` ``<-`` ``afun_1``(``df``, ``.var``)`` `` ``pats_rvs`` ``<-`` ``afun_2``(``df``, ``.var``, ``.N_col``, ``id``)`` `` `[`c`](https://rdrr.io/r/base/c.html)`(``events_rvs``, ``pats_rvs``)`` ``}`
 
-afun_1 <- function(df, .var) {
-  dat_vec <- df[[.var]]
-  in_rows("Total Events" = sum(!is.na(dat_vec)))
-}
-
-afun_2 <- function(df, .var, .N_col, id) {
-  non_na <- !is.na(df[[.var]])
-  count <- length(unique(df[[id]]))
-  in_rows("Unique Patients" = count * c(1, 1 / .N_col), .formats = c("Unique Patients" = "xx (xx.x%)"))
-}
-
-stacked_afun <- function(df, .var, .N_col, id) {
-  events_rvs <- afun_1(df, .var)
-  pats_rvs <- afun_2(df, .var, .N_col, id)
-  c(events_rvs, pats_rvs)
-}
-```
-
-``` r
-
-lyt <- basic_table() |>
-  split_cols_by("ARM") |>
-  split_rows_by("AEBODSYS", split_fun = trim_levels_in_group("AEDECOD")) |>
-  split_rows_by("AEDECOD") |>
-  analyze("STUDYID", afun = stacked_afun, extra_args = list(id = "USUBJID"))
-
-build_table(lyt, ex_adae, ex_adsl)
-#                       A: Drug X    B: Placebo   C: Combination
-# ——————————————————————————————————————————————————————————————
-# cl A.1                                                        
-#   dcd A.1.1.1.1                                               
-#     Total Events          64           62             88      
-#     Unique Patients   50 (37.3%)   45 (33.6%)     63 (47.7%)  
-#   dcd A.1.1.1.2                                               
-#     Total Events          68           68             72      
-#     Unique Patients   48 (35.8%)   48 (35.8%)     50 (37.9%)  
-# cl B.1                                                        
-#   dcd B.1.1.1.1                                               
-#     Total Events          56           60             62      
-#     Unique Patients   47 (35.1%)   49 (36.6%)     43 (32.6%)  
-# cl B.2                                                        
-#   dcd B.2.1.2.1                                               
-#     Total Events          65           62             66      
-#     Unique Patients   49 (36.6%)   44 (32.8%)     52 (39.4%)  
-#   dcd B.2.2.3.1                                               
-#     Total Events          64           76             77      
-#     Unique Patients   48 (35.8%)   54 (40.3%)     51 (38.6%)  
-# cl C.1                                                        
-#   dcd C.1.1.1.3                                               
-#     Total Events          55           63             64      
-#     Unique Patients   43 (32.1%)   46 (34.3%)     43 (32.6%)  
-# cl C.2                                                        
-#   dcd C.2.1.2.1                                               
-#     Total Events          48           53             65      
-#     Unique Patients   35 (26.1%)   48 (35.8%)     55 (41.7%)  
-# cl D.1                                                        
-#   dcd D.1.1.1.1                                               
-#     Total Events          61           51             71      
-#     Unique Patients   50 (37.3%)   42 (31.3%)     51 (38.6%)  
-#   dcd D.1.1.4.2                                               
-#     Total Events          66           55             64      
-#     Unique Patients   48 (35.8%)   42 (31.3%)     50 (37.9%)  
-# cl D.2                                                        
-#   dcd D.2.1.5.3                                               
-#     Total Events          62           72             74      
-#     Unique Patients   47 (35.1%)   58 (43.3%)     57 (43.2%)
-```
+`lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"AEBODSYS"``, split_fun ``=`` `[`trim_levels_in_group`](https://pharmaverse.github.io/rtables/reference/split_funcs.md)`(``"AEDECOD"``)``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"AEDECOD"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"STUDYID"``, afun ``=`` ``stacked_afun``, extra_args ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``id ``=`` ``"USUBJID"``)``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt``, ``ex_adae``, ``ex_adsl``)`` ``# A: Drug X B: Placebo C: Combination`` ``# ——————————————————————————————————————————————————————————————`` ``# cl A.1 `` ``# dcd A.1.1.1.1 `` ``# Total Events 64 62 88 `` ``# Unique Patients 50 (37.3%) 45 (33.6%) 63 (47.7%) `` ``# dcd A.1.1.1.2 `` ``# Total Events 68 68 72 `` ``# Unique Patients 48 (35.8%) 48 (35.8%) 50 (37.9%) `` ``# cl B.1 `` ``# dcd B.1.1.1.1 `` ``# Total Events 56 60 62 `` ``# Unique Patients 47 (35.1%) 49 (36.6%) 43 (32.6%) `` ``# cl B.2 `` ``# dcd B.2.1.2.1 `` ``# Total Events 65 62 66 `` ``# Unique Patients 49 (36.6%) 44 (32.8%) 52 (39.4%) `` ``# dcd B.2.2.3.1 `` ``# Total Events 64 76 77 `` ``# Unique Patients 48 (35.8%) 54 (40.3%) 51 (38.6%) `` ``# cl C.1 `` ``# dcd C.1.1.1.3 `` ``# Total Events 55 63 64 `` ``# Unique Patients 43 (32.1%) 46 (34.3%) 43 (32.6%) `` ``# cl C.2 `` ``# dcd C.2.1.2.1 `` ``# Total Events 48 53 65 `` ``# Unique Patients 35 (26.1%) 48 (35.8%) 55 (41.7%) `` ``# cl D.1 `` ``# dcd D.1.1.1.1 `` ``# Total Events 61 51 71 `` ``# Unique Patients 50 (37.3%) 42 (31.3%) 51 (38.6%) `` ``# dcd D.1.1.4.2 `` ``# Total Events 66 55 64 `` ``# Unique Patients 48 (35.8%) 42 (31.3%) 50 (37.9%) `` ``# cl D.2 `` ``# dcd D.2.1.5.3 `` ``# Total Events 62 72 74 `` ``# Unique Patients 47 (35.1%) 58 (43.3%) 57 (43.2%)`
 
 Note, some care is required, for example
 
@@ -268,54 +106,14 @@ counts for each final study status (`EOSSTT`), and then provide detailed
 counts for each reason for discontinuation (`DCSREAS`) under only the
 `"DISCONTINUED"` value.
 
-``` r
-
-afun_count_lbl <- function(df, .var, lbl) {
-  in_rows(sum(!is.na(df[[.var]])), .names = lbl)
-}
-basic_two_tier <- function(df, .var, .spl_context, detail_var, detail_level) {
-  values <- lapply(
-    levels(df[[.var]]),
-    function(lvl) {
-      dat <- df[df[[.var]] == lvl, ]
-      rvs_out <- afun_count_lbl(dat, .var, lvl)
-      if (lvl %in% detail_level) {
-        det_rvs <- simple_analysis(dat[[detail_var]])
-        indent_mod(det_rvs) <- 1
-        rvs_out <- c(rvs_out, det_rvs)
-      }
-      rvs_out
-    }
-  )
-  ret <- do.call(c, values)
-  ret
-}
-```
+`afun_count_lbl`` ``<-`` ``function``(``df``, ``.var``, ``lbl``)`` ``{`` `` `[`in_rows`](https://pharmaverse.github.io/rtables/reference/in_rows.md)`(`[`sum`](https://rdrr.io/r/base/sum.html)`(``!`[`is.na`](https://rdrr.io/r/base/NA.html)`(``df``[[``.var``]``]``)``)``, .names ``=`` ``lbl``)`` ``}`` ``basic_two_tier`` ``<-`` ``function``(``df``, ``.var``, ``.spl_context``, ``detail_var``, ``detail_level``)`` ``{`` `` ``values`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(`` `` `[`levels`](https://rdrr.io/r/base/levels.html)`(``df``[[``.var``]``]``)``,`` `` ``function``(``lvl``)`` ``{`` `` ``dat`` ``<-`` ``df``[``df``[[``.var``]``]`` ``==`` ``lvl``, ``]`` `` ``rvs_out`` ``<-`` ``afun_count_lbl``(``dat``, ``.var``, ``lvl``)`` `` ``if`` ``(``lvl`` `[`%in%`](https://rdrr.io/r/base/match.html)` ``detail_level``)`` ``{`` `` ``det_rvs`` ``<-`` `[`simple_analysis`](https://pharmaverse.github.io/rtables/reference/rtinner.md)`(``dat``[[``detail_var``]``]``)`` `` `[`indent_mod`](https://pharmaverse.github.io/rtables/reference/int_methods.md)`(``det_rvs``)`` ``<-`` ``1`` `` ``rvs_out`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``rvs_out``, ``det_rvs``)`` `` ``}`` `` ``rvs_out`` `` ``}`` `` ``)`` `` ``ret`` ``<-`` `[`do.call`](https://rdrr.io/r/base/do.call.html)`(``c``, ``values``)`` `` ``ret`` ``}`
 
 Here we use a simple counting function separately for each level in
 `.var` (`EOSSTT` in this case), and then - only for the `DISCONTINUED`
 level, stack the result of `simple_analysis` for our detail variable
 (`DCSREAS` for our table).
 
-``` r
-
-lyt <- basic_table() |>
-  split_cols_by("ARM") |>
-  analyze("EOSSTT", afun = basic_two_tier, extra_args = list(detail_var = "DCSREAS", detail_level = "DISCONTINUED"))
-
-build_table(lyt, ex_adsl)
-#                                   A: Drug X   B: Placebo   C: Combination
-# —————————————————————————————————————————————————————————————————————————
-# COMPLETED                            69           69             72      
-# DISCONTINUED                         38           43             39      
-#   ADVERSE EVENT                       6           6              7       
-#   LACK OF EFFICACY                   11           10             6       
-#   PHYSICIAN DECISION                  3           8              6       
-#   PROTOCOL VIOLATION                  6           9              6       
-#   WITHDRAWAL BY PARENT/GUARDIAN       8           2              4       
-#   WITHDRAWAL BY SUBJECT               4           8              10      
-# ONGOING                              27           22             21
-```
+`lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"EOSSTT"``, afun ``=`` ``basic_two_tier``, extra_args ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``detail_var ``=`` ``"DCSREAS"``, detail_level ``=`` ``"DISCONTINUED"``)``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt``, ``ex_adsl``)`` ``# A: Drug X B: Placebo C: Combination`` ``# —————————————————————————————————————————————————————————————————————————`` ``# COMPLETED 69 69 72 `` ``# DISCONTINUED 38 43 39 `` ``# ADVERSE EVENT 6 6 7 `` ``# LACK OF EFFICACY 11 10 6 `` ``# PHYSICIAN DECISION 3 8 6 `` ``# PROTOCOL VIOLATION 6 9 6 `` ``# WITHDRAWAL BY PARENT/GUARDIAN 8 2 4 `` ``# WITHDRAWAL BY SUBJECT 4 8 10 `` ``# ONGOING 27 22 21`
 
 Note that for production usage, `junco` provides `a_two_tier` for this
 purpose which is preferred to creating our own combination afun from
@@ -334,34 +132,4 @@ is not guaranteed to be kept in sync with `rtables`’ exported version of
 `c.RowsVerticalSection` and should be used for illustrative and
 back-porting purposes only.
 
-``` r
-
-c.RowsVerticalSection <- function(...) {
-  lst <- list(...)
-  if (!all(vapply(lst, function(x) inherits(x, "RowsVerticalSection"), TRUE))) {
-    stop("Cannot use c() to combine RowsVerticalSection objects with objects of other classes")
-  }
-
-  out <- NextMethod(generic = "c")
-  out <- RowsVerticalSection(
-    out,
-    names = comb_attr_w_dflt(lst, "row_names"),
-    labels = comb_attr_w_dflt(lst, "row_labels"),
-    indent_mods = comb_attr_w_dflt(lst, "indent_mods", 0L),
-    formats = comb_attr_w_dflt(lst, "row_formats", "xx"),
-    footnotes = comb_attr_w_dflt(lst, "row_footnotes"),
-    format_na_strs = comb_attr_w_dflt(lst, "row_na_strs", NA_character_)
-  )
-  out
-}
-
-comb_attr_w_dflt <- function(lst, attrname, dflt = NULL) {
-  unlist(
-    lapply(lst, function(x) {
-      attr(x, attrname, exact = TRUE) %||% rep(dflt, length(x))
-    }),
-    recursive = FALSE,
-    use.names = FALSE
-  )
-}
-```
+`c.RowsVerticalSection`` ``<-`` ``function``(``...``)`` ``{`` `` ``lst`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(``...``)`` `` ``if`` ``(``!`[`all`](https://rdrr.io/r/base/all.html)`(`[`vapply`](https://rdrr.io/r/base/lapply.html)`(``lst``, ``function``(``x``)`` `[`inherits`](https://rdrr.io/r/base/class.html)`(``x``, ``"RowsVerticalSection"``)``, ``TRUE``)``)``)`` ``{`` `` `[`stop`](https://rdrr.io/r/base/stop.html)`(``"Cannot use c() to combine RowsVerticalSection objects with objects of other classes"``)`` `` ``}`` `` `` ``out`` ``<-`` `[`NextMethod`](https://rdrr.io/r/base/UseMethod.html)`(``generic ``=`` ``"c"``)`` `` ``out`` ``<-`` ``RowsVerticalSection``(`` `` ``out``,`` `` names ``=`` ``comb_attr_w_dflt``(``lst``, ``"row_names"``)``,`` `` labels ``=`` ``comb_attr_w_dflt``(``lst``, ``"row_labels"``)``,`` `` indent_mods ``=`` ``comb_attr_w_dflt``(``lst``, ``"indent_mods"``, ``0L``)``,`` `` formats ``=`` ``comb_attr_w_dflt``(``lst``, ``"row_formats"``, ``"xx"``)``,`` `` footnotes ``=`` ``comb_attr_w_dflt``(``lst``, ``"row_footnotes"``)``,`` `` format_na_strs ``=`` ``comb_attr_w_dflt``(``lst``, ``"row_na_strs"``, ``NA_character_``)`` `` ``)`` `` ``out`` ``}`` `` ``comb_attr_w_dflt`` ``<-`` ``function``(``lst``, ``attrname``, ``dflt`` ``=`` ``NULL``)`` ``{`` `` `[`unlist`](https://rdrr.io/r/base/unlist.html)`(`` `` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``lst``, ``function``(``x``)`` ``{`` `` `[`attr`](https://rdrr.io/r/base/attr.html)`(``x``, ``attrname``, exact ``=`` ``TRUE``)`` `[`%||%`](https://rdrr.io/pkg/formatters/man/ifnotlen0.html)` `[`rep`](https://rdrr.io/r/base/rep.html)`(``dflt``, `[`length`](https://rdrr.io/r/base/length.html)`(``x``)``)`` `` ``}``)``,`` `` recursive ``=`` ``FALSE``,`` `` use.names ``=`` ``FALSE`` `` ``)`` ``}`

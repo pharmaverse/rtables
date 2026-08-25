@@ -46,24 +46,7 @@ is supplied.
 
 We enter into `build_table` using `debugonce` to see how it works.
 
-``` r
-
-# rtables 0.6.2
-library(rtables)
-debugonce(build_table)
-
-# A very simple layout
-lyt <- basic_table() |>
-  split_rows_by("STRATA1") |>
-  split_rows_by("SEX", split_fun = drop_split_levels) |>
-  split_cols_by("ARM") |>
-  analyze("BMRKR1")
-
-# lyt must be a PreDataTableLayouts object
-is(lyt, "PreDataTableLayouts")
-
-lyt |> build_table(DM)
-```
+`# rtables 0.6.2`` `[`library`](https://rdrr.io/r/base/library.html)`(`[`rtables`](https://github.com/pharmaverse/rtables)`)`` `[`debugonce`](https://rdrr.io/r/base/debug.html)`(``build_table``)`` `` ``# A very simple layout`` ``lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"STRATA1"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"SEX"``, split_fun ``=`` ``drop_split_levels``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"BMRKR1"``)`` `` ``# lyt must be a PreDataTableLayouts object`` `[`is`](https://rdrr.io/r/methods/is.html)`(``lyt``, ``"PreDataTableLayouts"``)`` `` ``lyt`` ``|>`` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``DM``)`
 
 Now let’s look within our `build_table` call. After the initial check
 that the layout is a pre-data table layout, it checks if the column
@@ -82,22 +65,7 @@ all data split, i.e. the root split (accessible with `root_spl`), and
 the row splits’ vectors which are iterative splits in the row space. In
 the following, we consider the initial checks and defensive programming.
 
-``` r
-
-## do checks and defensive programming now that we have the data
-lyt <- fix_dyncuts(lyt, df) # Create the splits that depends on data
-lyt <- set_def_child_ord(lyt, df) # With the data I set the same order for all splits
-lyt <- fix_analyze_vis(lyt) # Checks if the analyze last split should be visible
-# If there is only one you will not get the variable name, otherwise you get it if you
-# have multivar. Default is NA. You can do it now only because you are sure to
-# have the whole layout.
-df <- fix_split_vars(lyt, df, char_ok = is.null(col_counts))
-# checks if split vars are present
-
-lyt[] # preserve names - warning if names longer, repeats the name value if only one
-lyt@.Data # might not preserve the names # it works only when it is another class that inherits from lists
-# We suggest doing extensive testing about these behaviors in order to do choose the appropriate one
-```
+`## do checks and defensive programming now that we have the data`` ``lyt`` ``<-`` `[`fix_dyncuts`](https://pharmaverse.github.io/rtables/reference/int_methods.md)`(``lyt``, ``df``)`` ``# Create the splits that depends on data`` ``lyt`` ``<-`` ``set_def_child_ord``(``lyt``, ``df``)`` ``# With the data I set the same order for all splits`` ``lyt`` ``<-`` ``fix_analyze_vis``(``lyt``)`` ``# Checks if the analyze last split should be visible`` ``# If there is only one you will not get the variable name, otherwise you get it if you`` ``# have multivar. Default is NA. You can do it now only because you are sure to`` ``# have the whole layout.`` ``df`` ``<-`` ``fix_split_vars``(``lyt``, ``df``, char_ok ``=`` `[`is.null`](https://rdrr.io/r/base/NULL.html)`(``col_counts``)``)`` ``# checks if split vars are present`` `` ``lyt``[``]`` ``# preserve names - warning if names longer, repeats the name value if only one`` ``lyt``@``.Data`` ``# might not preserve the names # it works only when it is another class that inherits from lists`` ``# We suggest doing extensive testing about these behaviors in order to do choose the appropriate one`
 
 Along with the various checks and defensive programming, we find
 `PreDataAxisLayout` which is a virtual class that both row and column
@@ -116,44 +84,13 @@ represents the column splits and everything else that may be related to
 the columns. In particular, the column counts are calculated in this
 function. The parameter inputs are as follows:
 
-``` r
-
-cinfo <- create_colinfo(
-  lyt, # Main layout with col split info
-  df, # df used for splits and col counts if no alt_counts_df is present
-  rtpos, # TreePos (does not change out of this function)
-  counts = col_counts, # If we want to overwrite the calculations with df/alt_counts_df
-  alt_counts_df = alt_counts_df, # alternative data for col counts
-  total = col_total, # calculated from build_table inputs (nrow of df or alt_counts_df)
-  topleft # topleft information added into build_table
-)
-```
+`cinfo`` ``<-`` ``create_colinfo``(`` `` ``lyt``, ``# Main layout with col split info`` `` ``df``, ``# df used for splits and col counts if no alt_counts_df is present`` `` ``rtpos``, ``# TreePos (does not change out of this function)`` `` counts ``=`` ``col_counts``, ``# If we want to overwrite the calculations with df/alt_counts_df`` `` alt_counts_df ``=`` ``alt_counts_df``, ``# alternative data for col counts`` `` total ``=`` ``col_total``, ``# calculated from build_table inputs (nrow of df or alt_counts_df)`` `` ``topleft`` ``# topleft information added into build_table`` ``)`
 
 `create_colinfo` is in `make_subset_expr.R`. Here, we see that if
 `topleft` is present in `build_table`, it will override the one in
 `lyt`. Entering `create_colinfo`, we will see the following calls:
 
-``` r
-
-clayout <- clayout(lyt) # Extracts column split and info
-
-if (is.null(topleft)) {
-  topleft <- top_left(lyt) # If top_left is not present in build_table, it is taken from lyt
-}
-
-ctree <- coltree(clayout, df = df, rtpos = rtpos) # Main constructor of LayoutColTree
-# The above is referenced as generic and principally represented as
-# setMethod("coltree", "PreDataColLayout", (located in `tree_accessor.R`).
-# This is a call that restructures information from clayout, df, and rtpos
-# to get a more compact column tree layout. Part of this design is related
-# to past implementations.
-
-cexprs <- make_col_subsets(ctree, df) # extracts expressions in a compact fashion.
-# WARNING: removing NAs at this step is automatic. This should
-# be coupled with a warning for NAs in the split (xxx)
-
-colextras <- col_extra_args(ctree) # retrieves extra_args from the tree. It may not be used
-```
+`clayout`` ``<-`` `[`clayout`](https://pharmaverse.github.io/rtables/reference/col_accessors.md)`(``lyt``)`` ``# Extracts column split and info`` `` ``if`` ``(`[`is.null`](https://rdrr.io/r/base/NULL.html)`(``topleft``)``)`` ``{`` `` ``topleft`` ``<-`` `[`top_left`](https://pharmaverse.github.io/rtables/reference/top_left.md)`(``lyt``)`` ``# If top_left is not present in build_table, it is taken from lyt`` ``}`` `` ``ctree`` ``<-`` `[`coltree`](https://pharmaverse.github.io/rtables/reference/col_accessors.md)`(``clayout``, df ``=`` ``df``, rtpos ``=`` ``rtpos``)`` ``# Main constructor of LayoutColTree`` ``# The above is referenced as generic and principally represented as`` ``` # setMethod("coltree", "PreDataColLayout", (located in `tree_accessor.R`). ``` ``# This is a call that restructures information from clayout, df, and rtpos`` ``# to get a more compact column tree layout. Part of this design is related`` ``# to past implementations.`` `` ``cexprs`` ``<-`` ``make_col_subsets``(``ctree``, ``df``)`` ``# extracts expressions in a compact fashion.`` ``# WARNING: removing NAs at this step is automatic. This should`` ``# be coupled with a warning for NAs in the split (xxx)`` `` ``colextras`` ``<-`` `[`col_extra_args`](https://pharmaverse.github.io/rtables/reference/int_methods.md)`(``ctree``)`` ``# retrieves extra_args from the tree. It may not be used`
 
 Next in the function is the determination of the column counts.
 Currently, this happens only at the leaf level, but it can certainly be
@@ -191,19 +128,7 @@ this. Going forward we see how `recursive_applysplit` is applied to each
 split vector. It may be worthwhile to check what this vector looks like
 in our test case.
 
-``` r
-
-# rtables 0.6.2
-# A very simple layout
-lyt <- basic_table() |>
-  split_rows_by("STRATA1") |>
-  split_rows_by("SEX", split_fun = drop_split_levels) |>
-  split_cols_by("ARM") |>
-  analyze("BMRKR1")
-
-rlyt <- rtables:::rlayout(lyt)
-str(rlyt, max.level = 2)
-```
+`# rtables 0.6.2`` ``# A very simple layout`` ``lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"STRATA1"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"SEX"``, split_fun ``=`` ``drop_split_levels``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"BMRKR1"``)`` `` ``rlyt`` ``<-`` ``rtables``:::`[`rlayout`](https://pharmaverse.github.io/rtables/reference/int_methods.md)`(``lyt``)`` `[`str`](https://pharmaverse.github.io/rtables/reference/int_methods.md)`(``rlyt``, max.level ``=`` ``2``)`
 
 ``` c
 Formal class 'PreDataRowLayout' [package "rtables"] with 2 slots

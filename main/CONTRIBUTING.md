@@ -115,11 +115,7 @@ the package, you can apply the package styler automatically and check
 for lint by running the following two lines of code while within the
 file:
 
-``` r
-
-styler:::style_active_file()
-lintr:::addin_lint()
-```
+`styler``:::``style_active_file``(``)`` ``lintr``:::``addin_lint``(``)`
 
 ##### Documentation
 

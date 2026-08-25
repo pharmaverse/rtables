@@ -885,10 +885,7 @@ of the *labels* for the column facets rather than their names. This is
 the split/value pairs of each column split in order concatenated
 together, so it suffices to define
 
-``` r
-
-in_risk_diff <- function(spl_context) grepl("Risk Differences", spl_context$cur_col_id[1])
-```
+`in_risk_diff`` ``<-`` ``function``(``spl_context``)`` `[`grepl`](https://rdrr.io/r/base/grep.html)`(``"Risk Differences"``, ``spl_context``$``cur_col_id``[``1``]``)`
 
 For simplicity, we will not worry about *calculating* risk differences
 here, and simply write an analysis function that emits something
@@ -896,24 +893,7 @@ different to show that it can tell it is in “risk difference mode”.
 
 Thus a very simplistic afun is as follows:
 
-``` r
-
-rr_afun <- function(x, .N_col, .spl_context) {
-  xtbl <- table(x)
-  if (in_risk_diff(.spl_context)) {
-    armlabel <- tail(.spl_context$cur_col_split_val[[1]], 1) # last split value, ie arm
-    armletter <- substr(armlabel, 1, 1)
-    vals <- as.list(rep(paste(armletter, "vs B"), length(xtbl)))
-    fmts <- rep("xx", length(xtbl))
-  } else {
-    vals <- lapply(xtbl, function(x) x * c(1, 1 / .N_col)) ## count and pct
-    fmts <- rep("xx.x (xx.x%)", length(xtbl))
-  }
-  names(vals) <- names(xtbl)
-  names(fmts) <- names(vals)
-  in_rows(.list = vals, .formats = fmts)
-}
-```
+`rr_afun`` ``<-`` ``function``(``x``, ``.N_col``, ``.spl_context``)`` ``{`` `` ``xtbl`` ``<-`` `[`table`](https://rdrr.io/r/base/table.html)`(``x``)`` `` ``if`` ``(``in_risk_diff``(``.spl_context``)``)`` ``{`` `` ``armlabel`` ``<-`` `[`tail`](https://pharmaverse.github.io/rtables/reference/head_tail.md)`(``.spl_context``$``cur_col_split_val``[[``1``]``]``, ``1``)`` ``# last split value, ie arm`` `` ``armletter`` ``<-`` `[`substr`](https://rdrr.io/r/base/substr.html)`(``armlabel``, ``1``, ``1``)`` `` ``vals`` ``<-`` `[`as.list`](https://rdrr.io/r/base/list.html)`(`[`rep`](https://rdrr.io/r/base/rep.html)`(`[`paste`](https://rdrr.io/r/base/paste.html)`(``armletter``, ``"vs B"``)``, `[`length`](https://rdrr.io/r/base/length.html)`(``xtbl``)``)``)`` `` ``fmts`` ``<-`` `[`rep`](https://rdrr.io/r/base/rep.html)`(``"xx"``, `[`length`](https://rdrr.io/r/base/length.html)`(``xtbl``)``)`` `` ``}`` ``else`` ``{`` `` ``vals`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``xtbl``, ``function``(``x``)`` ``x`` ``*`` `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``1`` ``/`` ``.N_col``)``)`` ``## count and pct`` `` ``fmts`` ``<-`` `[`rep`](https://rdrr.io/r/base/rep.html)`(``"xx.x (xx.x%)"``, `[`length`](https://rdrr.io/r/base/length.html)`(``xtbl``)``)`` `` ``}`` `` `[`names`](https://rdrr.io/r/base/names.html)`(``vals``)`` ``<-`` `[`names`](https://rdrr.io/r/base/names.html)`(``xtbl``)`` `` `[`names`](https://rdrr.io/r/base/names.html)`(``fmts``)`` ``<-`` `[`names`](https://rdrr.io/r/base/names.html)`(``vals``)`` `` `[`in_rows`](https://pharmaverse.github.io/rtables/reference/in_rows.md)`(``.list ``=`` ``vals``, .formats ``=`` ``fmts``)`` ``}`
 
 With this we can create a table. We will analyze `BMRKR2` (biomarker 2)
 for the sake of brevity. This is an oversimplifaction, as typically this

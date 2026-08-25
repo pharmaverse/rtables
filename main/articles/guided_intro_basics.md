@@ -45,10 +45,7 @@ Consider a trivial table, with a single column representing all of our
 data. We can analyze `AGE` (a numeric variable) to declare a single row
 displaying the mean of patient ages in our data:
 
-``` r
-
-library(rtables)
-```
+[`library`](https://rdrr.io/r/base/library.html)`(`[`rtables`](https://github.com/pharmaverse/rtables)`)`
 
     ## Loading required package: formatters
 
@@ -66,13 +63,7 @@ library(rtables)
     ## 
     ##     str
 
-``` r
-
-lyt <- basic_table() |>
-  analyze("AGE")
-
-build_table(lyt, ex_adsl)
-```
+`lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"AGE"``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt``, ``ex_adsl``)`
 
     ##        all obs
     ## ——————————————
@@ -81,13 +72,7 @@ build_table(lyt, ex_adsl)
 Alternatively, if we `analyze` `BMRKR2`, a simulated categorical
 biomarker, we get rows with counts for each level:
 
-``` r
-
-lyt2 <- basic_table() |>
-  analyze("BMRKR2")
-
-build_table(lyt2, ex_adsl)
-```
+`lyt2`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"BMRKR2"``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt2``, ``ex_adsl``)`
 
     ##          all obs
     ## ————————————————
@@ -128,14 +113,7 @@ data; in the case of `split_cols_by`, declaring columns.
 For example, we can define a column for each trial arm in our simulated
 data by splitting on `ARM`:
 
-``` r
-
-lyt3 <- basic_table() |>
-  split_cols_by("ARM") |>
-  analyze("BMRKR2")
-
-build_table(lyt3, ex_adsl)
-```
+`lyt3`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"BMRKR2"``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt3``, ``ex_adsl``)`
 
     ##          A: Drug X   B: Placebo   C: Combination
     ## ————————————————————————————————————————————————
@@ -174,14 +152,7 @@ Row facets represent subsets of our data which should be analyzed. For
 example, we might want to analyze patient `BMRKR2` status for each
 gender:
 
-``` r
-
-lyt4 <- basic_table() |>
-  split_rows_by("SEX") |>
-  analyze("BMRKR2")
-
-build_table(lyt4, ex_adsl)
-```
+`lyt4`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"SEX"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"BMRKR2"``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt4``, ``ex_adsl``)`
 
     ##                    all obs
     ## ——————————————————————————
@@ -225,15 +196,7 @@ that:
 We might want an overall count for each gender in addition to those of
 each `BMRKR2` level within those genders:
 
-``` r
-
-lyt5 <- basic_table() |>
-  split_rows_by("SEX") |>
-  summarize_row_groups("SEX") |>
-  analyze("BMRKR2")
-
-build_table(lyt5, ex_adsl)
-```
+`lyt5`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"SEX"``)`` ``|>`` `` `[`summarize_row_groups`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md)`(``"SEX"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"BMRKR2"``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt5``, ``ex_adsl``)`
 
     ##                      all obs  
     ## ——————————————————————————————
@@ -265,16 +228,7 @@ build_table(lyt5, ex_adsl)
 We combine our column splitting, row splitting, group summary, and
 analysis instructions to create a full table layout, like so:
 
-``` r
-
-lyt_basic <- basic_table() |>
-  split_cols_by("ARM") |>
-  split_rows_by("SEX") |>
-  summarize_row_groups("SEX") |>
-  analyze("BMRKR2")
-
-build_table(lyt_basic, ex_adsl)
-```
+`lyt_basic`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"SEX"``)`` ``|>`` `` `[`summarize_row_groups`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md)`(``"SEX"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"BMRKR2"``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt_basic``, ``ex_adsl``)`
 
     ##                    A: Drug X    B: Placebo   C: Combination
     ## ———————————————————————————————————————————————————————————

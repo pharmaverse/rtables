@@ -71,13 +71,7 @@ functions like `do_split` are executed even when no split is requested.
 The following example shows how we can enter `do_split` and start
 understanding the class hierarchy and the main split engine.
 
-``` r
-
-library(rtables)
-# debugonce(rtables:::do_split) # Uncomment me to enter the function!!!
-basic_table() |>
-  build_table(DM)
-```
+[`library`](https://rdrr.io/r/base/library.html)`(`[`rtables`](https://github.com/pharmaverse/rtables)`)`` ``# debugonce(rtables:::do_split) # Uncomment me to enter the function!!!`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``DM``)`
 
     ##    all obs
     ## ——————————
@@ -87,80 +81,7 @@ the reader to go through the general structure with enhanced comments
 and sections. Each section in the code reflects roughly one section of
 this article.
 
-``` r
-
-# rtables 0.6.2
-### NB This is called at EACH level of recursive splitting
-do_split <- function(spl,
-                     df,
-                     vals = NULL,
-                     labels = NULL,
-                     trim = FALSE,
-                     spl_context) {
-  # - CHECKS - #
-  ## This will error if, e.g., df does not have columns
-  ##  required by spl, or generally any time the split (spl)
-  ##  can not be applied to df
-  check_validsplit(spl, df)
-
-  # - SPLIT FUNCTION - #
-  ## In special cases, we need to partition data (split)
-  ##  in a very specific way, e.g. depending on the data or
-  ##  external values. These can be achieved by using a custom
-  ##  split function.
-
-  ## note the <- here!!!
-  if (!is.null(splfun <- split_fun(spl))) {
-    ## Currently split functions take df, vals, labels and
-    ## return list(values = ..., datasplit = ..., labels = ...),
-    ## with an optional additional 'extras' element
-    if (func_takes(splfun, ".spl_context")) {
-      ret <- tryCatch(
-        splfun(df, spl, vals, labels,
-          trim = trim,
-          .spl_context = spl_context
-        ),
-        error = function(e) e
-      ) ## rawvalues(spl_context))
-    } else {
-      ret <- tryCatch(splfun(df, spl, vals, labels, trim = trim),
-        error = function(e) e
-      )
-    }
-    if (is(ret, "error")) {
-      stop(
-        "Error applying custom split function: ", ret$message, "\n\tsplit: ",
-        class(spl), " (", payloadmsg(spl), ")\n",
-        "\toccured at path: ",
-        spl_context_to_disp_path(spl_context), "\n"
-      )
-    }
-  } else {
-    # - .apply_split_inner - #
-    ## This is called when no split function is provided. Please note that this function
-    ##  will also probably be called when the split function is provided, as long as the
-    ##  main splitting method is not willingly modified by the split function.
-    ret <- .apply_split_inner(df = df, spl = spl, vals = vals, labels = labels, trim = trim)
-  }
-
-  # - EXTRA - #
-  ## this adds .ref_full and .in_ref_col
-  if (is(spl, "VarLevWBaselineSplit")) {
-    ret <- .add_ref_extras(spl, df, ret)
-  }
-
-  # - FIXUPVALS - #
-  ## This:
-  ##  - guarantees that ret$values contains SplitValue objects
-  ##  - removes the extras element since its redundant after the above
-  ##  - ensures datasplit and values lists are named according to labels
-  ##  - ensures labels are character not factor
-  ret <- .fixupvals(ret)
-
-  # - RETURN - #
-  ret
-}
-```
+`# rtables 0.6.2`` ``### NB This is called at EACH level of recursive splitting`` ``do_split`` ``<-`` ``function``(``spl``,`` `` ``df``,`` `` ``vals`` ``=`` ``NULL``,`` `` ``labels`` ``=`` ``NULL``,`` `` ``trim`` ``=`` ``FALSE``,`` `` ``spl_context``)`` ``{`` `` ``# - CHECKS - #`` `` ``## This will error if, e.g., df does not have columns`` `` ``## required by spl, or generally any time the split (spl)`` `` ``## can not be applied to df`` `` ``check_validsplit``(``spl``, ``df``)`` `` `` ``# - SPLIT FUNCTION - #`` `` ``## In special cases, we need to partition data (split)`` `` ``## in a very specific way, e.g. depending on the data or`` `` ``## external values. These can be achieved by using a custom`` `` ``## split function.`` `` `` ``## note the <- here!!!`` `` ``if`` ``(``!`[`is.null`](https://rdrr.io/r/base/NULL.html)`(``splfun`` ``<-`` `[`split_fun`](https://pharmaverse.github.io/rtables/reference/int_methods.md)`(``spl``)``)``)`` ``{`` `` ``## Currently split functions take df, vals, labels and`` `` ``## return list(values = ..., datasplit = ..., labels = ...),`` `` ``## with an optional additional 'extras' element`` `` ``if`` ``(``func_takes``(``splfun``, ``".spl_context"``)``)`` ``{`` `` ``ret`` ``<-`` `[`tryCatch`](https://rdrr.io/r/base/conditions.html)`(`` `` ``splfun``(``df``, ``spl``, ``vals``, ``labels``,`` `` trim ``=`` ``trim``,`` `` .spl_context ``=`` ``spl_context`` `` ``)``,`` `` error ``=`` ``function``(``e``)`` ``e`` `` ``)`` ``## rawvalues(spl_context))`` `` ``}`` ``else`` ``{`` `` ``ret`` ``<-`` `[`tryCatch`](https://rdrr.io/r/base/conditions.html)`(``splfun``(``df``, ``spl``, ``vals``, ``labels``, trim ``=`` ``trim``)``,`` `` error ``=`` ``function``(``e``)`` ``e`` `` ``)`` `` ``}`` `` ``if`` ``(`[`is`](https://rdrr.io/r/methods/is.html)`(``ret``, ``"error"``)``)`` ``{`` `` `[`stop`](https://rdrr.io/r/base/stop.html)`(`` `` ``"Error applying custom split function: "``, ``ret``$``message``, ``"\n\tsplit: "``,`` `` `[`class`](https://rdrr.io/r/base/class.html)`(``spl``)``, ``" ("``, ``payloadmsg``(``spl``)``, ``")\n"``,`` `` ``"\toccured at path: "``,`` `` `[`spl_context_to_disp_path`](https://pharmaverse.github.io/rtables/reference/spl_context_to_disp_path.md)`(``spl_context``)``, ``"\n"`` `` ``)`` `` ``}`` `` ``}`` ``else`` ``{`` `` ``# - .apply_split_inner - #`` `` ``## This is called when no split function is provided. Please note that this function`` `` ``## will also probably be called when the split function is provided, as long as the`` `` ``## main splitting method is not willingly modified by the split function.`` `` ``ret`` ``<-`` ``.apply_split_inner``(``df ``=`` ``df``, spl ``=`` ``spl``, vals ``=`` ``vals``, labels ``=`` ``labels``, trim ``=`` ``trim``)`` `` ``}`` `` `` ``# - EXTRA - #`` `` ``## this adds .ref_full and .in_ref_col`` `` ``if`` ``(`[`is`](https://rdrr.io/r/methods/is.html)`(``spl``, ``"VarLevWBaselineSplit"``)``)`` ``{`` `` ``ret`` ``<-`` ``.add_ref_extras``(``spl``, ``df``, ``ret``)`` `` ``}`` `` `` ``# - FIXUPVALS - #`` `` ``## This:`` `` ``## - guarantees that ret$values contains SplitValue objects`` `` ``## - removes the extras element since its redundant after the above`` `` ``## - ensures datasplit and values lists are named according to labels`` `` ``## - ensures labels are character not factor`` `` ``ret`` ``<-`` ``.fixupvals``(``ret``)`` `` `` ``# - RETURN - #`` `` ``ret`` ``}`
 
 We will see where and how input parameters are used. The most important
 parameters are `spl` and `df` - the split objects and the input
@@ -222,52 +143,7 @@ with their constructors in `R/00tabletrees.R`. Reading about how
 `AllSplit` is structured can be useful in understanding how split
 objects are expected to work. Please see the comments in the following:
 
-``` r
-
-# rtables 0.6.2
-setClass("AllSplit", contains = "Split")
-
-AllSplit <- function(split_label = "",
-                     cfun = NULL,
-                     cformat = NULL,
-                     cna_str = NA_character_,
-                     split_format = NULL,
-                     split_na_str = NA_character_,
-                     split_name = NULL,
-                     extra_args = list(),
-                     indent_mod = 0L,
-                     cindent_mod = 0L,
-                     cvar = "",
-                     cextra_args = list(),
-                     ...) {
-  if (is.null(split_name)) { # If the split has no name
-    if (nzchar(split_label)) { # (std is "")
-      split_name <- split_label
-    } else {
-      split_name <- "all obs" # No label, a standard split with all
-      # observations is assigned.
-    }
-  }
-  new("AllSplit",
-    split_label = split_label,
-    content_fun = cfun,
-    content_format = cformat,
-    content_na_str = cna_str,
-    split_format = split_format,
-    split_na_str = split_na_str,
-    name = split_name,
-    label_children = FALSE,
-    extra_args = extra_args,
-    indent_modifier = as.integer(indent_mod),
-    content_indent_modifier = as.integer(cindent_mod),
-    content_var = cvar,
-    split_label_position = "hidden",
-    content_extra_args = cextra_args,
-    page_title_prefix = NA_character_,
-    child_section_div = NA_character_
-  )
-}
-```
+`# rtables 0.6.2`` `[`setClass`](https://rdrr.io/r/methods/setClass.html)`(``"AllSplit"``, contains ``=`` ``"Split"``)`` `` ``AllSplit`` ``<-`` ``function``(``split_label`` ``=`` ``""``,`` `` ``cfun`` ``=`` ``NULL``,`` `` ``cformat`` ``=`` ``NULL``,`` `` ``cna_str`` ``=`` ``NA_character_``,`` `` ``split_format`` ``=`` ``NULL``,`` `` ``split_na_str`` ``=`` ``NA_character_``,`` `` ``split_name`` ``=`` ``NULL``,`` `` ``extra_args`` ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``)``,`` `` ``indent_mod`` ``=`` ``0L``,`` `` ``cindent_mod`` ``=`` ``0L``,`` `` ``cvar`` ``=`` ``""``,`` `` ``cextra_args`` ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``)``,`` `` ``...``)`` ``{`` `` ``if`` ``(`[`is.null`](https://rdrr.io/r/base/NULL.html)`(``split_name``)``)`` ``{`` ``# If the split has no name`` `` ``if`` ``(`[`nzchar`](https://rdrr.io/r/base/nchar.html)`(``split_label``)``)`` ``{`` ``# (std is "")`` `` ``split_name`` ``<-`` ``split_label`` `` ``}`` ``else`` ``{`` `` ``split_name`` ``<-`` ``"all obs"`` ``# No label, a standard split with all`` `` ``# observations is assigned.`` `` ``}`` `` ``}`` `` `[`new`](https://rdrr.io/r/methods/new.html)`(``"AllSplit"``,`` `` split_label ``=`` ``split_label``,`` `` content_fun ``=`` ``cfun``,`` `` content_format ``=`` ``cformat``,`` `` content_na_str ``=`` ``cna_str``,`` `` split_format ``=`` ``split_format``,`` `` split_na_str ``=`` ``split_na_str``,`` `` name ``=`` ``split_name``,`` `` label_children ``=`` ``FALSE``,`` `` extra_args ``=`` ``extra_args``,`` `` indent_modifier ``=`` `[`as.integer`](https://rdrr.io/r/base/integer.html)`(``indent_mod``)``,`` `` content_indent_modifier ``=`` `[`as.integer`](https://rdrr.io/r/base/integer.html)`(``cindent_mod``)``,`` `` content_var ``=`` ``cvar``,`` `` split_label_position ``=`` ``"hidden"``,`` `` content_extra_args ``=`` ``cextra_args``,`` `` page_title_prefix ``=`` ``NA_character_``,`` `` child_section_div ``=`` ``NA_character_`` `` ``)`` ``}`
 
 We can also print this information by calling `getClass("AllSplit")` for
 the general slot definition, or by calling `getClass(spl)`. Note that
@@ -313,15 +189,7 @@ autonomously. Let’s go forward in `do_split`. In our case, with
 `AllSplit` inherited from `Split`, we are sure that the called function
 will be the following (read the comment!):
 
-``` r
-
-# rtables 0.6.2
-## Default does nothing, add methods as they become required
-setMethod(
-  "check_validsplit", "Split",
-  function(spl, df) invisible(NULL)
-)
-```
+`# rtables 0.6.2`` ``## Default does nothing, add methods as they become required`` `[`setMethod`](https://rdrr.io/r/methods/setMethod.html)`(`` `` ``"check_validsplit"``, ``"Split"``,`` `` ``function``(``spl``, ``df``)`` `[`invisible`](https://rdrr.io/r/base/invisible.html)`(``NULL``)`` ``)`
 
 ### Split Functions and `.apply_split_inner`
 
@@ -332,81 +200,7 @@ the case by entering it with `debugonce(.apply_split_inner)`. Of course,
 we are still currently browsing within `do_split` in debug mode from the
 first example. We print and comment on the function in the following:
 
-``` r
-
-# rtables 0.6.2
-.apply_split_inner <- function(spl, df, vals = NULL, labels = NULL, trim = FALSE) {
-  # - INPUTS - #
-  # In this case .applysplit_rawvals will attempt to find the split values if vals is NULL.
-  # Please notice that there may be a non-mutually exclusive set or subset of elements that
-  # will constitute the split.
-
-  # - SPLIT VALS - #
-  ## Try to calculate values first - most of the time we can
-  if (is.null(vals)) {
-    vals <- .applysplit_rawvals(spl, df)
-  }
-
-  # - EXTRA PARAMETERS - #
-  # This call extracts extra parameters from the split, according to the split values
-  extr <- .applysplit_extras(spl, df, vals)
-
-  # If there are no values to do the split upon, we return an empty final split
-  if (is.null(vals)) {
-    return(list(
-      values = list(),
-      datasplit = list(),
-      labels = list(),
-      extras = list()
-    ))
-  }
-
-  # - DATA SUBSETTING - #
-  dpart <- .applysplit_datapart(spl, df, vals)
-
-  # - LABEL RETRIEVAL - #
-  if (is.null(labels)) {
-    labels <- .applysplit_partlabels(spl, df, vals, labels)
-  } else {
-    stopifnot(names(labels) == names(vals))
-  }
-
-  # - TRIM - #
-  ## Get rid of columns that would not have any observations,
-  ## but only if there were any rows to start with - if not
-  ## we're in a manually constructed table column tree
-  if (trim) {
-    hasdata <- sapply(dpart, function(x) nrow(x) > 0)
-    if (nrow(df) > 0 && length(dpart) > sum(hasdata)) { # some empties
-      dpart <- dpart[hasdata]
-      vals <- vals[hasdata]
-      extr <- extr[hasdata]
-      labels <- labels[hasdata]
-    }
-  }
-
-  # - ORDER RESULTS - #
-  # Finds relevant order depending on spl_child_order()
-  if (is.null(spl_child_order(spl)) || is(spl, "AllSplit")) {
-    vord <- seq_along(vals)
-  } else {
-    vord <- match(
-      spl_child_order(spl),
-      vals
-    )
-    vord <- vord[!is.na(vord)]
-  }
-
-  ## FIXME: should be an S4 object, not a list
-  ret <- list(
-    values = vals[vord],
-    datasplit = dpart[vord],
-    labels = labels[vord],
-    extras = extr[vord]
-  )
-  ret
-}
-```
+`# rtables 0.6.2`` ``.apply_split_inner`` ``<-`` ``function``(``spl``, ``df``, ``vals`` ``=`` ``NULL``, ``labels`` ``=`` ``NULL``, ``trim`` ``=`` ``FALSE``)`` ``{`` `` ``# - INPUTS - #`` `` ``# In this case .applysplit_rawvals will attempt to find the split values if vals is NULL.`` `` ``# Please notice that there may be a non-mutually exclusive set or subset of elements that`` `` ``# will constitute the split.`` `` `` ``# - SPLIT VALS - #`` `` ``## Try to calculate values first - most of the time we can`` `` ``if`` ``(`[`is.null`](https://rdrr.io/r/base/NULL.html)`(``vals``)``)`` ``{`` `` ``vals`` ``<-`` ``.applysplit_rawvals``(``spl``, ``df``)`` `` ``}`` `` `` ``# - EXTRA PARAMETERS - #`` `` ``# This call extracts extra parameters from the split, according to the split values`` `` ``extr`` ``<-`` ``.applysplit_extras``(``spl``, ``df``, ``vals``)`` `` `` ``# If there are no values to do the split upon, we return an empty final split`` `` ``if`` ``(`[`is.null`](https://rdrr.io/r/base/NULL.html)`(``vals``)``)`` ``{`` `` `[`return`](https://rdrr.io/r/base/function.html)`(`[`list`](https://rdrr.io/r/base/list.html)`(`` `` values ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``)``,`` `` datasplit ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``)``,`` `` labels ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``)``,`` `` extras ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``)`` `` ``)``)`` `` ``}`` `` `` ``# - DATA SUBSETTING - #`` `` ``dpart`` ``<-`` ``.applysplit_datapart``(``spl``, ``df``, ``vals``)`` `` `` ``# - LABEL RETRIEVAL - #`` `` ``if`` ``(`[`is.null`](https://rdrr.io/r/base/NULL.html)`(``labels``)``)`` ``{`` `` ``labels`` ``<-`` ``.applysplit_partlabels``(``spl``, ``df``, ``vals``, ``labels``)`` `` ``}`` ``else`` ``{`` `` `[`stopifnot`](https://rdrr.io/r/base/stopifnot.html)`(`[`names`](https://rdrr.io/r/base/names.html)`(``labels``)`` ``==`` `[`names`](https://rdrr.io/r/base/names.html)`(``vals``)``)`` `` ``}`` `` `` ``# - TRIM - #`` `` ``## Get rid of columns that would not have any observations,`` `` ``## but only if there were any rows to start with - if not`` `` ``## we're in a manually constructed table column tree`` `` ``if`` ``(``trim``)`` ``{`` `` ``hasdata`` ``<-`` `[`sapply`](https://rdrr.io/r/base/lapply.html)`(``dpart``, ``function``(``x``)`` `[`nrow`](https://rdrr.io/r/base/nrow.html)`(``x``)`` ``>`` ``0``)`` `` ``if`` ``(`[`nrow`](https://rdrr.io/r/base/nrow.html)`(``df``)`` ``>`` ``0`` ``&&`` `[`length`](https://rdrr.io/r/base/length.html)`(``dpart``)`` ``>`` `[`sum`](https://rdrr.io/r/base/sum.html)`(``hasdata``)``)`` ``{`` ``# some empties`` `` ``dpart`` ``<-`` ``dpart``[``hasdata``]`` `` ``vals`` ``<-`` ``vals``[``hasdata``]`` `` ``extr`` ``<-`` ``extr``[``hasdata``]`` `` ``labels`` ``<-`` ``labels``[``hasdata``]`` `` ``}`` `` ``}`` `` `` ``# - ORDER RESULTS - #`` `` ``# Finds relevant order depending on spl_child_order()`` `` ``if`` ``(`[`is.null`](https://rdrr.io/r/base/NULL.html)`(`[`spl_child_order`](https://pharmaverse.github.io/rtables/reference/int_methods.md)`(``spl``)``)`` ``||`` `[`is`](https://rdrr.io/r/methods/is.html)`(``spl``, ``"AllSplit"``)``)`` ``{`` `` ``vord`` ``<-`` `[`seq_along`](https://rdrr.io/r/base/seq.html)`(``vals``)`` `` ``}`` ``else`` ``{`` `` ``vord`` ``<-`` `[`match`](https://rdrr.io/r/base/match.html)`(`` `` `[`spl_child_order`](https://pharmaverse.github.io/rtables/reference/int_methods.md)`(``spl``)``,`` `` ``vals`` `` ``)`` `` ``vord`` ``<-`` ``vord``[``!`[`is.na`](https://rdrr.io/r/base/NA.html)`(``vord``)``]`` `` ``}`` `` `` ``## FIXME: should be an S4 object, not a list`` `` ``ret`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`` `` values ``=`` ``vals``[``vord``]``,`` `` datasplit ``=`` ``dpart``[``vord``]``,`` `` labels ``=`` ``labels``[``vord``]``,`` `` extras ``=`` ``extr``[``vord``]`` `` ``)`` `` ``ret`` ``}`
 
 After reading through `.apply_split_inner`, we see that there are some
 fundamental functions - defined strictly for internal use (by convention
@@ -418,74 +212,7 @@ shows how using `S4` logic enables better clarity and flexibility in
 programming, allowing for easy extension of the program. For compactness
 we also show the `showMethods` result for each generic.
 
-``` r
-
-# rtables 0.6.2
-# Retrieves the values that will constitute the splits (facets), not necessarily a unique list.
-# They could come from the data cuts for example -> it can be anything that produces a set of strings.
-setGeneric(
-  ".applysplit_rawvals",
-  function(spl, df) standardGeneric(".applysplit_rawvals")
-)
-# Browse[2]> showMethods(.applysplit_rawvals)
-# Function: .applysplit_rawvals (package rtables)
-# spl="AllSplit"
-# spl="ManualSplit"
-# spl="MultiVarSplit"
-# spl="VAnalyzeSplit"
-# spl="VarLevelSplit"
-# spl="VarStaticCutSplit"
-# Nothing here is inherited from the virtual class Split!!!
-
-# Contains the subset of the data (default, but these can overlap and can also NOT be mutually exclusive).
-setGeneric(
-  ".applysplit_datapart",
-  function(spl, df, vals) standardGeneric(".applysplit_datapart")
-)
-# Same as .applysplit_rawvals
-
-# Extract the extra parameter for the split
-setGeneric(
-  ".applysplit_extras",
-  function(spl, df, vals) standardGeneric(".applysplit_extras")
-)
-# Browse[2]> showMethods(.applysplit_extras)
-# Function: .applysplit_extras (package rtables)
-# spl="AllSplit"
-#     (inherited from: spl="Split")
-# spl="Split"
-# This means there is only a function for the virtual class Split.
-#  So all splits behave the same!!!
-
-# Split label retrieval and assignment if visible.
-setGeneric(
-  ".applysplit_partlabels",
-  function(spl, df, vals, labels) standardGeneric(".applysplit_partlabels")
-)
-# Browse[2]> showMethods(.applysplit_partlabels)
-# Function: .applysplit_partlabels (package rtables)
-# spl="AllSplit"
-#     (inherited from: spl="Split")
-# spl="MultiVarSplit"
-# spl="Split"
-# spl="VarLevelSplit"
-
-setGeneric(
-  "check_validsplit", # our friend
-  function(spl, df) standardGeneric("check_validsplit")
-)
-# Note: check_validsplit is an internal function but may one day be exported.
-#       This is why it does not have the "." prefix.
-
-setGeneric(
-  ".applysplit_ref_vals",
-  function(spl, df, vals) standardGeneric(".applysplit_ref_vals")
-)
-# Browse[2]> showMethods(.applysplit_ref_vals)
-# Function: .applysplit_ref_vals (package rtables)
-# spl="Split"
-# spl="VarLevWBaselineSplit"
-```
+`# rtables 0.6.2`` ``# Retrieves the values that will constitute the splits (facets), not necessarily a unique list.`` ``# They could come from the data cuts for example -> it can be anything that produces a set of strings.`` `[`setGeneric`](https://rdrr.io/r/methods/setGeneric.html)`(`` `` ``".applysplit_rawvals"``,`` `` ``function``(``spl``, ``df``)`` `[`standardGeneric`](https://rdrr.io/r/base/standardGeneric.html)`(``".applysplit_rawvals"``)`` ``)`` ``# Browse[2]> showMethods(.applysplit_rawvals)`` ``# Function: .applysplit_rawvals (package rtables)`` ``# spl="AllSplit"`` ``# spl="ManualSplit"`` ``# spl="MultiVarSplit"`` ``# spl="VAnalyzeSplit"`` ``# spl="VarLevelSplit"`` ``# spl="VarStaticCutSplit"`` ``# Nothing here is inherited from the virtual class Split!!!`` `` ``# Contains the subset of the data (default, but these can overlap and can also NOT be mutually exclusive).`` `[`setGeneric`](https://rdrr.io/r/methods/setGeneric.html)`(`` `` ``".applysplit_datapart"``,`` `` ``function``(``spl``, ``df``, ``vals``)`` `[`standardGeneric`](https://rdrr.io/r/base/standardGeneric.html)`(``".applysplit_datapart"``)`` ``)`` ``# Same as .applysplit_rawvals`` `` ``# Extract the extra parameter for the split`` `[`setGeneric`](https://rdrr.io/r/methods/setGeneric.html)`(`` `` ``".applysplit_extras"``,`` `` ``function``(``spl``, ``df``, ``vals``)`` `[`standardGeneric`](https://rdrr.io/r/base/standardGeneric.html)`(``".applysplit_extras"``)`` ``)`` ``# Browse[2]> showMethods(.applysplit_extras)`` ``# Function: .applysplit_extras (package rtables)`` ``# spl="AllSplit"`` ``# (inherited from: spl="Split")`` ``# spl="Split"`` ``# This means there is only a function for the virtual class Split.`` ``# So all splits behave the same!!!`` `` ``# Split label retrieval and assignment if visible.`` `[`setGeneric`](https://rdrr.io/r/methods/setGeneric.html)`(`` `` ``".applysplit_partlabels"``,`` `` ``function``(``spl``, ``df``, ``vals``, ``labels``)`` `[`standardGeneric`](https://rdrr.io/r/base/standardGeneric.html)`(``".applysplit_partlabels"``)`` ``)`` ``# Browse[2]> showMethods(.applysplit_partlabels)`` ``# Function: .applysplit_partlabels (package rtables)`` ``# spl="AllSplit"`` ``# (inherited from: spl="Split")`` ``# spl="MultiVarSplit"`` ``# spl="Split"`` ``# spl="VarLevelSplit"`` `` `[`setGeneric`](https://rdrr.io/r/methods/setGeneric.html)`(`` `` ``"check_validsplit"``, ``# our friend`` `` ``function``(``spl``, ``df``)`` `[`standardGeneric`](https://rdrr.io/r/base/standardGeneric.html)`(``"check_validsplit"``)`` ``)`` ``# Note: check_validsplit is an internal function but may one day be exported.`` ``# This is why it does not have the "." prefix.`` `` `[`setGeneric`](https://rdrr.io/r/methods/setGeneric.html)`(`` `` ``".applysplit_ref_vals"``,`` `` ``function``(``spl``, ``df``, ``vals``)`` `[`standardGeneric`](https://rdrr.io/r/base/standardGeneric.html)`(``".applysplit_ref_vals"``)`` ``)`` ``# Browse[2]> showMethods(.applysplit_ref_vals)`` ``# Function: .applysplit_ref_vals (package rtables)`` ``# spl="Split"`` ``# spl="VarLevWBaselineSplit"`
 
 Now, we know that `.applysplit_extras` is the function that will be
 called first. This is because we did not specify any `vals` and it is
@@ -567,27 +294,7 @@ elements can be added with `expression(E1, E2)`, which is the same as
 `untrace("do_split", quote(if(!is(spl, "AllSplit")) browser()), where = asNamespace("rtables"))`
 once finished to remove the trace.
 
-``` r
-
-# rtables 0.6.2
-library(rtables)
-library(dplyr)
-
-# This filter is added to avoid having too many calls to do_split
-DM_tmp <- DM |>
-  filter(ARM %in% names(table(DM$ARM)[1:2])) |> # limit to two
-  filter(SEX %in% c("M", "F")) |> # limit to two
-  mutate(SEX = factor(SEX), ARM = factor(ARM)) # to drop unused levels
-
-# debug(rtables:::do_split)
-lyt <- basic_table() |>
-  split_rows_by("ARM") |>
-  split_rows_by("SEX") |>
-  analyze("BMRKR1") # analyze() is needed for the table to have non-label rows
-
-lyt |>
-  build_table(DM_tmp)
-```
+`# rtables 0.6.2`` `[`library`](https://rdrr.io/r/base/library.html)`(`[`rtables`](https://github.com/pharmaverse/rtables)`)`` `[`library`](https://rdrr.io/r/base/library.html)`(`[`dplyr`](https://dplyr.tidyverse.org)`)`` `` ``# This filter is added to avoid having too many calls to do_split`` ``DM_tmp`` ``<-`` ``DM`` ``|>`` `` `[`filter`](https://dplyr.tidyverse.org/reference/filter.html)`(``ARM`` `[`%in%`](https://rdrr.io/r/base/match.html)` `[`names`](https://rdrr.io/r/base/names.html)`(`[`table`](https://rdrr.io/r/base/table.html)`(``DM``$``ARM``)``[``1``:``2``]``)``)`` ``|>`` ``# limit to two`` `` `[`filter`](https://dplyr.tidyverse.org/reference/filter.html)`(``SEX`` `[`%in%`](https://rdrr.io/r/base/match.html)` `[`c`](https://rdrr.io/r/base/c.html)`(``"M"``, ``"F"``)``)`` ``|>`` ``# limit to two`` `` `[`mutate`](https://dplyr.tidyverse.org/reference/mutate.html)`(``SEX ``=`` `[`factor`](https://rdrr.io/r/base/factor.html)`(``SEX``)``, ARM ``=`` `[`factor`](https://rdrr.io/r/base/factor.html)`(``ARM``)``)`` ``# to drop unused levels`` `` ``# debug(rtables:::do_split)`` ``lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"ARM"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"SEX"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"BMRKR1"``)`` ``# analyze() is needed for the table to have non-label rows`` `` ``lyt`` ``|>`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``DM_tmp``)`
 
     ##              all obs
     ## ————————————————————
@@ -602,10 +309,7 @@ lyt |>
     ##   M                 
     ##     Mean      5.97
 
-``` r
-
-# undebug(rtables:::do_split)
-```
+`# undebug(rtables:::do_split)`
 
 Before continuing, we want to check the formal class of `spl`.
 
@@ -641,21 +345,7 @@ From this, we can directly infer that the class is different now
 with specific split values. `VarLevelSplit` also seems to have three
 more slots than `AllSplit`. What are they precisely?
 
-``` r
-
-# rtables 0.6.2
-slots_as <- getSlots("AllSplit") # inherits virtual class Split and is general class for all splits
-# getClass("CustomizableSplit") # -> Extends: "Split", Known Subclasses: Class "VarLevelSplit", directly
-slots_cs <- getSlots("CustomizableSplit") # Adds split function
-slots_vls <- getSlots("VarLevelSplit")
-
-slots_cs[!(names(slots_cs) %in% names(slots_as))]
-#        split_fun
-# "functionOrNULL"
-slots_vls[!(names(slots_vls) %in% names(slots_cs))]
-# value_label_var     value_order
-#     "character"           "ANY"
-```
+`# rtables 0.6.2`` ``slots_as`` ``<-`` `[`getSlots`](https://rdrr.io/r/methods/slot.html)`(``"AllSplit"``)`` ``# inherits virtual class Split and is general class for all splits`` ``# getClass("CustomizableSplit") # -> Extends: "Split", Known Subclasses: Class "VarLevelSplit", directly`` ``slots_cs`` ``<-`` `[`getSlots`](https://rdrr.io/r/methods/slot.html)`(``"CustomizableSplit"``)`` ``# Adds split function`` ``slots_vls`` ``<-`` `[`getSlots`](https://rdrr.io/r/methods/slot.html)`(``"VarLevelSplit"``)`` `` ``slots_cs``[``!``(`[`names`](https://rdrr.io/r/base/names.html)`(``slots_cs``)`` `[`%in%`](https://rdrr.io/r/base/match.html)` `[`names`](https://rdrr.io/r/base/names.html)`(``slots_as``)``)``]`` ``# split_fun`` ``# "functionOrNULL"`` ``slots_vls``[``!``(`[`names`](https://rdrr.io/r/base/names.html)`(``slots_vls``)`` `[`%in%`](https://rdrr.io/r/base/match.html)` `[`names`](https://rdrr.io/r/base/names.html)`(``slots_cs``)``)``]`` ``# value_label_var value_order`` ``# "character" "ANY"`
 
 Remember to always check the constructor and class definition in
 `R/00tabletrees.R` if exploratory tools do not suffice. Now,
@@ -684,14 +374,7 @@ Instead of looking at the function source code with
 `getMethod(".applysplit_partlabels", "VarLevelSplit")`, we can enter the
 `S4` generic function in debugging mode as follows:
 
-``` r
-
-# rtables 0.6.2
-eval(debugcall(.applysplit_partlabels(spl, df, vals, labels)))
-# We leave to the smart developer to see how the labels are assigned
-
-# Remember to undebugcall() similarly!
-```
+`# rtables 0.6.2`` `[`eval`](https://rdrr.io/r/base/eval.html)`(`[`debugcall`](https://rdrr.io/r/utils/debugcall.html)`(``.applysplit_partlabels``(``spl``, ``df``, ``vals``, ``labels``)``)``)`` ``# We leave to the smart developer to see how the labels are assigned`` `` ``# Remember to undebugcall() similarly!`
 
 In our case, the final labels are `vals` because they were not
 explicitly assigned. Their order is retrieved from the split object
@@ -771,15 +454,7 @@ List of 2
 We start by examining a split function that is already defined in
 `rtables`. Its scope is filtering out specific values as follows:
 
-``` r
-
-library(rtables)
-# debug(rtables:::do_split) # uncomment to see into the main split function
-basic_table() |>
-  split_rows_by("SEX", split_fun = drop_split_levels) |>
-  analyze("BMRKR1") |>
-  build_table(DM)
-```
+[`library`](https://rdrr.io/r/base/library.html)`(`[`rtables`](https://github.com/pharmaverse/rtables)`)`` ``# debug(rtables:::do_split) # uncomment to see into the main split function`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"SEX"``, split_fun ``=`` ``drop_split_levels``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"BMRKR1"``)`` ``|>`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``DM``)`
 
     ##          all obs
     ## ————————————————
@@ -788,12 +463,7 @@ basic_table() |>
     ## M               
     ##   Mean    5.64
 
-``` r
-
-# undebug(rtables:::do_split)
-
-# This produces the same output as before (when filters were used)
-```
+`# undebug(rtables:::do_split)`` `` ``# This produces the same output as before (when filters were used)`
 
 After the root split, we enter the split based on `SEX`. As we have
 specified a split function, we can retrieve the split function by using
@@ -810,30 +480,7 @@ split function is called, please take a moment to look at how
 fundamentally a wrapper of `.apply_split_inner` that drops empty factor
 levels, therefore avoiding empty splits.
 
-``` r
-
-# rtables 0.6.2
-# > drop_split_levels
-function(df,
-         spl,
-         vals = NULL,
-         labels = NULL,
-         trim = FALSE) {
-  # Retrieve split column
-  var <- spl_payload(spl)
-  df2 <- df
-
-  ## This call is exactly the one we used when filtering to get rid of empty levels
-  df2[[var]] <- factor(df[[var]])
-
-  ## Our main function!
-  .apply_split_inner(spl, df2,
-    vals = vals,
-    labels = labels,
-    trim = trim
-  )
-}
-```
+`# rtables 0.6.2`` ``# > drop_split_levels`` ``function``(``df``,`` `` ``spl``,`` `` ``vals`` ``=`` ``NULL``,`` `` ``labels`` ``=`` ``NULL``,`` `` ``trim`` ``=`` ``FALSE``)`` ``{`` `` ``# Retrieve split column`` `` ``var`` ``<-`` `[`spl_payload`](https://pharmaverse.github.io/rtables/reference/int_methods.md)`(``spl``)`` `` ``df2`` ``<-`` ``df`` `` `` ``## This call is exactly the one we used when filtering to get rid of empty levels`` `` ``df2``[[``var``]``]`` ``<-`` `[`factor`](https://rdrr.io/r/base/factor.html)`(``df``[[``var``]``]``)`` `` `` ``## Our main function!`` `` ``.apply_split_inner``(``spl``, ``df2``,`` `` vals ``=`` ``vals``,`` `` labels ``=`` ``labels``,`` `` trim ``=`` ``trim`` `` ``)`` ``}`
 
 There are many pre-made split functions included in `rtables`. A list of
 these functions can be found in the [Split Functions
@@ -860,26 +507,7 @@ error. Note that you can revert to default behavior by restarting your
 retrieve the default as follows:
 `default_opts <- callr::r(function(){options()}); options(error = default_opts$error)`.
 
-``` r
-
-# rtables 0.6.2
-# Table call with only the function changing
-simple_table <- function(DM, f) {
-  lyt <- basic_table() |>
-    split_rows_by("ARM", split_fun = f) |>
-    analyze("BMRKR1")
-
-  lyt |>
-    build_table(DM)
-}
-# First round will fail because there are unused arguments
-exploratory_split_fun <- function(df, spl) NULL
-# debug(rtables:::do_split)
-err_msg <- tryCatch(simple_table(DM, exploratory_split_fun), error = function(e) e)
-# undebug(rtables:::do_split)
-
-message(err_msg$message)
-```
+`# rtables 0.6.2`` ``# Table call with only the function changing`` ``simple_table`` ``<-`` ``function``(``DM``, ``f``)`` ``{`` `` ``lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"ARM"``, split_fun ``=`` ``f``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"BMRKR1"``)`` `` `` ``lyt`` ``|>`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``DM``)`` ``}`` ``# First round will fail because there are unused arguments`` ``exploratory_split_fun`` ``<-`` ``function``(``df``, ``spl``)`` ``NULL`` ``# debug(rtables:::do_split)`` ``err_msg`` ``<-`` `[`tryCatch`](https://rdrr.io/r/base/conditions.html)`(``simple_table``(``DM``, ``exploratory_split_fun``)``, error ``=`` ``function``(``e``)`` ``e``)`` ``# undebug(rtables:::do_split)`` `` `[`message`](https://rdrr.io/r/base/message.html)`(``err_msg``$``message``)`
 
     ## Error applying custom split function: unused arguments (vals, labels, trim = trim)
     ##  split: VarLevelSplit (ARM)
@@ -910,41 +538,7 @@ given more arguments than it accepts. A simple way to avoid this is to
 add `...` to the function call. Now let’s construct an interesting split
 function (and error):
 
-``` r
-
-# rtables 0.6.2
-f_brakes_if <- function(split_col = NULL, error = FALSE) {
-  function(df, spl, ...) { # order matters! more than naming
-    # browser() # To check how it works
-    if (is.null(split_col)) { # Retrieves the default
-      split_col <- spl_variable(spl) # Internal accessor to split obj
-    }
-    my_payload <- split_col # Changing split column value
-
-    vals <- levels(df[[my_payload]]) # Extracting values to split
-    datasplit <- lapply(seq_along(vals), function(i) {
-      df[df[[my_payload]] == vals[[i]], ]
-    })
-    names(datasplit) <- as.character(vals)
-
-    # Error
-    if (isTRUE(error)) {
-      # browser() # If you need to check how it works
-      mystery_error_values <- sapply(datasplit, function(x) mean(x$BMRKR1))
-      if (any(mystery_error_values > 6)) {
-        stop(
-          "It should not be more than 6! Should it be? Found in split values: ",
-          names(datasplit)[which(mystery_error_values > 6)]
-        )
-      }
-    }
-
-    # Handy function to return a split result!!
-    make_split_result(vals, datasplit, vals)
-  }
-}
-simple_table(DM, f_brakes_if()) # works!
-```
+`# rtables 0.6.2`` ``f_brakes_if`` ``<-`` ``function``(``split_col`` ``=`` ``NULL``, ``error`` ``=`` ``FALSE``)`` ``{`` `` ``function``(``df``, ``spl``, ``...``)`` ``{`` ``# order matters! more than naming`` `` ``# browser() # To check how it works`` `` ``if`` ``(`[`is.null`](https://rdrr.io/r/base/NULL.html)`(``split_col``)``)`` ``{`` ``# Retrieves the default`` `` ``split_col`` ``<-`` `[`spl_variable`](https://pharmaverse.github.io/rtables/reference/spl_variable.md)`(``spl``)`` ``# Internal accessor to split obj`` `` ``}`` `` ``my_payload`` ``<-`` ``split_col`` ``# Changing split column value`` `` `` ``vals`` ``<-`` `[`levels`](https://rdrr.io/r/base/levels.html)`(``df``[[``my_payload``]``]``)`` ``# Extracting values to split`` `` ``datasplit`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(`[`seq_along`](https://rdrr.io/r/base/seq.html)`(``vals``)``, ``function``(``i``)`` ``{`` `` ``df``[``df``[[``my_payload``]``]`` ``==`` ``vals``[[``i``]``]``, ``]`` `` ``}``)`` `` `[`names`](https://rdrr.io/r/base/names.html)`(``datasplit``)`` ``<-`` `[`as.character`](https://rdrr.io/r/base/character.html)`(``vals``)`` `` `` ``# Error`` `` ``if`` ``(`[`isTRUE`](https://rdrr.io/r/base/Logic.html)`(``error``)``)`` ``{`` `` ``# browser() # If you need to check how it works`` `` ``mystery_error_values`` ``<-`` `[`sapply`](https://rdrr.io/r/base/lapply.html)`(``datasplit``, ``function``(``x``)`` `[`mean`](https://rdrr.io/r/base/mean.html)`(``x``$``BMRKR1``)``)`` `` ``if`` ``(`[`any`](https://rdrr.io/r/base/any.html)`(``mystery_error_values`` ``>`` ``6``)``)`` ``{`` `` `[`stop`](https://rdrr.io/r/base/stop.html)`(`` `` ``"It should not be more than 6! Should it be? Found in split values: "``,`` `` `[`names`](https://rdrr.io/r/base/names.html)`(``datasplit``)``[`[`which`](https://rdrr.io/r/base/which.html)`(``mystery_error_values`` ``>`` ``6``)``]`` `` ``)`` `` ``}`` `` ``}`` `` `` ``# Handy function to return a split result!!`` `` `[`make_split_result`](https://pharmaverse.github.io/rtables/reference/make_split_result.md)`(``vals``, ``datasplit``, ``vals``)`` `` ``}`` ``}`` ``simple_table``(``DM``, ``f_brakes_if``(``)``)`` ``# works!`
 
     ##                  all obs
     ## ————————————————————————
@@ -955,10 +549,7 @@ simple_table(DM, f_brakes_if()) # works!
     ## C: Combination          
     ##   Mean            5.69
 
-``` r
-
-simple_table(DM, f_brakes_if(split_col = "STRATA1")) # works!
-```
+`simple_table``(``DM``, ``f_brakes_if``(``split_col ``=`` ``"STRATA1"``)``)`` ``# works!`
 
     ##          all obs
     ## ————————————————
@@ -969,15 +560,7 @@ simple_table(DM, f_brakes_if(split_col = "STRATA1")) # works!
     ## C               
     ##   Mean    5.71
 
-``` r
-
-# simple_table(DM, f_brakes_if(error = TRUE)) # does not work, but returns an informative message
-
-# Error in do_split(spl, df, spl_context = spl_context) :
-# Error applying custom split function: It should not be more than 6! Should it be? Found in split values: B: Placebo
-# split: VarLevelSplit (ARM)
-# occurred at path: root
-```
+`# simple_table(DM, f_brakes_if(error = TRUE)) # does not work, but returns an informative message`` `` ``# Error in do_split(spl, df, spl_context = spl_context) :`` ``# Error applying custom split function: It should not be more than 6! Should it be? Found in split values: B: Placebo`` ``# split: VarLevelSplit (ARM)`` ``# occurred at path: root`
 
 Now we will take a moment to dwell on the machinery included in
 `rtables` to create custom split functions. Before doing so, please read
@@ -1031,43 +614,7 @@ it should even be impossible to set it differently from `trim = FALSE`.
 
 (write an issue informative error for not list xxx).
 
-``` r
-
-# rtables 0.6.2
-browsing_f <- function(df, spl, .spl_context, ...) {
-  # browser()
-  # do_base_split(df, spl, ...) # order matters!! This would fail if done
-  do_base_split(spl = spl, df = df, vals = NULL, labels = NULL, trim = TRUE)
-}
-
-fnc_tmp <- function(innervar) { # Exploring trim_levels_in_facets (check its form)
-  function(ret, ...) {
-    # browser()
-    for (var in innervar) { # of course AGE is not here, so nothing is dropped!!
-      ret$datasplit <- lapply(ret$datasplit, function(df) {
-        df[[var]] <- factor(df[[var]])
-        df
-      })
-    }
-    ret
-  }
-}
-
-basic_table() |>
-  split_rows_by("ARM") |>
-  split_rows_by("STRATA1") |>
-  split_rows_by_cuts("AGE",
-    cuts = c(0, 50, 100),
-    cutlabels = c("young", "old")
-  ) |>
-  split_rows_by("SEX", split_fun = make_split_fun(
-    pre = list(drop_facet_levels), # This is dropping the SEX levels (AGE is upper level)
-    core_split = browsing_f,
-    post = list(fnc_tmp("AGE")) # To drop these we should use a split_fun in the above level
-  )) |>
-  summarize_row_groups() |>
-  build_table(DM)
-```
+`# rtables 0.6.2`` ``browsing_f`` ``<-`` ``function``(``df``, ``spl``, ``.spl_context``, ``...``)`` ``{`` `` ``# browser()`` `` ``# do_base_split(df, spl, ...) # order matters!! This would fail if done`` `` `[`do_base_split`](https://pharmaverse.github.io/rtables/reference/do_base_split.md)`(``spl ``=`` ``spl``, df ``=`` ``df``, vals ``=`` ``NULL``, labels ``=`` ``NULL``, trim ``=`` ``TRUE``)`` ``}`` `` ``fnc_tmp`` ``<-`` ``function``(``innervar``)`` ``{`` ``# Exploring trim_levels_in_facets (check its form)`` `` ``function``(``ret``, ``...``)`` ``{`` `` ``# browser()`` `` ``for`` ``(``var`` ``in`` ``innervar``)`` ``{`` ``# of course AGE is not here, so nothing is dropped!!`` `` ``ret``$``datasplit`` ``<-`` `[`lapply`](https://rdrr.io/r/base/lapply.html)`(``ret``$``datasplit``, ``function``(``df``)`` ``{`` `` ``df``[[``var``]``]`` ``<-`` `[`factor`](https://rdrr.io/r/base/factor.html)`(``df``[[``var``]``]``)`` `` ``df`` `` ``}``)`` `` ``}`` `` ``ret`` `` ``}`` ``}`` `` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"ARM"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"STRATA1"``)`` ``|>`` `` `[`split_rows_by_cuts`](https://pharmaverse.github.io/rtables/reference/varcuts.md)`(``"AGE"``,`` `` cuts ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``0``, ``50``, ``100``)``,`` `` cutlabels ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"young"``, ``"old"``)`` `` ``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"SEX"``, split_fun ``=`` `[`make_split_fun`](https://pharmaverse.github.io/rtables/reference/make_split_fun.md)`(`` `` pre ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``drop_facet_levels``)``, ``# This is dropping the SEX levels (AGE is upper level)`` `` core_split ``=`` ``browsing_f``,`` `` post ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``fnc_tmp``(``"AGE"``)``)`` ``# To drop these we should use a split_fun in the above level`` `` ``)``)`` ``|>`` `` `[`summarize_row_groups`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md)`(``)`` ``|>`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``DM``)`
 
 ``` c
 # The following is the .spl_contest printout:
@@ -1106,88 +653,7 @@ functions (a somewhat complicated example of this can be found in the
 vignette](https://pharmaverse.github.io/rtables/latest-tag/articles/example_analysis_coxreg.html#constructing-the-table)),
 but we will show here how this can also apply to splits.
 
-``` r
-
-# rtables 0.6.2
-
-# Let's use the tracer!!
-my_tracer <- quote(if (length(spl@extra_args) > 0) browser())
-trace(
-  what = "do_split",
-  tracer = my_tracer,
-  where = asNamespace("rtables")
-)
-
-custom_mean_var <- function(var) {
-  function(df, labelstr, na.rm = FALSE, ...) {
-    # browser()
-    mean(df[[var]], na.rm = na.rm)
-  }
-}
-
-DM_ageNA <- DM
-DM_ageNA$AGE[1] <- NA
-
-basic_table() |>
-  split_rows_by("ARM") |>
-  split_rows_by("SEX", split_fun = drop_split_levels) |>
-  summarize_row_groups(
-    cfun = custom_mean_var("AGE"),
-    extra_args = list(na.rm = TRUE), format = "xx.x",
-    label_fstr = "label %s"
-  ) |>
-  # content_extra_args, c_extra_args are different slots!! (xxx)
-  split_rows_by("STRATA1", split_fun = keep_split_levels("A")) |>
-  analyze("AGE") |> # check with the extra_args (xxx)
-  build_table(DM_ageNA)
-# You can pass extra_args down to other splits. It is possible this will not not
-#   work. Should it? That is why extra_args lives only in splits (xxx) check if it works
-#   as is. Difficult to find an use case for this. Maybe it could work for the ref_group
-#   info. That does not work with nesting already (fairly sure that it will break stuff).
-#   Does it make sense to have more than one ref_group at any point of the analysis? No docs,
-#   send a warning if users try to nest things with ref_group (that is passed around via
-#   extra_args)
-
-# As we can see that was not possible. What if we now force it a bit?
-my_split_fun <- function(df, spl, .spl_context, ...) {
-  spl@extra_args <- list(na.rm = TRUE)
-  # does not work because do_split is not changing the object
-  # the split does not do anything with it
-  drop_split_levels(df, spl)
-} # does not work
-
-basic_table() |>
-  split_rows_by("ARM") |>
-  split_rows_by("SEX", split_fun = my_split_fun) |>
-  analyze("AGE", inclNAs = TRUE, afun = mean) |> # include_NAs is set FALSE
-  build_table(DM_ageNA)
-# extra_args is in available in cols but not in rows, because different columns
-#  may need it for different col space. Row-wise it seems not necessary.
-#  The only thing that works is adding it to analyze (xxx) check if it is worth adding
-
-# We invite the developer now to test all the test files of this package with the tracer on
-# therefore -> extra_args is not currently used in splits (xxx could be wrong)
-# could be not being hooked up
-untrace(what = "do_split", where = asNamespace("rtables"))
-
-# Let's try with the other variables identically
-my_tracer <- quote(if (!is.null(vals) || !is.null(labels) || isTRUE(trim)) {
-  print("A LOT TO SAY")
-  message("CANT BLOCK US ALL")
-  stop("NOW FOR SURE")
-  browser()
-})
-trace(
-  what = "do_split",
-  tracer = my_tracer,
-  where = asNamespace("rtables")
-)
-# Run tests by copying the above in setup-fakedata.R (then devtools::test())
-untrace(
-  what = "do_split",
-  where = asNamespace("rtables")
-)
-```
+`# rtables 0.6.2`` `` ``# Let's use the tracer!!`` ``my_tracer`` ``<-`` `[`quote`](https://rdrr.io/r/base/substitute.html)`(``if`` ``(`[`length`](https://rdrr.io/r/base/length.html)`(``spl``@``extra_args``)`` ``>`` ``0``)`` `[`browser`](https://rdrr.io/r/base/browser.html)`(``)``)`` `[`trace`](https://rdrr.io/r/base/trace.html)`(`` `` what ``=`` ``"do_split"``,`` `` tracer ``=`` ``my_tracer``,`` `` where ``=`` `[`asNamespace`](https://rdrr.io/r/base/ns-internal.html)`(``"rtables"``)`` ``)`` `` ``custom_mean_var`` ``<-`` ``function``(``var``)`` ``{`` `` ``function``(``df``, ``labelstr``, ``na.rm`` ``=`` ``FALSE``, ``...``)`` ``{`` `` ``# browser()`` `` `[`mean`](https://rdrr.io/r/base/mean.html)`(``df``[[``var``]``]``, na.rm ``=`` ``na.rm``)`` `` ``}`` ``}`` `` ``DM_ageNA`` ``<-`` ``DM`` ``DM_ageNA``$``AGE``[``1``]`` ``<-`` ``NA`` `` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"ARM"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"SEX"``, split_fun ``=`` ``drop_split_levels``)`` ``|>`` `` `[`summarize_row_groups`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md)`(`` `` cfun ``=`` ``custom_mean_var``(``"AGE"``)``,`` `` extra_args ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``na.rm ``=`` ``TRUE``)``, format ``=`` ``"xx.x"``,`` `` label_fstr ``=`` ``"label %s"`` `` ``)`` ``|>`` `` ``# content_extra_args, c_extra_args are different slots!! (xxx)`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"STRATA1"``, split_fun ``=`` `[`keep_split_levels`](https://pharmaverse.github.io/rtables/reference/split_funcs.md)`(``"A"``)``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"AGE"``)`` ``|>`` ``# check with the extra_args (xxx)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``DM_ageNA``)`` ``# You can pass extra_args down to other splits. It is possible this will not not`` ``# work. Should it? That is why extra_args lives only in splits (xxx) check if it works`` ``# as is. Difficult to find an use case for this. Maybe it could work for the ref_group`` ``# info. That does not work with nesting already (fairly sure that it will break stuff).`` ``# Does it make sense to have more than one ref_group at any point of the analysis? No docs,`` ``# send a warning if users try to nest things with ref_group (that is passed around via`` ``# extra_args)`` `` ``# As we can see that was not possible. What if we now force it a bit?`` ``my_split_fun`` ``<-`` ``function``(``df``, ``spl``, ``.spl_context``, ``...``)`` ``{`` `` ``spl``@``extra_args`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(``na.rm ``=`` ``TRUE``)`` `` ``# does not work because do_split is not changing the object`` `` ``# the split does not do anything with it`` `` `[`drop_split_levels`](https://pharmaverse.github.io/rtables/reference/split_funcs.md)`(``df``, ``spl``)`` ``}`` ``# does not work`` `` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"ARM"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"SEX"``, split_fun ``=`` ``my_split_fun``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"AGE"``, inclNAs ``=`` ``TRUE``, afun ``=`` ``mean``)`` ``|>`` ``# include_NAs is set FALSE`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``DM_ageNA``)`` ``# extra_args is in available in cols but not in rows, because different columns`` ``# may need it for different col space. Row-wise it seems not necessary.`` ``# The only thing that works is adding it to analyze (xxx) check if it is worth adding`` `` ``# We invite the developer now to test all the test files of this package with the tracer on`` ``# therefore -> extra_args is not currently used in splits (xxx could be wrong)`` ``# could be not being hooked up`` `[`untrace`](https://rdrr.io/r/base/trace.html)`(``what ``=`` ``"do_split"``, where ``=`` `[`asNamespace`](https://rdrr.io/r/base/ns-internal.html)`(``"rtables"``)``)`` `` ``# Let's try with the other variables identically`` ``my_tracer`` ``<-`` `[`quote`](https://rdrr.io/r/base/substitute.html)`(``if`` ``(``!`[`is.null`](https://rdrr.io/r/base/NULL.html)`(``vals``)`` ``||`` ``!`[`is.null`](https://rdrr.io/r/base/NULL.html)`(``labels``)`` ``||`` `[`isTRUE`](https://rdrr.io/r/base/Logic.html)`(``trim``)``)`` ``{`` `` `[`print`](https://rdrr.io/r/base/print.html)`(``"A LOT TO SAY"``)`` `` `[`message`](https://rdrr.io/r/base/message.html)`(``"CANT BLOCK US ALL"``)`` `` `[`stop`](https://rdrr.io/r/base/stop.html)`(``"NOW FOR SURE"``)`` `` `[`browser`](https://rdrr.io/r/base/browser.html)`(``)`` ``}``)`` `[`trace`](https://rdrr.io/r/base/trace.html)`(`` `` what ``=`` ``"do_split"``,`` `` tracer ``=`` ``my_tracer``,`` `` where ``=`` `[`asNamespace`](https://rdrr.io/r/base/ns-internal.html)`(``"rtables"``)`` ``)`` ``# Run tests by copying the above in setup-fakedata.R (then devtools::test())`` `[`untrace`](https://rdrr.io/r/base/trace.html)`(`` `` what ``=`` ``"do_split"``,`` `` where ``=`` `[`asNamespace`](https://rdrr.io/r/base/ns-internal.html)`(``"rtables"``)`` ``)`
 
 As we have demonstrated, all of the above seem like impossible cases and
 are to be considered as vestigial and to be deprecated.
@@ -1208,37 +674,7 @@ First, we want to see how the `MultiVarSplit` class behaves for an
 example case taken from
 [`?split_rows_by_multivar`](https://pharmaverse.github.io/rtables/reference/split_rows_by_multivar.md).
 
-``` r
-
-# rtables 0.6.2
-
-my_tracer <- quote(if (is(spl, "MultiVarSplit")) browser())
-trace(
-  what = "do_split",
-  tracer = my_tracer,
-  where = asNamespace("rtables")
-)
-# We want also to take a look at the following:
-debugonce(rtables:::.apply_split_inner)
-lyt <- basic_table() |>
-  split_cols_by("ARM") |>
-  split_rows_by_multivar(c("BMRKR1", "BMRKR1"),
-    varlabels = c("SD", "MEAN")
-  ) |>
-  split_rows_by("COUNTRY",
-    split_fun = keep_split_levels("PAK")
-  ) |> # xxx for #690 #691
-  summarize_row_groups() |>
-  analyze(c("AGE", "SEX"))
-
-build_table(lyt, DM)
-
-# xxx check empty space on top -> check if it is a bug, file it
-untrace(
-  what = "do_split",
-  where = asNamespace("rtables")
-)
-```
+`# rtables 0.6.2`` `` ``my_tracer`` ``<-`` `[`quote`](https://rdrr.io/r/base/substitute.html)`(``if`` ``(`[`is`](https://rdrr.io/r/methods/is.html)`(``spl``, ``"MultiVarSplit"``)``)`` `[`browser`](https://rdrr.io/r/base/browser.html)`(``)``)`` `[`trace`](https://rdrr.io/r/base/trace.html)`(`` `` what ``=`` ``"do_split"``,`` `` tracer ``=`` ``my_tracer``,`` `` where ``=`` `[`asNamespace`](https://rdrr.io/r/base/ns-internal.html)`(``"rtables"``)`` ``)`` ``# We want also to take a look at the following:`` `[`debugonce`](https://rdrr.io/r/base/debug.html)`(``rtables``:::``.apply_split_inner``)`` ``lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`split_rows_by_multivar`](https://pharmaverse.github.io/rtables/reference/split_rows_by_multivar.md)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"BMRKR1"``, ``"BMRKR1"``)``,`` `` varlabels ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"SD"``, ``"MEAN"``)`` `` ``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"COUNTRY"``,`` `` split_fun ``=`` `[`keep_split_levels`](https://pharmaverse.github.io/rtables/reference/split_funcs.md)`(``"PAK"``)`` `` ``)`` ``|>`` ``# xxx for #690 #691`` `` `[`summarize_row_groups`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md)`(``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"AGE"``, ``"SEX"``)``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt``, ``DM``)`` `` ``# xxx check empty space on top -> check if it is a bug, file it`` `[`untrace`](https://rdrr.io/r/base/trace.html)`(`` `` what ``=`` ``"do_split"``,`` `` where ``=`` `[`asNamespace`](https://rdrr.io/r/base/ns-internal.html)`(``"rtables"``)`` ``)`
 
 If we print the output, we will notice that the two groups (one called
 “SEX” and the other “STRATA1”) are identical along the columns. This is
@@ -1257,29 +693,7 @@ Lastly, we will briefly show an example of a split by cut function and
 how to replace it to solve the empty age groups problem as we did
 before. We propose the same simplified situation:
 
-``` r
-
-# rtables 0.6.2
-
-cutfun <- function(x) {
-  # browser()
-  cutpoints <- c(0, 50, 100)
-  names(cutpoints) <- c("", "Younger", "Older")
-  cutpoints
-}
-
-tbl <- basic_table(show_colcounts = TRUE) |>
-  split_rows_by("ARM", split_fun = drop_and_remove_levels(c("B: Placebo", "C: Combination"))) |>
-  split_rows_by("STRATA1") |>
-  split_rows_by_cutfun("AGE", cutfun = cutfun) |>
-  # split_rows_by_cuts("AGE", cuts = c(0, 50, 100),
-  #                    cutlabels = c("young", "old")) |> # Works the same
-  split_rows_by("SEX", split_fun = drop_split_levels) |>
-  summarize_row_groups() |> # This is degenerate!!!
-  build_table(DM)
-
-tbl
-```
+`# rtables 0.6.2`` `` ``cutfun`` ``<-`` ``function``(``x``)`` ``{`` `` ``# browser()`` `` ``cutpoints`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``0``, ``50``, ``100``)`` `` `[`names`](https://rdrr.io/r/base/names.html)`(``cutpoints``)`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``""``, ``"Younger"``, ``"Older"``)`` `` ``cutpoints`` ``}`` `` ``tbl`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``show_colcounts ``=`` ``TRUE``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"ARM"``, split_fun ``=`` `[`drop_and_remove_levels`](https://pharmaverse.github.io/rtables/reference/split_funcs.md)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"B: Placebo"``, ``"C: Combination"``)``)``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"STRATA1"``)`` ``|>`` `` `[`split_rows_by_cutfun`](https://pharmaverse.github.io/rtables/reference/varcuts.md)`(``"AGE"``, cutfun ``=`` ``cutfun``)`` ``|>`` `` ``# split_rows_by_cuts("AGE", cuts = c(0, 50, 100),`` `` ``# cutlabels = c("young", "old")) |> # Works the same`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"SEX"``, split_fun ``=`` ``drop_split_levels``)`` ``|>`` `` `[`summarize_row_groups`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md)`(``)`` ``|>`` ``# This is degenerate!!!`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``DM``)`` `` ``tbl`
 
     ##                  all obs 
     ##                  (N=356) 
@@ -1328,82 +742,12 @@ of the Tabulation vignette.
 We can try to construct the split function for cuts manually with
 `make_split_fun`:
 
-``` r
-
-my_count_afun <- function(x, .N_col, .spl_context, ...) {
-  # browser()
-  out <- list(c(length(x), length(x) / .N_col))
-  names(out) <- .spl_context$value[nrow(.spl_context)] # workaround (xxx #689)
-  in_rows(
-    .list = out,
-    .formats = c("xx (xx.x%)")
-  )
-}
-# ?make_split_fun # To check for docs/examples
-
-# Core split
-cuts_core <- function(spl, df, vals, labels, .spl_context) {
-  # browser() # file an issue xxx
-  # variables that are split on are converted to factor during the original clean-up
-  # cut split are not doing it but it is an exception. xxx
-  # young_v <- as.numeric(df[["AGE"]]) < 50
-  # current solution:
-  young_v <- as.numeric(as.character(df[["AGE"]])) < 50
-  make_split_result(c("young", "old"),
-    datasplit = list(df[young_v, ], df[!young_v, ]),
-    labels = c("Younger", "Older")
-  )
-}
-drop_empties <- function(splret, spl, fulldf, ...) {
-  # browser()
-  nrows_data_split <- vapply(splret$datasplit, nrow, numeric(1))
-  to_keep <- nrows_data_split > 0
-  make_split_result(
-    splret$values[to_keep],
-    splret$datasplit[to_keep],
-    splret$labels[to_keep]
-  )
-}
-gen_split <- make_split_fun(
-  core_split = cuts_core,
-  post = list(drop_empties)
-)
-
-tbl <- basic_table(show_colcounts = TRUE) |>
-  split_rows_by("ARM", split_fun = keep_split_levels(c("A: Drug X"))) |>
-  split_rows_by("STRATA1") |>
-  split_rows_by("AGE", split_fun = gen_split) |>
-  analyze("SEX") |> # It is the last step!! No need of BMRKR1 right?
-  # split_rows_by("SEX", split_fun = drop_split_levels,
-  #               child_labels = "hidden") |> # close issue #689. would it work for
-  # analyze_colvars? probably (xxx)
-  # analyze("BMRKR1", afun = my_count_afun) |>  # This is NOT degenerate!!! BMRKR1 is only placeholder
-  build_table(DM)
-
-tbl
-```
+`my_count_afun`` ``<-`` ``function``(``x``, ``.N_col``, ``.spl_context``, ``...``)`` ``{`` `` ``# browser()`` `` ``out`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(`[`length`](https://rdrr.io/r/base/length.html)`(``x``)``, `[`length`](https://rdrr.io/r/base/length.html)`(``x``)`` ``/`` ``.N_col``)``)`` `` `[`names`](https://rdrr.io/r/base/names.html)`(``out``)`` ``<-`` ``.spl_context``$``value``[`[`nrow`](https://rdrr.io/r/base/nrow.html)`(``.spl_context``)``]`` ``# workaround (xxx #689)`` `` `[`in_rows`](https://pharmaverse.github.io/rtables/reference/in_rows.md)`(`` `` .list ``=`` ``out``,`` `` .formats ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"xx (xx.x%)"``)`` `` ``)`` ``}`` ``# ?make_split_fun # To check for docs/examples`` `` ``# Core split`` ``cuts_core`` ``<-`` ``function``(``spl``, ``df``, ``vals``, ``labels``, ``.spl_context``)`` ``{`` `` ``# browser() # file an issue xxx`` `` ``# variables that are split on are converted to factor during the original clean-up`` `` ``# cut split are not doing it but it is an exception. xxx`` `` ``# young_v <- as.numeric(df[["AGE"]]) < 50`` `` ``# current solution:`` `` ``young_v`` ``<-`` `[`as.numeric`](https://rdrr.io/r/base/numeric.html)`(`[`as.character`](https://rdrr.io/r/base/character.html)`(``df``[[``"AGE"``]``]``)``)`` ``<`` ``50`` `` `[`make_split_result`](https://pharmaverse.github.io/rtables/reference/make_split_result.md)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"young"``, ``"old"``)``,`` `` datasplit ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``df``[``young_v``, ``]``, ``df``[``!``young_v``, ``]``)``,`` `` labels ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"Younger"``, ``"Older"``)`` `` ``)`` ``}`` ``drop_empties`` ``<-`` ``function``(``splret``, ``spl``, ``fulldf``, ``...``)`` ``{`` `` ``# browser()`` `` ``nrows_data_split`` ``<-`` `[`vapply`](https://rdrr.io/r/base/lapply.html)`(``splret``$``datasplit``, ``nrow``, `[`numeric`](https://rdrr.io/r/base/numeric.html)`(``1``)``)`` `` ``to_keep`` ``<-`` ``nrows_data_split`` ``>`` ``0`` `` `[`make_split_result`](https://pharmaverse.github.io/rtables/reference/make_split_result.md)`(`` `` ``splret``$``values``[``to_keep``]``,`` `` ``splret``$``datasplit``[``to_keep``]``,`` `` ``splret``$``labels``[``to_keep``]`` `` ``)`` ``}`` ``gen_split`` ``<-`` `[`make_split_fun`](https://pharmaverse.github.io/rtables/reference/make_split_fun.md)`(`` `` core_split ``=`` ``cuts_core``,`` `` post ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``drop_empties``)`` ``)`` `` ``tbl`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``show_colcounts ``=`` ``TRUE``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"ARM"``, split_fun ``=`` `[`keep_split_levels`](https://pharmaverse.github.io/rtables/reference/split_funcs.md)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"A: Drug X"``)``)``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"STRATA1"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"AGE"``, split_fun ``=`` ``gen_split``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"SEX"``)`` ``|>`` ``# It is the last step!! No need of BMRKR1 right?`` `` ``# split_rows_by("SEX", split_fun = drop_split_levels,`` `` ``# child_labels = "hidden") |> # close issue #689. would it work for`` `` ``# analyze_colvars? probably (xxx)`` `` ``# analyze("BMRKR1", afun = my_count_afun) |> # This is NOT degenerate!!! BMRKR1 is only placeholder`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``DM``)`` `` ``tbl`
 
 Alternatively, we could choose to prune these rows out with
 `prune_table`!
 
-``` r
-
-# rtables 0.6.2
-
-tbl <- basic_table(show_colcounts = TRUE) |>
-  split_rows_by("ARM", split_fun = keep_split_levels(c("A: Drug X"))) |>
-  split_rows_by("STRATA1") |>
-  split_rows_by_cuts(
-    "AGE",
-    cuts = c(0, 50, 100),
-    cutlabels = c("young", "old")
-  ) |>
-  split_rows_by("SEX", split_fun = drop_split_levels) |>
-  summarize_row_groups() |> # This is degenerate!!! # we keep it until #689
-  build_table(DM)
-
-tbl
-```
+`# rtables 0.6.2`` `` ``tbl`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``show_colcounts ``=`` ``TRUE``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"ARM"``, split_fun ``=`` `[`keep_split_levels`](https://pharmaverse.github.io/rtables/reference/split_funcs.md)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"A: Drug X"``)``)``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"STRATA1"``)`` ``|>`` `` `[`split_rows_by_cuts`](https://pharmaverse.github.io/rtables/reference/varcuts.md)`(`` `` ``"AGE"``,`` `` cuts ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``0``, ``50``, ``100``)``,`` `` cutlabels ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"young"``, ``"old"``)`` `` ``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"SEX"``, split_fun ``=`` ``drop_split_levels``)`` ``|>`` `` `[`summarize_row_groups`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md)`(``)`` ``|>`` ``# This is degenerate!!! # we keep it until #689`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``DM``)`` `` ``tbl`
 
     ##              all obs 
     ##              (N=356) 
@@ -1428,19 +772,10 @@ tbl
     ##       F     2 (0.6%) 
     ##       M     2 (0.6%)
 
-``` r
-
-# Trying with pruning
-prune_table(tbl) # (xxx) what is going on here? it is degenerate so it has no real leaves
-```
+`# Trying with pruning`` `[`prune_table`](https://pharmaverse.github.io/rtables/reference/prune_table.md)`(``tbl``)`` ``# (xxx) what is going on here? it is degenerate so it has no real leaves`
 
     ## NULL
 
-``` r
-
-# It is degenerate -> what to do?
-# The same mechanism is applied in the case of NULL leaves, they are rolled up in the
-#  table tree
-```
+`# It is degenerate -> what to do?`` ``# The same mechanism is applied in the case of NULL leaves, they are rolled up in the`` ``# table tree`
 
 30. add the pre-processing with z-scoring

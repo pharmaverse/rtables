@@ -57,48 +57,7 @@ occur in any (correctly cleaned) data set; nor does the combination
 We will showcase strategies to deal with this in the next sections using
 the following artificial data:
 
-``` r
-
-set.seed(0)
-levs_type <- c("car", "truck", "suv", "sailboat", "cruiseliner")
-
-vclass <- sample(c("auto", "boat"), 1000, replace = TRUE)
-auto_inds <- which(vclass == "auto")
-vtype <- rep(NA_character_, 1000)
-vtype[auto_inds] <- sample(
-  c("car", "truck"), ## suv missing on purpose
-  length(auto_inds),
-  replace = TRUE
-)
-vtype[-auto_inds] <- sample(
-  c("sailboat", "cruiseliner"),
-  1000 - length(auto_inds),
-  replace = TRUE
-)
-
-vehic_data <- data.frame(
-  vehicle_class = factor(vclass),
-  vehicle_type = factor(vtype, levels = levs_type),
-  color = sample(
-    c("white", "black", "red"), 1000,
-    prob = c(1, 2, 1),
-    replace = TRUE
-  ),
-  cost = ifelse(
-    vclass == "boat",
-    rnorm(1000, 100000, sd = 5000),
-    rnorm(1000, 40000, sd = 5000)
-  )
-)
-head(vehic_data)
-#>   vehicle_class vehicle_type color      cost
-#> 1          boat     sailboat black 100393.81
-#> 2          auto          car white  38150.17
-#> 3          boat     sailboat white  98696.13
-#> 4          auto        truck white  37677.16
-#> 5          auto        truck black  38489.27
-#> 6          boat  cruiseliner black 108709.72
-```
+[`set.seed`](https://rdrr.io/r/base/Random.html)`(``0``)`` ``levs_type`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``"car"``, ``"truck"``, ``"suv"``, ``"sailboat"``, ``"cruiseliner"``)`` `` ``vclass`` ``<-`` `[`sample`](https://rdrr.io/r/base/sample.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"auto"``, ``"boat"``)``, ``1000``, replace ``=`` ``TRUE``)`` ``auto_inds`` ``<-`` `[`which`](https://rdrr.io/r/base/which.html)`(``vclass`` ``==`` ``"auto"``)`` ``vtype`` ``<-`` `[`rep`](https://rdrr.io/r/base/rep.html)`(``NA_character_``, ``1000``)`` ``vtype``[``auto_inds``]`` ``<-`` `[`sample`](https://rdrr.io/r/base/sample.html)`(`` `` `[`c`](https://rdrr.io/r/base/c.html)`(``"car"``, ``"truck"``)``, ``## suv missing on purpose`` `` `[`length`](https://rdrr.io/r/base/length.html)`(``auto_inds``)``,`` `` replace ``=`` ``TRUE`` ``)`` ``vtype``[``-``auto_inds``]`` ``<-`` `[`sample`](https://rdrr.io/r/base/sample.html)`(`` `` `[`c`](https://rdrr.io/r/base/c.html)`(``"sailboat"``, ``"cruiseliner"``)``,`` `` ``1000`` ``-`` `[`length`](https://rdrr.io/r/base/length.html)`(``auto_inds``)``,`` `` replace ``=`` ``TRUE`` ``)`` `` ``vehic_data`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(`` `` vehicle_class ``=`` `[`factor`](https://rdrr.io/r/base/factor.html)`(``vclass``)``,`` `` vehicle_type ``=`` `[`factor`](https://rdrr.io/r/base/factor.html)`(``vtype``, levels ``=`` ``levs_type``)``,`` `` color ``=`` `[`sample`](https://rdrr.io/r/base/sample.html)`(`` `` `[`c`](https://rdrr.io/r/base/c.html)`(``"white"``, ``"black"``, ``"red"``)``, ``1000``,`` `` prob ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``2``, ``1``)``,`` `` replace ``=`` ``TRUE`` `` ``)``,`` `` cost ``=`` `[`ifelse`](https://rdrr.io/r/base/ifelse.html)`(`` `` ``vclass`` ``==`` ``"boat"``,`` `` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``1000``, ``100000``, sd ``=`` ``5000``)``,`` `` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``1000``, ``40000``, sd ``=`` ``5000``)`` `` ``)`` ``)`` `[`head`](https://pharmaverse.github.io/rtables/reference/head_tail.md)`(``vehic_data``)`` ``#> vehicle_class vehicle_type color cost`` ``#> 1 boat sailboat black 100393.81`` ``#> 2 auto car white 38150.17`` ``#> 3 boat sailboat white 98696.13`` ``#> 4 auto truck white 37677.16`` ``#> 5 auto truck black 38489.27`` ``#> 6 boat cruiseliner black 108709.72`
 
 #### `trim_levels_in_group`
 
@@ -110,70 +69,14 @@ within the table, while those that do not, will not.
 If we use default level-based faceting, we get several logically
 incoherent cells within our table:
 
-``` r
-
-library(rtables)
-
-lyt <- basic_table() |>
-  split_cols_by("color") |>
-  split_rows_by("vehicle_class") |>
-  split_rows_by("vehicle_type") |>
-  analyze("cost")
-
-build_table(lyt, vehic_data)
-#>                   black      white        red   
-#> ————————————————————————————————————————————————
-#> auto                                            
-#>   car                                           
-#>     Mean        40431.92    40518.92   38713.14 
-#>   truck                                         
-#>     Mean        40061.70    40635.74   40024.41 
-#>   suv                                           
-#>     Mean           NA          NA         NA    
-#>   sailboat                                      
-#>     Mean           NA          NA         NA    
-#>   cruiseliner                                   
-#>     Mean           NA          NA         NA    
-#> boat                                            
-#>   car                                           
-#>     Mean           NA          NA         NA    
-#>   truck                                         
-#>     Mean           NA          NA         NA    
-#>   suv                                           
-#>     Mean           NA          NA         NA    
-#>   sailboat                                      
-#>     Mean        99349.69    99996.54   101865.73
-#>   cruiseliner                                   
-#>     Mean        100212.00   99340.25   100363.52
-```
+[`library`](https://rdrr.io/r/base/library.html)`(`[`rtables`](https://github.com/pharmaverse/rtables)`)`` `` ``lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"color"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"vehicle_class"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"vehicle_type"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"cost"``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt``, ``vehic_data``)`` ``#> black white red `` ``#> ————————————————————————————————————————————————`` ``#> auto `` ``#> car `` ``#> Mean 40431.92 40518.92 38713.14 `` ``#> truck `` ``#> Mean 40061.70 40635.74 40024.41 `` ``#> suv `` ``#> Mean NA NA NA `` ``#> sailboat `` ``#> Mean NA NA NA `` ``#> cruiseliner `` ``#> Mean NA NA NA `` ``#> boat `` ``#> car `` ``#> Mean NA NA NA `` ``#> truck `` ``#> Mean NA NA NA `` ``#> suv `` ``#> Mean NA NA NA `` ``#> sailboat `` ``#> Mean 99349.69 99996.54 101865.73`` ``#> cruiseliner `` ``#> Mean 100212.00 99340.25 100363.52`
 
 This is obviously not the table we want, as the majority of its space is
 taken up by meaningless combinations. If we use `trim_levels_in_group`
 to trim the levels of `vehicle_type` separately within each level of
 `vehicle_class`, we get a table which only has meaningful combinations:
 
-``` r
-
-lyt2 <- basic_table() |>
-  split_cols_by("color") |>
-  split_rows_by("vehicle_class", split_fun = trim_levels_in_group("vehicle_type")) |>
-  split_rows_by("vehicle_type") |>
-  analyze("cost")
-
-build_table(lyt2, vehic_data)
-#>                   black      white        red   
-#> ————————————————————————————————————————————————
-#> auto                                            
-#>   car                                           
-#>     Mean        40431.92    40518.92   38713.14 
-#>   truck                                         
-#>     Mean        40061.70    40635.74   40024.41 
-#> boat                                            
-#>   sailboat                                      
-#>     Mean        99349.69    99996.54   101865.73
-#>   cruiseliner                                   
-#>     Mean        100212.00   99340.25   100363.52
-```
+`lyt2`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"color"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"vehicle_class"``, split_fun ``=`` `[`trim_levels_in_group`](https://pharmaverse.github.io/rtables/reference/split_funcs.md)`(``"vehicle_type"``)``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"vehicle_type"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"cost"``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt2``, ``vehic_data``)`` ``#> black white red `` ``#> ————————————————————————————————————————————————`` ``#> auto `` ``#> car `` ``#> Mean 40431.92 40518.92 38713.14 `` ``#> truck `` ``#> Mean 40061.70 40635.74 40024.41 `` ``#> boat `` ``#> sailboat `` ``#> Mean 99349.69 99996.54 101865.73`` ``#> cruiseliner `` ``#> Mean 100212.00 99340.25 100363.52`
 
 Note, however, that it does not contain *all* meaningful combinations,
 only those that were actually observed in our data; which *happens* to
@@ -193,40 +96,7 @@ logically nested variables. Unlike its sibling function, however, with
 priori*, and that exact set of combinations is produced in the resulting
 table, regardless of whether they are observed or not.
 
-``` r
-
-library(tibble)
-map <- tribble(
-  ~vehicle_class, ~vehicle_type,
-  "auto",         "truck",
-  "auto",         "suv",
-  "auto",         "car",
-  "boat",         "sailboat",
-  "boat",         "cruiseliner"
-)
-
-lyt3 <- basic_table() |>
-  split_cols_by("color") |>
-  split_rows_by("vehicle_class", split_fun = trim_levels_to_map(map)) |>
-  split_rows_by("vehicle_type") |>
-  analyze("cost")
-
-build_table(lyt3, vehic_data)
-#>                   black      white        red   
-#> ————————————————————————————————————————————————
-#> auto                                            
-#>   car                                           
-#>     Mean        40431.92    40518.92   38713.14 
-#>   truck                                         
-#>     Mean        40061.70    40635.74   40024.41 
-#>   suv                                           
-#>     Mean           NA          NA         NA    
-#> boat                                            
-#>   sailboat                                      
-#>     Mean        99349.69    99996.54   101865.73
-#>   cruiseliner                                   
-#>     Mean        100212.00   99340.25   100363.52
-```
+[`library`](https://rdrr.io/r/base/library.html)`(`[`tibble`](https://tibble.tidyverse.org/)`)`` ``map`` ``<-`` `[`tribble`](https://tibble.tidyverse.org/reference/tribble.html)`(`` `` ``~``vehicle_class``, ``~``vehicle_type``,`` `` ``"auto"``, ``"truck"``,`` `` ``"auto"``, ``"suv"``,`` `` ``"auto"``, ``"car"``,`` `` ``"boat"``, ``"sailboat"``,`` `` ``"boat"``, ``"cruiseliner"`` ``)`` `` ``lyt3`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"color"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"vehicle_class"``, split_fun ``=`` `[`trim_levels_to_map`](https://pharmaverse.github.io/rtables/reference/trim_levels_to_map.md)`(``map``)``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"vehicle_type"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"cost"``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt3``, ``vehic_data``)`` ``#> black white red `` ``#> ————————————————————————————————————————————————`` ``#> auto `` ``#> car `` ``#> Mean 40431.92 40518.92 38713.14 `` ``#> truck `` ``#> Mean 40061.70 40635.74 40024.41 `` ``#> suv `` ``#> Mean NA NA NA `` ``#> boat `` ``#> sailboat `` ``#> Mean 99349.69 99996.54 101865.73`` ``#> cruiseliner `` ``#> Mean 100212.00 99340.25 100363.52`
 
 Now we see that the `"auto"`, `"suv"` combination is again present, even
 though it is populated with `NA`s (because there is no data in that
@@ -252,31 +122,7 @@ level, as well as `label`, and `first` (whether it should come first, if
 Building further on our arbitrary vehicles table, we can use this to
 create an “all colors” category:
 
-``` r
-
-lyt4 <- basic_table(show_colcounts = TRUE) |>
-  split_cols_by("color", split_fun = add_overall_level("allcolors", label = "All Colors")) |>
-  split_rows_by("vehicle_class", split_fun = trim_levels_to_map(map)) |>
-  split_rows_by("vehicle_type") |>
-  analyze("cost")
-
-build_table(lyt4, vehic_data)
-#>                 All Colors     black      white        red   
-#>                  (N=1000)     (N=521)    (N=251)     (N=228) 
-#> —————————————————————————————————————————————————————————————
-#> auto                                                         
-#>   car                                                        
-#>     Mean         40095.49    40431.92    40518.92   38713.14 
-#>   truck                                                      
-#>     Mean         40194.68    40061.70    40635.74   40024.41 
-#>   suv                                                        
-#>     Mean            NA          NA          NA         NA    
-#> boat                                                         
-#>   sailboat                                                   
-#>     Mean        100133.22    99349.69    99996.54   101865.73
-#>   cruiseliner                                                
-#>     Mean        100036.76    100212.00   99340.25   100363.52
-```
+`lyt4`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``show_colcounts ``=`` ``TRUE``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"color"``, split_fun ``=`` `[`add_overall_level`](https://pharmaverse.github.io/rtables/reference/add_overall_level.md)`(``"allcolors"``, label ``=`` ``"All Colors"``)``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"vehicle_class"``, split_fun ``=`` `[`trim_levels_to_map`](https://pharmaverse.github.io/rtables/reference/trim_levels_to_map.md)`(``map``)``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"vehicle_type"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"cost"``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt4``, ``vehic_data``)`` ``#> All Colors black white red `` ``#> (N=1000) (N=521) (N=251) (N=228) `` ``#> —————————————————————————————————————————————————————————————`` ``#> auto `` ``#> car `` ``#> Mean 40095.49 40431.92 40518.92 38713.14 `` ``#> truck `` ``#> Mean 40194.68 40061.70 40635.74 40024.41 `` ``#> suv `` ``#> Mean NA NA NA NA `` ``#> boat `` ``#> sailboat `` ``#> Mean 100133.22 99349.69 99996.54 101865.73`` ``#> cruiseliner `` ``#> Mean 100036.76 100212.00 99340.25 100363.52`
 
 With the column counts turned on, we can see that the “All Colors”
 column encompasses the full 1000 (completely fake) vehicles in our data
@@ -307,38 +153,7 @@ columns and one row for each combination to add:
 Suppose we wanted combinations levels for all non-white colors, and for
 white and black colors. We do this like so:
 
-``` r
-
-combodf <- tribble(
-  ~valname, ~label, ~levelcombo, ~exargs,
-  "non-white", "Non-White", c("black", "red"), list(),
-  "blackwhite", "Black or White", c("black", "white"), list()
-)
-
-
-lyt5 <- basic_table(show_colcounts = TRUE) |>
-  split_cols_by("color", split_fun = add_combo_levels(combodf)) |>
-  split_rows_by("vehicle_class", split_fun = trim_levels_to_map(map)) |>
-  split_rows_by("vehicle_type") |>
-  analyze("cost")
-
-build_table(lyt5, vehic_data)
-#>                   black      white        red      Non-White   Black or White
-#>                  (N=521)    (N=251)     (N=228)     (N=749)       (N=772)    
-#> —————————————————————————————————————————————————————————————————————————————
-#> auto                                                                         
-#>   car                                                                        
-#>     Mean        40431.92    40518.92   38713.14    39944.93       40460.77   
-#>   truck                                                                      
-#>     Mean        40061.70    40635.74   40024.41    40050.66       40243.57   
-#>   suv                                                                        
-#>     Mean           NA          NA         NA          NA             NA      
-#> boat                                                                         
-#>   sailboat                                                                   
-#>     Mean        99349.69    99996.54   101865.73   100179.72      99567.50   
-#>   cruiseliner                                                                
-#>     Mean        100212.00   99340.25   100363.52   100258.56      99937.47
-```
+`combodf`` ``<-`` `[`tribble`](https://tibble.tidyverse.org/reference/tribble.html)`(`` `` ``~``valname``, ``~``label``, ``~``levelcombo``, ``~``exargs``,`` `` ``"non-white"``, ``"Non-White"``, `[`c`](https://rdrr.io/r/base/c.html)`(``"black"``, ``"red"``)``, `[`list`](https://rdrr.io/r/base/list.html)`(``)``,`` `` ``"blackwhite"``, ``"Black or White"``, `[`c`](https://rdrr.io/r/base/c.html)`(``"black"``, ``"white"``)``, `[`list`](https://rdrr.io/r/base/list.html)`(``)`` ``)`` `` `` ``lyt5`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``show_colcounts ``=`` ``TRUE``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"color"``, split_fun ``=`` `[`add_combo_levels`](https://pharmaverse.github.io/rtables/reference/add_overall_level.md)`(``combodf``)``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"vehicle_class"``, split_fun ``=`` `[`trim_levels_to_map`](https://pharmaverse.github.io/rtables/reference/trim_levels_to_map.md)`(``map``)``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"vehicle_type"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"cost"``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt5``, ``vehic_data``)`` ``#> black white red Non-White Black or White`` ``#> (N=521) (N=251) (N=228) (N=749) (N=772) `` ``#> —————————————————————————————————————————————————————————————————————————————`` ``#> auto `` ``#> car `` ``#> Mean 40431.92 40518.92 38713.14 39944.93 40460.77 `` ``#> truck `` ``#> Mean 40061.70 40635.74 40024.41 40050.66 40243.57 `` ``#> suv `` ``#> Mean NA NA NA NA NA `` ``#> boat `` ``#> sailboat `` ``#> Mean 99349.69 99996.54 101865.73 100179.72 99567.50 `` ``#> cruiseliner `` ``#> Mean 100212.00 99340.25 100363.52 100258.56 99937.47`
 
 ## Fully Customizing Split (Facet) Behavior
 
@@ -410,84 +225,17 @@ First, we define two aspects of ‘pre-processing step’ behavior:
 2.  A function factory which creates a function that removes a level and
     the data associated with it.
 
-``` r
-
-## reverse order of levels
-
-rev_lev <- function(df, spl, vals, labels, ...) {
-  ## in the split_rows_by() and split_cols_by() cases,
-  ## spl_variable() gives us the variable
-  var <- spl_variable(spl)
-  vec <- df[[var]]
-  levs <- if (is.character(vec)) unique(vec) else levels(vec)
-  df[[var]] <- factor(vec, levels = rev(levs))
-  df
-}
-
-rem_lev_facet <- function(torem) {
-  function(df, spl, vals, labels, ...) {
-    var <- spl_variable(spl)
-    vec <- df[[var]]
-    bad <- vec == torem
-    df <- df[!bad, ]
-    levs <- if (is.character(vec)) unique(vec) else levels(vec)
-    df[[var]] <- factor(as.character(vec[!bad]), levels = setdiff(levs, torem))
-    df
-  }
-}
-```
+`## reverse order of levels`` `` ``rev_lev`` ``<-`` ``function``(``df``, ``spl``, ``vals``, ``labels``, ``...``)`` ``{`` `` ``## in the split_rows_by() and split_cols_by() cases,`` `` ``## spl_variable() gives us the variable`` `` ``var`` ``<-`` `[`spl_variable`](https://pharmaverse.github.io/rtables/reference/spl_variable.md)`(``spl``)`` `` ``vec`` ``<-`` ``df``[[``var``]``]`` `` ``levs`` ``<-`` ``if`` ``(`[`is.character`](https://rdrr.io/r/base/character.html)`(``vec``)``)`` `[`unique`](https://rdrr.io/r/base/unique.html)`(``vec``)`` ``else`` `[`levels`](https://rdrr.io/r/base/levels.html)`(``vec``)`` `` ``df``[[``var``]``]`` ``<-`` `[`factor`](https://rdrr.io/r/base/factor.html)`(``vec``, levels ``=`` `[`rev`](https://rdrr.io/r/base/rev.html)`(``levs``)``)`` `` ``df`` ``}`` `` ``rem_lev_facet`` ``<-`` ``function``(``torem``)`` ``{`` `` ``function``(``df``, ``spl``, ``vals``, ``labels``, ``...``)`` ``{`` `` ``var`` ``<-`` `[`spl_variable`](https://pharmaverse.github.io/rtables/reference/spl_variable.md)`(``spl``)`` `` ``vec`` ``<-`` ``df``[[``var``]``]`` `` ``bad`` ``<-`` ``vec`` ``==`` ``torem`` `` ``df`` ``<-`` ``df``[``!``bad``, ``]`` `` ``levs`` ``<-`` ``if`` ``(`[`is.character`](https://rdrr.io/r/base/character.html)`(``vec``)``)`` `[`unique`](https://rdrr.io/r/base/unique.html)`(``vec``)`` ``else`` `[`levels`](https://rdrr.io/r/base/levels.html)`(``vec``)`` `` ``df``[[``var``]``]`` ``<-`` `[`factor`](https://rdrr.io/r/base/factor.html)`(`[`as.character`](https://rdrr.io/r/base/character.html)`(``vec``[``!``bad``]``)``, levels ``=`` `[`setdiff`](https://generics.r-lib.org/reference/setops.html)`(``levs``, ``torem``)``)`` `` ``df`` `` ``}`` ``}`
 
 Finally we implement our post-processing function. Here we will reorder
 the facets based on the amount of data each of them represents.
 
-``` r
-
-sort_them_facets <- function(splret, spl, fulldf, ...) {
-  ord <- order(sapply(splret$datasplit, nrow))
-  make_split_result(
-    splret$values[ord],
-    splret$datasplit[ord],
-    splret$labels[ord]
-  )
-}
-```
+`sort_them_facets`` ``<-`` ``function``(``splret``, ``spl``, ``fulldf``, ``...``)`` ``{`` `` ``ord`` ``<-`` `[`order`](https://rdrr.io/r/base/order.html)`(`[`sapply`](https://rdrr.io/r/base/lapply.html)`(``splret``$``datasplit``, ``nrow``)``)`` `` `[`make_split_result`](https://pharmaverse.github.io/rtables/reference/make_split_result.md)`(`` `` ``splret``$``values``[``ord``]``,`` `` ``splret``$``datasplit``[``ord``]``,`` `` ``splret``$``labels``[``ord``]`` `` ``)`` ``}`
 
 Finally, we construct our custom split function and use it to create our
 table:
 
-``` r
-
-silly_splfun1 <- make_split_fun(
-  pre = list(
-    rev_lev,
-    rem_lev_facet("white")
-  ),
-  post = list(sort_them_facets)
-)
-
-lyt6 <- basic_table(show_colcounts = TRUE) |>
-  split_cols_by("color", split_fun = silly_splfun1) |>
-  split_rows_by("vehicle_class", split_fun = trim_levels_to_map(map)) |>
-  split_rows_by("vehicle_type") |>
-  analyze("cost")
-
-build_table(lyt6, vehic_data)
-#>                    red        black  
-#>                  (N=228)     (N=521) 
-#> —————————————————————————————————————
-#> auto                                 
-#>   car                                
-#>     Mean        38713.14    40431.92 
-#>   truck                              
-#>     Mean        40024.41    40061.70 
-#>   suv                                
-#>     Mean           NA          NA    
-#> boat                                 
-#>   sailboat                           
-#>     Mean        101865.73   99349.69 
-#>   cruiseliner                        
-#>     Mean        100363.52   100212.00
-```
+`silly_splfun1`` ``<-`` `[`make_split_fun`](https://pharmaverse.github.io/rtables/reference/make_split_fun.md)`(`` `` pre ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(`` `` ``rev_lev``,`` `` ``rem_lev_facet``(``"white"``)`` `` ``)``,`` `` post ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``sort_them_facets``)`` ``)`` `` ``lyt6`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``show_colcounts ``=`` ``TRUE``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"color"``, split_fun ``=`` ``silly_splfun1``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"vehicle_class"``, split_fun ``=`` `[`trim_levels_to_map`](https://pharmaverse.github.io/rtables/reference/trim_levels_to_map.md)`(``map``)``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"vehicle_type"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"cost"``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt6``, ``vehic_data``)`` ``#> red black `` ``#> (N=228) (N=521) `` ``#> —————————————————————————————————————`` ``#> auto `` ``#> car `` ``#> Mean 38713.14 40431.92 `` ``#> truck `` ``#> Mean 40024.41 40061.70 `` ``#> suv `` ``#> Mean NA NA `` ``#> boat `` ``#> sailboat `` ``#> Mean 101865.73 99349.69 `` ``#> cruiseliner `` ``#> Mean 100363.52 100212.00`
 
 #### Overriding the Core Split Function
 
@@ -501,26 +249,7 @@ test for structural bias in the first and last observations, but really
 its to simply illustrate overriding the core splitting machinery and has
 no meaningful statistical purpose.
 
-``` r
-
-silly_core_split <- function(spl, df, vals, labels, .spl_context) {
-  make_split_result(
-    c("first", "lowmid", "highmid", "last"),
-    datasplit = list(
-      df[1:100, ],
-      df[101:500, ],
-      df[501:900, ],
-      df[901:1000, ]
-    ),
-    labels = c(
-      "first 100",
-      "obs 101-500",
-      "obs 501-900",
-      "last 100"
-    )
-  )
-}
-```
+`silly_core_split`` ``<-`` ``function``(``spl``, ``df``, ``vals``, ``labels``, ``.spl_context``)`` ``{`` `` `[`make_split_result`](https://pharmaverse.github.io/rtables/reference/make_split_result.md)`(`` `` `[`c`](https://rdrr.io/r/base/c.html)`(``"first"``, ``"lowmid"``, ``"highmid"``, ``"last"``)``,`` `` datasplit ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(`` `` ``df``[``1``:``100``, ``]``,`` `` ``df``[``101``:``500``, ``]``,`` `` ``df``[``501``:``900``, ``]``,`` `` ``df``[``901``:``1000``, ``]`` `` ``)``,`` `` labels ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(`` `` ``"first 100"``,`` `` ``"obs 101-500"``,`` `` ``"obs 501-900"``,`` `` ``"last 100"`` `` ``)`` `` ``)`` ``}`
 
 We can use this to construct a splitting function. This can be combined
 with pre- and post-processing functions, as each of the stages is
@@ -528,65 +257,7 @@ performed independently, but in this case, we won’t, because our core
 splitting behavior is such that pre- or post-processing do not make much
 sense.
 
-``` r
-
-even_sillier_splfun <- make_split_fun(core_split = silly_core_split)
-
-lyt7 <- basic_table(show_colcounts = TRUE) |>
-  split_cols_by("color") |>
-  split_rows_by("vehicle_class", split_fun = even_sillier_splfun) |>
-  split_rows_by("vehicle_type") |>
-  analyze("cost")
-
-build_table(lyt7, vehic_data)
-#>                   black       white        red   
-#>                  (N=521)     (N=251)     (N=228) 
-#> —————————————————————————————————————————————————
-#> first 100                                        
-#>   car                                            
-#>     Mean        40496.05    37785.41    37623.17 
-#>   truck                                          
-#>     Mean        41094.17    40437.29    37866.81 
-#>   suv                                            
-#>     Mean           NA          NA          NA    
-#>   sailboat                                       
-#>     Mean        100560.80   102017.05   101185.96
-#>   cruiseliner                                    
-#>     Mean        100838.12   96952.27    100610.71
-#> obs 101-500                                      
-#>   car                                            
-#>     Mean        39350.88    41185.98    37978.72 
-#>   truck                                          
-#>     Mean        40166.87    41385.32    39885.72 
-#>   suv                                            
-#>     Mean           NA          NA          NA    
-#>   sailboat                                       
-#>     Mean        98845.47    99563.02    101462.79
-#>   cruiseliner                                    
-#>     Mean        101558.62   99039.91    97335.05 
-#> obs 501-900                                      
-#>   car                                            
-#>     Mean        40721.82    40379.48    38681.26 
-#>   truck                                          
-#>     Mean        39951.92    39846.89    39840.39 
-#>   suv                                            
-#>     Mean           NA          NA          NA    
-#>   sailboat                                       
-#>     Mean        99533.20    100347.18   102732.12
-#>   cruiseliner                                    
-#>     Mean        99140.43    100074.43   101994.99
-#> last 100                                         
-#>   car                                            
-#>     Mean        45204.44    40626.95    41214.33 
-#>   truck                                          
-#>     Mean        38920.70    40620.47    42899.14 
-#>   suv                                            
-#>     Mean           NA          NA          NA    
-#>   sailboat                                       
-#>     Mean        99380.21    97644.77    101691.92
-#>   cruiseliner                                    
-#>     Mean        100017.53   99581.94    100751.30
-```
+`even_sillier_splfun`` ``<-`` `[`make_split_fun`](https://pharmaverse.github.io/rtables/reference/make_split_fun.md)`(``core_split ``=`` ``silly_core_split``)`` `` ``lyt7`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``show_colcounts ``=`` ``TRUE``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"color"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"vehicle_class"``, split_fun ``=`` ``even_sillier_splfun``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"vehicle_type"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"cost"``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt7``, ``vehic_data``)`` ``#> black white red `` ``#> (N=521) (N=251) (N=228) `` ``#> —————————————————————————————————————————————————`` ``#> first 100 `` ``#> car `` ``#> Mean 40496.05 37785.41 37623.17 `` ``#> truck `` ``#> Mean 41094.17 40437.29 37866.81 `` ``#> suv `` ``#> Mean NA NA NA `` ``#> sailboat `` ``#> Mean 100560.80 102017.05 101185.96`` ``#> cruiseliner `` ``#> Mean 100838.12 96952.27 100610.71`` ``#> obs 101-500 `` ``#> car `` ``#> Mean 39350.88 41185.98 37978.72 `` ``#> truck `` ``#> Mean 40166.87 41385.32 39885.72 `` ``#> suv `` ``#> Mean NA NA NA `` ``#> sailboat `` ``#> Mean 98845.47 99563.02 101462.79`` ``#> cruiseliner `` ``#> Mean 101558.62 99039.91 97335.05 `` ``#> obs 501-900 `` ``#> car `` ``#> Mean 40721.82 40379.48 38681.26 `` ``#> truck `` ``#> Mean 39951.92 39846.89 39840.39 `` ``#> suv `` ``#> Mean NA NA NA `` ``#> sailboat `` ``#> Mean 99533.20 100347.18 102732.12`` ``#> cruiseliner `` ``#> Mean 99140.43 100074.43 101994.99`` ``#> last 100 `` ``#> car `` ``#> Mean 45204.44 40626.95 41214.33 `` ``#> truck `` ``#> Mean 38920.70 40620.47 42899.14 `` ``#> suv `` ``#> Mean NA NA NA `` ``#> sailboat `` ``#> Mean 99380.21 97644.77 101691.92`` ``#> cruiseliner `` ``#> Mean 100017.53 99581.94 100751.30`
 
 #### Design of Pre- and Post-Processing Functions For Use in `make_split_fun`
 

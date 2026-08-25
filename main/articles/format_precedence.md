@@ -18,11 +18,7 @@ The examples shown in this vignette utilize the example `ADSL` dataset,
 a demographic table that summarizes the variables content for different
 population subsets (encoded in the columns).
 
-``` r
-
-library(rtables)
-ADSL <- ex_adsl
-```
+[`library`](https://rdrr.io/r/base/library.html)`(`[`rtables`](https://github.com/pharmaverse/rtables)`)`` ``ADSL`` ``<-`` ``ex_adsl`
 
 Note that all `ex_*` data which is currently attached to the `rtables`
 package is provided by the
@@ -49,16 +45,7 @@ that prints the structure of a given table object.
 
 For a simple illustration, consider the following example:
 
-``` r
-
-lyt <- basic_table() |>
-  split_cols_by("ARM") |>
-  split_rows_by("SEX") |>
-  analyze(vars = "AGE", afun = mean)
-
-adsl_analyzed <- build_table(lyt, ADSL)
-adsl_analyzed
-```
+`lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"SEX"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``vars ``=`` ``"AGE"``, afun ``=`` ``mean``)`` `` ``adsl_analyzed`` ``<-`` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt``, ``ADSL``)`` ``adsl_analyzed`
 
     #                       A: Drug X          B: Placebo       C: Combination 
     # —————————————————————————————————————————————————————————————————————————
@@ -71,10 +58,7 @@ adsl_analyzed
     # UNDIFFERENTIATED                                                         
     #   mean                    28                 NA                 45
 
-``` r
-
-table_structure(adsl_analyzed)
-```
+[`table_structure`](https://pharmaverse.github.io/rtables/reference/table_structure.md)`(``adsl_analyzed``)`
 
     # [TableTree] SEX
     #  [TableTree] F
@@ -117,14 +101,7 @@ Below is a simple layout that does not explicitly set a format for the
 output of the analysis function. In such a case, the default format is
 applied.
 
-``` r
-
-lyt0 <- basic_table() |>
-  split_cols_by("ARM") |>
-  analyze(vars = "AGE", afun = mean)
-
-build_table(lyt0, ADSL)
-```
+`lyt0`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``vars ``=`` ``"AGE"``, afun ``=`` ``mean``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt0``, ``ADSL``)`
 
     #           A: Drug X          B: Placebo       C: Combination 
     # —————————————————————————————————————————————————————————————
@@ -141,34 +118,13 @@ the latter is a collection of
 objects. As previously mentioned, this is the most specific place where
 the format can be specified by the user.
 
-``` r
-
-lyt1 <- basic_table() |>
-  split_cols_by("ARM") |>
-  analyze(vars = "AGE", afun = function(x) {
-    rcell(mean(x), format = "xx.xx", label = "Mean")
-  })
-
-build_table(lyt1, ADSL)
-```
+`lyt1`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``vars ``=`` ``"AGE"``, afun ``=`` ``function``(``x``)`` ``{`` `` `[`rcell`](https://pharmaverse.github.io/rtables/reference/rcell.md)`(`[`mean`](https://rdrr.io/r/base/mean.html)`(``x``)``, format ``=`` ``"xx.xx"``, label ``=`` ``"Mean"``)`` `` ``}``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt1``, ``ADSL``)`
 
     #        A: Drug X   B: Placebo   C: Combination
     # ——————————————————————————————————————————————
     # Mean     33.77       35.43          35.43
 
-``` r
-
-lyt1a <- basic_table() |>
-  split_cols_by("ARM") |>
-  analyze(vars = "AGE", afun = function(x) {
-    in_rows(
-      "Mean" = rcell(mean(x)),
-      .formats = "xx.xx"
-    )
-  })
-
-build_table(lyt1a, ADSL)
-```
+`lyt1a`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``vars ``=`` ``"AGE"``, afun ``=`` ``function``(``x``)`` ``{`` `` `[`in_rows`](https://pharmaverse.github.io/rtables/reference/in_rows.md)`(`` `` ``"Mean"`` ``=`` `[`rcell`](https://pharmaverse.github.io/rtables/reference/rcell.md)`(`[`mean`](https://rdrr.io/r/base/mean.html)`(``x``)``)``,`` `` .formats ``=`` ``"xx.xx"`` `` ``)`` `` ``}``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt1a``, ``ADSL``)`
 
     #        A: Drug X   B: Placebo   C: Combination
     # ——————————————————————————————————————————————
@@ -187,19 +143,7 @@ is applied to the cells not the rows (overriding the previously
 specified cell-specific values), which indicates that the precedence
 rules described above are still in place.
 
-``` r
-
-lyt2 <- basic_table() |>
-  split_cols_by("ARM") |>
-  analyze(vars = "AGE", afun = function(x) {
-    in_rows(
-      "Mean" = rcell(mean(x), format = "xx.xxx"),
-      .formats = "xx.xx"
-    )
-  })
-
-build_table(lyt2, ADSL)
-```
+`lyt2`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``vars ``=`` ``"AGE"``, afun ``=`` ``function``(``x``)`` ``{`` `` `[`in_rows`](https://pharmaverse.github.io/rtables/reference/in_rows.md)`(`` `` ``"Mean"`` ``=`` `[`rcell`](https://pharmaverse.github.io/rtables/reference/rcell.md)`(`[`mean`](https://rdrr.io/r/base/mean.html)`(``x``)``, format ``=`` ``"xx.xxx"``)``,`` `` .formats ``=`` ``"xx.xx"`` `` ``)`` `` ``}``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt2``, ``ADSL``)`
 
     #        A: Drug X   B: Placebo   C: Combination
     # ——————————————————————————————————————————————
@@ -212,14 +156,7 @@ table level. If no format has been set by the user for a cell, the most
 specific format for that cell is the one defined at its innermost parent
 table split (if any).
 
-``` r
-
-lyt3 <- basic_table() |>
-  split_cols_by("ARM") |>
-  analyze(vars = "AGE", mean, format = "xx.x")
-
-build_table(lyt3, ADSL)
-```
+`lyt3`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``vars ``=`` ``"AGE"``, ``mean``, format ``=`` ``"xx.x"``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt3``, ``ADSL``)`
 
     #        A: Drug X   B: Placebo   C: Combination
     # ——————————————————————————————————————————————
@@ -229,41 +166,13 @@ If the cell format is also specified for a cell, then the parent table
 format is ignored for this cell since the cell format is more specific
 and therefore takes precedence.
 
-``` r
-
-lyt4 <- basic_table() |>
-  split_cols_by("ARM") |>
-  analyze(
-    vars = "AGE", afun = function(x) {
-      rcell(mean(x), format = "xx.xx", label = "Mean")
-    },
-    format = "xx.x"
-  )
-
-build_table(lyt4, ADSL)
-```
+`lyt4`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(`` `` vars ``=`` ``"AGE"``, afun ``=`` ``function``(``x``)`` ``{`` `` `[`rcell`](https://pharmaverse.github.io/rtables/reference/rcell.md)`(`[`mean`](https://rdrr.io/r/base/mean.html)`(``x``)``, format ``=`` ``"xx.xx"``, label ``=`` ``"Mean"``)`` `` ``}``,`` `` format ``=`` ``"xx.x"`` `` ``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt4``, ``ADSL``)`
 
     #        A: Drug X   B: Placebo   C: Combination
     # ——————————————————————————————————————————————
     # Mean     33.77       35.43          35.43
 
-``` r
-
-lyt4a <- basic_table() |>
-  split_cols_by("ARM") |>
-  analyze(
-    vars = "AGE", afun = function(x) {
-      in_rows(
-        "Mean" = rcell(mean(x)),
-        "SD" = rcell(sd(x)),
-        .formats = "xx.xx"
-      )
-    },
-    format = "xx.x"
-  )
-
-build_table(lyt4a, ADSL)
-```
+`lyt4a`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(`` `` vars ``=`` ``"AGE"``, afun ``=`` ``function``(``x``)`` ``{`` `` `[`in_rows`](https://pharmaverse.github.io/rtables/reference/in_rows.md)`(`` `` ``"Mean"`` ``=`` `[`rcell`](https://pharmaverse.github.io/rtables/reference/rcell.md)`(`[`mean`](https://rdrr.io/r/base/mean.html)`(``x``)``)``,`` `` ``"SD"`` ``=`` `[`rcell`](https://pharmaverse.github.io/rtables/reference/rcell.md)`(`[`sd`](https://rdrr.io/r/stats/sd.html)`(``x``)``)``,`` `` .formats ``=`` ``"xx.xx"`` `` ``)`` `` ``}``,`` `` format ``=`` ``"xx.x"`` `` ``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt4a``, ``ADSL``)`
 
     #        A: Drug X   B: Placebo   C: Combination
     # ——————————————————————————————————————————————
@@ -274,22 +183,7 @@ In the following, slightly more complicated, example, we can observe
 partial inheritance. That is, only `SD` cells inherit the parent table’s
 format while the `Mean` cells do not.
 
-``` r
-
-lyt5 <- basic_table() |>
-  split_cols_by("ARM") |>
-  analyze(
-    vars = "AGE", afun = function(x) {
-      in_rows(
-        "Mean" = rcell(mean(x), format = "xx.xx"),
-        "SD" = rcell(sd(x))
-      )
-    },
-    format = "xx.x"
-  )
-
-build_table(lyt5, ADSL)
-```
+`lyt5`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(`` `` vars ``=`` ``"AGE"``, afun ``=`` ``function``(``x``)`` ``{`` `` `[`in_rows`](https://pharmaverse.github.io/rtables/reference/in_rows.md)`(`` `` ``"Mean"`` ``=`` `[`rcell`](https://pharmaverse.github.io/rtables/reference/rcell.md)`(`[`mean`](https://rdrr.io/r/base/mean.html)`(``x``)``, format ``=`` ``"xx.xx"``)``,`` `` ``"SD"`` ``=`` `[`rcell`](https://pharmaverse.github.io/rtables/reference/rcell.md)`(`[`sd`](https://rdrr.io/r/stats/sd.html)`(``x``)``)`` `` ``)`` `` ``}``,`` `` format ``=`` ``"xx.x"`` `` ``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt5``, ``ADSL``)`
 
     #        A: Drug X   B: Placebo   C: Combination
     # ——————————————————————————————————————————————
@@ -300,15 +194,7 @@ build_table(lyt5, ADSL)
 
 Consider the following layout and the resulting table created:
 
-``` r
-
-lyt6 <- basic_table() |>
-  split_cols_by("ARM") |>
-  split_rows_by("SEX") |>
-  analyze(vars = "AGE", afun = mean, format = "xx.xx")
-
-build_table(lyt6, ADSL)
-```
+`lyt6`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"SEX"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``vars ``=`` ``"AGE"``, afun ``=`` ``mean``, format ``=`` ``"xx.xx"``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt6``, ``ADSL``)`
 
     #                    A: Drug X   B: Placebo   C: Combination
     # ——————————————————————————————————————————————————————————
@@ -341,17 +227,7 @@ string by means of the `format_na_str` parameter in
 `.format_na_str` parameter in
 [`in_rows()`](https://pharmaverse.github.io/rtables/reference/in_rows.md).
 
-``` r
-
-lyt7 <- basic_table() |>
-  split_cols_by("ARM") |>
-  split_rows_by("SEX") |>
-  analyze(vars = "AGE", afun = function(x) {
-    rcell(mean(x), format = "xx.xx", label = "Mean", format_na_str = "<missing>")
-  })
-
-build_table(lyt7, ADSL)
-```
+`lyt7`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"SEX"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``vars ``=`` ``"AGE"``, afun ``=`` ``function``(``x``)`` ``{`` `` `[`rcell`](https://pharmaverse.github.io/rtables/reference/rcell.md)`(`[`mean`](https://rdrr.io/r/base/mean.html)`(``x``)``, format ``=`` ``"xx.xx"``, label ``=`` ``"Mean"``, format_na_str ``=`` ``"<missing>"``)`` `` ``}``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt7``, ``ADSL``)`
 
     #                    A: Drug X   B: Placebo   C: Combination
     # ——————————————————————————————————————————————————————————
@@ -364,20 +240,7 @@ build_table(lyt7, ADSL)
     # UNDIFFERENTIATED                                          
     #   Mean               28.00     <missing>        45.00
 
-``` r
-
-lyt7a <- basic_table() |>
-  split_cols_by("ARM") |>
-  split_rows_by("SEX") |>
-  analyze(vars = "AGE", afun = function(x) {
-    in_rows(
-      "Mean" = rcell(mean(x), format = "xx.xx"),
-      .format_na_strs = "<MISSING>"
-    )
-  })
-
-build_table(lyt7a, ADSL)
-```
+`lyt7a`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"SEX"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``vars ``=`` ``"AGE"``, afun ``=`` ``function``(``x``)`` ``{`` `` `[`in_rows`](https://pharmaverse.github.io/rtables/reference/in_rows.md)`(`` `` ``"Mean"`` ``=`` `[`rcell`](https://pharmaverse.github.io/rtables/reference/rcell.md)`(`[`mean`](https://rdrr.io/r/base/mean.html)`(``x``)``, format ``=`` ``"xx.xx"``)``,`` `` .format_na_strs ``=`` ``"<MISSING>"`` `` ``)`` `` ``}``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt7a``, ``ADSL``)`
 
     #                    A: Drug X   B: Placebo   C: Combination
     # ——————————————————————————————————————————————————————————
@@ -404,20 +267,7 @@ is applied to the cells, not the rows (overriding the previously
 specified cell specific values), which means that the precedence rules
 described above are still in place.
 
-``` r
-
-lyt8 <- basic_table() |>
-  split_cols_by("ARM") |>
-  split_rows_by("SEX") |>
-  analyze(vars = "AGE", afun = function(x) {
-    in_rows(
-      "Mean" = rcell(mean(x), format = "xx.xx", format_na_str = "<missing>"),
-      .format_na_strs = "<MISSING>"
-    )
-  })
-
-build_table(lyt8, ADSL)
-```
+`lyt8`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"SEX"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``vars ``=`` ``"AGE"``, afun ``=`` ``function``(``x``)`` ``{`` `` `[`in_rows`](https://pharmaverse.github.io/rtables/reference/in_rows.md)`(`` `` ``"Mean"`` ``=`` `[`rcell`](https://pharmaverse.github.io/rtables/reference/rcell.md)`(`[`mean`](https://rdrr.io/r/base/mean.html)`(``x``)``, format ``=`` ``"xx.xx"``, format_na_str ``=`` ``"<missing>"``)``,`` `` .format_na_strs ``=`` ``"<MISSING>"`` `` ``)`` `` ``}``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt8``, ``ADSL``)`
 
     #                    A: Drug X   B: Placebo   C: Combination
     # ——————————————————————————————————————————————————————————
@@ -438,15 +288,7 @@ been specified by the user for a cell, the most specific `NA` string for
 that cell is the one defined at its innermost parent table split (if
 any).
 
-``` r
-
-lyt9 <- basic_table() |>
-  split_cols_by("ARM") |>
-  split_rows_by("SEX") |>
-  analyze(vars = "AGE", mean, format = "xx.xx", na_str = "not available")
-
-build_table(lyt9, ADSL)
-```
+`lyt9`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"SEX"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``vars ``=`` ``"AGE"``, ``mean``, format ``=`` ``"xx.xx"``, na_str ``=`` ``"not available"``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt9``, ``ADSL``)`
 
     #                    A: Drug X    B: Placebo     C: Combination
     # —————————————————————————————————————————————————————————————
@@ -464,20 +306,7 @@ level, then the one set at the parent table level is ignored for this
 cell as the cell level format is more specific and therefore takes
 precedence.
 
-``` r
-
-lyt10 <- basic_table() |>
-  split_cols_by("ARM") |>
-  split_rows_by("SEX") |>
-  analyze(
-    vars = "AGE", afun = function(x) {
-      rcell(mean(x), format = "xx.xx", label = "Mean", format_na_str = "<missing>")
-    },
-    na_str = "not available"
-  )
-
-build_table(lyt10, ADSL)
-```
+`lyt10`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"SEX"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(`` `` vars ``=`` ``"AGE"``, afun ``=`` ``function``(``x``)`` ``{`` `` `[`rcell`](https://pharmaverse.github.io/rtables/reference/rcell.md)`(`[`mean`](https://rdrr.io/r/base/mean.html)`(``x``)``, format ``=`` ``"xx.xx"``, label ``=`` ``"Mean"``, format_na_str ``=`` ``"<missing>"``)`` `` ``}``,`` `` na_str ``=`` ``"not available"`` `` ``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt10``, ``ADSL``)`
 
     #                    A: Drug X   B: Placebo   C: Combination
     # ——————————————————————————————————————————————————————————
@@ -490,25 +319,7 @@ build_table(lyt10, ADSL)
     # UNDIFFERENTIATED                                          
     #   Mean               28.00     <missing>        45.00
 
-``` r
-
-lyt10a <- basic_table() |>
-  split_cols_by("ARM") |>
-  split_rows_by("SEX") |>
-  analyze(
-    vars = "AGE", afun = function(x) {
-      in_rows(
-        "Mean" = rcell(mean(x)),
-        "SD" = rcell(sd(x)),
-        .formats = "xx.xx",
-        .format_na_strs = "<missing>"
-      )
-    },
-    na_str = "not available"
-  )
-
-build_table(lyt10a, ADSL)
-```
+`lyt10a`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"SEX"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(`` `` vars ``=`` ``"AGE"``, afun ``=`` ``function``(``x``)`` ``{`` `` `[`in_rows`](https://pharmaverse.github.io/rtables/reference/in_rows.md)`(`` `` ``"Mean"`` ``=`` `[`rcell`](https://pharmaverse.github.io/rtables/reference/rcell.md)`(`[`mean`](https://rdrr.io/r/base/mean.html)`(``x``)``)``,`` `` ``"SD"`` ``=`` `[`rcell`](https://pharmaverse.github.io/rtables/reference/rcell.md)`(`[`sd`](https://rdrr.io/r/stats/sd.html)`(``x``)``)``,`` `` .formats ``=`` ``"xx.xx"``,`` `` .format_na_strs ``=`` ``"<missing>"`` `` ``)`` `` ``}``,`` `` na_str ``=`` ``"not available"`` `` ``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt10a``, ``ADSL``)`
 
     #                    A: Drug X   B: Placebo   C: Combination
     # ——————————————————————————————————————————————————————————
@@ -529,24 +340,7 @@ In the following, slightly more complicated example, we can observe
 partial inheritance of NA strings. That is, only `SD` cells inherit the
 parent table’s `NA` string, while the `Mean` cells do not.
 
-``` r
-
-lyt11 <- basic_table() |>
-  split_cols_by("ARM") |>
-  split_rows_by("SEX") |>
-  analyze(
-    vars = "AGE", afun = function(x) {
-      in_rows(
-        "Mean" = rcell(mean(x), format_na_str = "<missing>"),
-        "SD" = rcell(sd(x))
-      )
-    },
-    format = "xx.xx",
-    na_str = "not available"
-  )
-
-build_table(lyt11, ADSL)
-```
+`lyt11`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"SEX"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(`` `` vars ``=`` ``"AGE"``, afun ``=`` ``function``(``x``)`` ``{`` `` `[`in_rows`](https://pharmaverse.github.io/rtables/reference/in_rows.md)`(`` `` ``"Mean"`` ``=`` `[`rcell`](https://pharmaverse.github.io/rtables/reference/rcell.md)`(`[`mean`](https://rdrr.io/r/base/mean.html)`(``x``)``, format_na_str ``=`` ``"<missing>"``)``,`` `` ``"SD"`` ``=`` `[`rcell`](https://pharmaverse.github.io/rtables/reference/rcell.md)`(`[`sd`](https://rdrr.io/r/stats/sd.html)`(``x``)``)`` `` ``)`` `` ``}``,`` `` format ``=`` ``"xx.xx"``,`` `` na_str ``=`` ``"not available"`` `` ``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt11``, ``ADSL``)`
 
     #                      A: Drug X      B: Placebo     C: Combination
     # —————————————————————————————————————————————————————————————————

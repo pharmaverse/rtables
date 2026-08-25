@@ -22,11 +22,7 @@ The content in this vignette is based on the following two resources:
 
 The packages used in this vignette are `rtables` and `dplyr`:
 
-``` r
-
-library(rtables)
-library(dplyr)
-```
+[`library`](https://rdrr.io/r/base/library.html)`(`[`rtables`](https://github.com/pharmaverse/rtables)`)`` `[`library`](https://rdrr.io/r/base/library.html)`(`[`dplyr`](https://dplyr.tidyverse.org)`)`
 
 ## Overview
 
@@ -48,33 +44,7 @@ generators. The data content is relatively simple: one row per imaginary
 person and one column per measurement: study arm, the country of origin,
 gender, handedness, age, and weight.
 
-``` r
-
-n <- 400
-
-set.seed(1)
-
-df <- tibble(
-  arm = factor(sample(c("Arm A", "Arm B"), n, replace = TRUE), levels = c("Arm A", "Arm B")),
-  country = factor(sample(c("CAN", "USA"), n, replace = TRUE, prob = c(.55, .45)), levels = c("CAN", "USA")),
-  gender = factor(sample(c("Female", "Male"), n, replace = TRUE), levels = c("Female", "Male")),
-  handed = factor(sample(c("Left", "Right"), n, prob = c(.6, .4), replace = TRUE), levels = c("Left", "Right")),
-  age = rchisq(n, 30) + 10
-) |> mutate(
-  weight = 35 * rnorm(n, sd = .5) + ifelse(gender == "Female", 140, 180)
-)
-
-head(df)
-# # A tibble: 6 × 6
-#   arm   country gender handed   age weight
-#   <fct> <fct>   <fct>  <fct>  <dbl>  <dbl>
-# 1 Arm A USA     Female Left    31.3   139.
-# 2 Arm B CAN     Female Right   50.5   116.
-# 3 Arm A USA     Male   Right   32.4   186.
-# 4 Arm A USA     Male   Right   34.6   169.
-# 5 Arm B USA     Female Right   43.0   160.
-# 6 Arm A USA     Female Right   43.2   126.
-```
+`n`` ``<-`` ``400`` `` `[`set.seed`](https://rdrr.io/r/base/Random.html)`(``1``)`` `` ``df`` ``<-`` `[`tibble`](https://tibble.tidyverse.org/reference/tibble.html)`(`` `` arm ``=`` `[`factor`](https://rdrr.io/r/base/factor.html)`(`[`sample`](https://rdrr.io/r/base/sample.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"Arm A"``, ``"Arm B"``)``, ``n``, replace ``=`` ``TRUE``)``, levels ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"Arm A"``, ``"Arm B"``)``)``,`` `` country ``=`` `[`factor`](https://rdrr.io/r/base/factor.html)`(`[`sample`](https://rdrr.io/r/base/sample.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"CAN"``, ``"USA"``)``, ``n``, replace ``=`` ``TRUE``, prob ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``.55``, ``.45``)``)``, levels ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"CAN"``, ``"USA"``)``)``,`` `` gender ``=`` `[`factor`](https://rdrr.io/r/base/factor.html)`(`[`sample`](https://rdrr.io/r/base/sample.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"Female"``, ``"Male"``)``, ``n``, replace ``=`` ``TRUE``)``, levels ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"Female"``, ``"Male"``)``)``,`` `` handed ``=`` `[`factor`](https://rdrr.io/r/base/factor.html)`(`[`sample`](https://rdrr.io/r/base/sample.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"Left"``, ``"Right"``)``, ``n``, prob ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``.6``, ``.4``)``, replace ``=`` ``TRUE``)``, levels ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"Left"``, ``"Right"``)``)``,`` `` age ``=`` `[`rchisq`](https://rdrr.io/r/stats/Chisquare.html)`(``n``, ``30``)`` ``+`` ``10`` ``)`` ``|>`` `[`mutate`](https://dplyr.tidyverse.org/reference/mutate.html)`(`` `` weight ``=`` ``35`` ``*`` `[`rnorm`](https://rdrr.io/r/stats/Normal.html)`(``n``, sd ``=`` ``.5``)`` ``+`` `[`ifelse`](https://rdrr.io/r/base/ifelse.html)`(``gender`` ``==`` ``"Female"``, ``140``, ``180``)`` ``)`` `` `[`head`](https://pharmaverse.github.io/rtables/reference/head_tail.md)`(``df``)`` ``# ``# A tibble: 6 × 6`` ``# arm country gender handed age weight`` ``# ``<fct>`` ``<fct>`` ``<fct>`` ``<fct>`` ``<dbl>`` ``<dbl>`` ``# ``1`` Arm A USA Female Left 31.3 139.`` ``# ``2`` Arm B CAN Female Right 50.5 116.`` ``# ``3`` Arm A USA Male Right 32.4 186.`` ``# ``4`` Arm A USA Male Right 34.6 169.`` ``# ``5`` Arm B USA Female Right 43.0 160.`` ``# ``6`` Arm A USA Female Right 43.2 126.`
 
 Note that we use factor variables so that the level order is represented
 in the row or column order when we tabulate the information of `df`
@@ -114,31 +84,7 @@ vignette for more details.
 
 Here is the code to recreate the table above:
 
-``` r
-
-qtable(df,
-  row_vars = c("country", "handed"),
-  col_vars = c("arm", "gender"),
-  avar = "age",
-  afun = mean,
-  summarize_groups = TRUE,
-  row_labels = "mean"
-)
-#                       Arm A                     Arm B         
-#                Female        Male        Female        Male   
-# age - mean     (N=96)      (N=105)       (N=92)      (N=107)  
-# ——————————————————————————————————————————————————————————————
-# CAN          45 (46.9%)   64 (61.0%)   46 (50.0%)   62 (57.9%)
-#   Left       32 (33.3%)   42 (40.0%)   26 (28.3%)   37 (34.6%)
-#     mean       38.87        40.43        40.33        37.68   
-#   Right      13 (13.5%)   22 (21.0%)   20 (21.7%)   25 (23.4%)
-#     mean       36.64        40.19        40.16        40.65   
-# USA          51 (53.1%)   41 (39.0%)   46 (50.0%)   45 (42.1%)
-#   Left       34 (35.4%)   19 (18.1%)   25 (27.2%)   25 (23.4%)
-#     mean       40.36        39.68        39.21        40.07   
-#   Right      17 (17.7%)   22 (21.0%)   21 (22.8%)   20 (18.7%)
-#     mean       36.94        39.80        38.53        39.02
-```
+[`qtable`](https://pharmaverse.github.io/rtables/reference/qtable_layout.md)`(``df``,`` `` row_vars ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"country"``, ``"handed"``)``,`` `` col_vars ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"arm"``, ``"gender"``)``,`` `` avar ``=`` ``"age"``,`` `` afun ``=`` ``mean``,`` `` summarize_groups ``=`` ``TRUE``,`` `` row_labels ``=`` ``"mean"`` ``)`` ``# Arm A Arm B `` ``# Female Male Female Male `` ``# age - mean (N=96) (N=105) (N=92) (N=107) `` ``# ——————————————————————————————————————————————————————————————`` ``# CAN 45 (46.9%) 64 (61.0%) 46 (50.0%) 62 (57.9%)`` ``# Left 32 (33.3%) 42 (40.0%) 26 (28.3%) 37 (34.6%)`` ``# mean 38.87 40.43 40.33 37.68 `` ``# Right 13 (13.5%) 22 (21.0%) 20 (21.7%) 25 (23.4%)`` ``# mean 36.64 40.19 40.16 40.65 `` ``# USA 51 (53.1%) 41 (39.0%) 46 (50.0%) 45 (42.1%)`` ``# Left 34 (35.4%) 19 (18.1%) 25 (27.2%) 25 (23.4%)`` ``# mean 40.36 39.68 39.21 40.07 `` ``# Right 17 (17.7%) 22 (21.0%) 21 (22.8%) 20 (18.7%)`` ``# mean 36.94 39.80 38.53 39.02`
 
 From the `qtable` function arguments above we can see many of the key
 concepts of the underlying `rtables` layout framework. The user needs to
@@ -160,17 +106,7 @@ Now let’s take a look at building the example table with a layout.
 In `rtables` a basic table is defined to have 0 rows and one column
 representing all data. Analyzing a variable is one way of adding a row:
 
-``` r
-
-lyt <- basic_table() |>
-  analyze("age", mean, format = "xx.x")
-
-tbl <- build_table(lyt, df)
-tbl
-#        all obs
-# ——————————————
-# mean    39.4
-```
+`lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"age"``, ``mean``, format ``=`` ``"xx.x"``)`` `` ``tbl`` ``<-`` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt``, ``df``)`` ``tbl`` ``# all obs`` ``# ——————————————`` ``# mean 39.4`
 
 In the code above we first described the table and assigned that
 description to a variable `lyt`. We then built the table using the
@@ -188,17 +124,7 @@ function and the result should be rounded to `1` decimal place.
 Hence, a layout is “pre-data”, that is, it’s a description of how to
 build a table once we get data. We can look at the layout isolated:
 
-``` r
-
-lyt
-# A Pre-data Table Layout
-# 
-# Column-Split Structure:
-#  () 
-# 
-# Row-Split Structure:
-# age (** analysis **)
-```
+`lyt`` ``# A Pre-data Table Layout`` ``# `` ``# Column-Split Structure:`` ``# () `` ``# `` ``# Row-Split Structure:`` ``# age (** analysis **)`
 
 The general layouting instructions are summarized below:
 
@@ -231,18 +157,7 @@ as we will show in this document.
 We will now add more structure to the columns by adding a column split
 based on the factor variable `arm`:
 
-``` r
-
-lyt <- basic_table() |>
-  split_cols_by("arm") |>
-  analyze("age", afun = mean, format = "xx.x")
-
-tbl <- build_table(lyt, df)
-tbl
-#        Arm A   Arm B
-# ————————————————————
-# mean   39.5    39.4
-```
+`lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"arm"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"age"``, afun ``=`` ``mean``, format ``=`` ``"xx.x"``)`` `` ``tbl`` ``<-`` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt``, ``df``)`` ``tbl`` ``# Arm A Arm B`` ``# ————————————————————`` ``# mean 39.5 39.4`
 
 The resulting table has one column per factor level of `arm`. So the
 data represented by the first column is `df[df$arm == "ARM A", ]`.
@@ -256,20 +171,7 @@ sequential
 layout instruction. It’s also possible to add a non-nested split. Here
 we splitting each arm further by the gender:
 
-``` r
-
-lyt <- basic_table() |>
-  split_cols_by("arm") |>
-  split_cols_by("gender") |>
-  analyze("age", afun = mean, format = "xx.x")
-
-tbl <- build_table(lyt, df)
-tbl
-#            Arm A           Arm B    
-#        Female   Male   Female   Male
-# ————————————————————————————————————
-# mean    38.8    40.1    39.6    39.2
-```
+`lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"arm"``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"gender"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"age"``, afun ``=`` ``mean``, format ``=`` ``"xx.x"``)`` `` ``tbl`` ``<-`` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt``, ``df``)`` ``tbl`` ``# Arm A Arm B `` ``# Female Male Female Male`` ``# ————————————————————————————————————`` ``# mean 38.8 40.1 39.6 39.2`
 
 The first column represents the data in `df` where
 `df$arm == "A" & df$gender == "Female"` and the second column the data
@@ -290,78 +192,20 @@ respectively. This resulted with a table with multiple columns and one
 data row. We will add more row structure by stratifying the mean
 analysis by country (i.e. adding a split in the row space):
 
-``` r
-
-lyt <- basic_table() |>
-  split_cols_by("arm") |>
-  split_cols_by("gender") |>
-  split_rows_by("country") |>
-  analyze("age", afun = mean, format = "xx.x")
-
-tbl <- build_table(lyt, df)
-tbl
-#              Arm A           Arm B    
-#          Female   Male   Female   Male
-# ——————————————————————————————————————
-# CAN                                   
-#   mean    38.2    40.3    40.3    38.9
-# USA                                   
-#   mean    39.2    39.7    38.9    39.6
-```
+`lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"arm"``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"gender"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"country"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"age"``, afun ``=`` ``mean``, format ``=`` ``"xx.x"``)`` `` ``tbl`` ``<-`` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt``, ``df``)`` ``tbl`` ``# Arm A Arm B `` ``# Female Male Female Male`` ``# ——————————————————————————————————————`` ``# CAN `` ``# mean 38.2 40.3 40.3 38.9`` ``# USA `` ``# mean 39.2 39.7 38.9 39.6`
 
 In this table the data used to derive the first data cell (average of
 age of female Canadians in Arm A) is where
 `df$country == "CAN" & df$arm == "Arm A" & df$gender == "Female"`. This
 cell value can also be calculated manually:
 
-``` r
-
-mean(df$age[df$country == "CAN" & df$arm == "Arm A" & df$gender == "Female"])
-# [1] 38.22447
-```
+[`mean`](https://rdrr.io/r/base/mean.html)`(``df``$``age``[``df``$``country`` ``==`` ``"CAN"`` ``&`` ``df``$``arm`` ``==`` ``"Arm A"`` ``&`` ``df``$``gender`` ``==`` ``"Female"``]``)`` ``# [1] 38.22447`
 
 Row structure can also be used to group the table into titled groups of
 pages during rendering. We do this via ‘page by splits’, which are
 declared via `page_by = TRUE` within a call to `split_rows_by`:
 
-``` r
-
-lyt <- basic_table() |>
-  split_cols_by("arm") |>
-  split_cols_by("gender") |>
-  split_rows_by("country", page_by = TRUE) |>
-  split_rows_by("handed") |>
-  analyze("age", afun = mean, format = "xx.x")
-
-tbl <- build_table(lyt, df)
-cat(export_as_txt(tbl, page_type = "letter", page_break = "\n\n~~~~~~ Page Break ~~~~~~\n\n"))
-# 
-# country: CAN
-# 
-# ————————————————————————————————————————
-#                Arm A           Arm B    
-#            Female   Male   Female   Male
-# ————————————————————————————————————————
-# Left                                    
-#   mean      38.9    40.4    40.3    37.7
-# Right                                   
-#   mean      36.6    40.2    40.2    40.6
-# 
-# 
-# ~~~~~~ Page Break ~~~~~~
-# 
-# 
-# country: USA
-# 
-# ————————————————————————————————————————
-#                Arm A           Arm B    
-#            Female   Male   Female   Male
-# ————————————————————————————————————————
-# Left                                    
-#   mean      40.4    39.7    39.2    40.1
-# Right                                   
-#   mean      36.9    39.8    38.5    39.0
-```
+`lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"arm"``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"gender"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"country"``, page_by ``=`` ``TRUE``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"handed"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"age"``, afun ``=`` ``mean``, format ``=`` ``"xx.x"``)`` `` ``tbl`` ``<-`` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt``, ``df``)`` `[`cat`](https://rdrr.io/r/base/cat.html)`(`[`export_as_txt`](https://rdrr.io/pkg/formatters/man/export_as_txt.html)`(``tbl``, page_type ``=`` ``"letter"``, page_break ``=`` ``"\n\n~~~~~~ Page Break ~~~~~~\n\n"``)``)`` ``# `` ``# country: CAN`` ``# `` ``# ————————————————————————————————————————`` ``# Arm A Arm B `` ``# Female Male Female Male`` ``# ————————————————————————————————————————`` ``# Left `` ``# mean 38.9 40.4 40.3 37.7`` ``# Right `` ``# mean 36.6 40.2 40.2 40.6`` ``# `` ``# `` ``# ~~~~~~ Page Break ~~~~~~`` ``# `` ``# `` ``# country: USA`` ``# `` ``# ————————————————————————————————————————`` ``# Arm A Arm B `` ``# Female Male Female Male`` ``# ————————————————————————————————————————`` ``# Left `` ``# mean 40.4 39.7 39.2 40.1`` ``# Right `` ``# mean 36.9 39.8 38.5 39.0`
 
 We go into more detail on page-by splits and how to control the
 page-group specific titles in the Title and footer vignette.
@@ -386,101 +230,24 @@ label row into a content row, the
 function is required. By default, the count (`nrows()`) and percentage
 of data relative to the column associated data is calculated:
 
-``` r
-
-lyt <- basic_table() |>
-  split_cols_by("arm") |>
-  split_cols_by("gender") |>
-  split_rows_by("country") |>
-  summarize_row_groups() |>
-  analyze("age", afun = mean, format = "xx.x")
-
-tbl <- build_table(lyt, df)
-tbl
-#                   Arm A                     Arm B         
-#            Female        Male        Female        Male   
-# ——————————————————————————————————————————————————————————
-# CAN      45 (46.9%)   64 (61.0%)   46 (50.0%)   62 (57.9%)
-#   mean      38.2         40.3         40.3         38.9   
-# USA      51 (53.1%)   41 (39.0%)   46 (50.0%)   45 (42.1%)
-#   mean      39.2         39.7         38.9         39.6
-```
+`lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"arm"``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"gender"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"country"``)`` ``|>`` `` `[`summarize_row_groups`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md)`(``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"age"``, afun ``=`` ``mean``, format ``=`` ``"xx.x"``)`` `` ``tbl`` ``<-`` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt``, ``df``)`` ``tbl`` ``# Arm A Arm B `` ``# Female Male Female Male `` ``# ——————————————————————————————————————————————————————————`` ``# CAN 45 (46.9%) 64 (61.0%) 46 (50.0%) 62 (57.9%)`` ``# mean 38.2 40.3 40.3 38.9 `` ``# USA 51 (53.1%) 41 (39.0%) 46 (50.0%) 45 (42.1%)`` ``# mean 39.2 39.7 38.9 39.6`
 
 The relative percentage for average age of female Canadians is
 calculated as follows:
 
-``` r
-
-df_cell <- subset(df, df$country == "CAN" & df$arm == "Arm A" & df$gender == "Female")
-df_col_1 <- subset(df, df$arm == "Arm A" & df$gender == "Female")
-
-c(count = nrow(df_cell), percentage = nrow(df_cell) / nrow(df_col_1))
-#      count percentage 
-#   45.00000    0.46875
-```
+`df_cell`` ``<-`` `[`subset`](https://rdrr.io/r/base/subset.html)`(``df``, ``df``$``country`` ``==`` ``"CAN"`` ``&`` ``df``$``arm`` ``==`` ``"Arm A"`` ``&`` ``df``$``gender`` ``==`` ``"Female"``)`` ``df_col_1`` ``<-`` `[`subset`](https://rdrr.io/r/base/subset.html)`(``df``, ``df``$``arm`` ``==`` ``"Arm A"`` ``&`` ``df``$``gender`` ``==`` ``"Female"``)`` `` `[`c`](https://rdrr.io/r/base/c.html)`(``count ``=`` `[`nrow`](https://rdrr.io/r/base/nrow.html)`(``df_cell``)``, percentage ``=`` `[`nrow`](https://rdrr.io/r/base/nrow.html)`(``df_cell``)`` ``/`` `[`nrow`](https://rdrr.io/r/base/nrow.html)`(``df_col_1``)``)`` ``# count percentage `` ``# 45.00000 0.46875`
 
 so the group percentages per row split sum up to 1 for each column.
 
 We can further split the row space by dividing each country by
 handedness:
 
-``` r
-
-lyt <- basic_table() |>
-  split_cols_by("arm") |>
-  split_cols_by("gender") |>
-  split_rows_by("country") |>
-  summarize_row_groups() |>
-  split_rows_by("handed") |>
-  analyze("age", afun = mean, format = "xx.x")
-
-tbl <- build_table(lyt, df)
-tbl
-#                     Arm A                     Arm B         
-#              Female        Male        Female        Male   
-# ————————————————————————————————————————————————————————————
-# CAN        45 (46.9%)   64 (61.0%)   46 (50.0%)   62 (57.9%)
-#   Left                                                      
-#     mean      38.9         40.4         40.3         37.7   
-#   Right                                                     
-#     mean      36.6         40.2         40.2         40.6   
-# USA        51 (53.1%)   41 (39.0%)   46 (50.0%)   45 (42.1%)
-#   Left                                                      
-#     mean      40.4         39.7         39.2         40.1   
-#   Right                                                     
-#     mean      36.9         39.8         38.5         39.0
-```
+`lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"arm"``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"gender"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"country"``)`` ``|>`` `` `[`summarize_row_groups`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md)`(``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"handed"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"age"``, afun ``=`` ``mean``, format ``=`` ``"xx.x"``)`` `` ``tbl`` ``<-`` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt``, ``df``)`` ``tbl`` ``# Arm A Arm B `` ``# Female Male Female Male `` ``# ————————————————————————————————————————————————————————————`` ``# CAN 45 (46.9%) 64 (61.0%) 46 (50.0%) 62 (57.9%)`` ``# Left `` ``# mean 38.9 40.4 40.3 37.7 `` ``# Right `` ``# mean 36.6 40.2 40.2 40.6 `` ``# USA 51 (53.1%) 41 (39.0%) 46 (50.0%) 45 (42.1%)`` ``# Left `` ``# mean 40.4 39.7 39.2 40.1 `` ``# Right `` ``# mean 36.9 39.8 38.5 39.0`
 
 Next, we further add a count and percentage summary for handedness
 within each country:
 
-``` r
-
-lyt <- basic_table() |>
-  split_cols_by("arm") |>
-  split_cols_by("gender") |>
-  split_rows_by("country") |>
-  summarize_row_groups() |>
-  split_rows_by("handed") |>
-  summarize_row_groups() |>
-  analyze("age", afun = mean, format = "xx.x")
-
-tbl <- build_table(lyt, df)
-tbl
-#                     Arm A                     Arm B         
-#              Female        Male        Female        Male   
-# ————————————————————————————————————————————————————————————
-# CAN        45 (46.9%)   64 (61.0%)   46 (50.0%)   62 (57.9%)
-#   Left     32 (33.3%)   42 (40.0%)   26 (28.3%)   37 (34.6%)
-#     mean      38.9         40.4         40.3         37.7   
-#   Right    13 (13.5%)   22 (21.0%)   20 (21.7%)   25 (23.4%)
-#     mean      36.6         40.2         40.2         40.6   
-# USA        51 (53.1%)   41 (39.0%)   46 (50.0%)   45 (42.1%)
-#   Left     34 (35.4%)   19 (18.1%)   25 (27.2%)   25 (23.4%)
-#     mean      40.4         39.7         39.2         40.1   
-#   Right    17 (17.7%)   22 (21.0%)   21 (22.8%)   20 (18.7%)
-#     mean      36.9         39.8         38.5         39.0
-```
+`lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"arm"``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"gender"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"country"``)`` ``|>`` `` `[`summarize_row_groups`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md)`(``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"handed"``)`` ``|>`` `` `[`summarize_row_groups`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md)`(``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"age"``, afun ``=`` ``mean``, format ``=`` ``"xx.x"``)`` `` ``tbl`` ``<-`` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt``, ``df``)`` ``tbl`` ``# Arm A Arm B `` ``# Female Male Female Male `` ``# ————————————————————————————————————————————————————————————`` ``# CAN 45 (46.9%) 64 (61.0%) 46 (50.0%) 62 (57.9%)`` ``# Left 32 (33.3%) 42 (40.0%) 26 (28.3%) 37 (34.6%)`` ``# mean 38.9 40.4 40.3 37.7 `` ``# Right 13 (13.5%) 22 (21.0%) 20 (21.7%) 25 (23.4%)`` ``# mean 36.6 40.2 40.2 40.6 `` ``# USA 51 (53.1%) 41 (39.0%) 46 (50.0%) 45 (42.1%)`` ``# Left 34 (35.4%) 19 (18.1%) 25 (27.2%) 25 (23.4%)`` ``# mean 40.4 39.7 39.2 40.1 `` ``# Right 17 (17.7%) 22 (21.0%) 21 (22.8%) 20 (18.7%)`` ``# mean 36.9 39.8 38.5 39.0`
 
 ## Comparing with Other Tabulation Frameworks
 

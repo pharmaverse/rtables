@@ -142,62 +142,7 @@ types of denominators. The details of how we implement the `disp_denoms`
 function used below is not germane to our discussion here but motivated
 readers can choose to inspect it below.
 
-``` r
-
-disp_denoms <- function(x, .var, .N_col, .df_row, .alt_df_full, .spl_context) {
-  ## myfn <- RefFootnote("Patients observed in AE data", symbol = "*")
-  parent_df <- .spl_context$full_parent_df[[3]]
-  parent_df_onecol <- parent_df[eval(.spl_context$cur_col_expr[[1]], envir = parent_df), ]
-  gparent_df <- .spl_context$full_parent_df[[2]]
-  gparent_df_onecol <- gparent_df[eval(.spl_context$cur_col_expr[[1]], envir = gparent_df), ]
-  cur_race <- .spl_context$value[2]
-  cur_aebodsys <- .spl_context$value[3]
-  cur_aedecod <- .spl_context$value[4]
-  alt_df_race <- subset(.alt_df_full, RACE == cur_race)
-  alt_df_race_col <- alt_df_race[eval(.spl_context$cur_col_expr[[1]], envir = alt_df_race), ]
-
-  vals <- list(
-    .N_col,
-    length(x),
-    length(unique(x)),
-    NA,
-    NROW(.df_row),
-    length(unique(.df_row[[.var]])),
-    NA,
-    NROW(parent_df),
-    length(unique(parent_df[[.var]])),
-    NROW(parent_df_onecol),
-    length(unique(parent_df_onecol[[.var]])),
-    NROW(gparent_df),
-    length(unique(gparent_df[[.var]])),
-    NROW(alt_df_race),
-    NROW(gparent_df_onecol),
-    length(unique(gparent_df_onecol[[.var]])),
-    NROW(alt_df_race_col)
-  )
-  names(vals) <- c(
-    "Column N",
-    "facet events",
-    "facet patients",
-    "facet patients - alt df",
-    sprintf("%s events", cur_aedecod),
-    sprintf("%s patients", cur_aedecod),
-    sprintf("%s patients - alt df", cur_aedecod),
-    sprintf("%s events (all arms)", cur_aebodsys),
-    sprintf("%s patients (all arms)", cur_aebodsys),
-    sprintf("%s events (this arm)", cur_aebodsys),
-    sprintf("%s patients (this arm)", cur_aebodsys),
-    sprintf("%s events (all arms)", cur_race),
-    sprintf("%s patients (all arms)", cur_race),
-    sprintf("%s patients (all arms) - alt df", cur_race),
-    sprintf("%s events (this arms)", cur_race),
-    sprintf("%s patients (this arms)", cur_race),
-    sprintf("%s patients (this arms) - alt df", cur_race)
-  )
-
-  in_rows(.list = vals)
-}
-```
+`disp_denoms`` ``<-`` ``function``(``x``, ``.var``, ``.N_col``, ``.df_row``, ``.alt_df_full``, ``.spl_context``)`` ``{`` `` ``## myfn <- RefFootnote("Patients observed in AE data", symbol = "*")`` `` ``parent_df`` ``<-`` ``.spl_context``$``full_parent_df``[[``3``]``]`` `` ``parent_df_onecol`` ``<-`` ``parent_df``[`[`eval`](https://rdrr.io/r/base/eval.html)`(``.spl_context``$``cur_col_expr``[[``1``]``]``, envir ``=`` ``parent_df``)``, ``]`` `` ``gparent_df`` ``<-`` ``.spl_context``$``full_parent_df``[[``2``]``]`` `` ``gparent_df_onecol`` ``<-`` ``gparent_df``[`[`eval`](https://rdrr.io/r/base/eval.html)`(``.spl_context``$``cur_col_expr``[[``1``]``]``, envir ``=`` ``gparent_df``)``, ``]`` `` ``cur_race`` ``<-`` ``.spl_context``$``value``[``2``]`` `` ``cur_aebodsys`` ``<-`` ``.spl_context``$``value``[``3``]`` `` ``cur_aedecod`` ``<-`` ``.spl_context``$``value``[``4``]`` `` ``alt_df_race`` ``<-`` `[`subset`](https://rdrr.io/r/base/subset.html)`(``.alt_df_full``, ``RACE`` ``==`` ``cur_race``)`` `` ``alt_df_race_col`` ``<-`` ``alt_df_race``[`[`eval`](https://rdrr.io/r/base/eval.html)`(``.spl_context``$``cur_col_expr``[[``1``]``]``, envir ``=`` ``alt_df_race``)``, ``]`` `` `` ``vals`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(`` `` ``.N_col``,`` `` `[`length`](https://rdrr.io/r/base/length.html)`(``x``)``,`` `` `[`length`](https://rdrr.io/r/base/length.html)`(`[`unique`](https://rdrr.io/r/base/unique.html)`(``x``)``)``,`` `` ``NA``,`` `` `[`NROW`](https://rdrr.io/r/base/nrow.html)`(``.df_row``)``,`` `` `[`length`](https://rdrr.io/r/base/length.html)`(`[`unique`](https://rdrr.io/r/base/unique.html)`(``.df_row``[[``.var``]``]``)``)``,`` `` ``NA``,`` `` `[`NROW`](https://rdrr.io/r/base/nrow.html)`(``parent_df``)``,`` `` `[`length`](https://rdrr.io/r/base/length.html)`(`[`unique`](https://rdrr.io/r/base/unique.html)`(``parent_df``[[``.var``]``]``)``)``,`` `` `[`NROW`](https://rdrr.io/r/base/nrow.html)`(``parent_df_onecol``)``,`` `` `[`length`](https://rdrr.io/r/base/length.html)`(`[`unique`](https://rdrr.io/r/base/unique.html)`(``parent_df_onecol``[[``.var``]``]``)``)``,`` `` `[`NROW`](https://rdrr.io/r/base/nrow.html)`(``gparent_df``)``,`` `` `[`length`](https://rdrr.io/r/base/length.html)`(`[`unique`](https://rdrr.io/r/base/unique.html)`(``gparent_df``[[``.var``]``]``)``)``,`` `` `[`NROW`](https://rdrr.io/r/base/nrow.html)`(``alt_df_race``)``,`` `` `[`NROW`](https://rdrr.io/r/base/nrow.html)`(``gparent_df_onecol``)``,`` `` `[`length`](https://rdrr.io/r/base/length.html)`(`[`unique`](https://rdrr.io/r/base/unique.html)`(``gparent_df_onecol``[[``.var``]``]``)``)``,`` `` `[`NROW`](https://rdrr.io/r/base/nrow.html)`(``alt_df_race_col``)`` `` ``)`` `` `[`names`](https://rdrr.io/r/base/names.html)`(``vals``)`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(`` `` ``"Column N"``,`` `` ``"facet events"``,`` `` ``"facet patients"``,`` `` ``"facet patients - alt df"``,`` `` `[`sprintf`](https://rdrr.io/r/base/sprintf.html)`(``"%s events"``, ``cur_aedecod``)``,`` `` `[`sprintf`](https://rdrr.io/r/base/sprintf.html)`(``"%s patients"``, ``cur_aedecod``)``,`` `` `[`sprintf`](https://rdrr.io/r/base/sprintf.html)`(``"%s patients - alt df"``, ``cur_aedecod``)``,`` `` `[`sprintf`](https://rdrr.io/r/base/sprintf.html)`(``"%s events (all arms)"``, ``cur_aebodsys``)``,`` `` `[`sprintf`](https://rdrr.io/r/base/sprintf.html)`(``"%s patients (all arms)"``, ``cur_aebodsys``)``,`` `` `[`sprintf`](https://rdrr.io/r/base/sprintf.html)`(``"%s events (this arm)"``, ``cur_aebodsys``)``,`` `` `[`sprintf`](https://rdrr.io/r/base/sprintf.html)`(``"%s patients (this arm)"``, ``cur_aebodsys``)``,`` `` `[`sprintf`](https://rdrr.io/r/base/sprintf.html)`(``"%s events (all arms)"``, ``cur_race``)``,`` `` `[`sprintf`](https://rdrr.io/r/base/sprintf.html)`(``"%s patients (all arms)"``, ``cur_race``)``,`` `` `[`sprintf`](https://rdrr.io/r/base/sprintf.html)`(``"%s patients (all arms) - alt df"``, ``cur_race``)``,`` `` `[`sprintf`](https://rdrr.io/r/base/sprintf.html)`(``"%s events (this arms)"``, ``cur_race``)``,`` `` `[`sprintf`](https://rdrr.io/r/base/sprintf.html)`(``"%s patients (this arms)"``, ``cur_race``)``,`` `` `[`sprintf`](https://rdrr.io/r/base/sprintf.html)`(``"%s patients (this arms) - alt df"``, ``cur_race``)`` `` ``)`` `` `` `[`in_rows`](https://pharmaverse.github.io/rtables/reference/in_rows.md)`(``.list ``=`` ``vals``)`` ``}`
 
 With `disp_denoms` defined, we can proceed with using it to see how
 varied the options for denominator are when calculating a percent:
@@ -324,29 +269,7 @@ tables, the row facet for the initial or `BASELINE` visit will often
 have only a subset of those in the other facets, as those will contain
 comparisons to the baseline visit.
 
-``` r
-
-avisit_afun <- function(df, .var, .spl_context) {
-  cur_visit <- tail(.spl_context$value, 1)
-  vals <- list("Mean Patient DIABP" = mean(df[[.var]]))
-  pardf <- head(.spl_context$full_parent_df, 1)[[1]]
-
-  if (!(as.character(cur_visit) %in% c("SCREENING", "BASELINE"))) {
-    pardf <- subset(pardf, AVISIT %in% c("BASELINE", cur_visit))
-    difs <- tapply(
-      seq_len(nrow(pardf)), pardf$USUBJID,
-      function(iis) {
-        avalvec <- pardf$AVAL[iis]
-        bl <- which(as.character(pardf[iis, ]$AVISIT) == "BASELINE")
-        mean(avalvec[-bl] - avalvec[bl])
-      }
-    )
-    vals <- c(vals, list("Mean Diff From Patient's Baseline DIABP" = mean(difs)))
-  }
-
-  in_rows(.list = vals)
-}
-```
+`avisit_afun`` ``<-`` ``function``(``df``, ``.var``, ``.spl_context``)`` ``{`` `` ``cur_visit`` ``<-`` `[`tail`](https://pharmaverse.github.io/rtables/reference/head_tail.md)`(``.spl_context``$``value``, ``1``)`` `` ``vals`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(``"Mean Patient DIABP"`` ``=`` `[`mean`](https://rdrr.io/r/base/mean.html)`(``df``[[``.var``]``]``)``)`` `` ``pardf`` ``<-`` `[`head`](https://pharmaverse.github.io/rtables/reference/head_tail.md)`(``.spl_context``$``full_parent_df``, ``1``)``[[``1``]``]`` `` `` ``if`` ``(``!``(`[`as.character`](https://rdrr.io/r/base/character.html)`(``cur_visit``)`` `[`%in%`](https://rdrr.io/r/base/match.html)` `[`c`](https://rdrr.io/r/base/c.html)`(``"SCREENING"``, ``"BASELINE"``)``)``)`` ``{`` `` ``pardf`` ``<-`` `[`subset`](https://rdrr.io/r/base/subset.html)`(``pardf``, ``AVISIT`` `[`%in%`](https://rdrr.io/r/base/match.html)` `[`c`](https://rdrr.io/r/base/c.html)`(``"BASELINE"``, ``cur_visit``)``)`` `` ``difs`` ``<-`` `[`tapply`](https://rdrr.io/r/base/tapply.html)`(`` `` `[`seq_len`](https://rdrr.io/r/base/seq.html)`(`[`nrow`](https://rdrr.io/r/base/nrow.html)`(``pardf``)``)``, ``pardf``$``USUBJID``,`` `` ``function``(``iis``)`` ``{`` `` ``avalvec`` ``<-`` ``pardf``$``AVAL``[``iis``]`` `` ``bl`` ``<-`` `[`which`](https://rdrr.io/r/base/which.html)`(`[`as.character`](https://rdrr.io/r/base/character.html)`(``pardf``[``iis``, ``]``$``AVISIT``)`` ``==`` ``"BASELINE"``)`` `` `[`mean`](https://rdrr.io/r/base/mean.html)`(``avalvec``[``-``bl``]`` ``-`` ``avalvec``[``bl``]``)`` `` ``}`` `` ``)`` `` ``vals`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``vals``, `[`list`](https://rdrr.io/r/base/list.html)`(``"Mean Diff From Patient's Baseline DIABP"`` ``=`` `[`mean`](https://rdrr.io/r/base/mean.html)`(``difs``)``)``)`` `` ``}`` `` `` `[`in_rows`](https://pharmaverse.github.io/rtables/reference/in_rows.md)`(``.list ``=`` ``vals``)`` ``}`
 
 We can see this behavior using a basic row-conditional `afun` (defined
 above for those curious):
@@ -403,66 +326,12 @@ Difference Columns section [in the previous
 chapter](https://pharmaverse.github.io/rtables/articles/guided_intermediate_translating_shells.md)
 without further comment.
 
-``` r
-
-advs <- ex_advs
-advs$span_label <- "Active Treatment"
-advs$span_label[advs$ARM == "B: Placebo"] <- " "
-
-span_label_map <- tribble(
-  ~span_label, ~ARM,
-  "Active Treatment", "A: Drug X",
-  "Active Treatment", "C: Combination",
-  " ", "B: Placebo",
-)
-
-advs$rr_header <- "Risk Differences"
-advs$rr_label <- paste(substr(advs$ARM, 1, 1), "vs B")
-```
+`advs`` ``<-`` ``ex_advs`` ``advs``$``span_label`` ``<-`` ``"Active Treatment"`` ``advs``$``span_label``[``advs``$``ARM`` ``==`` ``"B: Placebo"``]`` ``<-`` ``" "`` `` ``span_label_map`` ``<-`` `[`tribble`](https://tibble.tidyverse.org/reference/tribble.html)`(`` `` ``~``span_label``, ``~``ARM``,`` `` ``"Active Treatment"``, ``"A: Drug X"``,`` `` ``"Active Treatment"``, ``"C: Combination"``,`` `` ``" "``, ``"B: Placebo"``,`` ``)`` `` ``advs``$``rr_header`` ``<-`` ``"Risk Differences"`` ``advs``$``rr_label`` ``<-`` `[`paste`](https://rdrr.io/r/base/paste.html)`(`[`substr`](https://rdrr.io/r/base/substr.html)`(``advs``$``ARM``, ``1``, ``1``)``, ``"vs B"``)`
 
 We can then define an afun which populates the “risk difference” columns
 only for follow up visits and leaves them blank otherwise:
 
-``` r
-
-in_risk_diff <- function(spl_context) grepl("Risk Differences", spl_context$cur_col_id[1])
-
-avisit_afun2 <- function(df, .var, .spl_context) {
-  in_rd <- in_risk_diff(.spl_context)
-
-  cur_visit <- tail(.spl_context$value, 1)
-  is_followup <- !(as.character(cur_visit) %in% c("SCREENING", "BASELINE"))
-  if (!in_rd) {
-    vals <- list("Mean Patient DIABP" = mean(df[[.var]]))
-  } else if (!is_followup) {
-    vals <- list("Mean Patient DIABP" = NULL)
-  } else {
-    vals <- list("Mean Patient DIABP" = rcell("-", format = "xx"))
-  }
-  pardf <- head(.spl_context$full_parent_df, 1)[[1]]
-
-  if (is_followup) {
-    if (!in_rd) {
-      pardf <- subset(pardf, AVISIT %in% c("BASELINE", cur_visit))
-      difs <- tapply(
-        seq_len(nrow(pardf)), pardf$USUBJID,
-        function(iis) {
-          avalvec <- pardf$AVAL[iis]
-          bl <- which(as.character(pardf[iis, ]$AVISIT) == "BASELINE")
-          mean(avalvec[-bl] - avalvec[bl])
-        }
-      )
-      vals <- c(vals, list("Mean Diff From Baseline" = mean(difs)))
-    } else {
-      armlabel <- tail(.spl_context$cur_col_split_val[[1]], 1) # last split value, ie arm
-      armletter <- substr(armlabel, 1, 1)
-      vals <- c(vals, list("Mean Diff From Baseline" = rcell(paste(armletter, "vs B"), format = "xx")))
-    }
-  }
-
-  in_rows(.list = vals)
-}
-```
+`in_risk_diff`` ``<-`` ``function``(``spl_context``)`` `[`grepl`](https://rdrr.io/r/base/grep.html)`(``"Risk Differences"``, ``spl_context``$``cur_col_id``[``1``]``)`` `` ``avisit_afun2`` ``<-`` ``function``(``df``, ``.var``, ``.spl_context``)`` ``{`` `` ``in_rd`` ``<-`` ``in_risk_diff``(``.spl_context``)`` `` `` ``cur_visit`` ``<-`` `[`tail`](https://pharmaverse.github.io/rtables/reference/head_tail.md)`(``.spl_context``$``value``, ``1``)`` `` ``is_followup`` ``<-`` ``!``(`[`as.character`](https://rdrr.io/r/base/character.html)`(``cur_visit``)`` `[`%in%`](https://rdrr.io/r/base/match.html)` `[`c`](https://rdrr.io/r/base/c.html)`(``"SCREENING"``, ``"BASELINE"``)``)`` `` ``if`` ``(``!``in_rd``)`` ``{`` `` ``vals`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(``"Mean Patient DIABP"`` ``=`` `[`mean`](https://rdrr.io/r/base/mean.html)`(``df``[[``.var``]``]``)``)`` `` ``}`` ``else`` ``if`` ``(``!``is_followup``)`` ``{`` `` ``vals`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(``"Mean Patient DIABP"`` ``=`` ``NULL``)`` `` ``}`` ``else`` ``{`` `` ``vals`` ``<-`` `[`list`](https://rdrr.io/r/base/list.html)`(``"Mean Patient DIABP"`` ``=`` `[`rcell`](https://pharmaverse.github.io/rtables/reference/rcell.md)`(``"-"``, format ``=`` ``"xx"``)``)`` `` ``}`` `` ``pardf`` ``<-`` `[`head`](https://pharmaverse.github.io/rtables/reference/head_tail.md)`(``.spl_context``$``full_parent_df``, ``1``)``[[``1``]``]`` `` `` ``if`` ``(``is_followup``)`` ``{`` `` ``if`` ``(``!``in_rd``)`` ``{`` `` ``pardf`` ``<-`` `[`subset`](https://rdrr.io/r/base/subset.html)`(``pardf``, ``AVISIT`` `[`%in%`](https://rdrr.io/r/base/match.html)` `[`c`](https://rdrr.io/r/base/c.html)`(``"BASELINE"``, ``cur_visit``)``)`` `` ``difs`` ``<-`` `[`tapply`](https://rdrr.io/r/base/tapply.html)`(`` `` `[`seq_len`](https://rdrr.io/r/base/seq.html)`(`[`nrow`](https://rdrr.io/r/base/nrow.html)`(``pardf``)``)``, ``pardf``$``USUBJID``,`` `` ``function``(``iis``)`` ``{`` `` ``avalvec`` ``<-`` ``pardf``$``AVAL``[``iis``]`` `` ``bl`` ``<-`` `[`which`](https://rdrr.io/r/base/which.html)`(`[`as.character`](https://rdrr.io/r/base/character.html)`(``pardf``[``iis``, ``]``$``AVISIT``)`` ``==`` ``"BASELINE"``)`` `` `[`mean`](https://rdrr.io/r/base/mean.html)`(``avalvec``[``-``bl``]`` ``-`` ``avalvec``[``bl``]``)`` `` ``}`` `` ``)`` `` ``vals`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``vals``, `[`list`](https://rdrr.io/r/base/list.html)`(``"Mean Diff From Baseline"`` ``=`` `[`mean`](https://rdrr.io/r/base/mean.html)`(``difs``)``)``)`` `` ``}`` ``else`` ``{`` `` ``armlabel`` ``<-`` `[`tail`](https://pharmaverse.github.io/rtables/reference/head_tail.md)`(``.spl_context``$``cur_col_split_val``[[``1``]``]``, ``1``)`` ``# last split value, ie arm`` `` ``armletter`` ``<-`` `[`substr`](https://rdrr.io/r/base/substr.html)`(``armlabel``, ``1``, ``1``)`` `` ``vals`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``vals``, `[`list`](https://rdrr.io/r/base/list.html)`(``"Mean Diff From Baseline"`` ``=`` `[`rcell`](https://pharmaverse.github.io/rtables/reference/rcell.md)`(`[`paste`](https://rdrr.io/r/base/paste.html)`(``armletter``, ``"vs B"``)``, format ``=`` ``"xx"``)``)``)`` `` ``}`` `` ``}`` `` `` `[`in_rows`](https://pharmaverse.github.io/rtables/reference/in_rows.md)`(``.list ``=`` ``vals``)`` ``}`
 
 With that done, we can construct a table that has dual conditionality in
 its cell contents.

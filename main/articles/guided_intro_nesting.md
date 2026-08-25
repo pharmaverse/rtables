@@ -42,10 +42,7 @@ preceding layout instruction - if any - in its dimension (row or
 column), with a couple caveats we discuss later. We see this default
 behavior below:
 
-``` r
-
-library(rtables)
-```
+[`library`](https://rdrr.io/r/base/library.html)`(`[`rtables`](https://github.com/pharmaverse/rtables)`)`
 
     ## Loading required package: formatters
 
@@ -63,16 +60,7 @@ library(rtables)
     ## 
     ##     str
 
-``` r
-
-lyt <- basic_table() |>
-  split_cols_by("ARM") |>
-  split_cols_by("STRATA1") |>
-  split_rows_by("SEX") |>
-  split_rows_by("BMRKR2") |>
-  analyze("AGE")
-build_table(lyt, ex_adsl)
-```
+`lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"STRATA1"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"SEX"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"BMRKR2"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"AGE"``)`` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt``, ``ex_adsl``)`
 
     ##                          A: Drug X              B: Placebo            C: Combination    
     ##                      A       B       C       A       B       C       A       B       C  
@@ -111,17 +99,7 @@ analyses are bundled into a ‘multi-analysis’ parent structure. This
 parent structure as a whole, then, has the nesting behavior that an
 single `analyze` call would have in its place.
 
-``` r
-
-lyt2 <- basic_table() |>
-  split_cols_by("ARM") |>
-  split_cols_by("STRATA1") |>
-  split_rows_by("SEX") |>
-  split_rows_by("BMRKR2") |>
-  analyze("AGE") |>
-  analyze("BMRKR1")
-head(build_table(lyt2, ex_adsl), 32)
-```
+`lyt2`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"STRATA1"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"SEX"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"BMRKR2"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"AGE"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"BMRKR1"``)`` `[`head`](https://pharmaverse.github.io/rtables/reference/head_tail.md)`(`[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt2``, ``ex_adsl``)``, ``32``)`
 
     ##                    A: Drug X              B: Placebo            C: Combination    
     ##                A       B       C       A       B       C       A       B       C  

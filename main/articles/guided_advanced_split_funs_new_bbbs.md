@@ -70,150 +70,36 @@ Recognizing that this is ultimately a reordering behavior, we can wrap a
 call to `restrict_facets` with `reorder = TRUE` after calculating the
 desired full ordering:
 
-``` r
-
-library(rtables)
-# Loading required package: formatters
-# 
-# Attaching package: 'formatters'
-# The following object is masked from 'package:base':
-# 
-#     %||%
-# 
-# Attaching package: 'rtables'
-# The following object is masked from 'package:utils':
-# 
-#     str
-
-put_facets_first_last <- function(first = NULL, last = NULL) {
-  if (is.null(first) && is.null(last)) {
-    stop("must speficify at least one facet to be placed first or last")
-  }
-  function(ret, spl, fulldf) {
-    fac_names <- names(ret$values)
-    all_speced <- c(first, last)
-
-    if (!all(all_speced %in% fac_names)) {
-      stop(
-        "Facet(s) []",
-        paste(setdiff(all_speced, fac_names), collapse = ", "),
-        "] not found in incoming split result."
-      )
-    }
-    tmpfun <- restrict_facets(c(first, setdiff(fac_names, all_speced), last), op = "keep", reorder = TRUE)
-    tmpfun(ret, spl, fulldf)
-  }
-}
-```
+[`library`](https://rdrr.io/r/base/library.html)`(`[`rtables`](https://github.com/pharmaverse/rtables)`)`` ``# Loading required package: formatters`` ``# `` ``# Attaching package: 'formatters'`` ``# The following object is masked from 'package:base':`` ``# `` ``# %||%`` ``# `` ``# Attaching package: 'rtables'`` ``# The following object is masked from 'package:utils':`` ``# `` ``# str`` `` ``put_facets_first_last`` ``<-`` ``function``(``first`` ``=`` ``NULL``, ``last`` ``=`` ``NULL``)`` ``{`` `` ``if`` ``(`[`is.null`](https://rdrr.io/r/base/NULL.html)`(``first``)`` ``&&`` `[`is.null`](https://rdrr.io/r/base/NULL.html)`(``last``)``)`` ``{`` `` `[`stop`](https://rdrr.io/r/base/stop.html)`(``"must speficify at least one facet to be placed first or last"``)`` `` ``}`` `` ``function``(``ret``, ``spl``, ``fulldf``)`` ``{`` `` ``fac_names`` ``<-`` `[`names`](https://rdrr.io/r/base/names.html)`(``ret``$``values``)`` `` ``all_speced`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``first``, ``last``)`` `` `` ``if`` ``(``!`[`all`](https://rdrr.io/r/base/all.html)`(``all_speced`` `[`%in%`](https://rdrr.io/r/base/match.html)` ``fac_names``)``)`` ``{`` `` `[`stop`](https://rdrr.io/r/base/stop.html)`(`` `` ``"Facet(s) []"``,`` `` `[`paste`](https://rdrr.io/r/base/paste.html)`(`[`setdiff`](https://generics.r-lib.org/reference/setops.html)`(``all_speced``, ``fac_names``)``, collapse ``=`` ``", "``)``,`` `` ``"] not found in incoming split result."`` `` ``)`` `` ``}`` `` ``tmpfun`` ``<-`` `[`restrict_facets`](https://pharmaverse.github.io/rtables/reference/restrict_facets.md)`(`[`c`](https://rdrr.io/r/base/c.html)`(``first``, `[`setdiff`](https://generics.r-lib.org/reference/setops.html)`(``fac_names``, ``all_speced``)``, ``last``)``, op ``=`` ``"keep"``, reorder ``=`` ``TRUE``)`` `` ``tmpfun``(``ret``, ``spl``, ``fulldf``)`` `` ``}`` ``}`
 
 While this could be achieved by variable re-leveling, we show that this
 works by forcing the `U` and `UNDIFFERENTIATED` levels of `SEX` to be
 first and last, respectively:
 
-``` r
-
-fl_splfun <- make_split_fun(
-  post = list(
-    put_facets_first_last(first = "U", last = "UNDIFFERENTIATED")
-  )
-)
-```
+`fl_splfun`` ``<-`` `[`make_split_fun`](https://pharmaverse.github.io/rtables/reference/make_split_fun.md)`(`` `` post ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(`` `` ``put_facets_first_last``(``first ``=`` ``"U"``, last ``=`` ``"UNDIFFERENTIATED"``)`` `` ``)`` ``)`
 
 We can then compare two similar (column) layouts to see the effect of
 our BBB
 
-``` r
+`lyt_basic`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"SEX"``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt_basic``, ``ex_adsl``)`` ``# F M U UNDIFFERENTIATED`` ``# ———————————————————————————————`
 
-lyt_basic <- basic_table() |>
-  split_cols_by("SEX")
-
-build_table(lyt_basic, ex_adsl)
-#    F   M   U   UNDIFFERENTIATED
-# ———————————————————————————————
-```
-
-``` r
-
-lyt_fl <- basic_table() |>
-  split_cols_by("SEX", split_fun = fl_splfun)
-
-build_table(lyt_fl, ex_adsl)
-#    U   F   M   UNDIFFERENTIATED
-# ———————————————————————————————
-```
+`lyt_fl`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"SEX"``, split_fun ``=`` ``fl_splfun``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt_fl``, ``ex_adsl``)`` ``# U F M UNDIFFERENTIATED`` ``# ———————————————————————————————`
 
 #### Pre-sorting Or Pre-pruning Facets Based On Data Sparsity
 
 Here we want to either reorder our facets or remove some facets based on
 how much data they represent.
 
-``` r
-
-presort_facets <- function(ret, spl, fulldf) {
-  fac_names <- names(ret$values)
-  fac_ns <- vapply(ret$datasplit, NROW, 1L)
-  ord <- order(fac_ns, decreasing = TRUE)
-  tmpfun <- restrict_facets(fac_names[ord], op = "keep", reorder = TRUE)
-  tmpfun(ret, spl, fulldf)
-}
-```
+`presort_facets`` ``<-`` ``function``(``ret``, ``spl``, ``fulldf``)`` ``{`` `` ``fac_names`` ``<-`` `[`names`](https://rdrr.io/r/base/names.html)`(``ret``$``values``)`` `` ``fac_ns`` ``<-`` `[`vapply`](https://rdrr.io/r/base/lapply.html)`(``ret``$``datasplit``, ``NROW``, ``1L``)`` `` ``ord`` ``<-`` `[`order`](https://rdrr.io/r/base/order.html)`(``fac_ns``, decreasing ``=`` ``TRUE``)`` `` ``tmpfun`` ``<-`` `[`restrict_facets`](https://pharmaverse.github.io/rtables/reference/restrict_facets.md)`(``fac_names``[``ord``]``, op ``=`` ``"keep"``, reorder ``=`` ``TRUE``)`` `` ``tmpfun``(``ret``, ``spl``, ``fulldf``)`` ``}`
 
 Here we can see that using this building block gives our desired
 behavior:
 
-``` r
-
-presort_splfun <- make_split_fun(post = list(presort_facets))
-
-lyt_presort <- basic_table(show_colcounts = TRUE) |>
-  split_cols_by("STRATA1", split_fun = presort_splfun)
-
-build_table(lyt_presort, ex_adsl)
-#       C         B         A   
-#    (N=143)   (N=135)   (N=122)
-# ——————————————————————————————
-```
+`presort_splfun`` ``<-`` `[`make_split_fun`](https://pharmaverse.github.io/rtables/reference/make_split_fun.md)`(``post ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``presort_facets``)``)`` `` ``lyt_presort`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``show_colcounts ``=`` ``TRUE``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"STRATA1"``, split_fun ``=`` ``presort_splfun``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt_presort``, ``ex_adsl``)`` ``# C B A `` ``# (N=143) (N=135) (N=122)`` ``# ——————————————————————————————`
 
 And similarly here:
 
-``` r
-
-drop_sparse_facets <- function(ncutoff = 5) {
-  function(ret, spl, fulldf) {
-    fac_names <- names(ret$values)
-    fac_ns <- vapply(ret$datasplit, NROW, 1L)
-    keep_inds <- which(fac_ns >= ncutoff)
-    tmpfun <- restrict_facets(fac_names[keep_inds], op = "keep", reorder = FALSE)
-    tmpfun(ret, spl, fulldf)
-  }
-}
-
-lyt_preprune1 <- basic_table(show_colcounts = TRUE) |>
-  split_cols_by("SEX")
-
-build_table(lyt_preprune1, ex_adsl)
-#       F         M        U     UNDIFFERENTIATED
-#    (N=222)   (N=166)   (N=9)        (N=3)      
-# ———————————————————————————————————————————————
-
-preprune_splfun2 <- make_split_fun(post = list(drop_sparse_facets()))
-lyt_preprune2 <- basic_table(show_colcounts = TRUE) |>
-  split_cols_by("SEX", split_fun = preprune_splfun2)
-
-build_table(lyt_preprune2, ex_adsl)
-#       F         M        U  
-#    (N=222)   (N=166)   (N=9)
-# ————————————————————————————
-
-preprune_splfun3 <- make_split_fun(post = list(drop_sparse_facets(10)))
-lyt_preprune3 <- basic_table(show_colcounts = TRUE) |>
-  split_cols_by("SEX", split_fun = preprune_splfun3)
-
-build_table(lyt_preprune3, ex_adsl)
-#       F         M   
-#    (N=222)   (N=166)
-# ————————————————————
-```
+`drop_sparse_facets`` ``<-`` ``function``(``ncutoff`` ``=`` ``5``)`` ``{`` `` ``function``(``ret``, ``spl``, ``fulldf``)`` ``{`` `` ``fac_names`` ``<-`` `[`names`](https://rdrr.io/r/base/names.html)`(``ret``$``values``)`` `` ``fac_ns`` ``<-`` `[`vapply`](https://rdrr.io/r/base/lapply.html)`(``ret``$``datasplit``, ``NROW``, ``1L``)`` `` ``keep_inds`` ``<-`` `[`which`](https://rdrr.io/r/base/which.html)`(``fac_ns`` ``>=`` ``ncutoff``)`` `` ``tmpfun`` ``<-`` `[`restrict_facets`](https://pharmaverse.github.io/rtables/reference/restrict_facets.md)`(``fac_names``[``keep_inds``]``, op ``=`` ``"keep"``, reorder ``=`` ``FALSE``)`` `` ``tmpfun``(``ret``, ``spl``, ``fulldf``)`` `` ``}`` ``}`` `` ``lyt_preprune1`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``show_colcounts ``=`` ``TRUE``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"SEX"``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt_preprune1``, ``ex_adsl``)`` ``# F M U UNDIFFERENTIATED`` ``# (N=222) (N=166) (N=9) (N=3) `` ``# ———————————————————————————————————————————————`` `` ``preprune_splfun2`` ``<-`` `[`make_split_fun`](https://pharmaverse.github.io/rtables/reference/make_split_fun.md)`(``post ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``drop_sparse_facets``(``)``)``)`` ``lyt_preprune2`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``show_colcounts ``=`` ``TRUE``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"SEX"``, split_fun ``=`` ``preprune_splfun2``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt_preprune2``, ``ex_adsl``)`` ``# F M U `` ``# (N=222) (N=166) (N=9)`` ``# ————————————————————————————`` `` ``preprune_splfun3`` ``<-`` `[`make_split_fun`](https://pharmaverse.github.io/rtables/reference/make_split_fun.md)`(``post ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``drop_sparse_facets``(``10``)``)``)`` ``lyt_preprune3`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``show_colcounts ``=`` ``TRUE``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"SEX"``, split_fun ``=`` ``preprune_splfun3``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt_preprune3``, ``ex_adsl``)`` ``# F M `` ``# (N=222) (N=166)`` ``# ————————————————————`
 
 ## Creating Preprocessing BBBs
 
@@ -227,23 +113,7 @@ That said, for illustrative purposes, we can recreate part of
 functionality of `trim_levels_to_map` in a preprocessing BBB (the
 restriction of data based on inner variable values), like so:
 
-``` r
-
-trim_facets_to_map <- function(map = NULL) {
-  function(df, spl, vals, labels, .spl_context) {
-    if (is.null(map)) {
-      return(df)
-    } # do nothing
-    cur_outer_val <- tail(.spl_context$value, 1)
-    inner_var <- names(map)[2]
-    inner_vec <- df[[inner_var]]
-    inner_keep <- map[map[[1]] == cur_outer_val, inner_var, drop = TRUE]
-    df_out <- df[inner_vec %in% inner_keep, ]
-    df_out[[inner_var]] <- factor(df_out[[inner_var]], levels = intersect(levels(inner_vec), inner_keep))
-    df_out
-  }
-}
-```
+`trim_facets_to_map`` ``<-`` ``function``(``map`` ``=`` ``NULL``)`` ``{`` `` ``function``(``df``, ``spl``, ``vals``, ``labels``, ``.spl_context``)`` ``{`` `` ``if`` ``(`[`is.null`](https://rdrr.io/r/base/NULL.html)`(``map``)``)`` ``{`` `` `[`return`](https://rdrr.io/r/base/function.html)`(``df``)`` `` ``}`` ``# do nothing`` `` ``cur_outer_val`` ``<-`` `[`tail`](https://pharmaverse.github.io/rtables/reference/head_tail.md)`(``.spl_context``$``value``, ``1``)`` `` ``inner_var`` ``<-`` `[`names`](https://rdrr.io/r/base/names.html)`(``map``)``[``2``]`` `` ``inner_vec`` ``<-`` ``df``[[``inner_var``]``]`` `` ``inner_keep`` ``<-`` ``map``[``map``[[``1``]``]`` ``==`` ``cur_outer_val``, ``inner_var``, drop ``=`` ``TRUE``]`` `` ``df_out`` ``<-`` ``df``[``inner_vec`` `[`%in%`](https://rdrr.io/r/base/match.html)` ``inner_keep``, ``]`` `` ``df_out``[[``inner_var``]``]`` ``<-`` `[`factor`](https://rdrr.io/r/base/factor.html)`(``df_out``[[``inner_var``]``]``, levels ``=`` `[`intersect`](https://generics.r-lib.org/reference/setops.html)`(`[`levels`](https://rdrr.io/r/base/levels.html)`(``inner_vec``)``, ``inner_keep``)``)`` `` ``df_out`` `` ``}`` ``}`
 
 We use `spl_variable` to retrieve the variable name for the split,
 determine the levels of the inner variable to keep based on the map and
@@ -260,37 +130,8 @@ Note: If our map does not include at least one entry for each factor
 level defined by the incoming data, we need to restrict those at the
 previous split; `trim_levels_to_map` combines this behavior.
 
-``` r
-
-map <- data.frame(
-  ARM = c("A: Drug X", "B: Placebo"),
-  STRATA1 = c("B", "A")
-)
-
-map_splfun <- make_split_fun(pre = list(trim_facets_to_map(map)))
-
-outer_splfun <- make_split_fun(post = list(restrict_facets("C: Combination", op = "exclude")))
-
-lyt <- basic_table() |>
-  split_cols_by("ARM", split_fun = outer_splfun) |>
-  split_cols_by("STRATA1", split_fun = map_splfun)
-
-build_table(lyt, ex_adsl)
-#    A: Drug X   B: Placebo
-#        B           A     
-# —————————————————————————
-```
+`map`` ``<-`` `[`data.frame`](https://rdrr.io/r/base/data.frame.html)`(`` `` ARM ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"A: Drug X"``, ``"B: Placebo"``)``,`` `` STRATA1 ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"B"``, ``"A"``)`` ``)`` `` ``map_splfun`` ``<-`` `[`make_split_fun`](https://pharmaverse.github.io/rtables/reference/make_split_fun.md)`(``pre ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(``trim_facets_to_map``(``map``)``)``)`` `` ``outer_splfun`` ``<-`` `[`make_split_fun`](https://pharmaverse.github.io/rtables/reference/make_split_fun.md)`(``post ``=`` `[`list`](https://rdrr.io/r/base/list.html)`(`[`restrict_facets`](https://pharmaverse.github.io/rtables/reference/restrict_facets.md)`(``"C: Combination"``, op ``=`` ``"exclude"``)``)``)`` `` ``lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``, split_fun ``=`` ``outer_splfun``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"STRATA1"``, split_fun ``=`` ``map_splfun``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt``, ``ex_adsl``)`` ``# A: Drug X B: Placebo`` ``# B A `` ``# —————————————————————————`
 
 This matches the core behavior of `trim_levels_to_map`:
 
-``` r
-
-lyt <- basic_table() |>
-  split_cols_by("ARM", split_fun = trim_levels_to_map(map)) |>
-  split_cols_by("STRATA1")
-
-build_table(lyt, ex_adsl)
-#    A: Drug X   B: Placebo
-#        B           A     
-# —————————————————————————
-```
+`lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``, split_fun ``=`` `[`trim_levels_to_map`](https://pharmaverse.github.io/rtables/reference/trim_levels_to_map.md)`(``map``)``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"STRATA1"``)`` `` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt``, ``ex_adsl``)`` ``# A: Drug X B: Placebo`` ``# B A `` ``# —————————————————————————`

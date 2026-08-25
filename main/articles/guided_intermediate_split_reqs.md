@@ -527,7 +527,7 @@ my_combo_df <- tribble(
 lyt_tpose_cols_only <- basic_table() |>
   split_cols_by("ARM", show_colcounts = TRUE) |>
   split_cols_by("STUDYID",
-    split_fun = add_combo_levels(my_combo_df, keep_levels = combo_df$valname),
+    split_fun = add_combo_levels(my_combo_df, keep_levels = my_combo_df$valname),
     show_colcounts = TRUE
   )
 
