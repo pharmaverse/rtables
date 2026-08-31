@@ -1246,7 +1246,7 @@ underneath analyses, which is not allowed.}
 
 \item{for_analyze}{(\code{flag}) whether split is an analyze split.}
 
-\item{at_sibling}{(\code{charactere(1)} or \code{NULL})\cr If non-null, a preceding
+\item{at_sibling}{(\code{character(1)} or \code{NULL})\cr If non-null, a preceding
 split or analyze this instruction should be placed as a sibling to. Cannot
 select an instruction that was itself placed with non-null \code{at_sibling}.}
 
