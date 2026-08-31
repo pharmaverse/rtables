@@ -302,6 +302,12 @@ setMethod(
       oldval <- lyt[[pos]]
       ## if we at_sibling a top level element we need to handle as nested = FALSE
       if (branch_is_root(oldval, at_sibling)) {
+        if (has_force_pag(last_rowsplit(oldval))) {
+          stop(
+            "at_sibling pointed to a split with forced pagination (page_by = TRUE).",
+            " This is not supported."
+          )
+        }
         tmp <- SplitVector(spl)
         pos <- length(lyt) + 1 ## pos when nested = FALSE
       } else if (is(oldval, "SplitVectorTree")) {

@@ -78,6 +78,15 @@ test_that("at_sibling row split works with row summaries", {
   expect_gt(path_count(tbl, c("RACE", "*", "SEX", "*", "@content")), 0L)
 })
 
+test_that("at_sibling rejects page_by splits", {
+  expect_error(
+    basic_table() |>
+      split_rows_by("STRATA1", page_by = TRUE) |>
+      split_rows_by("RACE", at_sibling = "STRATA1"),
+    "at_sibling pointed to a split with forced pagination"
+  )
+})
+
 test_that("at_sibling shows dynamic cut split labels", {
   path_count <- function(tt, pth) length(tt_normalize_row_path(tt, pth))
 
