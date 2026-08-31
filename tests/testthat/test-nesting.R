@@ -61,6 +61,23 @@ test_that("at_sibling creates intermediate row nesting", {
   expect_gt(path_count(sibling_analysis, c("RACE", "WHITE", "AGE", "Mean")), 0L)
 })
 
+test_that("at_sibling row split works with row summaries", {
+  path_count <- function(tt, pth) length(tt_normalize_row_path(tt, pth))
+
+  lyt <- basic_table() |>
+    split_rows_by("RACE") |>
+    summarize_row_groups() |>
+    analyze("AGE") |>
+    split_rows_by("SEX", at_sibling = "AGE") |>
+    summarize_row_groups() |>
+    analyze("AGE")
+
+  tbl <- build_table(lyt, rawdat)
+
+  expect_gt(path_count(tbl, c("RACE", "*", "@content")), 0L)
+  expect_gt(path_count(tbl, c("RACE", "*", "SEX", "*", "@content")), 0L)
+})
+
 test_that("at_sibling shows dynamic cut split labels", {
   path_count <- function(tt, pth) length(tt_normalize_row_path(tt, pth))
 

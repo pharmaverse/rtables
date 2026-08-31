@@ -133,6 +133,7 @@
 \alias{label_position}
 \alias{label_position,Split-method}
 \alias{label_position,VAnalyzeSplit-method}
+\alias{label_position,SplitVectorTree-method}
 \alias{label_position<-}
 \alias{label_position<-,Split-method}
 \alias{content_fun}
@@ -728,6 +729,8 @@ label_position(spl)
 \S4method{label_position}{Split}(spl)
 
 \S4method{label_position}{VAnalyzeSplit}(spl)
+
+\S4method{label_position}{SplitVectorTree}(spl)
 
 label_position(spl) <- value
 
