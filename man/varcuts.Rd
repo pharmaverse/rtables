@@ -31,8 +31,9 @@ split_rows_by_cuts(
   format = NULL,
   na_str = NA_character_,
   nested = TRUE,
+  at_sibling = NULL,
   cumulative = FALSE,
-  label_pos = "hidden",
+  label_pos = if (!is.null(at_sibling)) "visible" else "default",
   section_div = NA_character_
 )
 
@@ -68,11 +69,12 @@ split_rows_by_quartiles(
   format = NULL,
   na_str = NA_character_,
   nested = TRUE,
+  at_sibling = NULL,
   child_labels = c("default", "visible", "hidden"),
   extra_args = list(),
   cumulative = FALSE,
   indent_mod = 0L,
-  label_pos = "hidden",
+  label_pos = if (!is.null(at_sibling)) "visible" else "default",
   section_div = NA_character_
 )
 
@@ -86,11 +88,12 @@ split_rows_by_cutfun(
   format = NULL,
   na_str = NA_character_,
   nested = TRUE,
+  at_sibling = NULL,
   child_labels = c("default", "visible", "hidden"),
   extra_args = list(),
   cumulative = FALSE,
   indent_mod = 0L,
-  label_pos = "hidden",
+  label_pos = if (!is.null(at_sibling)) "visible" else "default",
   section_div = NA_character_
 )
 }
@@ -129,6 +132,10 @@ strings (\code{"xx.x"}) or function. In cases such as \code{analyze} calls, they
 functions. See \code{\link[formatters:list_valid_format_labels]{formatters::list_valid_format_labels()}} for a list of all available format strings.}
 
 \item{na_str}{(\code{string})\cr string that should be displayed when the value of \code{x} is missing. Defaults to \code{"NA"}.}
+
+\item{at_sibling}{(\code{character(1)} or \code{NULL})\cr If non-null, a preceding
+split or analyze this instruction should be placed as a sibling to. Cannot
+select an instruction that was itself placed with non-null \code{at_sibling}.}
 
 \item{label_pos}{(\code{string})\cr location where the variable label should be displayed. Accepts \code{"hidden"}
 (default for non-analyze row splits), \code{"visible"}, \code{"topleft"}, and \code{"default"} (for analyze splits only). For

@@ -194,106 +194,6 @@ setMethod(
   }
 )
 
-#' @param for_analyze (`flag`) whether split is an analyze split.
-#' @rdname int_methods
-setGeneric("next_rpos", function(obj, nested = TRUE, for_analyze = FALSE) standardGeneric("next_rpos"))
-
-#' @rdname int_methods
-setMethod(
-  "next_rpos", "PreDataTableLayouts",
-  function(obj, nested, for_analyze = FALSE) next_rpos(rlayout(obj), nested, for_analyze = for_analyze)
-)
-
-.check_if_nest <- function(obj, nested, for_analyze) {
-  if (!nested) {
-    FALSE
-  } else {
-    ## can always nest analyze splits (almost? what about colvars noncolvars mixing? prolly ok?)
-    for_analyze ||
-      ## If its not an analyze split it can't go under an analyze split
-      !(is(last_rowsplit(obj), "VAnalyzeSplit") ||
-        is(last_rowsplit(obj), "AnalyzeMultiVars")) ## should this be CompoundSplit? # nolint
-  }
-}
-
-#' @rdname int_methods
-setMethod(
-  "next_rpos", "PreDataRowLayout",
-  function(obj, nested, for_analyze) {
-    l <- length(obj)
-    if (length(obj[[l]]) > 0L && !.check_if_nest(obj, nested, for_analyze)) {
-      l <- l + 1L
-    }
-    l
-  }
-)
-
-#' @rdname int_methods
-setMethod("next_rpos", "ANY", function(obj, nested) 1L)
-
-#' @rdname int_methods
-setGeneric("next_cpos", function(obj, nested = TRUE) standardGeneric("next_cpos"))
-
-#' @rdname int_methods
-setMethod(
-  "next_cpos", "PreDataTableLayouts",
-  function(obj, nested) next_cpos(clayout(obj), nested)
-)
-
-#' @rdname int_methods
-setMethod(
-  "next_cpos", "PreDataColLayout",
-  function(obj, nested) {
-    if (nested || length(obj[[length(obj)]]) == 0) {
-      length(obj)
-    } else {
-      length(obj) + 1L
-    }
-  }
-)
-
-#' @rdname int_methods
-setMethod("next_cpos", "ANY", function(obj, nested) 1L)
-
-#' @rdname int_methods
-setGeneric("last_rowsplit", function(obj) standardGeneric("last_rowsplit"))
-
-#' @rdname int_methods
-setMethod(
-  "last_rowsplit", "NULL",
-  function(obj) NULL
-)
-
-#' @rdname int_methods
-setMethod(
-  "last_rowsplit", "SplitVector",
-  function(obj) {
-    if (length(obj) == 0) {
-      NULL
-    } else {
-      obj[[length(obj)]]
-    }
-  }
-)
-
-#' @rdname int_methods
-setMethod(
-  "last_rowsplit", "PreDataRowLayout",
-  function(obj) {
-    if (length(obj) == 0) {
-      NULL
-    } else {
-      last_rowsplit(obj[[length(obj)]])
-    }
-  }
-)
-
-#' @rdname int_methods
-setMethod(
-  "last_rowsplit", "PreDataTableLayouts",
-  function(obj) last_rowsplit(rlayout(obj))
-)
-
 # rlayout ----
 ## TODO maybe export these?
 
@@ -730,7 +630,7 @@ setGeneric("vis_label", function(spl) standardGeneric("vis_label"))
 
 #' @rdname int_methods
 setMethod("vis_label", "Split", function(spl) {
-  .labelkids_helper(label_position(spl))
+  .labelkids_helper(label_position(spl), na_ok = FALSE)
 })
 
 ## #' @rdname int_methods
@@ -752,6 +652,11 @@ setMethod("label_position", "Split", function(spl) spl@split_label_position)
 
 #' @rdname int_methods
 setMethod("label_position", "VAnalyzeSplit", function(spl) spl@var_label_position) ## split_label_position)
+
+#' @rdname int_methods
+setMethod("label_position", "SplitVectorTree", function(spl) {
+  label_position(last_rowsplit(spl))
+})
 
 #' @rdname int_methods
 setGeneric("label_position<-", function(spl, value) standardGeneric("label_position<-"))
