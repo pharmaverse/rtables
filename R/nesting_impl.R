@@ -400,7 +400,7 @@ setMethod(
 setMethod(
   "split_rows", "ANY",
   function(lyt, spl, pos, at_sibling = NULL) {
-    stop("nope. can't add a row split to that (", class(lyt), "). contact the maintaner.")
+    stop("nope. can't add a row split to that (", class(lyt), "). contact the maintainer.")
   }
 )
 
@@ -465,7 +465,7 @@ setMethod(
   function(lyt, spl, constructor) {
     stop(
       "nope. can't do cmpnd_last_rowsplit to that (",
-      class(lyt), "). contact the maintaner."
+      class(lyt), "). contact the maintainer."
     )
   }
 )
@@ -535,7 +535,7 @@ setMethod(
   function(lyt, spl, pos) {
     stop(
       "nope. can't add a col split to that (", class(lyt),
-      "). contact the maintaner."
+      "). contact the maintainer."
     )
   }
 )
