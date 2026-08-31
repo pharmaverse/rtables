@@ -211,17 +211,6 @@ find_branch_pos2 <- function(splvec, at_sibling, preceding = NULL) {
   found_lgl <- vapply(nmlst, function(lst) atsib %in% deuniqify_path_elements(lst), FALSE)
   found <- which(found_lgl)
 
-  ## i <- 1
-  ## found <- numeric()
-  ## while (i <= length(nmlst) && !found) {
-  ##     if (deuniqify_path_elements(at_sibling) %in%
-  ##         deuniqify_path_elements(nmlst[[i]])) {
-  ##     found <- c(found, i)
-  ##   }
-  ##   i <- i + 1
-
-  ## }
-
   if (length(found) == 0) {
     stop(
       "Unable to find structural element '", at_sibling, "' to add siblings for.\n",
