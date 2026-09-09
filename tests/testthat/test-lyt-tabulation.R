@@ -306,6 +306,30 @@ test_that("ref_group comparisons work", {
   expect_identical(d12, d11 - d10)
 })
 
+test_that("ref_group passed to cfuns correctly", {
+  rgroupn <- function(x, labelstr = NULL, .ref_group) {
+    lbl <- labelstr %||% "ref group n"
+    rcell(label = lbl, NROW(.ref_group), format = "xx")
+  }
+  lyt <- basic_table(show_colcounts = TRUE) |>
+    split_cols_by("ARM", ref_group = "B: Placebo") |>
+    summarize_row_groups("AGE", cfun = rgroupn) |>
+    analyze("AGE", afun = rgroupn) |>
+    split_rows_by("SEX") |>
+    summarize_row_groups("AGE", cfun = rgroupn) |>
+    analyze("AGE", afun = rgroupn)
+  
+  tbl <- build_table(lyt, ex_adsl)
+
+  vals <- cell_values(tbl)
+  for (i in seq(1, 9, by = 2)) {
+    expect_identical(unname(unlist(vals[[i]])),
+                     unname(unlist(vals[[i + 1]])))
+  }
+
+
+})
+
 test_that("missing vars caught", {
   misscol <- basic_table() |>
     split_cols_by("ARM") |>
