@@ -318,16 +318,16 @@ test_that("ref_group passed to cfuns correctly", {
     split_rows_by("SEX") |>
     summarize_row_groups("AGE", cfun = rgroupn) |>
     analyze("AGE", afun = rgroupn)
-  
+
   tbl <- build_table(lyt, ex_adsl)
 
   vals <- cell_values(tbl)
   for (i in seq(1, 9, by = 2)) {
-    expect_identical(unname(unlist(vals[[i]])),
-                     unname(unlist(vals[[i + 1]])))
+    expect_identical(
+      unname(unlist(vals[[i]])),
+      unname(unlist(vals[[i + 1]]))
+    )
   }
-
-
 })
 
 test_that("missing vars caught", {
