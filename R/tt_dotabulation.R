@@ -896,26 +896,27 @@ setMethod(
            cinfo, ## used for sanity check
            baselines, ## used to calc new baselines
            spl_context) {
-   ret <- lapply(
-    spl,
-    function(splvecii) {
-      recursive_applysplit(
-        df = df,
-        lvl = lvl + 1L,
-        alt_df = alt_df,
-        alt_df_full = alt_df_full,
-        splvec = splvecii,
-        name = obj_name(unlist(splvecii, recursive = TRUE)[[1]]), ## XXX I think this is wrong
-        make_lrow = make_lrow,
-        cinfo = cinfo,
-        baselines = baselines,
-        spl_context = spl_context,
-        no_outer_tbl = TRUE # XXX is this always right? I think so
-      )
-      
-  })
-  ret
-})
+    ret <- lapply(
+      spl,
+      function(splvecii) {
+        recursive_applysplit(
+          df = df,
+          lvl = lvl + 1L,
+          alt_df = alt_df,
+          alt_df_full = alt_df_full,
+          splvec = splvecii,
+          name = obj_name(unlist(splvecii, recursive = TRUE)[[1]]), ## XXX I think this is wrong
+          make_lrow = make_lrow,
+          cinfo = cinfo,
+          baselines = baselines,
+          spl_context = spl_context,
+          no_outer_tbl = TRUE # XXX is this always right? I think so
+        )
+      }
+    )
+    ret
+  }
+)
 
 setMethod(
   ".make_split_kids", "Split",
@@ -1218,33 +1219,34 @@ recursive_applysplit <- function(df,
   }
 
   if (is(splvec, "SplitVectorTree")) {
-   return(
+    return(
       unlist(
-          lapply(
-            seq_along(splvec),
-            function(ii) {
-              recursive_applysplit(
-                  df = df,
-                  lvl = lvl,
-                  alt_df = alt_df,
-                  alt_df_full = alt_df_full,
-                  splvec = splvec[[ii]],
-                  name = obj_name(unlist(splvec[[ii]])[[1]]),
-                  make_lrow = make_lrow,
-                  partlabel = partlabel,
-                  cinfo = cinfo,
-                  parent_cfun = parent_cfun,
-                  cformat = cformat,
-                  cna_str = cna_str,
-                  cindent_mod = cindent_mod,
-                  cextra_args = cextra_args,
-                  cvar = cvar,
-                  baselines = baselines,
-                  spl_context = spl_context,
-                  no_outer_tbl = TRUE, ## XXX is this always right???? no_outer_tbl,
-                  parent_sect_split = parent_sect_split)
+        lapply(
+          seq_along(splvec),
+          function(ii) {
+            recursive_applysplit(
+              df = df,
+              lvl = lvl,
+              alt_df = alt_df,
+              alt_df_full = alt_df_full,
+              splvec = splvec[[ii]],
+              name = obj_name(unlist(splvec[[ii]])[[1]]),
+              make_lrow = make_lrow,
+              partlabel = partlabel,
+              cinfo = cinfo,
+              parent_cfun = parent_cfun,
+              cformat = cformat,
+              cna_str = cna_str,
+              cindent_mod = cindent_mod,
+              cextra_args = cextra_args,
+              cvar = cvar,
+              baselines = baselines,
+              spl_context = spl_context,
+              no_outer_tbl = TRUE, ## XXX is this always right???? no_outer_tbl,
+              parent_sect_split = parent_sect_split
+            )
           }
-          )
+        )
       )
     )
   }
@@ -1549,7 +1551,7 @@ build_table <- function(lyt, df,
       no_outer_tbl = !is(firstspl, "AnalyzeMultiVars")
     )
   })
-  ##kids <- kids[!sapply(kids, is.null)]
+  ## kids <- kids[!sapply(kids, is.null)]
   kids <- unlist(kids, recursive = TRUE)
   if (length(kids) > 0) names(kids) <- sapply(kids, obj_name)
 
@@ -1749,7 +1751,7 @@ setMethod(
     lyt
   }
 )
-    
+
 
 ## for most split types, don't do anything
 ## becuause their ordering already isn't data-based
@@ -1974,7 +1976,8 @@ setMethod(
     stopifnot(length(lyt) > 0)
     lst <- lapply(lyt, fix_analyze_vis)
     SplitVectorTree(lst = lst)
-})
+  }
+)
 
 # check_afun_cfun_params ----
 
@@ -2014,7 +2017,8 @@ setMethod(
   function(lyt, params) {
     param_l <- lapply(lyt, check_afun_cfun_params, params = params)
     Reduce(`|`, param_l)
-})
+  }
+)
 # Helper function for check_afun_cfun_params
 .afun_cfun_switch <- function(spl_i) {
   if (is(spl_i, "VAnalyzeSplit")) {

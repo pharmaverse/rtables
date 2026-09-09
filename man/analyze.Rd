@@ -61,7 +61,7 @@ Cannot be used simultaneously with \code{format}. Cannot be used if \code{format
 \emph{if possible} (\code{TRUE}, the default) or as a new top-level element (\code{FALSE}). Ignored if it would nest a split
 underneath analyses, which is not allowed.}
 
-\item{at_sibling}{(\code{charactere(1)} or \code{NULL})\cr If non-null, a preceding
+\item{at_sibling}{(\code{character(1)} or \code{NULL})\cr If non-null, a preceding
 split or analyze this instruction should be placed as a sibling to. Cannot
 select an instruction that was itself placed with non-null \code{at_sibling}.}
 

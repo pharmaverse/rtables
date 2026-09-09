@@ -654,6 +654,11 @@ setMethod("label_position", "Split", function(spl) spl@split_label_position)
 setMethod("label_position", "VAnalyzeSplit", function(spl) spl@var_label_position) ## split_label_position)
 
 #' @rdname int_methods
+setMethod("label_position", "SplitVectorTree", function(spl) {
+  label_position(last_rowsplit(spl))
+})
+
+#' @rdname int_methods
 setGeneric("label_position<-", function(spl, value) standardGeneric("label_position<-"))
 
 #' @rdname int_methods

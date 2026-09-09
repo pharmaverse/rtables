@@ -1914,7 +1914,7 @@ TableTree <- function(kids = list(),
 ## This is used for add_existing_table in colby_constructors.R
 
 split_or_splitvectree <- function(object) {
-    is(object, "Split") || is(object, "SplitVectorTree")
+  is(object, "Split") || is(object, "SplitVectorTree")
 }
 
 setClass("SplitVector",
@@ -1940,19 +1940,21 @@ SplitVector <- function(x = NULL,
 }
 
 setClass("SplitVectorTree",
-         contains = "list",
-         validity = function(object) {
+  contains = "list",
+  validity = function(object) {
     all(vapply(object, function(x) is(x, "SplitVector") || is(x, "SplitVectorTree"), TRUE))
-})
+  }
+)
 
 SplitVectorTree <- function(x = NULL,
                             ...,
                             lst = list(...)) {
-    if (is.null(x))
-        xlst <- NULL
-    else
-        xlst <- list(x)
-    new("SplitVectorTree", c(xlst, lst))
+  if (is.null(x)) {
+    xlst <- NULL
+  } else {
+    xlst <- list(x)
+  }
+  new("SplitVectorTree", c(xlst, lst))
 }
 
 avar_noneorlast <- function(vec) {

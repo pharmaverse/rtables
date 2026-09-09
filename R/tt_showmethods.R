@@ -45,7 +45,8 @@ setMethod(
   "ploads_to_str", "SplitVectorTree",
   function(x, collapse = ":") {
     sapply(x, ploads_to_str, collapse = collapse)
-})
+  }
+)
 
 setMethod(
   "ploads_to_str", "CompoundSplit",

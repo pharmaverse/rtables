@@ -172,7 +172,7 @@ setMethod(
   function(lyt) {
     sum(vapply(lyt, function(x) label_position(x) == "topleft", TRUE)) - 1L
   }
-) ## length(lyt)  - 1L)
+) ## length(lyt) - 1L)
 
 .tl_indent <- function(lyt, nested = TRUE) {
   if (!nested) {
@@ -1019,8 +1019,8 @@ analyze <- function(lyt,
     na_strs_var = na_strs_var
   )
 
-  if (nested && is.null(at_sibling) &&
-      (is(last_rowsplit(lyt), "VAnalyzeSplit") || is(last_rowsplit(lyt), "AnalyzeMultiVars"))) {
+  is_analyze_spl <- is(last_rowsplit(lyt), "VAnalyzeSplit") || is(last_rowsplit(lyt), "AnalyzeMultiVars")
+  if (nested && is.null(at_sibling) && is_analyze_spl) {
     cmpnd_last_rowsplit(lyt, spl, AnalyzeMultiVars)
   } else {
     ## analysis compounding now done in split_rows
@@ -1329,18 +1329,20 @@ setMethod(
            indent_mod = 0L,
            cvar = "",
            extra_args = list()) {
-  len <- length(lyt)
-  lyt[[len]] <- .add_row_summary(lyt[[len]],
-                                 label = label,
-                                 cfun = cfun,
-                                 child_labels = child_labels,
-                                 cformat = cformat,
-                                 cna_str = cna_str,
-                                 indent_mod = indent_mod,
-                                 cvar = cvar,
-                                 extra_args = extra_args)
-  lyt
-})
+    len <- length(lyt)
+    lyt[[len]] <- .add_row_summary(lyt[[len]],
+      label = label,
+      cfun = cfun,
+      child_labels = child_labels,
+      cformat = cformat,
+      cna_str = cna_str,
+      indent_mod = indent_mod,
+      cvar = cvar,
+      extra_args = extra_args
+    )
+    lyt
+  }
+)
 
 #' @rdname int_methods
 setMethod(

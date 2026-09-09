@@ -37,6 +37,8 @@ test_that("deeply nested and uneven column layouts work", {
 
 
 test_that("at_sibling creates intermediate row nesting", {
+  path_count <- function(tt, pth) length(tt_normalize_row_path(tt, pth))
+
   lyt <- basic_table() |>
     split_rows_by("RACE") |>
     split_rows_by("FACTOR2") |>
@@ -44,12 +46,10 @@ test_that("at_sibling creates intermediate row nesting", {
     split_rows_by("SEX", at_sibling = "FACTOR2") |>
     analyze("AGE")
   tbl <- build_table(lyt, rawdat)
-  paths <- row_paths(tbl)
-  has_path <- function(path) any(vapply(paths, identical, logical(1), path))
 
-  expect_true(has_path(c("RACE", "WHITE", "FACTOR2", "A", "AGE", "Mean")))
-  expect_true(has_path(c("RACE", "WHITE", "SEX", "M", "AGE", "Mean")))
-  expect_false(has_path(c("RACE", "WHITE", "FACTOR2", "A", "SEX", "M", "AGE", "Mean")))
+  expect_gt(path_count(tbl, c("RACE", "WHITE", "FACTOR2", "A", "AGE", "Mean")), 0L)
+  expect_gt(path_count(tbl, c("RACE", "WHITE", "SEX", "M", "AGE", "Mean")), 0L)
+  expect_equal(path_count(tbl, c("RACE", "WHITE", "FACTOR2", "A", "SEX", "M", "AGE", "Mean")), 0L)
   expect_true(all(c("FACTOR2", "SEX") %in% row.names(tbl)))
 
   sibling_analysis <- basic_table() |>
@@ -58,15 +58,38 @@ test_that("at_sibling creates intermediate row nesting", {
     analyze("AGE") |>
     analyze("AGE", at_sibling = "FACTOR2") |>
     build_table(rawdat)
-  expect_true(any(vapply(
-    row_paths(sibling_analysis),
-    identical,
-    logical(1),
-    c("RACE", "WHITE", "AGE", "Mean")
-  )))
+  expect_gt(path_count(sibling_analysis, c("RACE", "WHITE", "AGE", "Mean")), 0L)
+})
+
+test_that("at_sibling row split works with row summaries", {
+  path_count <- function(tt, pth) length(tt_normalize_row_path(tt, pth))
+
+  lyt <- basic_table() |>
+    split_rows_by("RACE") |>
+    summarize_row_groups() |>
+    analyze("AGE") |>
+    split_rows_by("SEX", at_sibling = "AGE") |>
+    summarize_row_groups() |>
+    analyze("AGE")
+
+  tbl <- build_table(lyt, rawdat)
+
+  expect_gt(path_count(tbl, c("RACE", "*", "@content")), 0L)
+  expect_gt(path_count(tbl, c("RACE", "*", "SEX", "*", "@content")), 0L)
+})
+
+test_that("at_sibling rejects page_by splits", {
+  expect_error(
+    basic_table() |>
+      split_rows_by("STRATA1", page_by = TRUE) |>
+      split_rows_by("RACE", at_sibling = "STRATA1"),
+    "at_sibling pointed to a split with forced pagination"
+  )
 })
 
 test_that("at_sibling shows dynamic cut split labels", {
+  path_count <- function(tt, pth) length(tt_normalize_row_path(tt, pth))
+
   lyt <- basic_table() |>
     split_rows_by("RACE") |>
     split_rows_by("FACTOR2") |>
@@ -74,14 +97,8 @@ test_that("at_sibling shows dynamic cut split labels", {
     split_rows_by_cutfun("AGE", at_sibling = "FACTOR2") |>
     analyze("AGE")
   tbl <- build_table(lyt, rawdat)
-  paths <- row_paths(tbl)
 
-  expect_true(any(vapply(
-    paths,
-    identical,
-    logical(1),
-    c("RACE", "WHITE", "AGE", "1st qrtile", "AGE", "Mean")
-  )))
+  expect_gt(path_count(tbl, c("RACE", "WHITE", "AGE", "1st qrtile", "AGE", "Mean")), 0L)
   expect_true("AGE" %in% row.names(tbl))
 })
 
@@ -235,10 +252,12 @@ test_that("intermediate nesting works correctly", {
     split_rows_by("DCSREAS", split_fun = keep_2_levels("DCSREAS"), nested = TRUE, at_sibling = "AGE") |>
     split_rows_by("COUNTRY", split_fun = keep_2_levels("COUNTRY")) |> ## its a trap!
     analyze("AGE") |> ## its a trap redux
-    split_rows_by("RACE", split_fun = keep_2_levels("RACE"), nested = TRUE, at_sibling = "AGE") |> ## tricky fish AGE == AGE[[1]]
+    ## tricky fish AGE == AGE[[1]]
+    split_rows_by("RACE", split_fun = keep_2_levels("RACE"), nested = TRUE, at_sibling = "AGE") |>
     split_rows_by("COUNTRY", split_fun = keep_2_levels("COUNTRY"), nested = TRUE) |>
     analyze("BMRKR1") |>
-    split_rows_by("BMRKR2", split_fun = keep_2_levels("BMRKR2"), nested = TRUE, at_sibling = "COUNTRY") |> ## did we get the right one?
+    ## did we get the right one?
+    split_rows_by("BMRKR2", split_fun = keep_2_levels("BMRKR2"), nested = TRUE, at_sibling = "COUNTRY") |>
     analyze("AGE")
 
   tbl_is <- build_table(lyt7, ex_adsl)
@@ -290,10 +309,12 @@ test_that("intermediate nesting works correctly", {
     split_rows_by("DCSREAS", split_fun = keep_2_levels("DCSREAS"), nested = TRUE, at_sibling = "AGE") |>
     split_rows_by("COUNTRY", split_fun = keep_2_levels("COUNTRY")) |> ## its a trap!
     analyze("AGE") |> ## its a trap redux
-    split_rows_by("RACE", split_fun = keep_2_levels("RACE"), nested = TRUE, at_sibling = "AGE[2]") |> ## tricky fish AGE == AGE[1]
+    ## tricky fish AGE == AGE[1]
+    split_rows_by("RACE", split_fun = keep_2_levels("RACE"), nested = TRUE, at_sibling = "AGE[2]") |>
     split_rows_by("BMRKR2", split_fun = keep_2_levels("BMRKR2"), nested = TRUE) |>
     analyze("BMRKR1") |>
-    split_rows_by("BMRKR2", split_fun = keep_2_levels("BMRKR2"), nested = TRUE, at_sibling = "AGE") |> ## did we get the right one?
+    ## did we get the right one?
+    split_rows_by("BMRKR2", split_fun = keep_2_levels("BMRKR2"), nested = TRUE, at_sibling = "AGE") |>
     analyze("AGE")
 
   tbl_is2 <- build_table(lyt7b, ex_adsl)
