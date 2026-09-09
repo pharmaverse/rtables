@@ -23,6 +23,7 @@
  
 ### Bug Fixes
  * `indent_mod<-` `RowsVerticalSection` method now correctly recycles length 1 values @gmbecker
+ * cfuns now receive correct `.ref_group` value instead of a data.frame with zero rows, when requested. #1117 @gmbecker
 
 ## rtables 0.6.15
 
