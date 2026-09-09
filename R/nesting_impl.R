@@ -355,7 +355,7 @@ setMethod(
 setMethod(
   "split_rows", "SplitVectorTree",
   function(lyt, spl, pos, cmpnd_fun = AnalyzeMultiVars, at_sibling = NULL) {
-    ## nested is always TRUE by this point as FALSE and the new NA
+    ## nested is always TRUE by this point as FALSE
     ## should be captured by the pos value in the PreData*Layout
     ## methods
     len <- length(lyt)
