@@ -2059,6 +2059,63 @@ setClass("RefFootnote", representation(
   symbol = "character"
 ))
 
+#' Referential Footnote
+#'
+#' @param note (`character(1)`)\cr The text of the footnote, not including
+#'   the symbol or index.
+#' @param note (`integer(1)`)\cr The index (position in the list of footnotes);
+#'   this should not typically be set by users. `NA` (the default) indicates
+#'   automatic counting.
+#' @param symbol (`character(1)`)\cr The symbol to be used instead of the
+#'   index value to indicate the footnote's anchor and message. `NA` (the
+#'   default) will use the footnote's index (after automatic counting, if
+#'   applicable) as its symbol.
+#'
+#' @details When `symbol` is non-missing, all footnotes with the same symbol
+#'   will share a single footer entry containing `note`, rather than it
+#'   being entered repeatedly. `symbol` cannot be `"NA"` or contain `"{"`
+#'   or `"}"`.
+#'
+#' @return a `RefFootnote` object suitable for use in `in_rows` and
+#' `fnotes_at_path<-` and `rcell`, or `NULL` if `note` is of length zero.
+#'
+#' @examples
+#'
+#' afun1 <- function(x, ...) {
+#'   in_rows(
+#'     row1 = 5,
+#'     row2 = c(1, 2),
+#'     .row_footnotes = list(row1 = list(RefFootnote("row 1 rfn"))),
+#'     .cell_footnotes = list(row2 = list(RefFootnote("row 2 cfn")))
+#'   )
+#' }
+#'
+#' afun2 <- function(x, ...) {
+#'   in_rows(
+#'     row1 = 5,
+#'     row2 = c(1, 2),
+#'     .row_footnotes = list(row1 = list(RefFootnote("row 1 rfn", symbol = "+"))),
+#'     .cell_footnotes = list(row2 = list(RefFootnote("row 2 cfn", symbol = "^")))
+#'   )
+#' }
+#'
+#' lyt1 <- basic_table() |>
+#'   split_cols_by("ARM") |>
+#'   analyze("AGE", afun = afun1)
+#'
+#' build_table(lyt1, DM)
+#'
+#' lyt2 <- basic_table() |>
+#'   split_cols_by("ARM") |>
+#'   split_rows_by("STRATA1") |>
+#'   analyze("AGE", afun = afun2)
+#'
+#' build_table(lyt2, DM)
+#'
+#' @export
+#'
+#'
+#'
 RefFootnote <- function(note, index = NA_integer_, symbol = NA_character_) {
   if (is(note, "RefFootnote")) {
     return(note)
@@ -2071,7 +2128,7 @@ RefFootnote <- function(note, index = NA_integer_, symbol = NA_character_) {
       " Got char vector of length ", length(index)
     )
   }
-  if (!is.na(symbol) && (index == "NA" || grepl("[{}]", index))) {
+  if (!is.na(symbol) && (symbol == "NA" || grepl("[{}]", symbol))) {
     stop(
       "The string 'NA' and strings containing '{' or '}' cannot be used as ",
       "referential footnote index symbols. Got string '", index, "'."
