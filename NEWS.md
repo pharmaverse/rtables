@@ -20,6 +20,7 @@
  * Added vignette: Guided Tour (Advanced) - (stub) `TableTree` Objects - (stub) Accessing Table Values @gmbecker
  * Added vignette: Guided Tour (Advanced) - (stub) `TableTree` Objects - (stub) Custom Scoring Functions For Sorting @gmbecker
  * Added vignette: Guided Tour (Advanced) - (stub) `TableTree` Objects - (stub) Custom Pruning Functions @gmbecker
+ * Added Intermediate nesting behavior @gmbecker 
  
 ### Bug Fixes
  * `indent_mod<-` `RowsVerticalSection` method now correctly recycles length 1 values @gmbecker

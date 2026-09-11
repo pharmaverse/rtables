@@ -62,12 +62,12 @@ lyt <- basic_table() |>
   split_rows_by("SEX") |>
   split_rows_by("BMRKR2") |>
   analyze("AGE")
-build_table(lyt, ex_adsl)
+table_structure(build_table(lyt, ex_adsl))
 ```
 
 When `analyze` instructions are 'nested within' another `analyze`, the
 analyses are bundled into a 'multi-analysis' parent structure. This
-parent structure as a whole, then, has the nesting behavior that an
+parent structure as a whole, then, has the nesting behavior that a
 single `analyze` call would have in its place.
 
 ```{r}
@@ -78,12 +78,172 @@ lyt2 <- basic_table() |>
   split_rows_by("BMRKR2") |>
   analyze("AGE") |>
   analyze("BMRKR1")
-head(build_table(lyt2, ex_adsl), 32)
+table_structure(build_table(lyt2, ex_adsl))
 ```
-
 
 By default:
 
 - `analyze` calls nest within the most recently preceding
   `split_rows_by` or instruction
   - multiple `analyze` calls that nest within the 
+
+## Creating 'Multi-Section' Tables With `nested = FALSE`
+
+We often want to create tables with rows grouped into two or more
+logical or analytical sections. For example we might want to analyze
+`AGE` overall, then separately by `SEX` and by `RACE`. We can do this by:
+
+1. `analyze`ing `AGE`, then
+2. splitting by `SEX` and `analyze`ing `AGE`, and finally
+3. splitting by `RACE` and `analyze`ing `AGE` again.
+
+We will start each section after the first with `nested = FALSE` to
+delineate it from the previous portion of the layout.
+
+NOTE: while we will do it explicitly for illustration purposes, any
+`split_rows_by` layout instruction that follows an `analyze` is
+defaults to `nested = FALSE`.
+
+Thus we can create our table with the code below:
+
+Note: we set a top level section divider to make our different
+sections concrete; section dividers will be covered in a later part of
+this guide and can be taken as is for now.
+
+```{r}
+trim_adsl <- subset(ex_adsl, RACE %in% levels(ex_adsl$RACE)[1:3] & SEX %in% c("F", "M"))
+trim_adsl$RACE <- factor(trim_adsl$RACE)
+trim_adsl$SEX <- factor(trim_adsl$SEX)
+
+nice_mean <- function(x) {
+  in_rows("Average Age" = mean(x), .formats = list("Average Age" = "xx.x"))
+}
+
+lyt3 <- basic_table(top_level_section_div = "-") |>
+  split_cols_by("ARM") |>
+  analyze("AGE", afun = nice_mean) |>
+  split_rows_by("SEX", nested = FALSE) |>
+  analyze("AGE", afun = nice_mean) |>
+  split_rows_by("RACE", nested = FALSE) |>
+  analyze("AGE", afun = nice_mean)
+
+tbl3 <- build_table(lyt3, trim_adsl)
+tbl3
+```
+
+We see three clear top-level 'sections' of our table in row-space, as
+desired.  Contrast this with our result without `nested = FALSE` (and
+with the first two `analyze` calls replaced with
+`summarize_row_groups`:
+
+
+```{r}
+nice_mean_cfun <- function(x, labelstr) {
+  lbl <- paste0(labelstr, " (Ave. Age)")
+  in_rows(mean(x), .labels = lbl, .formats = "xx.x")
+}
+
+lyt3b <- basic_table(top_level_section_div = "-") |>
+  split_cols_by("ARM") |>
+  summarize_row_groups("AGE", cfun = nice_mean_cfun) |>
+  split_rows_by("SEX") |>
+  summarize_row_groups("AGE", cfun = nice_mean_cfun) |>
+  split_rows_by("RACE") |>
+  analyze("AGE", afun = nice_mean)
+
+tbl3b <- build_table(lyt3b, trim_adsl)
+head(tbl3b)
+```
+
+Here the faceting on `RACE` occurs *nested within* the faceting on
+`SEX`, whereas above it occurs *alongside* it.
+
+### A Brief Note On Removing Sections
+
+Sometimes we will receive a template script that does more than we
+want, but is close to meeting our needs. For example, imagine we
+wanted the above table (non-nested version) but only wanted the
+overall and race portions, removing the age within gender analysis.
+
+We do this by simply identifying all of the layout instructions
+corresponding to that portion of the table and removing them. Our top
+level section dividers can help us reason about this, and can be added
+to the template if they were not there originally.
+
+In our case, the instructions for our section to remove are the
+`split_rows_by("SEX", nested = FALSE)`, and directly following
+`analyze("AGE")` calls. By starting with our code above and removing
+those, we would get our desired table:
+
+
+```{r}
+lyt3c <- basic_table(top_level_section_div = "-") |>
+  split_cols_by("ARM") |>
+  analyze("AGE", afun = nice_mean) |>
+  ## split_rows_by("SEX", nested = FALSE) |>
+  ## analyze("AGE", afun = nice_mean) |>
+  split_rows_by("RACE", nested = FALSE) |>
+  analyze("AGE", afun = nice_mean)
+
+tbl3c <- build_table(lyt3c, trim_adsl)
+tbl3c
+```
+
+When performing this kind of layout pruning in the wild, it is
+important to remember that `split_rows_by` calls that follow `analyze`
+calls default to `nested = FALSE`, even if that is not made explicit
+in the template script you are starting from.
+
+It is also important to not remove all `analyze` call(s) nested within
+any series of row faceting (`split_rows_by*` calls), as this will
+result in an degenerate (invalidly structured) table which could have
+undefined behavior when passed to some other aspects of the `rtables`
+and `formatters` APIs.
+
+## Intermediate Nesting
+
+As of `rtables` `0.7.0`, we can declare *intermediate* nesting, rather
+than simply full -- the previous and now default behavior when `nested
+= TRUE` -- and no -- the `nested = FALSE` behavior -- nesting.
+
+We do this via the new `at_sibling` parameter the `split_rows_by*` and
+`analyze*` families of layout functions now accept.
+
+This allows us to, for example, split by strata, further split by
+gender, analyze strata x gender, then analyze the strata as a whole,
+like so:
+
+
+```{r}
+lyt4 <- basic_table() |>
+  split_cols_by("ARM") |>
+  split_rows_by("STRATA1") |>
+  split_rows_by("SEX", split_fun = keep_split_levels(c("F", "M"))) |>
+  analyze("AGE") |>
+  analyze("BMRKR2", at_sibling = "SEX")
+
+tbl <- build_table(lyt4, ex_adsl)
+
+lyt4b <- basic_table() |>
+  split_cols_by("ARM") |>
+  split_rows_by("STRATA1") |>
+  split_rows_by("SEX", split_fun = keep_split_levels(c("F", "M"))) |>
+  analyze("AGE") |>
+  analyze("BMRKR2", at_sibling = "STRATA1")
+
+tbl4b <- build_table(lyt4b, ex_adsl)
+```
+
+
+
+```{r}
+lyt5 <- basic_table() |>
+  split_cols_by("ARM") |>
+  split_rows_by("STRATA1") |>
+  split_rows_by("SEX", split_fun = keep_split_levels(c("F", "M"))) |>
+  analyze("AGE") |>
+  split_rows_by("RACE", split_fun = keep_split_levels(levels(ex_adsl$RACE)[1:2]), at_sibling = "SEX") |>
+  analyze("AGE")
+
+tbl <- build_table(lyt5, ex_adsl)
+```

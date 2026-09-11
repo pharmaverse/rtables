@@ -53,7 +53,8 @@ lyt_args(
   colcount_format,
   parent_name,
   formats_var,
-  na_strs_var
+  na_strs_var,
+  at_sibling
 )
 }
 \arguments{
@@ -199,6 +200,11 @@ Cannot be used simultaneously with \code{format}.}
 lists of default NA strings to use. These will be applied with the same precedence as the \code{format} argument; i.e.,
 they will not override formats (other than \code{"default"}) set within the afun.
 Cannot be used simultaneously with \code{format}. Cannot be used if \code{formats_var} is \code{NULL}.}
+
+\item{at_sibling}{(\code{character(1)} or \code{NULL})\cr If non-null, a preceding
+split or analyze to anchor this instruction to as a direct sibling. Cannot
+select an instruction that is downstream of a point a previously used
+anchor (See Nesting Anchor Resolution for details).}
 }
 \value{
 No return value.
