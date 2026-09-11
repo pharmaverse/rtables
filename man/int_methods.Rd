@@ -19,6 +19,12 @@
 \alias{last_rowsplit,PreDataTableLayouts-method}
 \alias{split_rows}
 \alias{split_rows,NULL-method}
+\alias{get_names_list}
+\alias{get_names_list,PreDataTableLayouts-method}
+\alias{get_names_list,PreDataRowLayout-method}
+\alias{get_names_list,SplitVector-method}
+\alias{get_names_list,SplitVectorTree-method}
+\alias{get_names_list,Split-method}
 \alias{split_rows,PreDataRowLayout-method}
 \alias{split_rows,SplitVector-method}
 \alias{split_rows,PreDataTableLayouts-method}
@@ -433,6 +439,18 @@ split_rows(
   cmpnd_fun = AnalyzeMultiVars,
   at_sibling = NULL
 )
+
+get_names_list(splvec)
+
+\S4method{get_names_list}{PreDataTableLayouts}(splvec)
+
+\S4method{get_names_list}{PreDataRowLayout}(splvec)
+
+\S4method{get_names_list}{SplitVector}(splvec)
+
+\S4method{get_names_list}{SplitVectorTree}(splvec)
+
+\S4method{get_names_list}{Split}(splvec)
 
 \S4method{split_rows}{PreDataRowLayout}(
   lyt = NULL,
@@ -1250,8 +1268,9 @@ underneath analyses, which is not allowed.}
 \item{for_analyze}{(\code{flag}) whether split is an analyze split.}
 
 \item{at_sibling}{(\code{character(1)} or \code{NULL})\cr If non-null, a preceding
-split or analyze this instruction should be placed as a sibling to. Cannot
-select an instruction that was itself placed with non-null \code{at_sibling}.}
+split or analyze to anchor this instruction to as a direct sibling. Cannot
+select an instruction that is downstream of a point a previously used
+anchor (See Nesting Anchor Resolution for details).}
 
 \item{lyt}{(\code{PreDataTableLayouts})\cr layout object pre-data used for tabulation.}
 

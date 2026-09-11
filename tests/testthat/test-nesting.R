@@ -236,7 +236,120 @@ test_that("intermediate nesting works correctly", {
     "Unable to find structural element"
   )
 
+  path_count <- function(tt, pth) length(tt_normalize_row_path(tt, pth))
   keep_2_levels <- function(varnm, dat = ex_adsl) keep_split_levels(levels(dat[[varnm]])[1:2])
+
+  ## even though this doesn't make a ton of sense, as the correct thing is for
+  ## BMRKR2's at_sibling to also be "SEX", as that is the anchor point for the
+  ## tree it (and RACE) is appended to,
+  ## it was easier to support it than to construct a fully useful error message :-/.
+  lyt_silly <- basic_table() |>
+    split_rows_by("STRATA1", split_fun = keep_2_levels("STRATA1")) |>
+    split_rows_by("SEX", split_fun = keep_2_levels("SEX")) |>
+    analyze("AGE") |>
+    split_rows_by("RACE", split_fun = keep_2_levels("RACE"), at_sibling = "SEX") |>
+    analyze("AGE") |>
+    split_rows_by("BMRKR2", split_fun = keep_2_levels("BMRKR2"), at_sibling = "RACE") |>
+    analyze("AGE")
+
+  tbl <- build_table(lyt_silly, ex_adsl)
+
+  ## these are fast enough that we can be a bit repetetive/redundant
+  ## they're the same cause it's powers of 2 due to keep_2_levels splitfun
+  expect_equal(
+    path_count(tbl, c("STRATA1", "*", "SEX", "*", "AGE")),
+    path_count(tbl, c("STRATA1", "*", "RACE", "*", "AGE"))
+  )
+
+  ## RACE and BMRKR2 are siblings to eachother (anchored on SEX)
+  expect_equal(
+    path_count(tbl, c("STRATA1", "*", "RACE", "*", "AGE")),
+    path_count(tbl, c("STRATA1", "*", "BMRKR2", "*", "AGE"))
+  )
+
+  ## should not exist
+  expect_equal(
+    path_count(tbl, c("STRATA1", "*", "RACE", "*", "BMRKR2")),
+    0L
+  )
+
+  ## at_sibling finds overridden table names
+
+  lyt_ovrd <- basic_table() |>
+    split_cols_by("ARM") |>
+    split_rows_by("RACE", split_fun = keep_2_levels("RACE")) |>
+    split_rows_by("BMRKR2",
+      split_fun = keep_2_levels("BMRKR2"),
+      parent_name = "funkytown"
+    ) |>
+    analyze("AGE") |>
+    split_rows_by("STRATA1",
+      split_fun = keep_2_levels("STRATA1"),
+      at_sibling = "funkytown"
+    ) |>
+    analyze("BMRKR1")
+  tbl_ovrd <- build_table(lyt_ovrd, ex_adsl)
+
+  expect_equal(
+    path_count(tbl_ovrd, c("RACE", "*", "funkytown", "*", "AGE")),
+    path_count(tbl_ovrd, c("RACE", "*", "STRATA1", "*", "BMRKR1"))
+  )
+
+  expect_equal(
+    path_count(tbl_ovrd, c("STRATA1", "*", "BMRKR1")),
+    0L
+  )
+
+  ## this layout is completely ridiculous but it exercises the index resolution in
+  ## anchor lookup
+  ##
+  ## RACE (xx) masked by unnested splitting below
+  ## SEX -> | RACE -> STRATA1 -> | RACE (2)
+  ##        |--------------------| BMRKR2 -> AGE
+  ##        | COUNTRY -> BMRKR1
+  ##
+  ## gotta catch them all
+
+  clowndat <- subset(ex_adsl, RACE %in% levels(RACE)[1:2])
+  clowndat$RACE <- factor(clowndat$RACE)
+  clown_shoes <- basic_table() |>
+    analyze("RACE") |>
+    split_rows_by("SEX", split_fun = keep_2_levels("SEX")) |>
+    split_rows_by("RACE") |>
+    split_rows_by("STRATA1", split_fun = keep_2_levels("STRATA1")) |>
+    analyze("RACE") |>
+    split_rows_by("BMRKR2", split_fun = keep_2_levels("BMRKR2"), at_sibling = "RACE[2]") |>
+    analyze("AGE") |>
+    split_rows_by("COUNTRY",
+      split_fun = keep_2_levels("COUNTRY"),
+      at_sibling = "RACE"
+    ) |>
+    analyze("BMRKR1")
+
+  tbl_clown <- build_table(clown_shoes, clowndat)
+  expect_equal(
+    path_count(tbl_clown, c("RACE", "*")),
+    2L
+  )
+  expect_equal(
+    path_count(tbl_clown, c("SEX", "*", "RACE", "*", "STRATA1", "*", "RACE", "*")),
+    16L
+  )
+
+  expect_equal(
+    path_count(tbl_clown, c("SEX", "*", "RACE", "*", "STRATA1", "*", "BMRKR2", "*")),
+    16L
+  )
+
+  expect_equal(
+    path_count(tbl_clown, c("SEX", "*", "COUNTRY", "*")),
+    4L
+  )
+
+  expect_equal(
+    path_count(tbl_clown, c("COUNTRY", "*")),
+    0L
+  )
 
   ## "Full On" INSANEO STYLE
   ##  STRATA1 -> SEX -> | AGE
@@ -261,8 +374,6 @@ test_that("intermediate nesting works correctly", {
     analyze("AGE")
 
   tbl_is <- build_table(lyt7, ex_adsl)
-
-  path_count <- function(tt, pth) length(tt_normalize_row_path(tt, pth))
 
   ## should exist
   expect_equal(

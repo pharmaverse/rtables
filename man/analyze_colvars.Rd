@@ -41,8 +41,9 @@ functions. See \code{\link[formatters:list_valid_format_labels]{formatters::list
 underneath analyses, which is not allowed.}
 
 \item{at_sibling}{(\code{character(1)} or \code{NULL})\cr If non-null, a preceding
-split or analyze this instruction should be placed as a sibling to. Cannot
-select an instruction that was itself placed with non-null \code{at_sibling}.}
+split or analyze to anchor this instruction to as a direct sibling. Cannot
+select an instruction that is downstream of a point a previously used
+anchor (See Nesting Anchor Resolution for details).}
 
 \item{extra_args}{(\code{list})\cr extra arguments to be passed to the tabulation function. Element position in the list
 corresponds to the children of this split. Named elements in the child-specific lists are ignored if they do
@@ -61,6 +62,45 @@ A \code{PreDataTableLayouts} object suitable for passing to further layouting fu
 \description{
 Generate rows analyzing different variables across columns
 }
+\section{Nesting Anchor Resolution}{
+
+
+When \code{nested} is \code{TRUE}, \code{at_sibling} allows you to set a \emph{nesting
+anchor} that your new \verb{split_rows_by*} or \verb{analyze*} directive
+should be placed as a sibling to.  The lookup for this anchor
+occurs \emph{only in the currently active top-level nesting stack},
+meaning the directives splitting directives that have occurred since
+the last split or analysis with \code{nested == FALSE}.
+
+Furthermore, resolution occurs against the first element of each
+arm of a branching point caused by any previous uses of
+\code{at_sibling} but \emph{only descends into the last arm}.
+
+So for example if our previous layout was generated via:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{lyt <- basic_table() |>
+  split_rows_by("SEX") |>
+  analyze("AGE") |>
+  split_rows_by("BMRKR2", nested = FALSE) |>
+  split_rows_by("RACE") |>
+  analyze("AGE") |>
+  split_rows_by("SEX", at_sibling = "RACE") |>
+  analyze("BMRKR1")
+}\if{html}{\out{</div>}}
+
+The eligible anchor points would be \code{"BMRKR2"}, \code{"RACE"}, \code{"SEX"}
+and \code{"BMRKR1"}. \code{"AGE"} is masked by the branching caused by
+anchoring our \code{SEX} split on \code{RACE}.
+
+Finally, while \code{at_sibling} does support de-duplication of
+\code{"<name>[i]"} anchors, it does so \strong{within the set of available
+anchors}, which can be counter-intuitive. It is strongly suggested
+that the \code{parent_name} and \code{table_names} argument(s) of
+\verb{split_rows_by*} and \code{analyze} to prevent the need for
+this. \code{at_sibling} will resolve to table names overridden in this
+manner.
+}
+
 \examples{
 \dontshow{if (require(dplyr)) withAutoprint(\{ # examplesIf}
 library(dplyr)

@@ -151,8 +151,9 @@ gen_args <- function(df, alt_counts_df, spl, pos, tt, tr, verbose, colwidths, ob
 #' `analyze*` when analyzing more than one variable, respectively. Ignored when
 #' analyzing a single variable.
 #' @param at_sibling (`character(1)` or `NULL`)\cr If non-null, a preceding
-#'   split or analyze this instruction should be placed as a sibling to. Cannot
-#'   select an instruction that was itself placed with non-null `at_sibling`.
+#'   split or analyze to anchor this instruction to as a direct sibling. Cannot
+#'   select an instruction that is downstream of a point a previously used
+#'   anchor (See Nesting Anchor Resolution for details).
 #'
 #' @inherit gen_args return
 #'

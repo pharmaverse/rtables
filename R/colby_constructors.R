@@ -190,6 +190,44 @@ setMethod(
 #'
 #' @inheritSection custom_split_funs Custom Splitting Function Details
 #'
+#' @section Nesting Anchor Resolution:
+#'
+#' When `nested` is `TRUE`, `at_sibling` allows you to set a *nesting
+#' anchor* that your new `split_rows_by*` or `analyze*` directive
+#' should be placed as a sibling to.  The lookup for this anchor
+#' occurs *only in the currently active top-level nesting stack*,
+#' meaning the directives splitting directives that have occurred since
+#' the last split or analysis with `nested == FALSE`.
+#'
+#' Furthermore, resolution occurs against the first element of each
+#' arm of a branching point caused by any previous uses of
+#' `at_sibling` but *only descends into the last arm*.
+#'
+#' So for example if our previous layout was generated via:
+#'
+#' ```
+#' lyt <- basic_table() |>
+#'   split_rows_by("SEX") |>
+#'   analyze("AGE") |>
+#'   split_rows_by("BMRKR2", nested = FALSE) |>
+#'   split_rows_by("RACE") |>
+#'   analyze("AGE") |>
+#'   split_rows_by("SEX", at_sibling = "RACE") |>
+#'   analyze("BMRKR1")
+#' ```
+#'
+#' The eligible anchor points would be `"BMRKR2"`, `"RACE"`, `"SEX"`
+#' and `"BMRKR1"`. `"AGE"` is masked by the branching caused by
+#' anchoring our `SEX` split on `RACE`.
+#'
+#' Finally, while `at_sibling` does support de-duplication of
+#' `"<name>[i]"` anchors, it does so **within the set of available
+#' anchors**, which can be counter-intuitive. It is strongly suggested
+#' that the `parent_name` and `table_names` argument(s) of
+#' `split_rows_by*` and `analyze` to prevent the need for
+#' this. `at_sibling` will resolve to table names overridden in this
+#' manner.
+#'
 #' @note
 #' If `var` is a factor with empty unobserved levels and `labels_var` is specified, it must also be a factor
 #' with the same number of levels as `var`. Currently the error that occurs when this is not the case is not very
@@ -365,6 +403,8 @@ split_cols_by_multivar <- function(lyt,
 #'
 #' @inherit split_rows_by return
 #'
+#' @inheritSection split_rows_by Nesting Anchor Resolution
+#'
 #' @seealso [split_rows_by()] for typical row splitting, and [split_cols_by_multivar()] to perform the same type of
 #'   split on a column basis.
 #'
@@ -528,6 +568,7 @@ split_cols_by_cuts <- function(lyt, var, cuts,
 }
 
 #' @export
+#' @inheritSection split_rows_by Nesting Anchor Resolution
 #' @rdname varcuts
 split_rows_by_cuts <- function(lyt, var, cuts,
                                cutlabels = NULL,
@@ -902,6 +943,7 @@ NULL
 #' machinery. These are listed and described in [additional_fun_params].
 #'
 #' @inherit split_cols_by return
+#' @inheritSection split_rows_by Nesting Anchor Resolution
 #'
 #' @note None of the arguments described in [additional_fun_params] can be overridden via `extra_args` or when calling
 #'   [make_afun()]. `.N_col` and `.N_total` can be overridden via the `col_counts` argument to [build_table()].
@@ -1060,6 +1102,7 @@ get_acolvar_vars <- function(lyt) {
 #'   [additional_fun_params].
 #'
 #' @inherit split_cols_by return
+#' @inheritSection split_rows_by Nesting Anchor Resolution
 #'
 #' @seealso [split_cols_by_multivar()]
 #'
