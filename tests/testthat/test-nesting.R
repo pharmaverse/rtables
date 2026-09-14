@@ -302,13 +302,13 @@ test_that("intermediate nesting works correctly", {
   )
 
   lyt_other <- basic_table() |>
-      split_rows_by("STRATA1") |>
-      split_rows_by("SEX") |>
-      analyze("AGE") |>
-      split_rows_by("RACE", at_sibling = "SEX") |>
-      split_rows_by("BMRKR2") |>
-      analyze("AGE") |>
-      analyze("BMRKR1", at_sibling = "BMRKR2")
+    split_rows_by("STRATA1") |>
+    split_rows_by("SEX") |>
+    analyze("AGE") |>
+    split_rows_by("RACE", at_sibling = "SEX") |>
+    split_rows_by("BMRKR2") |>
+    analyze("AGE") |>
+    analyze("BMRKR1", at_sibling = "BMRKR2")
 
   expect_identical(
     get_anchors_list(lyt_other),
@@ -341,20 +341,20 @@ test_that("intermediate nesting works correctly", {
   expect_identical(
     get_anchors_list(clown_base),
     list(
+      "RACE",
+      list(
+        "SEX",
         "RACE",
-        list(
-            "SEX",
-            "RACE",
-            "STRATA1",
-            c(
-              "RACE",
-              "BMRKR2"
-            ),
-            "AGE"
-        )
+        "STRATA1",
+        c(
+          "RACE",
+          "BMRKR2"
+        ),
+        "AGE"
+      )
     )
   )
-            
+
 
   ## RACE (xx) masked by unnested splitting below
   ## SEX -> | RACE -> STRATA1 -> | RACE (2)

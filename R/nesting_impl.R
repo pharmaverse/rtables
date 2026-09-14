@@ -210,7 +210,7 @@ extract_dup_pos <- function(str) {
 #'   analyze("AGE")
 #'
 #' get_anchors_list(lyt)
-#' 
+#'
 #' @export
 setGeneric("get_anchors_list", function(splvec) standardGeneric("get_anchors_list"))
 
