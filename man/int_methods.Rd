@@ -19,12 +19,6 @@
 \alias{last_rowsplit,PreDataTableLayouts-method}
 \alias{split_rows}
 \alias{split_rows,NULL-method}
-\alias{get_names_list}
-\alias{get_names_list,PreDataTableLayouts-method}
-\alias{get_names_list,PreDataRowLayout-method}
-\alias{get_names_list,SplitVector-method}
-\alias{get_names_list,SplitVectorTree-method}
-\alias{get_names_list,Split-method}
 \alias{split_rows,PreDataRowLayout-method}
 \alias{split_rows,SplitVector-method}
 \alias{split_rows,PreDataTableLayouts-method}
@@ -439,18 +433,6 @@ split_rows(
   cmpnd_fun = AnalyzeMultiVars,
   at_sibling = NULL
 )
-
-get_names_list(splvec)
-
-\S4method{get_names_list}{PreDataTableLayouts}(splvec)
-
-\S4method{get_names_list}{PreDataRowLayout}(splvec)
-
-\S4method{get_names_list}{SplitVector}(splvec)
-
-\S4method{get_names_list}{SplitVectorTree}(splvec)
-
-\S4method{get_names_list}{Split}(splvec)
 
 \S4method{split_rows}{PreDataRowLayout}(
   lyt = NULL,

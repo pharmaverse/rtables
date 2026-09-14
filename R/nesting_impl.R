@@ -187,84 +187,83 @@ extract_dup_pos <- function(str) {
 ##   analyze("AGE") |>
 ##   analyze("BMRKR1", at_sibling = "BMRKR2")
 ##
-## this should give: STRATA1, list(SEX, RACE), BMRKR2, BMRKR1 as valid at_sibling targets
+## this should give: STRATA1, c(SEX, RACE), c(BMRKR2, BMRKR1) as valid at_sibling targets
 
-#' @rdname int_methods
+#' List Possible Nesting Anchors
+#'
+#' This function scans an existing layout's row structure and lists
+#' valid `at_sibling` anchors for intermediate nesting.
+#'
+#' @param splvec (`PreDataTableLayouts` or internal classes)\cr The layout or partial
+#' layout to list anchors for.
+#'
+#' @return a (possibly nested) list containing the anchors which can be used with
+#' `at_sibling` in `split_rows_by*` or `analyze`.
+#' @examples
+#'
+#' lyt <- basic_table() |>
+#'   split_rows_by("STRATA1") |>
+#'   split_rows_by("RACE") |>
+#'   split_rows_by("SEX") |>
+#'   analyze("AGE") |>
+#'   split_rows_by("BMRKR1", at_sibling = "RACE") |>
+#'   analyze("AGE")
+#'
+#' get_anchors_list(lyt)
+#' 
 #' @export
-setGeneric("get_names_list", function(splvec) standardGeneric("get_names_list"))
+setGeneric("get_anchors_list", function(splvec) standardGeneric("get_anchors_list"))
 
-#' @rdname int_methods
+#' @rdname get_anchors_list
 #' @export
 setMethod(
-  "get_names_list", "PreDataTableLayouts",
+  "get_anchors_list", "PreDataTableLayouts",
   function(splvec) {
-    get_names_list(rlayout(splvec))
+    get_anchors_list(rlayout(splvec))
   }
 )
 
-#' @rdname int_methods
+#' @rdname get_anchors_list
 #' @export
 setMethod(
-  "get_names_list", "PreDataRowLayout",
+  "get_anchors_list", "PreDataRowLayout",
   function(splvec) {
-    lapply(splvec, get_names_list)
+    lapply(splvec, get_anchors_list)
   }
 )
 
-#' @rdname int_methods
+#' @rdname get_anchors_list
 #' @export
 setMethod(
-  "get_names_list", "SplitVector",
+  "get_anchors_list", "SplitVector",
   function(splvec) {
-    unlist(lapply(splvec, get_names_list), recursive = FALSE)
+    unlist(lapply(splvec, get_anchors_list), recursive = FALSE)
   }
 )
 
-#' @rdname int_methods
+#' @rdname get_anchors_list
 #' @export
 setMethod(
-  "get_names_list", "SplitVectorTree",
+  "get_anchors_list", "SplitVectorTree",
   function(splvec) {
     ## use this cause it does deuniqify
     c(
       list(vapply(splvec, first_spl_name, "")),
       ## ignore first name of last branch, we use name from first branch for matching here
-      get_names_list(SplitVector(lst = splvec[[length(splvec)]][-1]))
+      get_anchors_list(SplitVector(lst = splvec[[length(splvec)]][-1]))
     )
   }
 )
 
-#' @rdname int_methods
+#' @rdname get_anchors_list
 #' @export
 setMethod(
-  "get_names_list", "Split",
+  "get_anchors_list", "Split",
   function(splvec) first_spl_name(splvec)
 )
 
-
-get_names_list_old <- function(splvec) {
-  if (is(splvec, "PreDataTableLayouts")) {
-    splvec <- rlayout(splvec)
-  }
-
-  unlist(lapply(splvec, function(x) {
-    if (is(x, "SplitVectorTree")) {
-      c(
-        ## use this cause it does deuniqify
-        list(vapply(x, first_spl_name, "")),
-        ## ignore first name of last branch, we use name from first branch for matching here
-        get_names_list(x[[length(x)]][-1])
-      )
-    } else if (is(x, "SplitVector")) {
-      get_names_list(x)
-    } else { ## Split case
-      first_spl_name(x)
-    }
-  }), recursive = FALSE)
-}
-
 find_branch_pos2 <- function(splvec, at_sibling, preceding = NULL) {
-  nmlst <- get_names_list(splvec)
+  nmlst <- get_anchors_list(splvec)
 
   atsib <- deuniqify_path_elements(at_sibling)
   dup_pos <- extract_dup_pos(at_sibling)
@@ -328,7 +327,9 @@ branch_above_split <- function(splvec, newspl, at_sibling,
   len <- length(splvec)
 
   endontree <- is(lastel, "SplitVectorTree")
-  sib_matches <- is.null(at_sibling) || at_sibling %in% vapply(lstlastel, first_spl_name, "")
+  ## counting deduplications already happened in find_branch_pos2, so we just need
+  ## to ensure they match here, which they already should
+  sib_matches <- is.null(at_sibling) || deuniqify_path_elements(at_sibling) %in% vapply(lstlastel, first_spl_name, "")
   if (endontree && sib_matches) {
     splvec[[branch_pos]] <- SplitVectorTree(lst = c(lastel, list(SplitVector(newspl))))
   } else if (has_force_pag(lastel)) {
@@ -377,11 +378,13 @@ setMethod(
       } else if (is(oldval, "SplitVector")) {
         tmp <- branch_above_split(oldval, spl, at_sibling)
       } else {
+        # nocov start
         stop(
           "split_rows failed with at_sibling ['", at_sibling, "'] and oldval class '",
           class(oldval),
           "'. This should not happen, contact the maintainer."
-        ) # nocov
+        )
+        # nocov end
       }
     } else if (pos <= length(lyt)) {
       tmp <- split_rows(lyt[[pos]], spl, pos, cmpnd_fun = cmpnd_fun, at_sibling = at_sibling)
@@ -397,10 +400,6 @@ setMethod(
     lyt
   }
 )
-
-is_analysis_spl <- function(spl) {
-  is(spl, "VAnalyzeSplit") || is(spl, "AnalyzeMultiVars")
-}
 
 ## note "pos" is ignored here because it is for which nest-chain
 ## spl should be placed in, NOT for where in that chain it should go
@@ -531,10 +530,12 @@ setMethod(
 setMethod(
   "cmpnd_last_rowsplit", "ANY",
   function(lyt, spl, constructor) {
+    # nocov start
     stop(
       "nope. can't do cmpnd_last_rowsplit to that (",
       class(lyt), "). contact the maintainer."
-    ) # nocov
+    )
+    # nocov end
   }
 )
 
@@ -601,9 +602,11 @@ setMethod(
 setMethod(
   "split_cols", "ANY",
   function(lyt, spl, pos) {
+    # nocov start
     stop(
       "nope. can't add a col split to that (", class(lyt),
       "). contact the maintainer."
-    ) # nocov
+    )
+    # nocov end
   }
 )

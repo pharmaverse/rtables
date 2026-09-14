@@ -211,7 +211,7 @@ test_that("intermediate nesting works correctly", {
   tbl4b <- build_table(lyt4b, ex_adsl)
   expect_identical(tbl4, tbl4b)
 
-  ## Useful error for bad at_sibling
+  ## Useful errors for bad at_sibling
   expect_error(
     {
       basic_table() |>
@@ -227,14 +227,15 @@ test_that("intermediate nesting works correctly", {
   expect_error(
     {
       basic_table() |>
-        split_cols_by("ARM") |>
-        split_rows_by("STRATA1") |>
-        split_rows_by("SEX", split_fun = keep_split_levels(c("F", "M"))) |>
+        split_rows_by("ARM", page_by = TRUE) |>
+        split_rows_by("STRATA1", page_by = TRUE) |>
+        split_rows_by("SEX") |>
         analyze("AGE") |>
-        split_rows_by("BMRKR2", at_sibling = "whaaaaat?")
+        split_rows_by("RACE", at_sibling = "STRATA1")
     },
-    "Unable to find structural element"
+    "at_sibling pointed to a split with forced pagination"
   )
+
 
   path_count <- function(tt, pth) length(tt_normalize_row_path(tt, pth))
   keep_2_levels <- function(varnm, dat = ex_adsl) keep_split_levels(levels(dat[[varnm]])[1:2])
@@ -300,26 +301,67 @@ test_that("intermediate nesting works correctly", {
     0L
   )
 
-  ## this layout is completely ridiculous but it exercises the index resolution in
+  lyt_other <- basic_table() |>
+      split_rows_by("STRATA1") |>
+      split_rows_by("SEX") |>
+      analyze("AGE") |>
+      split_rows_by("RACE", at_sibling = "SEX") |>
+      split_rows_by("BMRKR2") |>
+      analyze("AGE") |>
+      analyze("BMRKR1", at_sibling = "BMRKR2")
+
+  expect_identical(
+    get_anchors_list(lyt_other),
+    list(
+      list(
+        "STRATA1",
+        c("SEX", "RACE"),
+        c("BMRKR2", "BMRKR1")
+      )
+    )
+  )
+
+  ## these layouts are completely ridiculous but they exercise the index resolution in
   ## anchor lookup
-  ##
-  ## RACE (xx) masked by unnested splitting below
-  ## SEX -> | RACE -> STRATA1 -> | RACE (2)
-  ##        |--------------------| BMRKR2 -> AGE
-  ##        | COUNTRY -> BMRKR1
   ##
   ## gotta catch them all
 
   clowndat <- subset(ex_adsl, RACE %in% levels(RACE)[1:2])
   clowndat$RACE <- factor(clowndat$RACE)
-  clown_shoes <- basic_table() |>
+
+  clown_base <- basic_table() |>
     analyze("RACE") |>
     split_rows_by("SEX", split_fun = keep_2_levels("SEX")) |>
     split_rows_by("RACE") |>
     split_rows_by("STRATA1", split_fun = keep_2_levels("STRATA1")) |>
     analyze("RACE") |>
     split_rows_by("BMRKR2", split_fun = keep_2_levels("BMRKR2"), at_sibling = "RACE[2]") |>
-    analyze("AGE") |>
+    analyze("AGE")
+
+  expect_identical(
+    get_anchors_list(clown_base),
+    list(
+        "RACE",
+        list(
+            "SEX",
+            "RACE",
+            "STRATA1",
+            c(
+              "RACE",
+              "BMRKR2"
+            ),
+            "AGE"
+        )
+    )
+  )
+            
+
+  ## RACE (xx) masked by unnested splitting below
+  ## SEX -> | RACE -> STRATA1 -> | RACE (2)
+  ##        |--------------------| BMRKR2 -> AGE
+  ##        | COUNTRY -> BMRKR1
+
+  clown_shoes <- clown_base |>
     split_rows_by("COUNTRY",
       split_fun = keep_2_levels("COUNTRY"),
       at_sibling = "RACE"
@@ -350,6 +392,40 @@ test_that("intermediate nesting works correctly", {
     path_count(tbl_clown, c("COUNTRY", "*")),
     0L
   )
+
+  ## RACE (xx) masked by unnested splitting below
+  ## SEX -> | RACE -> STRATA1 -> | RACE (2)
+  ##                             | BMRKR2 -> AGE
+  ##                             | COUNTRY -> BMRKR1
+  ##
+
+  clown_shoes2 <- clown_base |>
+    split_rows_by("COUNTRY",
+      split_fun = keep_2_levels("COUNTRY"),
+      at_sibling = "RACE[2]"
+    ) |>
+    analyze("BMRKR1")
+
+  tbl_clown2 <- build_table(clown_shoes2, clowndat)
+
+  expect_equal(
+    path_count(tbl_clown2, c("SEX", "*", "COUNTRY", "*")),
+    0L
+  )
+
+  expect_equal(
+    path_count(tbl_clown2, c("SEX", "*", "RACE", "*", "STRATA1", "*", "COUNTRY", "*")),
+    16L
+  )
+
+  ## first RACE analysis is masked, so it can only find 2 (split after SEX and
+  ## analyze after STRATA1)
+  expect_error(
+    clown_base |>
+      split_rows_by("COUNTRY", at_sibling = "RACE[3]"),
+    regexp = "Found only 2 eligible elements named 'RACE', but at_sibling was 'RACE\\[3\\]'"
+  )
+
 
   ## "Full On" INSANEO STYLE
   ##  STRATA1 -> SEX -> | AGE
