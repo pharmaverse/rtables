@@ -33,7 +33,7 @@ Authors:
 
 Other contributors:
 \itemize{
-  \item Daniel Saban<U+00E9>s Bov<U+00E9> \email{daniel.sabanes_bove@rconis.com} [contributor]
+  \item Daniel Sabanés Bové \email{daniel.sabanes_bove@rconis.com} [contributor]
   \item Maximilian Mordig \email{maximilian_oliver.mordig@roche.com} [contributor]
   \item Abinaya Yogasekaram \email{ayogasek@gmail.com} (\href{https://orcid.org/0009-0005-2083-1105}{ORCID}) [contributor]
   \item David Munoz Tord \email{david.munoztord@mailbox.org} [contributor]
