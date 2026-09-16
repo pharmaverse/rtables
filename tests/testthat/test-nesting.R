@@ -311,13 +311,11 @@ test_that("intermediate nesting works correctly", {
     analyze("BMRKR1", at_sibling = "BMRKR2")
 
   expect_identical(
-    get_anchors_list(lyt_other),
+    get_anchor_list(lyt_other),
     list(
-      list(
-        "STRATA1",
-        c("SEX", "RACE"),
-        c("BMRKR2", "BMRKR1")
-      )
+      "STRATA1",
+      c("SEX", "RACE"),
+      c("BMRKR2", "BMRKR1")
     )
   )
 
@@ -339,19 +337,17 @@ test_that("intermediate nesting works correctly", {
     analyze("AGE")
 
   expect_identical(
-    get_anchors_list(clown_base),
+    get_anchor_list(clown_base),
     list(
       "RACE",
-      list(
-        "SEX",
+      "SEX",
+      "RACE",
+      "STRATA1",
+      c(
         "RACE",
-        "STRATA1",
-        c(
-          "RACE",
-          "BMRKR2"
-        ),
-        "AGE"
-      )
+        "BMRKR2"
+      ),
+      "AGE"
     )
   )
 
@@ -426,6 +422,33 @@ test_that("intermediate nesting works correctly", {
     regexp = "Found only 2 eligible elements named 'RACE', but at_sibling was 'RACE\\[3\\]'"
   )
 
+  clown_nose <- basic_table() |>
+    split_rows_by("STRATA1", split_fun = keep_2_levels("RACE")) |>
+    split_rows_by("STRATA2", split_fun = keep_2_levels("STRATA2")) |>
+    analyze("ARM") |>
+    split_rows_by("SEX", split_fun = keep_2_levels("SEX")) |>
+    split_rows_by("RACE") |>
+    split_rows_by("STRATA1", split_fun = keep_2_levels("STRATA1")) |>
+    analyze("BMRKR1") |>
+    split_rows_by("BMRKR2", split_fun = keep_2_levels("BMRKR2"), at_sibling = "RACE") |>
+    split_rows_by("COUNTRY", split_fun = keep_2_levels("COUNTRY")) |>
+    analyze("AGE") |>
+    split_rows_by("SITEID", split_fun = drop_split_levels, at_sibling = "RACE") |>
+    split_rows_by("BEP01FL") |>
+    analyze("AGE")
+
+  ## this ensures STRATA2 is masked, ie only the base split of previous
+  ## top-level structures are available
+  expect_identical(
+    get_anchor_list(clown_nose),
+    list(
+      "STRATA1",
+      "SEX",
+      c("RACE", "BMRKR2", "SITEID"),
+      "BEP01FL",
+      "AGE"
+    )
+  )
 
   ## "Full On" INSANEO STYLE
   ##  STRATA1 -> SEX -> | AGE

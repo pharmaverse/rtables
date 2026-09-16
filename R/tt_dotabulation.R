@@ -905,12 +905,12 @@ setMethod(
           alt_df = alt_df,
           alt_df_full = alt_df_full,
           splvec = splvecii,
-          name = obj_name(unlist(splvecii, recursive = TRUE)[[1]]), ## XXX I think this is wrong
+          name = obj_name(unlist(splvecii, recursive = TRUE)[[1]]),
           make_lrow = make_lrow,
           cinfo = cinfo,
           baselines = baselines,
           spl_context = spl_context,
-          no_outer_tbl = TRUE # XXX is this always right? I think so
+          no_outer_tbl = TRUE
         )
       }
     )
@@ -1242,7 +1242,7 @@ recursive_applysplit <- function(df,
               cvar = cvar,
               baselines = baselines,
               spl_context = spl_context,
-              no_outer_tbl = TRUE, ## XXX is this always right???? no_outer_tbl,
+              no_outer_tbl = TRUE,
               parent_sect_split = parent_sect_split
             )
           }

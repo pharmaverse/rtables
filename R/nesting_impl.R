@@ -209,61 +209,70 @@ extract_dup_pos <- function(str) {
 #'   split_rows_by("BMRKR1", at_sibling = "RACE") |>
 #'   analyze("AGE")
 #'
-#' get_anchors_list(lyt)
+#' get_anchor_list(lyt)
 #'
 #' @export
-setGeneric("get_anchors_list", function(splvec) standardGeneric("get_anchors_list"))
+setGeneric("get_anchor_list", function(splvec) standardGeneric("get_anchor_list"))
 
-#' @rdname get_anchors_list
+#' @rdname get_anchor_list
 #' @export
 setMethod(
-  "get_anchors_list", "PreDataTableLayouts",
+  "get_anchor_list", "PreDataTableLayouts",
   function(splvec) {
-    get_anchors_list(rlayout(splvec))
+    get_anchor_list(rlayout(splvec))
   }
 )
 
-#' @rdname get_anchors_list
+#' @rdname get_anchor_list
 #' @export
 setMethod(
-  "get_anchors_list", "PreDataRowLayout",
+  "get_anchor_list", "PreDataRowLayout",
   function(splvec) {
-    lapply(splvec, get_anchors_list)
+    unlist(
+      c(
+        lapply(
+          splvec[-length(splvec)],
+          first_spl_name
+        ),
+        lapply(splvec[[length(splvec)]], get_anchor_list)
+      ),
+      recursive = FALSE
+    )
   }
 )
 
-#' @rdname get_anchors_list
+#' @rdname get_anchor_list
 #' @export
 setMethod(
-  "get_anchors_list", "SplitVector",
+  "get_anchor_list", "SplitVector",
   function(splvec) {
-    unlist(lapply(splvec, get_anchors_list), recursive = FALSE)
+    unlist(lapply(splvec, get_anchor_list), recursive = FALSE)
   }
 )
 
-#' @rdname get_anchors_list
+#' @rdname get_anchor_list
 #' @export
 setMethod(
-  "get_anchors_list", "SplitVectorTree",
+  "get_anchor_list", "SplitVectorTree",
   function(splvec) {
     ## use this cause it does deuniqify
     c(
       list(vapply(splvec, first_spl_name, "")),
       ## ignore first name of last branch, we use name from first branch for matching here
-      get_anchors_list(SplitVector(lst = splvec[[length(splvec)]][-1]))
+      get_anchor_list(SplitVector(lst = splvec[[length(splvec)]][-1]))
     )
   }
 )
 
-#' @rdname get_anchors_list
+#' @rdname get_anchor_list
 #' @export
 setMethod(
-  "get_anchors_list", "Split",
+  "get_anchor_list", "Split",
   function(splvec) first_spl_name(splvec)
 )
 
 find_branch_pos2 <- function(splvec, at_sibling, preceding = NULL) {
-  nmlst <- get_anchors_list(splvec)
+  nmlst <- get_anchor_list(splvec)
 
   atsib <- deuniqify_path_elements(at_sibling)
   dup_pos <- extract_dup_pos(at_sibling)
