@@ -1,5 +1,5 @@
 ---
-title: "Introductory rtables - Facet And Analysis Nesting"
+title: "Introductory `rtables` - Facet And Analysis Nesting"
 author: "Gabriel Becker"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -38,6 +38,15 @@ column structure, or both; or combinations of all three of these.
 
 We achieve all of these by leveraging *nesting* of layout instructions.
 
+Throughout this vignette we will use a custom split function (`keep_2_levels`)
+for table brevity, defined as follows:
+
+```{r}
+keep_2_levels <- function(varnm, dat = ex_adsl) {
+  keep_split_levels(levels(dat[[varnm]])[1:2])
+}
+```
+
 # Nesting
 
 *Nesting* is how we talk about *where* a layout instruction fits with
@@ -59,31 +68,384 @@ library(rtables)
 lyt <- basic_table() |>
   split_cols_by("ARM") |>
   split_cols_by("STRATA1") |>
-  split_rows_by("SEX") |>
-  split_rows_by("BMRKR2") |>
+  split_rows_by("SEX", split_fun = keep_2_levels("SEX")) |>
+  split_rows_by("BMRKR2", split_fun = keep_2_levels("BMRKR2")) |>
   analyze("AGE")
-build_table(lyt, ex_adsl)
+table_structure(build_table(lyt, ex_adsl))
 ```
 
 When `analyze` instructions are 'nested within' another `analyze`, the
 analyses are bundled into a 'multi-analysis' parent structure. This
-parent structure as a whole, then, has the nesting behavior that an
+parent structure as a whole, then, has the nesting behavior that a
 single `analyze` call would have in its place.
 
 ```{r}
 lyt2 <- basic_table() |>
   split_cols_by("ARM") |>
   split_cols_by("STRATA1") |>
-  split_rows_by("SEX") |>
-  split_rows_by("BMRKR2") |>
+  split_rows_by("SEX", split_fun = keep_2_levels("SEX")) |>
+  split_rows_by("BMRKR2", split_fun = keep_2_levels("BMRKR2")) |>
   analyze("AGE") |>
   analyze("BMRKR1")
-head(build_table(lyt2, ex_adsl), 32)
+table_structure(build_table(lyt2, ex_adsl))
 ```
-
 
 By default:
 
 - `analyze` calls nest within the most recently preceding
   `split_rows_by` or instruction
   - multiple `analyze` calls that nest within the 
+
+## Creating 'Multi-Section' Tables With `nested = FALSE`
+
+We often want to create tables with rows grouped into two or more
+logical or analytical sections. For example we might want to analyze
+`AGE` overall, then separately by `SEX` and by `RACE`. We can do this by:
+
+1. `analyze`ing `AGE`, then
+2. splitting by `SEX` and `analyze`ing `AGE`, and finally
+3. splitting by `RACE` and `analyze`ing `AGE` again.
+
+We will start each section after the first with `nested = FALSE` to
+delineate it from the previous portion of the layout.
+
+NOTE: while we will do it explicitly for illustration purposes, any
+`split_rows_by` layout instruction that follows an `analyze` 
+defaults to `nested = FALSE`.
+
+Thus we can create our table with the code below:
+
+Note: we set a top level section divider to make our different
+sections concrete; section dividers will be covered in a later part of
+this guide and can be taken as is for now.
+
+```{r}
+trim_adsl <- subset(ex_adsl, RACE %in% levels(ex_adsl$RACE)[1:3] & SEX %in% c("F", "M"))
+trim_adsl$RACE <- factor(trim_adsl$RACE)
+trim_adsl$SEX <- factor(trim_adsl$SEX)
+
+nice_mean <- function(x) {
+  in_rows("Average Age" = mean(x), .formats = list("Average Age" = "xx.x"))
+}
+
+lyt3 <- basic_table(top_level_section_div = "-") |>
+  split_cols_by("ARM") |>
+  analyze("AGE", afun = nice_mean) |>
+  split_rows_by("SEX", nested = FALSE) |>
+  analyze("AGE", afun = nice_mean) |>
+  split_rows_by("RACE", nested = FALSE) |>
+  analyze("AGE", afun = nice_mean)
+
+tbl3 <- build_table(lyt3, trim_adsl)
+tbl3
+```
+
+We see three clear top-level 'sections' of our table in row-space, as
+desired.  Contrast this with our result without `nested = FALSE` (and
+with the first two `analyze` calls replaced with
+`summarize_row_groups`:
+
+
+```{r}
+nice_mean_cfun <- function(x, labelstr) {
+  lbl <- paste0(labelstr, " (Ave. Age)")
+  in_rows(mean(x), .labels = lbl, .formats = "xx.x")
+}
+
+lyt3b <- basic_table(top_level_section_div = "-") |>
+  split_cols_by("ARM") |>
+  summarize_row_groups("AGE", cfun = nice_mean_cfun) |>
+  split_rows_by("SEX", split_fun = keep_2_levels("SEX")) |>
+  summarize_row_groups("AGE", cfun = nice_mean_cfun) |>
+  split_rows_by("RACE", split_fun = keep_2_levels("RACE")) |>
+  analyze("AGE", afun = nice_mean)
+
+tbl3b <- build_table(lyt3b, trim_adsl)
+head(tbl3b)
+```
+
+Here the faceting on `RACE` occurs *nested within* the faceting on
+`SEX`, whereas above it occurs *alongside* it.
+
+### A Brief Note On Removing Sections
+
+Sometimes we will receive a template script that does more than we
+want, but is close to meeting our needs. For example, imagine we
+wanted the above table (non-nested version) but only wanted the
+overall and race portions, removing the age within gender analysis.
+
+We do this by simply identifying all of the layout instructions
+corresponding to that portion of the table and removing them. Our top
+level section dividers can help us reason about this, and can be added
+to the template if they were not there originally.
+
+In our case, the instructions for our section to remove are the
+`split_rows_by("SEX", nested = FALSE)`, and directly following
+`analyze("AGE")` calls. By starting with our code above and removing
+those, we would get our desired table:
+
+
+```{r}
+lyt3c <- basic_table(top_level_section_div = "-") |>
+  split_cols_by("ARM") |>
+  analyze("AGE", afun = nice_mean) |>
+  ## split_rows_by("SEX", nested = FALSE) |>
+  ## analyze("AGE", afun = nice_mean) |>
+  split_rows_by("RACE", nested = FALSE) |>
+  analyze("AGE", afun = nice_mean)
+
+tbl3c <- build_table(lyt3c, trim_adsl)
+tbl3c
+```
+
+When performing this kind of layout pruning in the wild, it is
+important to remember that `split_rows_by` calls that follow `analyze`
+calls default to `nested = FALSE`, even if that is not made explicit
+in the template script you are starting from.
+
+It is also important to not remove all `analyze` call(s) nested within
+any series of row faceting (`split_rows_by*` calls), as this will
+result in an degenerate (invalidly structured) table which could have
+undefined behavior when passed to some other aspects of the `rtables`
+and `formatters` APIs.
+
+## Intermediate Nesting
+
+As of `rtables` `0.7.0`, we can declare *intermediate* nesting, rather
+than simply full -- the previous and now default behavior when `nested
+= TRUE` -- and no -- the `nested = FALSE` behavior -- nesting.
+
+We do this via the new `at_sibling` parameter the `split_rows_by*` and
+`analyze*` families of layout functions now accept. `at_sibling` allows
+us to specify the *nesting anchor* for a row split or analyze directive;
+when we do so, the table resulting from our new directive will appear
+*as a direct sibling* to that resulting from our anchor in the
+created table.
+
+
+Consider where our `BMRKR2` analysis is placed in when using the
+following layouts to build tables:
+
+The default behavior:
+```{r}
+lyt4 <- basic_table() |>
+  split_cols_by("ARM") |>
+  split_rows_by("STRATA1", split_fun = keep_2_levels("STRATA1")) |>
+  split_rows_by("SEX", split_fun = keep_2_levels("SEX")) |>
+  analyze("AGE") |>
+  analyze("BMRKR2")
+
+build_table(lyt4, ex_adsl)
+```
+
+Anchoring the analysis on `"SEX"`:
+```{r}
+lyt4a <- basic_table() |>
+  split_cols_by("ARM") |>
+  split_rows_by("STRATA1", split_fun = keep_2_levels("STRATA1")) |>
+  split_rows_by("SEX", split_fun = keep_2_levels("SEX")) |>
+  analyze("AGE") |>
+  analyze("BMRKR2", at_sibling = "SEX", show_labels = "visible")
+
+build_table(lyt4a, ex_adsl)
+```
+
+Anchoring the analysis on `"STRATA1"`
+```{r}
+lyt4b <- basic_table() |>
+  split_cols_by("ARM") |>
+  split_rows_by("STRATA1", split_fun = keep_2_levels("STRATA1")) |>
+  split_rows_by("SEX", split_fun = keep_2_levels("SEX")) |>
+  analyze("AGE") |>
+  analyze("BMRKR2", at_sibling = "STRATA1", show_labels = "visible")
+
+build_table(lyt4b, ex_adsl)
+```
+
+Analysis is fully non-nested:
+```{r}
+lyt4c <- basic_table() |>
+  split_cols_by("ARM") |>
+  split_rows_by("STRATA1", split_fun = keep_2_levels("STRATA1")) |>
+  split_rows_by("SEX", split_fun = keep_2_levels("SEX")) |>
+  analyze("AGE") |>
+  analyze("BMRKR2", nested = FALSE, show_labels = "visible")
+
+build_table(lyt4c, ex_adsl)
+```
+
+Note that because our `STRATA` split is a top-level split, anchoring
+our analysis to it is equivalent to simply using `nested =
+FALSE`. While these result in identically-rendering tables, they will
+not if our current layout is placed under a new split, such as when we
+want the same table structure both globally and split by subgroups or
+parameters:
+
+
+
+Anchoring the analysis on `"STRATA1"`
+```{r}
+lyt4d <- basic_table() |>
+  split_cols_by("ARM") |>
+  split_rows_by("RACE", split_fun = keep_2_levels("RACE")) |>
+  split_rows_by("STRATA1", split_fun = keep_2_levels("STRATA1")) |>
+  split_rows_by("SEX", split_fun = keep_2_levels("SEX")) |>
+  analyze("AGE") |>
+  analyze("BMRKR2", at_sibling = "STRATA1", show_labels = "visible")
+
+build_table(lyt4d, ex_adsl)
+```
+
+Analysis is fully non-nested:
+```{r}
+lyt4c <- basic_table() |>
+  split_cols_by("ARM") |>
+  split_rows_by("RACE", split_fun = keep_2_levels("RACE")) |>
+  split_rows_by("STRATA1", split_fun = keep_2_levels("STRATA1")) |>
+  split_rows_by("SEX", split_fun = keep_2_levels("SEX")) |>
+  analyze("AGE") |>
+  analyze("BMRKR2", nested = FALSE, show_labels = "visible")
+
+build_table(lyt4c, ex_adsl)
+```
+
+Thus whether to use explicit anchoring to generate top-level sections
+is a trade-off between explicit clarity (`nested = FALSE`) and
+robustness to this sort of slotting the described structure into a
+larger table (`at_sibling = `).
+
+
+### Anchor Resolution
+
+Given a pre-existing layout, only certain elements are eligible to act
+as nesting anchors.  For clarity, we will use *element* to refer to
+any individual layout instruction that effect the resulting table
+row-structure (i.e., `split_rows_by*` and `analyze`); furthermore we
+will refer to an element named by `at_sibling` as the *anchor point*
+and an element placed via `at_sibling` as the *anchored element*. For
+convenience we will refer to elements which do not act as anchor
+points nor anchored elements as *standard elements*.
+
+Using this terminology, the general rules are as follows:
+
+
+1. Elements nested within previous top-level elements are *not eligible*,
+2. Elements nested within previous anchor points are *not eligible*,
+3. For each previous anchor point, elements nested within anchored
+   elements other than the most recently placed one are *not
+   eligible*.
+
+
+We can re-frame this into an algorithm to determine the list of
+eligible elements like so:
+
+1. All previous top-level elements,
+2. the current top-level element and all standard elements nested
+   directly within it until the first anchor point,
+3. the anchor point and all of its anchored elements,
+4. all standard elements nested within the most recent of this anchor
+   point's anchored elements, until the next anchor point,
+5. repeat (3)-(4) until no more anchor points along the path exist.
+
+Viewed a certain way, this algorithm defines a horizon along the edge
+of the branching structure defined by a layout.
+
+To illustrate these rules, and this concept of a horizon, consider the
+following illustrative - if analytically nonsensical - complex row
+layout:
+
+
+```{r}
+complex_lyt <- basic_table() |>
+  split_rows_by("STRATA1", split_fun = keep_2_levels("RACE")) |>
+  split_rows_by("STRATA2", split_fun = keep_2_levels("STRATA2")) |>
+  analyze("ARM") |>
+  split_rows_by("SEX", split_fun = keep_2_levels("SEX")) |>
+  split_rows_by("RACE", split_fun = keep_2_levels("RACE")) |>
+  split_rows_by("STRATA1", split_fun = keep_2_levels("STRATA1")) |>
+  analyze("BMRKR1") |>
+  split_rows_by("BMRKR2", split_fun = keep_2_levels("BMRKR2"), at_sibling = "RACE") |>
+  split_rows_by("COUNTRY", split_fun = keep_2_levels("COUNTRY")) |>
+  analyze("AGE") |>
+  split_rows_by("SITEID", split_fun = drop_split_levels, at_sibling = "RACE") |>
+  split_rows_by("BEP01FL", split_fun = keep_2_levels("BEP01FL")) |>
+  analyze("AGE")
+```
+
+We can get the list of eligible anchor points via `get_anchor_list`:
+
+
+```{r}
+get_anchor_list(complex_lyt)
+```
+
+We can see that our first `STRATA1` split is eligible, but the
+`STRATA2` split nested within it and the `ARM` analysis nested within
+that are not. Then, for the current top-level structure, `SEX`(std element)
+`RACE`(anchor pt), `BMRKR2` (anchored element), `SITEID` (anchored element),
+`BEP01FL` (std element), and `AGE` (std element) are eligible.
+
+
+### Order Of Intermediate Nesting Placement
+
+The rules above imply a particular order required to place
+intermediately nested elements anchored to different points within the
+same top-level structure:
+
+*When you intend to anchor multiple points to different elements in a
+sequence of splits, place them in order from most deeply nested anchor
+point to least deeply nested anchor point.*
+
+
+We can see this in practice, consider the following sequence of
+splitting layout instructions (ending, as always, with an `analyze`):
+
+```{r}
+lyt_stack <- basic_table() |>
+  split_rows_by("STRATA1", split_fun = keep_2_levels("STRATA1")) |>
+  split_rows_by("STRATA2", split_fun = keep_2_levels("STRATA2")) |>
+  split_rows_by("RACE", split_fun = keep_2_levels("RACE")) |>
+  split_rows_by("SEX", split_fun = keep_2_levels("SEX")) |>
+  analyze("AGE")
+```
+
+Now suppose we want to place additional `analyze`'s as siblings to the
+`STRATA2` and `RACE` splits.
+
+If we do so in that order, our first placement will work:
+
+```{r}
+lyt_stack2 <- lyt_stack |>
+  analyze("BMRKR1", at_sibling = "STRATA2")
+```
+
+But we will get an error when attempting to anchor another `analyze` onto `RACE`:
+
+```{r, error = TRUE}
+lyt_stack2 |>
+  analyze("BMRKR2", at_sibling = "RACE")
+```
+
+If, however, we anchor our `BMRKR2` analyze to `RACE` *first*, and
+then place our `BMRKR1` analyze to `STRATA2`, we can achieve both
+placements:
+
+
+```{r}
+lyt_stack3 <- lyt_stack |>
+  analyze("BMRKR2", at_sibling = "RACE", show_labels = "visible") |>
+  analyze("BMRKR1", at_sibling = "STRATA2", show_labels = "visible")
+```
+
+
+Thus we can build the (somewhat lengthy) desired table:
+
+```{r}
+build_table(lyt_stack3, ex_adsl)
+```
+
+Phrased a different way, placing an anchored element at an anchor
+point diverts the stream of eligible nested elements after that point
+from those nested within the anchor point, or previously placed
+anchored elements, to those nested within the newly placed anchored
+element.

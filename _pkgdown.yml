@@ -158,6 +158,7 @@ reference:
     - add_overall_col
     - add_existing_table
     - formatters::table_inset
+    - get_anchor_list
 
   - title: Tabulation Utility Functions
     desc: Functions that are useful to be used with the `analyze*` functions.
