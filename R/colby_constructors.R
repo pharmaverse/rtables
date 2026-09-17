@@ -196,7 +196,7 @@ setMethod(
 #' anchor* that your new `split_rows_by*` or `analyze*` directive
 #' should be placed as a sibling to.  The lookup for this anchor
 #' occurs *only in the currently active top-level nesting stack*,
-#' meaning the directives splitting directives that have occurred since
+#' meaning the directives that have occurred since
 #' the last split or analysis with `nested == FALSE`.
 #'
 #' Furthermore, resolution occurs against the first element of each
@@ -224,7 +224,7 @@ setMethod(
 #' `"<name>[i]"` anchors, it does so **within the set of available
 #' anchors**, which can be counter-intuitive. It is strongly suggested
 #' that the `parent_name` and `table_names` argument(s) of
-#' `split_rows_by*` and `analyze` to prevent the need for
+#' `split_rows_by*` and `analyze` be used to prevent the need for
 #' this. `at_sibling` will resolve to table names overridden in this
 #' manner.
 #'

@@ -152,7 +152,7 @@ gen_args <- function(df, alt_counts_df, spl, pos, tt, tr, verbose, colwidths, ob
 #' analyzing a single variable.
 #' @param at_sibling (`character(1)` or `NULL`)\cr If non-null, a preceding
 #'   split or analyze to anchor this instruction to as a direct sibling. Cannot
-#'   select an instruction that is downstream of a point a previously used
+#'   select an instruction that is downstream of a point where a previously used
 #'   anchor (See Nesting Anchor Resolution for details).
 #'
 #' @inherit gen_args return
