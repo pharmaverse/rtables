@@ -50,7 +50,7 @@ underneath analyses, which is not allowed.}
 
 \item{at_sibling}{(\code{character(1)} or \code{NULL})\cr If non-null, a preceding
 split or analyze to anchor this instruction to as a direct sibling. Cannot
-select an instruction that is downstream of a point a previously used
+select an instruction that is downstream of a point where a previously used
 anchor (See Nesting Anchor Resolution for details).}
 
 \item{child_labels}{(\code{string})\cr the display behavior for the labels (i.e. label rows) of the children of this
@@ -82,7 +82,7 @@ When \code{nested} is \code{TRUE}, \code{at_sibling} allows you to set a \emph{n
 anchor} that your new \verb{split_rows_by*} or \verb{analyze*} directive
 should be placed as a sibling to.  The lookup for this anchor
 occurs \emph{only in the currently active top-level nesting stack},
-meaning the directives splitting directives that have occurred since
+meaning the directives that have occurred since
 the last split or analysis with \code{nested == FALSE}.
 
 Furthermore, resolution occurs against the first element of each
@@ -109,7 +109,7 @@ Finally, while \code{at_sibling} does support de-duplication of
 \code{"<name>[i]"} anchors, it does so \strong{within the set of available
 anchors}, which can be counter-intuitive. It is strongly suggested
 that the \code{parent_name} and \code{table_names} argument(s) of
-\verb{split_rows_by*} and \code{analyze} to prevent the need for
+\verb{split_rows_by*} and \code{analyze} be used to prevent the need for
 this. \code{at_sibling} will resolve to table names overridden in this
 manner.
 }

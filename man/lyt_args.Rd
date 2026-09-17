@@ -203,7 +203,7 @@ Cannot be used simultaneously with \code{format}. Cannot be used if \code{format
 
 \item{at_sibling}{(\code{character(1)} or \code{NULL})\cr If non-null, a preceding
 split or analyze to anchor this instruction to as a direct sibling. Cannot
-select an instruction that is downstream of a point a previously used
+select an instruction that is downstream of a point where a previously used
 anchor (See Nesting Anchor Resolution for details).}
 }
 \value{
