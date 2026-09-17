@@ -110,7 +110,7 @@ We will start each section after the first with `nested = FALSE` to
 delineate it from the previous portion of the layout.
 
 NOTE: while we will do it explicitly for illustration purposes, any
-`split_rows_by` layout instruction that follows an `analyze` is
+`split_rows_by` layout instruction that follows an `analyze` 
 defaults to `nested = FALSE`.
 
 Thus we can create our table with the code below:
