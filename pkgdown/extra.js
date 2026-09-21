@@ -7,12 +7,13 @@
 // is <= the current version. Versions older than the first available report do
 // not get a link at all.
 //
-// To add a report for a future release, just append its version to REPORTS
-// (keep the list sorted ascending) -- no other change is needed.
+// To add a report for a future release, add its version to REPORTS. Order does
+// not matter. Also update the static href in _pkgdown.yml, which is what readers
+// with JavaScript disabled get.
 (function () {
   "use strict";
 
-  // Available validation reports, ascending. Only these versions have a report.
+  // Versions that have a validation report. Order does not matter.
   var REPORTS = ["0.6.16"];
   var REPORT_BASE =
     "https://pharmar.github.io/pharmapkgs/src/contrib/Meta/validation_report_rtables_v";
@@ -36,11 +37,13 @@
   }
 
   // Newest report version that is <= the current version, or null if none.
+  // Takes the maximum rather than the last match, so REPORTS need not be sorted.
   function pickReport(current) {
     var cur = parseVersion(current);
     var chosen = null;
     for (var i = 0; i < REPORTS.length; i++) {
-      if (compareVersions(cur, parseVersion(REPORTS[i])) >= 0) {
+      if (compareVersions(cur, parseVersion(REPORTS[i])) < 0) continue;
+      if (chosen === null || compareVersions(parseVersion(REPORTS[i]), parseVersion(chosen)) > 0) {
         chosen = REPORTS[i];
       }
     }
@@ -74,12 +77,26 @@
   }
 
   // Find the "Validation report" anchor by its (case-insensitive) link text.
+  // Scoped to the navbar so page content using the same wording is left alone.
   function findLink() {
-    var anchors = document.querySelectorAll("a");
-    for (var i = 0; i < anchors.length; i++) {
-      if (anchors[i].textContent.trim().toLowerCase() === "validation report") {
-        return anchors[i];
+    var roots = [document.querySelector(".navbar"), document.querySelector("header")];
+    for (var r = 0; r < roots.length; r++) {
+      if (!roots[r]) continue;
+      var anchors = roots[r].querySelectorAll("a");
+      for (var i = 0; i < anchors.length; i++) {
+        if (anchors[i].textContent.trim().toLowerCase() === "validation report") {
+          return anchors[i];
+        }
       }
+    }
+    return null;
+  }
+
+  // Nearest ancestor <li>, or null. Stands in for Element.closest(), which the
+  // rest of this file's ES5 target does not assume.
+  function closestListItem(el) {
+    for (var node = el; node; node = node.parentNode) {
+      if (node.nodeName && node.nodeName.toLowerCase() === "li") return node;
     }
     return null;
   }
@@ -97,8 +114,8 @@
       link.setAttribute("href", REPORT_BASE + report + ".html");
     } else {
       // No report for versions older than the first available one: drop the item.
-      var li = link.closest("li");
-      (li || link).remove();
+      var target = closestListItem(link) || link;
+      if (target.parentNode) target.parentNode.removeChild(target);
     }
   }
 
