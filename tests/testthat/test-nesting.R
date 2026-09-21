@@ -241,7 +241,6 @@ test_that("intermediate nesting works correctly", {
   )
 
 
-
   ## even though this doesn't make a ton of sense, as the correct thing is for
   ## BMRKR2's at_sibling to also be "SEX", as that is the anchor point for the
   ## tree it (and RACE) is appended to,
@@ -354,7 +353,7 @@ test_that("intermediate nesting works correctly", {
   )
 
 
-  ## RACE 
+  ## RACE
   ## SEX -> | RACE (2) -> STRATA1 -> | RACE (3)
   ##        |------------------------| BMRKR2 -> AGE
   ##        | COUNTRY -> BMRKR1
@@ -416,7 +415,7 @@ test_that("intermediate nesting works correctly", {
     16L
   )
 
-  ## 
+  ##
   expect_error(
     clown_base |>
       split_rows_by("COUNTRY", at_sibling = "RACE[4]"),
@@ -453,7 +452,8 @@ test_that("intermediate nesting works correctly", {
 
   expect_identical(
     vars_in_layout(clown_nose),
-    c("STRATA1",
+    c(
+      "STRATA1",
       "STRATA2",
       "ARM",
       "SEX",
@@ -463,7 +463,8 @@ test_that("intermediate nesting works correctly", {
       "COUNTRY",
       "AGE",
       "SITEID",
-      "BEP01FL")
+      "BEP01FL"
+    )
   )
 
   ## "Full On" INSANEO STYLE
@@ -569,18 +570,17 @@ test_that("intermediate nesting works correctly", {
 })
 
 test_that("at_sibling doesn't mash 2 analyzes up all willy nilly", {
-
   ## also ensures the anchor lookup behavior is correct when anchor
   ## pt is a previous root split (which it wasn't when the test
   ## was written x.x)
   lyt <- basic_table() |>
     split_rows_by("RACE", split_fun = keep_2_levels("RACE")) |>
-    split_rows_by("SEX" , split_fun = keep_2_levels("SEX")) |>
+    split_rows_by("SEX", split_fun = keep_2_levels("SEX")) |>
     analyze("AGE") |>
     analyze("BMRKR1", at_sibling = "RACE") |>
     analyze("AGE", at_sibling = "RACE")
 
-  tbl <- build_table(lyt, ex_adsl) 
+  tbl <- build_table(lyt, ex_adsl)
   expect_equal(path_count(tbl, c("root", "BMRKR1")), 1L)
   expect_equal(path_count(tbl, c("root", "AGE")), 1L)
   expect_equal(path_count(tbl, c("RACE", "*", "SEX", "*", "AGE")), 4L)
@@ -592,36 +592,36 @@ test_that("at_sibling doesn't mash 2 analyzes up all willy nilly", {
   ## old, ie non-at_sibling behavior remains unchanged
   ## TODO: deprecate this eventually now that we can have analyzes
   ## within row faceting (which we couldn't before, thus the creation
-  ## of the ma_bla_bla_bla parent table.  
+  ## of the ma_bla_bla_bla parent table.
   lyt2 <- basic_table() |>
     split_rows_by("RACE", split_fun = keep_2_levels("RACE")) |>
-    split_rows_by("SEX" , split_fun = keep_2_levels("SEX")) |>
+    split_rows_by("SEX", split_fun = keep_2_levels("SEX")) |>
     analyze("AGE") |>
     analyze("BMRKR1", at_sibling = "SEX") |>
     analyze("AGE", at_sibling = "SEX")
   tbl2 <- build_table(lyt2, ex_adsl)
   ## no surrounding multivar table
-  expect_equal(path_count(tbl2, c("RACE", "*", "ma_BMRKR1_AGE")), 0L)  
+  expect_equal(path_count(tbl2, c("RACE", "*", "ma_BMRKR1_AGE")), 0L)
 
-  lytbad <-  basic_table() |>
+  lytbad <- basic_table() |>
     split_rows_by("RACE", split_fun = keep_2_levels("RACE")) |>
-    split_rows_by("SEX" , split_fun = keep_2_levels("SEX")) |>
+    split_rows_by("SEX", split_fun = keep_2_levels("SEX")) |>
     analyze("AGE") |>
     analyze("BMRKR1", nested = FALSE) |>
     analyze("AGE")
   tblbad <- build_table(lytbad, ex_adsl)
   ## no surrounding multivar table
-  expect_equal(path_count(tblbad,  c("ma_BMRKR1_AGE", "*")), 2L)               
+  expect_equal(path_count(tblbad, c("ma_BMRKR1_AGE", "*")), 2L)
 })
 
 test_that("more than 2 analyzes get mashed together correctly", {
   lyt <- basic_table(show_colcounts = TRUE) |>
-  ## Column faceting
-  split_cols_by("ARM", ref_group = "A: Drug X") |>
-  analyze("AGE") |>
-  analyze("RACE") |>
-  analyze("BMRKR1") |>
-  analyze("BMRKR2")
+    ## Column faceting
+    split_cols_by("ARM", ref_group = "A: Drug X") |>
+    analyze("AGE") |>
+    analyze("RACE") |>
+    analyze("BMRKR1") |>
+    analyze("BMRKR2")
 
   tbl <- build_table(lyt, ex_adsl)
 

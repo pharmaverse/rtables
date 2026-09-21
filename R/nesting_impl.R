@@ -32,7 +32,7 @@ setMethod(
     l <- length(obj)
     if (length(obj[[l]]) > 0L && (
       (!is.null(at_sibling) && branch_is_root(obj, at_sibling)) ||
-      !.check_if_nest(obj, nested, for_analyze, at_sibling = at_sibling)
+        !.check_if_nest(obj, nested, for_analyze, at_sibling = at_sibling)
     )) {
       l <- l + 1L
     }
@@ -83,12 +83,13 @@ setMethod(
     if (length(obj) == 0) {
       NULL
     } else {
-        for (i in seq_along(obj)) {
-          cur <- obj[[i]]
-          if (is(cur, "SplitVectorTree"))
-            break;
+      for (i in seq_along(obj)) {
+        cur <- obj[[i]]
+        if (is(cur, "SplitVectorTree")) {
+          break
         }
-        last_rowsplit(cur)
+      }
+      last_rowsplit(cur)
     }
   }
 )
@@ -187,11 +188,12 @@ first_spl_forcepag <- function(splvectree) {
 }
 
 first_spl_anchor_df <- function(splvectree, step) {
-    data.frame(name = first_spl_name(splvectree),
-               force_pag = first_spl_forcepag(splvectree),
-               step = step)
+  data.frame(
+    name = first_spl_name(splvectree),
+    force_pag = first_spl_forcepag(splvectree),
+    step = step
+  )
 }
-    
 
 
 brack_regex <- "[^[]+\\[([[:digit:]]+)\\]"
@@ -255,23 +257,25 @@ setMethod(
 setMethod(
   "get_anchor_df", "PreDataRowLayout",
   function(splvec, next_step = 1L) {
-
     prev <- do.call(
-        rbind.data.frame,
-        lapply(
-          splvec[-length(splvec)],
-          first_spl_anchor_df,
-          step = next_step
-          )
+      rbind.data.frame,
+      lapply(
+        splvec[-length(splvec)],
+        first_spl_anchor_df,
+        step = next_step
+      )
     )
- #   prev$step <- seq(next_step, length.out = NROW(prev))
+    #   prev$step <- seq(next_step, length.out = NROW(prev))
 
     active <- get_anchor_df(splvec[[length(splvec)]],
-                            next_step = NROW(prev) + 1)
+      next_step = NROW(prev) + 1
+    )
     ret <- rbind(prev, active)
     nroots <- NROW(prev) + 1
-    ret$is_root <- c(rep(TRUE, nroots),
-                     rep(FALSE, NROW(ret) - nroots))
+    ret$is_root <- c(
+      rep(TRUE, nroots),
+      rep(FALSE, NROW(ret) - nroots)
+    )
     ret
   }
 )
@@ -284,23 +288,26 @@ setMethod(
     lst <- vector("list", length(splvec))
     step <- next_step
     for (i in seq_along(lst)) {
-        lst[[i]] <- get_anchor_df(splvec[[i]], next_step = step)
-        step <- max(lst[[i]]$step) + 1
+      lst[[i]] <- get_anchor_df(splvec[[i]], next_step = step)
+      step <- max(lst[[i]]$step) + 1
     }
     do.call(rbind.data.frame, lst)
-})
+  }
+)
 
 #' @rdname get_anchor_df
 #' @export
 setMethod(
   "get_anchor_df", "SplitVectorTree",
   function(splvec, next_step = 1L) {
-    ret <- do.call(rbind.data.frame,
-                    lapply(splvec, first_spl_anchor_df, step = next_step))
+    ret <- do.call(
+      rbind.data.frame,
+      lapply(splvec, first_spl_anchor_df, step = next_step)
+    )
     last <- splvec[[length(splvec)]]
     if (length(last) > 1) {
-        active <- get_anchor_df(SplitVector(lst = splvec[[length(splvec)]][-1]), next_step = next_step + 1)
-        ret <- rbind(ret, active)
+      active <- get_anchor_df(SplitVector(lst = splvec[[length(splvec)]][-1]), next_step = next_step + 1)
+      ret <- rbind(ret, active)
     }
     ret
   }
@@ -318,21 +325,21 @@ setMethod(
 #'  to identify anchors for.
 #' @export
 get_anchor_list <- function(lyt) {
-    df <- get_anchor_df(lyt)
-    unname(split(df$name, df$step))
+  df <- get_anchor_df(lyt)
+  unname(split(df$name, df$step))
 }
 
 ## this is where all the valid anchor checks happen, and it should occur very early
 ## (in do_next_row_split), after that we can assume branch_pos is correct and
 ## anchor pt it leads to is valid
 ## recursive walking of tree happens once in anchordf creation
-find_branch_pos_df <- function(tt, at_sibling,  anchordf = get_anchor_df(tt), nofind_ok = FALSE) {
-    
+find_branch_pos_df <- function(tt, at_sibling, anchordf = get_anchor_df(tt), nofind_ok = FALSE) {
   atsib <- deuniqify_path_elements(at_sibling)
   dup_pos <- extract_dup_pos(at_sibling)
   found_lgl <- anchordf$name == atsib ## both deuniqified
-  if (sum(found_lgl) < dup_pos && nofind_ok)
+  if (sum(found_lgl) < dup_pos && nofind_ok) {
     return(anchordf[NA, ])
+  }
   found <- which(found_lgl)
   if (length(found) == 0) {
     stop(
@@ -354,10 +361,12 @@ find_branch_pos_df <- function(tt, at_sibling,  anchordf = get_anchor_df(tt), no
       "', but at_sibling was '", at_sibling, "'"
     )
   } else if (anchordf$force_pag[found[dup_pos]]) {
-    stop("at_sibling pointed to an element with forced pagination (page_by = TRUE). ",
-         "This is not supported.")
+    stop(
+      "at_sibling pointed to an element with forced pagination (page_by = TRUE). ",
+      "This is not supported."
+    )
   }
-  anchordf[found[dup_pos],]
+  anchordf[found[dup_pos], ]
 }
 
 ## steps is how many (more) elements we need to walk
@@ -386,9 +395,12 @@ branch_at_pos <- function(splv, steps, newspl) {
 
       splv <- SplitVector(
         lst = c(
-          if( steps > 1) splv[seq_len(steps - 1)],
-          list(SplitVectorTree(SplitVector(lst = splv[seq(steps, len)]),
-                               SplitVector(newspl))))
+          if (steps > 1) splv[seq_len(steps - 1)],
+          list(SplitVectorTree(
+            SplitVector(lst = splv[seq(steps, len)]),
+            SplitVector(newspl)
+          ))
+        )
       )
     }
   }
