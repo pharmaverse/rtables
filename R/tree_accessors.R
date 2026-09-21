@@ -3275,6 +3275,15 @@ setMethod(
 
 #' @rdname vil
 setMethod(
+  "vars_in_layout", "SplitVectorTree",
+  function(lyt) {
+    vil_collapse(lapply(lyt, vars_in_layout))
+  }
+)
+
+
+#' @rdname vil
+setMethod(
   "vars_in_layout", "SplitVector",
   function(lyt) {
     vil_collapse(lapply(lyt, vars_in_layout))

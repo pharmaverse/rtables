@@ -30,7 +30,10 @@ setMethod(
   "next_rpos", "PreDataRowLayout",
   function(obj, nested, for_analyze, at_sibling = NULL) {
     l <- length(obj)
-    if (length(obj[[l]]) > 0L && !.check_if_nest(obj, nested, for_analyze, at_sibling = at_sibling)) {
+    if (length(obj[[l]]) > 0L && (
+      (!is.null(at_sibling) && branch_is_root(obj, at_sibling)) ||
+      !.check_if_nest(obj, nested, for_analyze, at_sibling = at_sibling)
+    )) {
       l <- l + 1L
     }
     l
@@ -80,7 +83,12 @@ setMethod(
     if (length(obj) == 0) {
       NULL
     } else {
-      last_rowsplit(obj[[length(obj)]])
+        for (i in seq_along(obj)) {
+          cur <- obj[[i]]
+          if (is(cur, "SplitVectorTree"))
+            break;
+        }
+        last_rowsplit(cur)
     }
   }
 )
@@ -169,6 +177,22 @@ first_spl_name <- function(splvectree) {
   deuniqify_path_elements(obj_name(spl))
 }
 
+first_spl_forcepag <- function(splvectree) {
+  if (is(splvectree, "Split")) { ## could generic + methods but ... whyyyyy?
+    spl <- splvectree
+  } else {
+    spl <- unlist(splvectree, recursive = TRUE)[[1]]
+  }
+  has_force_pag(spl)
+}
+
+first_spl_anchor_df <- function(splvectree, step) {
+    data.frame(name = first_spl_name(splvectree),
+               force_pag = first_spl_forcepag(splvectree),
+               step = step)
+}
+    
+
 
 brack_regex <- "[^[]+\\[([[:digit:]]+)\\]"
 extract_dup_pos <- function(str) {
@@ -189,16 +213,19 @@ extract_dup_pos <- function(str) {
 ##
 ## this should give: STRATA1, c(SEX, RACE), c(BMRKR2, BMRKR1) as valid at_sibling targets
 
-#' List Possible Nesting Anchors
+#' Retrieve Info About Possible Nesting Anchors
 #'
 #' This function scans an existing layout's row structure and lists
 #' valid `at_sibling` anchors for intermediate nesting.
 #'
 #' @param splvec (`PreDataTableLayouts` or internal classes)\cr The layout or partial
 #' layout to list anchors for.
+#' @param next_step (`integer(1)`)\cr For internal use.
 #'
-#' @return a (possibly nested) list containing the anchors which can be used with
-#' `at_sibling` in `split_rows_by*` or `analyze`.
+#' @return for `get_anchor_list` a character vector of eligible anchor
+#'     names (not including any `[n]` for duplicates); for
+#'     `get_anchor_df, a data.frame containing a `name` column and one
+#'     or more other columns intended for internal use.
 #' @examples
 #'
 #' lyt <- basic_table() |>
@@ -212,73 +239,101 @@ extract_dup_pos <- function(str) {
 #' get_anchor_list(lyt)
 #'
 #' @export
-setGeneric("get_anchor_list", function(splvec) standardGeneric("get_anchor_list"))
+setGeneric("get_anchor_df", function(splvec, next_step = 1L) standardGeneric("get_anchor_df"))
 
-#' @rdname get_anchor_list
+#' @rdname get_anchor_df
 #' @export
 setMethod(
-  "get_anchor_list", "PreDataTableLayouts",
-  function(splvec) {
-    get_anchor_list(rlayout(splvec))
+  "get_anchor_df", "PreDataTableLayouts",
+  function(splvec, next_step = 1) {
+    get_anchor_df(rlayout(splvec), next_step = next_step)
   }
 )
 
-#' @rdname get_anchor_list
+#' @rdname get_anchor_df
 #' @export
 setMethod(
-  "get_anchor_list", "PreDataRowLayout",
-  function(splvec) {
-    unlist(
-      c(
+  "get_anchor_df", "PreDataRowLayout",
+  function(splvec, next_step = 1L) {
+
+    prev <- do.call(
+        rbind.data.frame,
         lapply(
           splvec[-length(splvec)],
-          first_spl_name
-        ),
-        lapply(splvec[[length(splvec)]], get_anchor_list)
-      ),
-      recursive = FALSE
+          first_spl_anchor_df,
+          step = next_step
+          )
     )
+ #   prev$step <- seq(next_step, length.out = NROW(prev))
+
+    active <- get_anchor_df(splvec[[length(splvec)]],
+                            next_step = NROW(prev) + 1)
+    ret <- rbind(prev, active)
+    nroots <- NROW(prev) + 1
+    ret$is_root <- c(rep(TRUE, nroots),
+                     rep(FALSE, NROW(ret) - nroots))
+    ret
   }
 )
 
-#' @rdname get_anchor_list
+#' @rdname get_anchor_df
 #' @export
 setMethod(
-  "get_anchor_list", "SplitVector",
-  function(splvec) {
-    unlist(lapply(splvec, get_anchor_list), recursive = FALSE)
+  "get_anchor_df", "SplitVector",
+  function(splvec, next_step = 1L) {
+    lst <- vector("list", length(splvec))
+    step <- next_step
+    for (i in seq_along(lst)) {
+        lst[[i]] <- get_anchor_df(splvec[[i]], next_step = step)
+        step <- max(lst[[i]]$step) + 1
+    }
+    do.call(rbind.data.frame, lst)
+})
+
+#' @rdname get_anchor_df
+#' @export
+setMethod(
+  "get_anchor_df", "SplitVectorTree",
+  function(splvec, next_step = 1L) {
+    ret <- do.call(rbind.data.frame,
+                    lapply(splvec, first_spl_anchor_df, step = next_step))
+    last <- splvec[[length(splvec)]]
+    if (length(last) > 1) {
+        active <- get_anchor_df(SplitVector(lst = splvec[[length(splvec)]][-1]), next_step = next_step + 1)
+        ret <- rbind(ret, active)
+    }
+    ret
   }
 )
 
-#' @rdname get_anchor_list
+#' @rdname get_anchor_df
 #' @export
 setMethod(
-  "get_anchor_list", "SplitVectorTree",
-  function(splvec) {
-    ## use this cause it does deuniqify
-    c(
-      list(vapply(splvec, first_spl_name, "")),
-      ## ignore first name of last branch, we use name from first branch for matching here
-      get_anchor_list(SplitVector(lst = splvec[[length(splvec)]][-1]))
-    )
-  }
+  "get_anchor_df", "Split",
+  function(splvec, next_step = 1L) first_spl_anchor_df(splvec, step = next_step)
 )
 
-#' @rdname get_anchor_list
+#' @rdname get_anchor_df
+#' @param lyt (`PreDataTableLayouts` or `PreDataRowLayout`)\cr A layout or row
+#'  to identify anchors for.
 #' @export
-setMethod(
-  "get_anchor_list", "Split",
-  function(splvec) first_spl_name(splvec)
-)
+get_anchor_list <- function(lyt) {
+    df <- get_anchor_df(lyt)
+    unname(split(df$name, df$step))
+}
 
-find_branch_pos2 <- function(splvec, at_sibling, preceding = NULL) {
-  nmlst <- get_anchor_list(splvec)
-
+## this is where all the valid anchor checks happen, and it should occur very early
+## (in do_next_row_split), after that we can assume branch_pos is correct and
+## anchor pt it leads to is valid
+## recursive walking of tree happens once in anchordf creation
+find_branch_pos_df <- function(tt, at_sibling,  anchordf = get_anchor_df(tt), nofind_ok = FALSE) {
+    
   atsib <- deuniqify_path_elements(at_sibling)
   dup_pos <- extract_dup_pos(at_sibling)
-  found_lgl <- vapply(nmlst, function(lst) atsib %in% deuniqify_path_elements(lst), FALSE)
+  found_lgl <- anchordf$name == atsib ## both deuniqified
+  if (sum(found_lgl) < dup_pos && nofind_ok)
+    return(anchordf[NA, ])
   found <- which(found_lgl)
-
   if (length(found) == 0) {
     stop(
       "Unable to find structural element '", at_sibling, "' to add siblings for.\n",
@@ -287,7 +342,7 @@ find_branch_pos2 <- function(splvec, at_sibling, preceding = NULL) {
         collapse = ", ",
         paste0(
           "'",
-          unlist(c(preceding, nmlst)),
+          anchordf$name,
           "'"
         )
       )
@@ -298,103 +353,66 @@ find_branch_pos2 <- function(splvec, at_sibling, preceding = NULL) {
       deuniqify_path_elements(at_sibling),
       "', but at_sibling was '", at_sibling, "'"
     )
+  } else if (anchordf$force_pag[found[dup_pos]]) {
+    stop("at_sibling pointed to an element with forced pagination (page_by = TRUE). ",
+         "This is not supported.")
   }
-  found[dup_pos]
+  anchordf[found[dup_pos],]
 }
 
-branch_is_root <- function(splv, at_sibling) find_branch_pos2(splv, at_sibling) == 1
-
-## its recursive all the way down ... as always
-
-branch_above_split <- function(splvec, newspl, at_sibling,
-                               branch_pos = find_branch_pos2(splvec, at_sibling, preceding = preceding),
-                               preceding = NULL) {
-  svlen <- length(splvec)
-  if (branch_pos > svlen) {
-    stopifnot(is(splvec[[svlen]], "SplitVectorTree"))
-    lasttree <- splvec[[svlen]]
-    treelen <- length(lasttree)
-    lasttree[[treelen]] <- branch_above_split(lasttree[[treelen]],
-      newspl,
-      at_sibling = at_sibling, ## not used in this path
-      ## +1 is b/c the first split for this branch
-      ## was already matched against, otherwise we
-      ## are double-counting it
-      branch_pos = branch_pos - svlen + 1,
-      preceding = c(
-        preceding,
-        vapply(splvec, first_spl_name, "")
-      )
-    )
-    splvec[[svlen]] <- lasttree
-    return(splvec)
-  }
-  lastel <- splvec[[branch_pos]]
-
-  lstlastel <- if (is(lastel, "SplitVectorTree")) lastel else list(lastel)
-
-  len <- length(splvec)
-
-  endontree <- is(lastel, "SplitVectorTree")
-  ## counting deduplications already happened in find_branch_pos2, so we just need
-  ## to ensure they match here, which they already should
-  sib_matches <- is.null(at_sibling) || deuniqify_path_elements(at_sibling) %in% vapply(lstlastel, first_spl_name, "")
-  if (endontree && sib_matches) {
-    splvec[[branch_pos]] <- SplitVectorTree(lst = c(lastel, list(SplitVector(newspl))))
-  } else if (has_force_pag(lastel)) {
-    stop(
-      "at_sibling pointed to a split with forced pagination (page_by = TRUE).",
-      " This is not supported."
-    )
-  } else {
-    ## are_spls <- which(!vapply(splvec, is, "VAnalyzeSplit", FUN.VALUE = TRUE))
-    ## branch_pos <- max(0, are_spls) ## ensure no -Inf warning
-    if (branch_pos > 0 && label_position(splvec[[branch_pos]]) == "default") {
-      label_position(splvec[[branch_pos]]) <- "visible"
+## steps is how many (more) elements we need to walk
+## to get to the anchor point with the "algorithm"
+## that whenever we need to walk past the end of our vector
+## we check that the last element is a SplitVectorTree and if so,
+## step into the last existing branch of that tree and continue
+branch_at_pos <- function(splv, steps, newspl) {
+  len <- length(splv)
+  if (steps > len) { ## step down into tree at end of vector and keep going
+    if (!is(splv[[len]], "SplitVectorTree")) {
+      stop("Bad branching position, please contact the maintainer") ## nocov
     }
-    lst <- c(
-      if (branch_pos > 1) splvec[seq(1, branch_pos - 1)],
-      list(SplitVectorTree(lst = list(
-        SplitVector(lst = splvec[seq(branch_pos, len)]),
-        SplitVector(newspl)
-      )))
-    )
-    splvec <- SplitVector(lst = lst)
+    tr <- splv[[len]]
+    tr[[length(tr)]] <- branch_at_pos(tr[[length(tr)]], steps - len + 1, newspl)
+    splv[[len]] <- tr
+  } else { ## branch somewhere along vector
+    el <- splv[[steps]]
+    if (is(el, "SplitVectorTree")) {
+      stopifnot(steps == len) ## nocov
+      splv[[steps]] <- SplitVectorTree(lst = c(el, list(SplitVector(newspl))))
+    } else {
+      if (label_position(el) == "default") {
+        label_position(splv[[steps]]) <- "visible"
+      }
+
+      splv <- SplitVector(
+        lst = c(
+          if( steps > 1) splv[seq_len(steps - 1)],
+          list(SplitVectorTree(SplitVector(lst = splv[seq(steps, len)]),
+                               SplitVector(newspl))))
+      )
+    }
   }
-  splvec
+  splv
 }
 
+## **!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!**
+## pos means different things depending on
+## if it points to an anchor point or
+## (!is.null(at_sibling)) or simply a place
+## in the root tree (is.null(at_sibling)
+## **!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!**
 #' @rdname int_methods
 setMethod(
   "split_rows", "PreDataRowLayout",
   function(lyt, spl, pos, cmpnd_fun = AnalyzeMultiVars, at_sibling = NULL) {
-    stopifnot(is.na(pos) || (pos > 0 && pos <= length(lyt) + 1))
+    stopifnot(is.na(pos) || (pos > 0 && (!is.null(at_sibling) || pos <= length(lyt) + 1)))
     root_branching <- FALSE
     if (!is.null(at_sibling)) {
+      ## oof this is an ugly hack :(
+      pos2 <- pos
+      pos <- min(length(lyt), pos)
       oldval <- lyt[[pos]]
-      ## if we at_sibling a top level element we need to handle as nested = FALSE
-      if (branch_is_root(oldval, at_sibling)) {
-        if (has_force_pag(last_rowsplit(oldval))) {
-          stop(
-            "at_sibling pointed to a split with forced pagination (page_by = TRUE).",
-            " This is not supported."
-          )
-        }
-        tmp <- SplitVector(spl)
-        pos <- length(lyt) + 1 ## pos when nested = FALSE
-      } else if (is(oldval, "SplitVectorTree")) {
-        tmp <- SplitVectorTree(lst = c(oldval, list(SplitVector(spl))))
-      } else if (is(oldval, "SplitVector")) {
-        tmp <- branch_above_split(oldval, spl, at_sibling)
-      } else {
-        # nocov start
-        stop(
-          "split_rows failed with at_sibling ['", at_sibling, "'] and oldval class '",
-          class(oldval),
-          "'. This should not happen, contact the maintainer."
-        )
-        # nocov end
-      }
+      tmp <- branch_at_pos(oldval, steps = pos2 - pos + 1, spl)
     } else if (pos <= length(lyt)) {
       tmp <- split_rows(lyt[[pos]], spl, pos, cmpnd_fun = cmpnd_fun, at_sibling = at_sibling)
     } else {

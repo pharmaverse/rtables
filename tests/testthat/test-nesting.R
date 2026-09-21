@@ -1,3 +1,7 @@
+path_count <- function(tt, pth) length(tt_normalize_row_path(tt, pth))
+keep_2_levels <- function(varnm, dat = ex_adsl) keep_split_levels(levels(dat[[varnm]])[1:2])
+
+
 ## regression test for automatically not-nesting
 ## when a non-analyze comes after an analyze
 test_that("split under analyze", {
@@ -83,7 +87,7 @@ test_that("at_sibling rejects page_by splits", {
     basic_table() |>
       split_rows_by("STRATA1", page_by = TRUE) |>
       split_rows_by("RACE", at_sibling = "STRATA1"),
-    "at_sibling pointed to a split with forced pagination"
+    "at_sibling pointed to an element with forced pagination"
   )
 })
 
@@ -233,12 +237,10 @@ test_that("intermediate nesting works correctly", {
         analyze("AGE") |>
         split_rows_by("RACE", at_sibling = "STRATA1")
     },
-    "at_sibling pointed to a split with forced pagination"
+    "at_sibling pointed to an element with forced pagination"
   )
 
 
-  path_count <- function(tt, pth) length(tt_normalize_row_path(tt, pth))
-  keep_2_levels <- function(varnm, dat = ex_adsl) keep_split_levels(levels(dat[[varnm]])[1:2])
 
   ## even though this doesn't make a ton of sense, as the correct thing is for
   ## BMRKR2's at_sibling to also be "SEX", as that is the anchor point for the
@@ -333,7 +335,7 @@ test_that("intermediate nesting works correctly", {
     split_rows_by("RACE") |>
     split_rows_by("STRATA1", split_fun = keep_2_levels("STRATA1")) |>
     analyze("RACE") |>
-    split_rows_by("BMRKR2", split_fun = keep_2_levels("BMRKR2"), at_sibling = "RACE[2]") |>
+    split_rows_by("BMRKR2", split_fun = keep_2_levels("BMRKR2"), at_sibling = "RACE[3]") |>
     analyze("AGE")
 
   expect_identical(
@@ -352,15 +354,15 @@ test_that("intermediate nesting works correctly", {
   )
 
 
-  ## RACE (xx) masked by unnested splitting below
-  ## SEX -> | RACE -> STRATA1 -> | RACE (2)
-  ##        |--------------------| BMRKR2 -> AGE
+  ## RACE 
+  ## SEX -> | RACE (2) -> STRATA1 -> | RACE (3)
+  ##        |------------------------| BMRKR2 -> AGE
   ##        | COUNTRY -> BMRKR1
 
   clown_shoes <- clown_base |>
     split_rows_by("COUNTRY",
       split_fun = keep_2_levels("COUNTRY"),
-      at_sibling = "RACE"
+      at_sibling = "RACE[2]"
     ) |>
     analyze("BMRKR1")
 
@@ -389,16 +391,16 @@ test_that("intermediate nesting works correctly", {
     0L
   )
 
-  ## RACE (xx) masked by unnested splitting below
-  ## SEX -> | RACE -> STRATA1 -> | RACE (2)
-  ##                             | BMRKR2 -> AGE
-  ##                             | COUNTRY -> BMRKR1
+  ## RACE
+  ## SEX -> | RACE (2)-> STRATA1 -> | RACE (3)
+  ##                                | BMRKR2 -> AGE
+  ##                                | COUNTRY -> BMRKR1
   ##
 
   clown_shoes2 <- clown_base |>
     split_rows_by("COUNTRY",
       split_fun = keep_2_levels("COUNTRY"),
-      at_sibling = "RACE[2]"
+      at_sibling = "RACE[3]"
     ) |>
     analyze("BMRKR1")
 
@@ -414,16 +416,15 @@ test_that("intermediate nesting works correctly", {
     16L
   )
 
-  ## first RACE analysis is masked, so it can only find 2 (split after SEX and
-  ## analyze after STRATA1)
+  ## 
   expect_error(
     clown_base |>
-      split_rows_by("COUNTRY", at_sibling = "RACE[3]"),
-    regexp = "Found only 2 eligible elements named 'RACE', but at_sibling was 'RACE\\[3\\]'"
+      split_rows_by("COUNTRY", at_sibling = "RACE[4]"),
+    regexp = "Found only 3 eligible elements named 'RACE', but at_sibling was 'RACE\\[4\\]'"
   )
 
   clown_nose <- basic_table() |>
-    split_rows_by("STRATA1", split_fun = keep_2_levels("RACE")) |>
+    split_rows_by("STRATA1", split_fun = keep_2_levels("STRATA1")) |>
     split_rows_by("STRATA2", split_fun = keep_2_levels("STRATA2")) |>
     analyze("ARM") |>
     split_rows_by("SEX", split_fun = keep_2_levels("SEX")) |>
@@ -448,6 +449,21 @@ test_that("intermediate nesting works correctly", {
       "BEP01FL",
       "AGE"
     )
+  )
+
+  expect_identical(
+    vars_in_layout(clown_nose),
+    c("STRATA1",
+      "STRATA2",
+      "ARM",
+      "SEX",
+      "RACE",
+      "BMRKR1",
+      "BMRKR2",
+      "COUNTRY",
+      "AGE",
+      "SITEID",
+      "BEP01FL")
   )
 
   ## "Full On" INSANEO STYLE
@@ -550,4 +566,65 @@ test_that("intermediate nesting works correctly", {
     ),
     8L
   )
+})
+
+test_that("at_sibling doesn't mash 2 analyzes up all willy nilly", {
+
+  ## also ensures the anchor lookup behavior is correct when anchor
+  ## pt is a previous root split (which it wasn't when the test
+  ## was written x.x)
+  lyt <- basic_table() |>
+    split_rows_by("RACE", split_fun = keep_2_levels("RACE")) |>
+    split_rows_by("SEX" , split_fun = keep_2_levels("SEX")) |>
+    analyze("AGE") |>
+    analyze("BMRKR1", at_sibling = "RACE") |>
+    analyze("AGE", at_sibling = "RACE")
+
+  tbl <- build_table(lyt, ex_adsl) 
+  expect_equal(path_count(tbl, c("root", "BMRKR1")), 1L)
+  expect_equal(path_count(tbl, c("root", "AGE")), 1L)
+  expect_equal(path_count(tbl, c("RACE", "*", "SEX", "*", "AGE")), 4L)
+  expect_equal(path_count(tbl, c("RACE", "*", "SEX", "*", "BMRKR1")), 0L)
+  ## no surrounding multivar table
+  expect_equal(path_count(tbl, c("ma_BMRKR1_AGE", "*")), 0L)
+
+
+  ## old, ie non-at_sibling behavior remains unchanged
+  ## TODO: deprecate this eventually now that we can have analyzes
+  ## within row faceting (which we couldn't before, thus the creation
+  ## of the ma_bla_bla_bla parent table.  
+  lyt2 <- basic_table() |>
+    split_rows_by("RACE", split_fun = keep_2_levels("RACE")) |>
+    split_rows_by("SEX" , split_fun = keep_2_levels("SEX")) |>
+    analyze("AGE") |>
+    analyze("BMRKR1", at_sibling = "SEX") |>
+    analyze("AGE", at_sibling = "SEX")
+  tbl2 <- build_table(lyt2, ex_adsl)
+  ## no surrounding multivar table
+  expect_equal(path_count(tbl2, c("RACE", "*", "ma_BMRKR1_AGE")), 0L)  
+
+  lytbad <-  basic_table() |>
+    split_rows_by("RACE", split_fun = keep_2_levels("RACE")) |>
+    split_rows_by("SEX" , split_fun = keep_2_levels("SEX")) |>
+    analyze("AGE") |>
+    analyze("BMRKR1", nested = FALSE) |>
+    analyze("AGE")
+  tblbad <- build_table(lytbad, ex_adsl)
+  ## no surrounding multivar table
+  expect_equal(path_count(tblbad,  c("ma_BMRKR1_AGE", "*")), 2L)               
+})
+
+test_that("more than 2 analyzes get mashed together correctly", {
+  lyt <- basic_table(show_colcounts = TRUE) |>
+  ## Column faceting
+  split_cols_by("ARM", ref_group = "A: Drug X") |>
+  analyze("AGE") |>
+  analyze("RACE") |>
+  analyze("BMRKR1") |>
+  analyze("BMRKR2")
+
+  tbl <- build_table(lyt, ex_adsl)
+
+  expect_equal(obj_name(tbl), "ma_AGE_RACE_BMRKR1_BMRKR2")
+  expect_equal(path_count(tbl, c("ma_AGE_RACE_BMRKR1_BMRKR2", "*")), 4L)
 })

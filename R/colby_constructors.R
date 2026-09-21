@@ -325,9 +325,66 @@ split_rows_by <- function(lyt,
     split_name = parent_name
   )
 
-  pos <- next_rpos(lyt, nested, at_sibling = at_sibling)
-  ret <- split_rows(lyt, spl, pos, at_sibling = at_sibling)
+  ret <- do_next_split_rows(lyt = lyt, spl = spl, at_sibling = at_sibling, nested = nested)
+  ret
+}
 
+is_analyze_spl <- function(spl) is(spl, "VAnalyzeSplit") || is(spl, "AnalyzeMultiVars")
+
+## workhorse, this fires off all the checks via find_branch_pos
+
+do_next_split_rows <- function(lyt, spl, nested, at_sibling) {
+    
+    if (!is.null(at_sibling)) {
+    anchordf <- get_anchor_df(lyt)
+    ## anchor point existence and validity checks occur here
+    bprow <- find_branch_pos_df(anchordf = anchordf, at_sibling = at_sibling)
+    if (bprow$is_root) {
+        nested <- FALSE
+        at_sibling <- NULL
+    }
+  }
+  if (is.null(at_sibling)) {
+    cmpfun <- AnalyzeMultiVars
+    pos <- next_rpos(lyt, nested, at_sibling = at_sibling)
+  } else {
+    cmpfun <- pack_in_svt ##SplitVectorTree
+    pos <- bprow$step
+  }
+  if (is_analyze_spl(spl) && is_analyze_spl(last_rowsplit(lyt)) &&
+      nested && is.null(at_sibling)) {
+    ret <- cmpnd_last_rowsplit(lyt, spl, cmpfun)
+  } else {
+    ret <- split_rows(lyt, spl, pos, at_sibling = at_sibling, cmpnd_fun = cmpfun)
+  }
+  ret
+}
+
+
+do_next_split_rows_old <- function(lyt, spl, nested, at_sibling) {
+
+    if (!is.null(at_sibling) && branch_is_root(lyt, at_sibling)) {
+    if (has_force_pag(get_branch_anchor(rlayout(lyt), at_sibling))) {
+      stop(
+        "at_sibling pointed to a split with forced pagination (page_by = TRUE).",
+        " This is not supported."
+      )
+    }
+    nested <- FALSE
+    at_sibling <- NULL
+  }
+  if (is.null(at_sibling))
+    cmpfun <- AnalyzeMultiVars
+  else
+    cmpfun <- pack_in_svt ##SplitVectorTree
+
+  if (is_analyze_spl(spl) && is_analyze_spl(last_rowsplit(lyt)) &&
+      nested && is.null(at_sibling)) {
+    ret <- cmpnd_last_rowsplit(lyt, spl, cmpfun)
+  } else {
+    pos <- next_rpos(lyt, nested, at_sibling = at_sibling)
+    ret <- split_rows(lyt, spl, pos, at_sibling = at_sibling, cmpnd_fun = cmpfun)
+  }
   ret
 }
 
@@ -445,8 +502,8 @@ split_rows_by_multivar <- function(lyt,
     extra_args = extra_args,
     split_name = parent_name
   )
-  pos <- next_rpos(lyt, nested, at_sibling = at_sibling)
-  split_rows(lyt, spl, pos, at_sibling = at_sibling)
+  ret <- do_next_split_rows(lyt = lyt, spl = spl, at_sibling = at_sibling, nested = nested)
+  ret
 }
 
 #' Split on static or dynamic cuts of the data
@@ -595,8 +652,8 @@ split_rows_by_cuts <- function(lyt, var, cuts,
   )
   ## if(cumulative)
   ##     spl = as(spl, "CumulativeCutSplit")
-  pos <- next_rpos(lyt, nested, at_sibling = at_sibling)
-  split_rows(lyt, spl, pos, at_sibling = at_sibling)
+  ret <- do_next_split_rows(lyt = lyt, spl = spl, at_sibling = at_sibling, nested = nested)
+  ret
 }
 
 #' @export
@@ -748,8 +805,8 @@ split_rows_by_cutfun <- function(lyt, var,
     section_div = section_div,
     split_name = parent_name
   )
-  pos <- next_rpos(lyt, nested, at_sibling = at_sibling)
-  split_rows(lyt, spl, pos, at_sibling = at_sibling)
+  ret <- do_next_split_rows(lyt = lyt, spl = spl, at_sibling = at_sibling, nested = nested)
+  ret
 }
 
 #' .spl_context within analysis and split functions
@@ -1059,16 +1116,37 @@ analyze <- function(lyt,
     split_name = parent_name,
     formats_var = formats_var,
     na_strs_var = na_strs_var
-  )
+    )
 
-  is_analyze_spl <- is(last_rowsplit(lyt), "VAnalyzeSplit") || is(last_rowsplit(lyt), "AnalyzeMultiVars")
-  if (nested && is.null(at_sibling) && is_analyze_spl) {
-    cmpnd_last_rowsplit(lyt, spl, AnalyzeMultiVars)
+  ret <- do_next_split_rows(lyt = lyt, spl = spl, at_sibling = at_sibling, nested = nested)
+  ret
+
+  ## ## drop down to pure nested = FALSE behavior for root anchor pts
+  ## if (!is.null(at_sibling) && branch_is_root(lyt, at_sibling)) {
+  ##   nested <- FALSE
+  ##   at_sibling <- NULL
+  ## }
+  ## is_analyze_spl <- is(last_rowsplit(lyt), "VAnalyzeSplit") || is(last_rowsplit(lyt), "AnalyzeMultiVars")
+  
+  ## if (nested && is.null(at_sibling) && is_analyze_spl) {
+  ##   cmpnd_last_rowsplit(lyt, spl, cmpfun)
+  ## } else {
+  ##   ## analysis compounding now done in split_rows
+  ##   pos <- next_rpos(lyt, nested, at_sibling = at_sibling)
+  ##   split_rows(lyt, spl, pos, at_sibling = at_sibling, cmpnd_fun = cmpfun )
+  ## }
+}
+
+pack_in_svt <- function(.payload) {
+  a <- .payload[[1]]
+  b <- .payload[[2]]  
+  nw <- SplitVector(b)
+  if (is(a, "SplitVectorTree")) {
+    lst <- c(a, list(nw))
   } else {
-    ## analysis compounding now done in split_rows
-    pos <- next_rpos(lyt, nested, at_sibling = at_sibling)
-    split_rows(lyt, spl, pos, at_sibling = at_sibling)
-  }
+      lst <- list(SplitVector(a), SplitVector(b))
+  }      
+  SplitVectorTree(lst = lst)
 }
 
 get_acolvar_name <- function(lyt) {
@@ -1199,8 +1277,8 @@ analyze_colvars <- function(lyt,
     extra_args = extra_args,
     inclNAs = inclNAs
   )
-  pos <- next_rpos(lyt, nested, for_analyze = TRUE, at_sibling = at_sibling)
-  split_rows(lyt, spl, pos, at_sibling = at_sibling)
+  ret <- do_next_split_rows(lyt = lyt, spl = spl, at_sibling = at_sibling, nested = nested)
+  ret
 }
 
 ## Add a total column at the next **top level** spot in
