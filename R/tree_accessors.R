@@ -3849,9 +3849,11 @@ setMethod("has_force_pag", "TableTree", function(obj) !is.na(ptitle_prefix(obj))
 
 #' @exportMethod has_force_pag
 #' @rdname int_methods
-setMethod("has_force_pag", "Split",
-          ## RootSplit was returning logical(0) like a psychopath
-          function(obj) !is.na(ptitle_prefix(obj)) %||% FALSE)
+setMethod(
+  "has_force_pag", "Split",
+  ## RootSplit was returning logical(0) like a psychopath
+  function(obj) !is.na(ptitle_prefix(obj)) %||% FALSE
+)
 
 #' @exportMethod has_force_pag
 #' @rdname int_methods
