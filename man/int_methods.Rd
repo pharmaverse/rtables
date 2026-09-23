@@ -32,6 +32,9 @@
 \alias{cmpnd_last_rowsplit,NULL-method}
 \alias{cmpnd_last_rowsplit,PreDataRowLayout-method}
 \alias{cmpnd_last_rowsplit,SplitVector-method}
+\alias{cmpnd_last_rowsplit,CompoundSplit-method}
+\alias{cmpnd_last_rowsplit,Split-method}
+\alias{cmpnd_last_rowsplit,SplitVectorTree-method}
 \alias{cmpnd_last_rowsplit,PreDataTableLayouts-method}
 \alias{cmpnd_last_rowsplit,ANY-method}
 \alias{split_cols}
@@ -476,6 +479,12 @@ cmpnd_last_rowsplit(lyt, spl, constructor)
 \S4method{cmpnd_last_rowsplit}{PreDataRowLayout}(lyt, spl, constructor)
 
 \S4method{cmpnd_last_rowsplit}{SplitVector}(lyt, spl, constructor)
+
+\S4method{cmpnd_last_rowsplit}{CompoundSplit}(lyt, spl, constructor)
+
+\S4method{cmpnd_last_rowsplit}{Split}(lyt, spl, constructor)
+
+\S4method{cmpnd_last_rowsplit}{SplitVectorTree}(lyt, spl, constructor)
 
 \S4method{cmpnd_last_rowsplit}{PreDataTableLayouts}(lyt, spl, constructor)
 

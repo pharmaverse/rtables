@@ -628,3 +628,62 @@ test_that("more than 2 analyzes get mashed together correctly", {
   expect_equal(obj_name(tbl), "ma_AGE_RACE_BMRKR1_BMRKR2")
   expect_equal(path_count(tbl, c("ma_AGE_RACE_BMRKR1_BMRKR2", "*")), 4L)
 })
+
+test_that("random intermediate nesting stuff", {
+  expect_error(
+    {
+      basic_table() |>
+        split_rows_by("STRATA1", page_by = TRUE) |>
+        analyze("AGE") |>
+        split_rows_by("SEX", at_sibling = "STRATA1")
+    },
+    regexp = "at_sibling pointed to an element with forced pagination"
+  )
+
+
+  expect_no_error({
+    basic_table() |>
+      analyze("AGE") |>
+      split_rows_by("STRATA1") |>
+      analyze("AGE") |>
+      split_rows_by("SEX", nested = FALSE, at_sibling = "STRATA1")
+  })
+
+
+  lyt <- basic_table() |>
+    split_rows_by("SEX") |>
+    split_rows_by("STRATA1") |>
+    analyze("AGE") |>
+    split_rows_by("SEX", nested = FALSE, at_sibling = "STRATA1")
+
+
+  lyt <- basic_table() |>
+    split_rows_by("SEX") |>
+    analyze("AGE") |>
+    split_rows_by("BMRKR2", nested = FALSE) |>
+    split_rows_by("RACE") |>
+    analyze("AGE")
+  expect_no_error({
+    lyt |> split_rows_by("STRATA1", at_sibling = "SEX")
+  })
+})
+
+
+test_that("nested analyses are compounded correctly when on branch", {
+  lyt <- basic_table() |>
+    split_rows_by("STRATA1", split_fun = keep_2_levels("STRATA1")) |>
+    split_rows_by("SEX", split_fun = keep_2_levels("SEX")) |>
+    analyze("AGE", table_names = "a1") |>
+    split_rows_by("RACE",
+      split_fun = keep_2_levels("RACE"),
+      at_sibling = "SEX"
+    ) |>
+    analyze("AGE", table_names = "a2") |>
+    analyze("BMRKR1")
+  tbl <- build_table(lyt, ex_adsl)
+
+  expect_equal(
+    path_count(tbl, c("STRATA1", "*", "SEX", "*")),
+    4L
+  )
+})

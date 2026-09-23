@@ -783,23 +783,44 @@ setMethod(
   "cmpnd_last_rowsplit", "SplitVector",
   function(lyt, spl, constructor) {
     pos <- length(lyt)
-    lst <- lyt[[pos]]
-    tmp <- if (is(lst, "CompoundSplit")) {
-      spl_payload(lst) <- c(
-        .uncompound(spl_payload(lst)),
-        .uncompound(spl)
-      )
-      obj_name(lst) <- make_ma_name(spl = lst)
-      lst
-      ## XXX never reached because AnalzyeMultiVars inherits from
-      ## CompoundSplit???
-    } else {
-      constructor(.payload = list(lst, spl))
-    }
-    lyt[[pos]] <- tmp
+    lyt[[pos]] <- cmpnd_last_rowsplit(lyt[[pos]], spl, constructor)
     lyt
   }
 )
+
+#' @rdname int_methods
+setMethod(
+  "cmpnd_last_rowsplit", "CompoundSplit",
+  function(lyt, spl, constructor) {
+    spl_payload(lyt) <- c(
+      .uncompound(spl_payload(lyt)),
+      .uncompound(spl)
+    )
+    obj_name(lyt) <- make_ma_name(spl = lyt)
+    lyt
+  }
+)
+
+
+#' @rdname int_methods
+setMethod(
+  "cmpnd_last_rowsplit", "Split",
+  function(lyt, spl, constructor) {
+    constructor(.payload = list(lyt, spl))
+  }
+)
+
+
+#' @rdname int_methods
+setMethod(
+  "cmpnd_last_rowsplit", "SplitVectorTree",
+  function(lyt, spl, constructor) {
+    pos <- length(lyt)
+    lyt[[pos]] <- cmpnd_last_rowsplit(lyt[[pos]], spl, constructor)
+    lyt
+  }
+)
+
 
 #' @rdname int_methods
 setMethod(
