@@ -1925,7 +1925,8 @@ setClass("SplitVector",
     } else {
       lst <- NULL
     }
-    all(sapply(head(object, -1), split_or_splitvectree)) &&
+    ## only last element can be a splitvectree, others must be splits
+    all(sapply(head(object, -1), function(x) is(x, "Split"))) &&
       (is.null(lst) || split_or_splitvectree(lst) || is(lst, "VTableNodeInfo"))
   }
 )
