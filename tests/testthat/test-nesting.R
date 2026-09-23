@@ -171,8 +171,6 @@ test_that("basic usage of intermediate nesting works correctly", {
 })
 
 test_that("anchoring to top-level element gives exact nested = FALSE behavior", {
-
-
   ## at_sibling = <top-level-split> gracefully works as nested = FALSE
   ## we are intentionally strict using expect_identical for these
   lyt3 <- basic_table() |>
@@ -247,8 +245,6 @@ test_that("bad at_sibling values give informative errors", {
 })
 
 test_that("previously placed siblings can be targeted by at_sibling", {
-
-
   ## even though this doesn't make a ton of sense, as the correct thing is for
   ## BMRKR2's at_sibling to also be "SEX", as that is the anchor point for the
   ## tree it (and RACE) is appended to,
@@ -282,7 +278,6 @@ test_that("previously placed siblings can be targeted by at_sibling", {
     path_count(tbl, c("STRATA1", "*", "RACE", "*", "BMRKR2")),
     0L
   )
-
 })
 
 test_that("at_sibling finds and respects overridden table names", {
