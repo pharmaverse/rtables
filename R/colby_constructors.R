@@ -334,21 +334,21 @@ is_analyze_spl <- function(spl) is(spl, "VAnalyzeSplit") || is(spl, "AnalyzeMult
 ## workhorse, this fires off all the checks via find_branch_pos
 
 do_next_split_rows <- function(lyt, spl, nested, at_sibling) {
-    force(lyt)
-    if (!is.null(at_sibling)) {
+  force(lyt)
+  if (!is.null(at_sibling)) {
     anchordf <- get_row_anchor_df(lyt)
     ## anchor point existence and validity checks occur here
     bprow <- find_branch_pos_df(anchordf = anchordf, at_sibling = at_sibling)
     if (bprow$is_toplevel) {
-        nested <- FALSE
-        at_sibling <- NULL
+      nested <- FALSE
+      at_sibling <- NULL
     }
   }
   if (is.null(at_sibling)) {
     cmpfun <- AnalyzeMultiVars
     pos <- next_rpos(lyt, nested, at_sibling = at_sibling)
   } else {
-    cmpfun <- pack_in_svt ##SplitVectorTree
+    cmpfun <- pack_in_svt ## SplitVectorTree
     pos <- bprow$anchor_step
   }
   if (is_analyze_spl(spl) && is_analyze_spl(last_rowsplit(lyt)) &&

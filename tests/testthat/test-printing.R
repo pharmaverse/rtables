@@ -394,7 +394,6 @@ test_that("layout printing works for cornercases", {
 })
 
 
-
 test_that("section_div works throughout", {
   lyt <- basic_table() |>
     split_rows_by("ARM", section_div = "-") |>

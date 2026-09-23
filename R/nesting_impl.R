@@ -30,10 +30,8 @@ setMethod(
   "next_rpos", "PreDataRowLayout",
   function(obj, nested, for_analyze, at_sibling = NULL) {
     l <- length(obj)
-    if (length(obj[[l]]) > 0L && (
-      (!is.null(at_sibling) && branch_is_root(obj, at_sibling)) ||
-        !.check_if_nest(obj, nested, for_analyze, at_sibling = at_sibling)
-    )) {
+    if (length(obj[[l]]) > 0L &&
+      !.check_if_nest(obj, nested, for_analyze, at_sibling = at_sibling)) {
       l <- l + 1L
     }
     l
@@ -213,31 +211,33 @@ setGeneric("get_kid_types", function(obj, type) standardGeneric("get_kid_types")
 setMethod("get_kid_types", "Split", function(obj, type) type)
 #' @rdname int_methods
 #' @export
-setMethod("get_kid_types", "SplitVector",
-          function(obj, type) {
-  switch(
-    type,
-    anchor = c("anchor", rep("inactive", times = length(obj) - 1)),
-    inactive = c("sibling", rep("inactive", times = length(obj) - 1)),
-    active = rep("active", length(obj))
-  )
-})
+setMethod(
+  "get_kid_types", "SplitVector",
+  function(obj, type) {
+    switch(type,
+      anchor = c("anchor", rep("inactive", times = length(obj) - 1)),
+      inactive = c("sibling", rep("inactive", times = length(obj) - 1)),
+      active = rep("active", length(obj))
+    )
+  }
+)
 
 #' @rdname int_methods
 #' @export
-setMethod("get_kid_types", "SplitVectorTree",
-          function(obj, type) {
+setMethod(
+  "get_kid_types", "SplitVectorTree",
+  function(obj, type) {
     c("anchor", rep("inactive", times = length(obj) - 2), type)
-})
+  }
+)
 #' @rdname int_methods
 #' @export
-setMethod("get_kid_types", "PreDataRowLayout",
-          function(obj, type) {
+setMethod(
+  "get_kid_types", "PreDataRowLayout",
+  function(obj, type) {
     c(rep("inactive", times = length(obj) - 1), "active")
-})
-
-
-
+  }
+)
 
 
 ## for
@@ -327,41 +327,46 @@ setGeneric("get_full_lyt_df", function(splvec, next_node = 1L, next_anchor_step 
 #' @export
 setMethod(
   "get_full_lyt_df", "PreDataTableLayouts",
-  function(splvec, next_node, next_anchor_step = 1, parent, depth, node_type) 
-    get_full_lyt_df(rlayout(splvec), next_node = next_node,
-                    next_anchor_step = next_anchor_step,
-                    parent = 0, depth = 1, node_type = "active")
+  function(splvec, next_node, next_anchor_step = 1, parent, depth, node_type) {
+    get_full_lyt_df(rlayout(splvec),
+      next_node = next_node,
+      next_anchor_step = next_anchor_step,
+      parent = 0, depth = 1, node_type = "active"
+    )
+  }
 )
 
 make_lyt_df_row <- function(name, nodeid, parentid, depth, type, anchor_step, force_pag = NA, spl_abbrev = NA) {
-    data.frame(name = name, nodeid = nodeid, parentid = parentid, depth = depth, type = type, is_toplevel = parentid ==0, anchor_step = anchor_step, force_pag = force_pag, spl_abbrev = spl_abbrev)
+  data.frame(name = name, nodeid = nodeid, parentid = parentid, depth = depth, type = type, is_toplevel = parentid == 0, anchor_step = anchor_step, force_pag = force_pag, spl_abbrev = spl_abbrev)
 }
 
 #' @rdname get_anchor_df
 #' @export
-setMethod(
-  "get_anchor_df", "PreDataRowLayout",
-  function(splvec, next_step = 1L) {
-    prev <- do.call(
-      rbind.data.frame,
-      lapply(
-        splvec[-length(splvec)],
-        first_spl_anchor_df,
-        step = next_step
-      )
-    )
-    #   prev$step <- seq(next_step, length.out = NROW(prev))
+get_layout_dfs <- function(lyt) {
+  stopifnot(is(lyt, "PreDataTableLayouts"))
+  list(
+    cols = get_full_lyt_df(clayout(lyt)),
+    rows = get_full_lyt_df(rlayout(lyt))
+  )
+}
 
-    active <- get_anchor_df(splvec[[length(splvec)]],
-      next_step = NROW(prev) + 1
+
+.gflytdf_predataaxis <- function(splvec, next_node = 1, next_anchor_step = 1L, parent = 0L, depth = 1L, node_type = "active") {
+  len <- length(splvec)
+  prvlst <- vector("list", length(splvec))
+
+  for (i in seq_len(len)) {
+    prvlst[[i]] <- get_full_lyt_df(splvec[[i]],
+      next_node = next_node,
+      next_anchor_step = next_anchor_step + i - 1,
+      parent = 0L,
+      depth = 1,
+      node_type = ifelse(i == len, "active", "inactive")
     )
-    ret <- rbind(prev, active)
-    nroots <- NROW(prev) + 1
-    ret$is_root <- c(
-      rep(TRUE, nroots),
-      rep(FALSE, NROW(ret) - nroots)
-    )
-    ret
+    next_node <- max(prvlst[[i]]$nodeid) + 1
+  }
+  ret <- do.call(rbind.data.frame, prvlst)
+  ret
 }
 
 ## note the different behaviors for the 0 length case below
@@ -369,9 +374,10 @@ setMethod(
 #' @export
 setMethod(
   "get_full_lyt_df", "PreDataRowLayout",
-  function(splvec, next_node = 1,  next_anchor_step = 1L, parent = 0L, depth = 1L, node_type = "active") {
-    if (length(splvec) == 1 && length(splvec[[1]]) == 0 )
-      return(make_lyt_df_row(NA, NA, NA, NA, NA, NA, NA)[0,])
+  function(splvec, next_node = 1, next_anchor_step = 1L, parent = 0L, depth = 1L, node_type = "active") {
+    if (length(splvec) == 1 && length(splvec[[1]]) == 0) {
+      return(make_lyt_df_row(NA, NA, NA, NA, NA, NA, NA)[0, ])
+    }
     .gflytdf_predataaxis(splvec = splvec, next_node = next_node, next_anchor_step = next_anchor_step, parent = parent, depth = depth, node_type = node_type)
   }
 )
@@ -381,9 +387,10 @@ setMethod(
 #' @export
 setMethod(
   "get_full_lyt_df", "PreDataColLayout",
-  function(splvec, next_node = 1,  next_anchor_step = 1L, parent = 0L, depth = 1L, node_type = "active") {
-    if (length(splvec) == 1 && length(splvec[[1]]) == 0 )
+  function(splvec, next_node = 1, next_anchor_step = 1L, parent = 0L, depth = 1L, node_type = "active") {
+    if (length(splvec) == 1 && length(splvec[[1]]) == 0) {
       return(get_full_lyt_df(AllSplit("<implicit>"), 1, 1, 0, 1, NA))
+    }
     .gflytdf_predataaxis(splvec = splvec, next_node = next_node, next_anchor_step = next_anchor_step, parent = parent, depth = depth, node_type = node_type)
   }
 )
@@ -392,14 +399,26 @@ setMethod(
 #' @export
 setMethod(
   "get_full_lyt_df", "SplitVector",
-  function(splvec, next_node,  next_anchor_step = 1L, parent, depth, node_type) {
+  function(splvec, next_node, next_anchor_step = 1L, parent, depth, node_type) {
     lst <- vector("list", length(splvec))
     an_step <- next_anchor_step
-    nid = next_node
+    nid <- next_node
     ktypes <- get_kid_types(splvec, node_type)
     for (i in seq_along(lst)) {
-      lst[[i]] <- get_anchor_df(splvec[[i]], next_step = step)
-      step <- max(lst[[i]]$step) + 1
+      if (ktypes[i] == "inactive") {
+        an_step <- NA_integer_
+      }
+      lst[[i]] <- get_full_lyt_df(
+        splvec[[i]],
+        next_node = nid,
+        next_anchor_step = an_step,
+        depth = depth + i - 1,
+        parent = parent,
+        node_type = ktypes[i]
+      )
+      an_step <- suppressWarnings(max(next_anchor_step, lst[[i]]$anchor_step, na.rm = TRUE)) + 1
+      parent <- max(lst[[i]]$nodeid)
+      nid <- parent + 1
     }
     do.call(rbind.data.frame, lst)
   }
@@ -408,20 +427,27 @@ setMethod(
 #' @rdname get_anchor_df
 #' @export
 setMethod(
-  "get_anchor_df", "SplitVectorTree",
-  function(splvec, next_step = 1L) {
-    ret <- do.call(
-      rbind.data.frame,
-      lapply(splvec, first_spl_anchor_df, step = next_step)
-    )
-    last <- splvec[[length(splvec)]]
-    if (length(last) > 1) {
-      active <- get_anchor_df(SplitVector(lst = splvec[[length(splvec)]][-1]), next_step = next_step + 1)
-      ret <- rbind(ret, active)
+  "get_full_lyt_df", "SplitVectorTree",
+  function(splvec, next_node, next_anchor_step, parent, depth, node_type) {
+    len <- length(splvec)
+    lst <- vector("list", length(splvec))
+    ktypes <- get_kid_types(splvec, node_type)
+    nid <- next_node
+    for (i in seq_len(len)) {
+      lst[[i]] <- get_full_lyt_df(
+        splvec[[i]],
+        next_anchor_step = next_anchor_step,
+        next_node = nid,
+        parent = parent,
+        depth = depth,
+        node_type = ktypes[i]
+      )
+      nid <- max(lst[[i]]$nodeid) + 1
     }
     ret <- do.call(rbind.data.frame, lst)
     ret
-})
+  }
+)
 
 #' @rdname get_anchor_df
 #' @export
@@ -445,14 +471,16 @@ setMethod(
 #' @rdname get_anchor_df
 #' @export
 get_anchor_dfs <- function(lyt) {
-    fdfs <- get_layout_dfs(lyt)
+  fdfs <- get_layout_dfs(lyt)
 
-    ret <- lapply(fdfs,
-                  function(curdf) {
-        curdf[!is.na(curdf$anchor_step), ]
-    })
-    names(ret) <- names(fdfs)
-    ret
+  ret <- lapply(
+    fdfs,
+    function(curdf) {
+      curdf[!is.na(curdf$anchor_step), ]
+    }
+  )
+  names(ret) <- names(fdfs)
+  ret
 }
 
 #' @rdname get_anchor_df
@@ -542,16 +570,16 @@ get_row_anchor_df <- function(lyt) {
 #' @param lyt (`PreDataTableLayouts` or `PreDataRowLayout`)\cr A layout or row
 #'  to identify anchors for.
 #' @export
-get_anchor_list <- function(lyt) {
-  df <- get_anchor_df(lyt)
-  unname(split(df$name, df$step))
+get_row_anchor_list <- function(lyt) {
+  df <- get_row_anchor_df(lyt)
+  unname(split(df$name, df$anchor_step))
 }
 
 ## this is where all the valid anchor checks happen, and it should occur very early
 ## (in do_next_row_split), after that we can assume branch_pos is correct and
 ## anchor pt it leads to is valid
 ## recursive walking of tree happens once in anchordf creation
-find_branch_pos_df <- function(tt, at_sibling, anchordf = get_anchor_df(tt), nofind_ok = FALSE) {
+find_branch_pos_df <- function(tt, at_sibling, anchordf = get_row_anchor_df(tt), nofind_ok = FALSE) {
   atsib <- deuniqify_path_elements(at_sibling)
   dup_pos <- extract_dup_pos(at_sibling)
   found_lgl <- anchordf$name == atsib ## both deuniqified

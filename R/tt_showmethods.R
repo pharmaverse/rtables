@@ -140,7 +140,7 @@ lyt_desc_mat <- function(obj) {
   lastdepth <- 0
   for (i in seq_len(NROW(df))) {
     curdepth <- df$depth[i]
-    if(lastdepth >= curdepth) {
+    if (lastdepth >= curdepth) {
       outrow <- outrow + 1
     }
     outmat[outrow, curdepth] <- paste0(df$name[i], " (", df$spl_abbrev[i], ")")
@@ -154,11 +154,13 @@ lyt_desc_mat <- function(obj) {
 lyt_desc_add_spans <- function(obj, mat = lyt_desc_mat(obj)) {
   nempty <- matrix(nzchar(mat), nrow = nrow(mat), ncol = ncol(mat))
   spans <- list()
-  if (NROW(mat) <= 1)
-    return(mat) ## no padding needed
+  if (NROW(mat) <= 1) {
+    return(mat)
+  } ## no padding needed
   for (i in seq(2, NROW(mat))) {
-    if (nempty[i, 1])
-      next;
+    if (nempty[i, 1]) {
+      next
+    }
     col <- min(which(nempty[i, , drop = TRUE]))
     anchor_row <- max(which(nempty[seq_len(i - 1), col, drop = TRUE]))
     stopifnot(is.finite(anchor_row))
@@ -171,7 +173,6 @@ lyt_desc_add_spans <- function(obj, mat = lyt_desc_mat(obj)) {
     mat[rws, cl] <- paste("|", mat[rws, cl])
   }
   mat
-
 }
 pad_lyt_desc_mat <- function(mat) {
   matrix(apply(
@@ -188,21 +189,24 @@ build_lyt_desc_msg <- function(obj, sep_lines = FALSE) {
   nonempty <- matrix(nzchar(mat), nrow = nrow(mat), ncol = ncol(mat))
   mat <- lyt_desc_add_spans(mat = mat)
   padmat <- pad_lyt_desc_mat(mat)
-  rvs <- lapply(seq_len(nrow(mat)),
-                function(i) {
-    vec <- padmat[i, , drop = TRUE]
-    nempvec <- nonempty[i, , drop = TRUE]
-    sep <- c(ifelse(head(nempvec, -1) & tail(nempvec, -1), " -> ", "    "), if(sep_lines) "" else "\n")
-    paste(
-      collapse = "",
-      paste0(vec, sep)
-    )
-  })
+  rvs <- lapply(
+    seq_len(nrow(mat)),
+    function(i) {
+      vec <- padmat[i, , drop = TRUE]
+      nempvec <- nonempty[i, , drop = TRUE]
+      sep <- c(ifelse(head(nempvec, -1) & tail(nempvec, -1), " -> ", "    "), if (sep_lines) "" else "\n")
+      paste(
+        collapse = "",
+        paste0(vec, sep)
+      )
+    }
+  )
 
-  if (sep_lines)
+  if (sep_lines) {
     unlist(rvs)
-  else
+  } else {
     do.call(paste0, rvs)
+  }
 }
 layoutmsg <- function(obj) {
   ## if(!is(obj, "VLayoutNode"))
@@ -379,16 +383,18 @@ setMethod(
 
 docat_predataxis <- function(object, indent = 0) {
   cat(build_lyt_desc_msg(object))
-    
-  #lapply(object, docat_splitvec)
+
+  # lapply(object, docat_splitvec)
 }
 
 docat_splitvec <- docat_predataxis
 
 docat_lyt_legend <- function() {
-    cat("\n",
-        "'->' indicates nesting, vertical stacks of '|' indicate anchoring/siblings.\n'(<type>)' indicates split type, while '(** <type> **)' indicates an analyze instruction.",
-        "\n\n", sep = "")
+  cat("\n",
+    "'->' indicates nesting, vertical stacks of '|' indicate anchoring/siblings.\n'(<type>)' indicates split type, while '(** <type> **)' indicates an analyze instruction.",
+    "\n\n",
+    sep = ""
+  )
 }
 
 setMethod(
