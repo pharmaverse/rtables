@@ -312,7 +312,7 @@ test_that("intermediate nesting works correctly", {
     analyze("BMRKR1", at_sibling = "BMRKR2")
 
   expect_identical(
-    get_anchor_list(lyt_other),
+    get_row_anchor_list(lyt_other),
     list(
       "STRATA1",
       c("SEX", "RACE"),
@@ -338,7 +338,7 @@ test_that("intermediate nesting works correctly", {
     analyze("AGE")
 
   expect_identical(
-    get_anchor_list(clown_base),
+    get_row_anchor_list(clown_base),
     list(
       "RACE",
       "SEX",
@@ -440,7 +440,7 @@ test_that("intermediate nesting works correctly", {
   ## this ensures STRATA2 is masked, ie only the base split of previous
   ## top-level structures are available
   expect_identical(
-    get_anchor_list(clown_nose),
+    get_row_anchor_list(clown_nose),
     list(
       "STRATA1",
       "SEX",

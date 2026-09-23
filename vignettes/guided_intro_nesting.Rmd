@@ -376,7 +376,7 @@ We can get the list of eligible anchor points via `get_anchor_list`:
 
 
 ```{r}
-get_anchor_list(complex_lyt)
+get_row_anchor_list(complex_lyt)
 ```
 
 We can see that our first `STRATA1` split is eligible, but the
@@ -449,3 +449,103 @@ point diverts the stream of eligible nested elements after that point
 from those nested within the anchor point, or previously placed
 anchored elements, to those nested within the newly placed anchored
 element.
+
+We can consider the current state to help us visualize the eligible
+anchor points by printing our current layout:
+
+```{r}
+lyt_stack
+```
+
+
+# Designing Multi-Section Row-Layouts To Support Subgroup Variants
+
+In setting with standardized table outputs, we commonly want both
+all-patient and split-by-subgroups variants of a given core table
+structure. Intermediate nesting allows us to develop layouts with this
+in mind as we will see in this section.
+
+Consider a table layout with multiple sections in row space, e.g., an
+overall analysis, an analysis split by `RACE` and the same analysis
+split by `SEX`:
+
+```{r}
+lyt <- basic_table() |>
+  split_cols_by("ARM") |>
+  analyze("AGE") |>
+  split_rows_by("RACE", split_fun = keep_2_levels("RACE")) |>
+  analyze("AGE") |>
+  split_rows_by("SEX", split_fun = keep_2_levels("SEX")) |>
+  analyze("AGE")  
+
+build_table(lyt, ex_adsl)
+```
+
+Now supposing we want the same structure for each strata in our
+sample, if we apply `split_rows_by("STRATA1")` as the first row
+instruction, we do not get the desired table, because each
+`split_rows_by` that follows an `analyze` is `nested = FALSE` by
+default, bringing it all the way to the top level, ie.e, outside of
+our new strata splitting:
+
+
+```{r}
+lyt2 <- basic_table() |>
+  split_cols_by("ARM") |>
+  split_rows_by("STRATA1", split_fun = keep_2_levels("STRATA1")) |>
+  analyze("AGE") |>
+  split_rows_by("RACE", split_fun = keep_2_levels("RACE")) |>
+  analyze("AGE") |>
+  split_rows_by("SEX", split_fun = keep_2_levels("SEX")) |>
+  analyze("AGE")  
+
+build_table(lyt2, ex_adsl)
+```
+
+This is not a subgroup variant of our table.
+
+If we anchor those `split_rows_by` (each of which essentially starts a
+new section of the layout in row space) to our overall `AGE` analyze
+call, we will get the same table for the full variant:
+
+```{r}
+lyt_good <- basic_table() |>
+  split_cols_by("ARM") |>
+  analyze("AGE") |>
+  split_rows_by("RACE", split_fun = keep_2_levels("RACE"),
+                at_sibling = "AGE") |>
+  analyze("AGE") |>
+  split_rows_by("SEX", split_fun = keep_2_levels("SEX"),
+                at_sibling = "AGE") |>
+  analyze("AGE")  
+
+build_table(lyt_good, ex_adsl)
+```
+
+Crucially, however, when we prepend a new row splitting instruction to
+the sequence of row layout instructions, we immediately get our
+desired subgroup variant with no extra effort required:
+
+
+```{r}
+lyt_good_subgrp <- basic_table() |>
+  split_cols_by("ARM") |>
+  split_rows_by("STRATA1", split_fun = keep_2_levels("STRATA1")) |>  
+  analyze("AGE") |>
+  split_rows_by("RACE", split_fun = keep_2_levels("RACE"),
+                at_sibling = "AGE") |>
+  analyze("AGE") |>
+  split_rows_by("SEX", split_fun = keep_2_levels("SEX"),
+                at_sibling = "AGE") |>
+  analyze("AGE")  
+
+build_table(lyt_good, ex_adsl)
+```
+
+Note can use either standard splitting or splitting with `page_by =
+TRUE` when injecting our subgroups, depending on the desired behavior,
+with no other changes.
+
+Thus, it is good practice to anchor all top level (seemingly
+non-nested) row instructions after the first to that first instruction
+to make our layouts easily support the creation of subgroup variants.

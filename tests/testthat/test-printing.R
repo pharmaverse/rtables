@@ -384,6 +384,16 @@ test_that("Various Printing things work", {
   expect_false(any(grepl("new..AnalyzeColVarSplit., analysis_fun =", printoutput)))
 })
 
+test_that("layout printing works for cornercases", {
+  adsl_lyt <- basic_table(show_colcounts = TRUE) |>
+    split_cols_by("ARM") |>
+    analyze(c("AGE", "SEX"), afun = mean)
+
+  expect_no_error(capture.output(print(adsl_lyt)))
+  expect_no_error(capture.output(print(basic_table())))
+})
+
+
 
 test_that("section_div works throughout", {
   lyt <- basic_table() |>

@@ -204,6 +204,42 @@ extract_dup_pos <- function(str) {
   as.numeric(out)
 }
 
+
+#' @rdname int_methods
+#' @export
+setGeneric("get_kid_types", function(obj, type) standardGeneric("get_kid_types"))
+#' @rdname int_methods
+#' @export
+setMethod("get_kid_types", "Split", function(obj, type) type)
+#' @rdname int_methods
+#' @export
+setMethod("get_kid_types", "SplitVector",
+          function(obj, type) {
+  switch(
+    type,
+    anchor = c("anchor", rep("inactive", times = length(obj) - 1)),
+    inactive = c("sibling", rep("inactive", times = length(obj) - 1)),
+    active = rep("active", length(obj))
+  )
+})
+
+#' @rdname int_methods
+#' @export
+setMethod("get_kid_types", "SplitVectorTree",
+          function(obj, type) {
+    c("anchor", rep("inactive", times = length(obj) - 2), type)
+})
+#' @rdname int_methods
+#' @export
+setMethod("get_kid_types", "PreDataRowLayout",
+          function(obj, type) {
+    c(rep("inactive", times = length(obj) - 1), "active")
+})
+
+
+
+
+
 ## for
 ## split_rows_by("STRATA1") |>
 ## split_rows_by("SEX") |>
@@ -220,17 +256,58 @@ extract_dup_pos <- function(str) {
 #' This function scans an existing layout's row structure and lists
 #' valid `at_sibling` anchors for intermediate nesting.
 #'
+#' @param lyt (`PreDataTableLayouts`)\cr the layout.
 #' @param splvec (`PreDataTableLayouts` or internal classes)\cr The layout or partial
 #' layout to list anchors for.
-#' @param next_step (`integer(1)`)\cr For internal use.
+#' @param next_node (`integer(1)`)\cr For internal use
+#' @param next_anchor_step (`integer(1)`)\cr For internal use.
+#' @param parent (`integer(1)`)\cr For internal use.
+#' @param depth (`integer(1)`)\cr For internal use.
+#' @param node_type (`character(1)`)\cr For internal use.
+#' @details
 #'
-#' @return for `get_anchor_list` a character vector of eligible anchor
-#'     names (not including any `[n]` for duplicates); for
-#'     `get_anchor_df, a data.frame containing a `name` column and one
-#'     or more other columns intended for internal use.
+#' A layout data.frame is a data.frame describing a single dimension
+#' of pre-data layout structure, containing the following columns
+#' (most of which are used for internal implementations and will not
+#' be useful to the end-user):
+#'
+#' - `name`: name of the element
+#' - `nodeid`: sequential numeric id of the node, for use in
+#'   constructing graphs (0 is the root node)
+#' - `parentid`: node id of the layout instructions direct parent
+#' - `depth`: length of path from root to the current node through the
+#'   implicit graph defined by the (`nodeid`, `parentid`) pairings
+#' - `type`: a description of the 'type' of the node, used internally
+#' - `is_toplevel`: whether the node represents a top-level split/analysis.
+#' - `anchor_step`: position *along the path of eligible anchor
+#'   points*, (`NA` for nodes not along that path).
+#'
+#' The core difference between a layout data.frame and an anchor
+#' data.frame is that the anchor df has been subset to remove rows for
+#' nodes not currently eligible to be anchor points (ie allowed
+#' targets for a subsequent instruction's `at_sibling` argument).
+#'
+#' @return for `get_layout_dfs` a list with `rows` and `cols` elements
+#'     containing layout data.frames (see Details) for each structural
+#'     dimension; `get_anchor_dfs` returns the same, but with anchor
+#'     data.frames rather than full layout ones. `get_anchor_row_df`
+#'     is a convenience function that returns only the `rows` anchor
+#'     data.frame. `get_row_anchor_list` returns a list, each element
+#'     of which is a set of the names of one or more layout
+#'     instructions that will be placed as direct siblings to
+#'     each-other; i.e., anchored to the first element of the vector
+#'     when the length of the element is greater than one.
+#'
+#' @note Instructions which are anchored in such a way that they
+#'     ultimately become top-level instructions in the layout (i.e.,
+#'     by being anchored as a sibling to a top-level instruction) are
+#'     handled somewhat differently for implementation reasons and may
+#'     present differently to those anchored to non-top-level
+#'     instructions.
 #' @examples
 #'
 #' lyt <- basic_table() |>
+#'   split_cols_by("ARM") |>
 #'   split_rows_by("STRATA1") |>
 #'   split_rows_by("RACE") |>
 #'   split_rows_by("SEX") |>
@@ -238,19 +315,27 @@ extract_dup_pos <- function(str) {
 #'   split_rows_by("BMRKR1", at_sibling = "RACE") |>
 #'   analyze("AGE")
 #'
-#' get_anchor_list(lyt)
+#' get_layout_dfs(lyt)
+#' get_anchor_dfs(lyt)
+#' get_row_anchor_df(lyt)
 #'
 #' @export
-setGeneric("get_anchor_df", function(splvec, next_step = 1L) standardGeneric("get_anchor_df"))
+#' @rdname get_anchor_df
+setGeneric("get_full_lyt_df", function(splvec, next_node = 1L, next_anchor_step = 1L, parent, depth, node_type) standardGeneric("get_full_lyt_df"))
 
 #' @rdname get_anchor_df
 #' @export
 setMethod(
-  "get_anchor_df", "PreDataTableLayouts",
-  function(splvec, next_step = 1) {
-    get_anchor_df(rlayout(splvec), next_step = next_step)
-  }
+  "get_full_lyt_df", "PreDataTableLayouts",
+  function(splvec, next_node, next_anchor_step = 1, parent, depth, node_type) 
+    get_full_lyt_df(rlayout(splvec), next_node = next_node,
+                    next_anchor_step = next_anchor_step,
+                    parent = 0, depth = 1, node_type = "active")
 )
+
+make_lyt_df_row <- function(name, nodeid, parentid, depth, type, anchor_step, force_pag = NA, spl_abbrev = NA) {
+    data.frame(name = name, nodeid = nodeid, parentid = parentid, depth = depth, type = type, is_toplevel = parentid ==0, anchor_step = anchor_step, force_pag = force_pag, spl_abbrev = spl_abbrev)
+}
 
 #' @rdname get_anchor_df
 #' @export
@@ -277,16 +362,41 @@ setMethod(
       rep(FALSE, NROW(ret) - nroots)
     )
     ret
+}
+
+## note the different behaviors for the 0 length case below
+#' @rdname get_anchor_df
+#' @export
+setMethod(
+  "get_full_lyt_df", "PreDataRowLayout",
+  function(splvec, next_node = 1,  next_anchor_step = 1L, parent = 0L, depth = 1L, node_type = "active") {
+    if (length(splvec) == 1 && length(splvec[[1]]) == 0 )
+      return(make_lyt_df_row(NA, NA, NA, NA, NA, NA, NA)[0,])
+    .gflytdf_predataaxis(splvec = splvec, next_node = next_node, next_anchor_step = next_anchor_step, parent = parent, depth = depth, node_type = node_type)
+  }
+)
+
+
+#' @rdname get_anchor_df
+#' @export
+setMethod(
+  "get_full_lyt_df", "PreDataColLayout",
+  function(splvec, next_node = 1,  next_anchor_step = 1L, parent = 0L, depth = 1L, node_type = "active") {
+    if (length(splvec) == 1 && length(splvec[[1]]) == 0 )
+      return(get_full_lyt_df(AllSplit("<implicit>"), 1, 1, 0, 1, NA))
+    .gflytdf_predataaxis(splvec = splvec, next_node = next_node, next_anchor_step = next_anchor_step, parent = parent, depth = depth, node_type = node_type)
   }
 )
 
 #' @rdname get_anchor_df
 #' @export
 setMethod(
-  "get_anchor_df", "SplitVector",
-  function(splvec, next_step = 1L) {
+  "get_full_lyt_df", "SplitVector",
+  function(splvec, next_node,  next_anchor_step = 1L, parent, depth, node_type) {
     lst <- vector("list", length(splvec))
-    step <- next_step
+    an_step <- next_anchor_step
+    nid = next_node
+    ktypes <- get_kid_types(splvec, node_type)
     for (i in seq_along(lst)) {
       lst[[i]] <- get_anchor_df(splvec[[i]], next_step = step)
       step <- max(lst[[i]]$step) + 1
@@ -309,16 +419,124 @@ setMethod(
       active <- get_anchor_df(SplitVector(lst = splvec[[length(splvec)]][-1]), next_step = next_step + 1)
       ret <- rbind(ret, active)
     }
+    ret <- do.call(rbind.data.frame, lst)
     ret
-  }
-)
+})
 
 #' @rdname get_anchor_df
 #' @export
 setMethod(
-  "get_anchor_df", "Split",
-  function(splvec, next_step = 1L) first_spl_anchor_df(splvec, step = next_step)
+  "get_full_lyt_df", "Split",
+  function(splvec, next_node, next_anchor_step, parent, depth, node_type) make_lyt_df_row(name = obj_name(splvec), nodeid = next_node, anchor_step = next_anchor_step, parentid = parent, depth = depth, type = node_type, force_pag = has_force_pag(splvec), spl_abbrev = spltype_abbrev(splvec))
 )
+
+
+## the ***never*** used insert an existing table into a layout
+## support that I regret deeply.
+#' @rdname get_anchor_df
+#' @export
+setMethod(
+  "get_full_lyt_df", "VTableNodeInfo",
+  function(splvec, next_node, next_anchor_step, parent, depth, node_type) make_lyt_df_row(name = obj_name(splvec), nodeid = next_node, anchor_step = next_anchor_step, parentid = parent, depth = depth, type = node_type, force_pag = FALSE, spl_abbrev = paste0(nrow(splvec), "x", ncol(splvec), " table"))
+)
+
+
+## f-f-f-f-f-future proooooofin'
+#' @rdname get_anchor_df
+#' @export
+get_anchor_dfs <- function(lyt) {
+    fdfs <- get_layout_dfs(lyt)
+
+    ret <- lapply(fdfs,
+                  function(curdf) {
+        curdf[!is.na(curdf$anchor_step), ]
+    })
+    names(ret) <- names(fdfs)
+    ret
+}
+
+#' @rdname get_anchor_df
+#' @export
+get_row_anchor_df <- function(lyt) {
+  get_anchor_dfs(lyt)[["rows"]]
+}
+
+
+## #' @rdname get_anchor_df
+## #' @export
+## setGeneric("get_anchor_df", function(splvec, next_step = 1L) standardGeneric("get_anchor_df"))
+
+## #' @rdname get_anchor_df
+## #' @export
+## setMethod(
+##   "get_anchor_df", "PreDataTableLayouts",
+##   function(splvec, next_step = 1) {
+##     get_anchor_df(rlayout(splvec), next_step = next_step)
+##   }
+## )
+
+## #' @rdname get_anchor_df
+## #' @export
+## setMethod(
+##   "get_anchor_df", "PreDataRowLayout",
+##   function(splvec, next_step = 1L) {
+
+##     prev <- do.call(
+##         rbind.data.frame,
+##         lapply(
+##           splvec[-length(splvec)],
+##           first_spl_anchor_df,
+##           step = next_step
+##           )
+##     )
+##  #   prev$step <- seq(next_step, length.out = NROW(prev))
+
+##     active <- get_anchor_df(splvec[[length(splvec)]],
+##                             next_step = NROW(prev) + 1)
+##     ret <- rbind(prev, active)
+##     nroots <- NROW(prev) + 1
+##     ret$is_root <- c(rep(TRUE, nroots),
+##                      rep(FALSE, NROW(ret) - nroots))
+##     ret
+##   }
+## )
+
+## #' @rdname get_anchor_df
+## #' @export
+## setMethod(
+##   "get_anchor_df", "SplitVector",
+##   function(splvec, next_step = 1L) {
+##     lst <- vector("list", length(splvec))
+##     step <- next_step
+##     for (i in seq_along(lst)) {
+##         lst[[i]] <- get_anchor_df(splvec[[i]], next_step = step)
+##         step <- max(lst[[i]]$step) + 1
+##     }
+##     do.call(rbind.data.frame, lst)
+## })
+
+## #' @rdname get_anchor_df
+## #' @export
+## setMethod(
+##   "get_anchor_df", "SplitVectorTree",
+##   function(splvec, next_step = 1L) {
+##     ret <- do.call(rbind.data.frame,
+##                     lapply(splvec, first_spl_anchor_df, step = next_step))
+##     last <- splvec[[length(splvec)]]
+##     if (length(last) > 1) {
+##         active <- get_anchor_df(SplitVector(lst = splvec[[length(splvec)]][-1]), next_step = next_step + 1)
+##         ret <- rbind(ret, active)
+##     }
+##     ret
+##   }
+## )
+
+## #' @rdname get_anchor_df
+## #' @export
+## setMethod(
+##   "get_anchor_df", "Split",
+##   function(splvec, next_step = 1L) first_spl_anchor_df(splvec, step = next_step)
+## )
 
 #' @rdname get_anchor_df
 #' @param lyt (`PreDataTableLayouts` or `PreDataRowLayout`)\cr A layout or row

@@ -132,6 +132,78 @@ spldesc <- function(spl, value = "") {
   )
 }
 
+lyt_desc_mat <- function(obj) {
+  df <- get_full_lyt_df(obj, parent = 0, depth = 1, node_type = "inactive")
+
+  outrow <- 1
+  outmat <- matrix("", nrow = NROW(df), ncol = max(0, df$depth))
+  lastdepth <- 0
+  for (i in seq_len(NROW(df))) {
+    curdepth <- df$depth[i]
+    if(lastdepth >= curdepth) {
+      outrow <- outrow + 1
+    }
+    outmat[outrow, curdepth] <- paste0(df$name[i], " (", df$spl_abbrev[i], ")")
+    lastdepth <- curdepth
+  }
+  rs <- rowSums(nchar(outmat))
+  outmat <- outmat[rs > 0, , drop = FALSE]
+  outmat
+}
+
+lyt_desc_add_spans <- function(obj, mat = lyt_desc_mat(obj)) {
+  nempty <- matrix(nzchar(mat), nrow = nrow(mat), ncol = ncol(mat))
+  spans <- list()
+  if (NROW(mat) <= 1)
+    return(mat) ## no padding needed
+  for (i in seq(2, NROW(mat))) {
+    if (nempty[i, 1])
+      next;
+    col <- min(which(nempty[i, , drop = TRUE]))
+    anchor_row <- max(which(nempty[seq_len(i - 1), col, drop = TRUE]))
+    stopifnot(is.finite(anchor_row))
+    spans <- c(spans, list(list(rows = seq(anchor_row, i), col = col)))
+  }
+
+  for (j in seq_along(spans)) {
+    rws <- spans[[j]]$rows
+    cl <- spans[[j]]$col
+    mat[rws, cl] <- paste("|", mat[rws, cl])
+  }
+  mat
+
+}
+pad_lyt_desc_mat <- function(mat) {
+  matrix(apply(
+    mat, 2,
+    function(x) {
+      vapply(x, padstr, just = "left", n = max(nchar(x)), fontspec = NULL, FUN.VALUE = "")
+    }
+  ), nrow = nrow(mat), ncol = ncol(mat))
+}
+
+build_lyt_desc_msg <- function(obj, sep_lines = FALSE) {
+  mat <- lyt_desc_mat(obj)
+  ## before |'s are added
+  nonempty <- matrix(nzchar(mat), nrow = nrow(mat), ncol = ncol(mat))
+  mat <- lyt_desc_add_spans(mat = mat)
+  padmat <- pad_lyt_desc_mat(mat)
+  rvs <- lapply(seq_len(nrow(mat)),
+                function(i) {
+    vec <- padmat[i, , drop = TRUE]
+    nempvec <- nonempty[i, , drop = TRUE]
+    sep <- c(ifelse(head(nempvec, -1) & tail(nempvec, -1), " -> ", "    "), if(sep_lines) "" else "\n")
+    paste(
+      collapse = "",
+      paste0(vec, sep)
+    )
+  })
+
+  if (sep_lines)
+    unlist(rvs)
+  else
+    do.call(paste0, rvs)
+}
 layoutmsg <- function(obj) {
   ## if(!is(obj, "VLayoutNode"))
   ##     stop("how did a non layoutnode object get in docatlayout??")
@@ -248,7 +320,7 @@ setMethod(
 
 setMethod(
   "spltype_abbrev", "AnalyzeVarSplit",
-  function(obj) "** analysis **"
+  function(obj) "** var **"
 )
 
 setMethod(
@@ -258,11 +330,11 @@ setMethod(
 
 setMethod(
   "spltype_abbrev", "AnalyzeMultiVars",
-  function(obj) "** multivar analysis **"
+  function(obj) "** multivar **"
 )
 setMethod(
   "spltype_abbrev", "AnalyzeColVarSplit",
-  function(obj) "** col-var analysis **"
+  function(obj) "** col-var **"
 )
 
 setMethod(
@@ -270,43 +342,53 @@ setMethod(
   function(obj) ""
 )
 
-docat_splitvec <- function(object, indent = 0) {
-  if (indent > 0) {
-    cat(rep(" ", times = indent), sep = "")
-  }
-  if (length(object) == 1L && is(object[[1]], "VTableNodeInfo")) {
-    tab <- object[[1]]
-    msg <- sprintf(
-      "A Pre-Existing Table [%d x %d]",
-      nrow(tab), ncol(tab)
-    )
-  } else {
-    if (is(object, "SplitVectorTree")) {
-      return(lapply(object, docat_splitvec))
-    }
-    plds <- ploads_to_str(object) ## lapply(object, spl_payload))
+## docat_splitvec <- function(object, indent = 0) {
+##   if (indent > 0) {
+##     cat(rep(" ", times = indent), sep = "")
+##   }
+##   if (length(object) == 1L && is(object[[1]], "VTableNodeInfo")) {
+##     tab <- object[[1]]
+##     msg <- sprintf(
+##       "A Pre-Existing Table [%d x %d]",
+##       nrow(tab), ncol(tab)
+##     )
+##   } else {
+##     if (is(object, "SplitVectorTree")) {
+##       return(lapply(object, docat_splitvec))
+##     }
+##     plds <- ploads_to_str(object) ## lapply(object, spl_payload))
 
-    tabbrev <- sapply(object, spltype_abbrev)
-    msg <- paste(
-      collapse = " -> ",
-      paste0(plds, " (", tabbrev, ")")
-    )
-  }
-  cat(msg, "\n")
-}
+##     tabbrev <- sapply(object, spltype_abbrev)
+##     msg <- paste(
+##       collapse = " -> ",
+##       paste0(plds, " (", tabbrev, ")")
+##     )
+##   }
+##   cat(msg, "\n")
+## }
 
 setMethod(
   "show", "SplitVector",
   function(object) {
     cat("A SplitVector Pre-defining a Tree Structure\n\n")
     docat_splitvec(object)
-    cat("\n")
+    docat_lyt_legend()
     invisible(object)
   }
 )
 
 docat_predataxis <- function(object, indent = 0) {
-  lapply(object, docat_splitvec)
+  cat(build_lyt_desc_msg(object))
+    
+  #lapply(object, docat_splitvec)
+}
+
+docat_splitvec <- docat_predataxis
+
+docat_lyt_legend <- function() {
+    cat("\n",
+        "'->' indicates nesting, vertical stacks of '|' indicate anchoring/siblings.\n'(<type>)' indicates split type, while '(** <type> **)' indicates an analyze instruction.",
+        "\n\n", sep = "")
 }
 
 setMethod(
@@ -314,6 +396,7 @@ setMethod(
   function(object) {
     cat("A Pre-data Column Layout Object\n\n")
     docat_predataxis(object)
+    docat_lyt_legend()
     invisible(object)
   }
 )
@@ -323,6 +406,7 @@ setMethod(
   function(object) {
     cat("A Pre-data Row Layout Object\n\n")
     docat_predataxis(object)
+    docat_lyt_legend()
     invisible(object)
   }
 )
@@ -335,7 +419,7 @@ setMethod(
     docat_predataxis(object@col_layout)
     cat("\nRow-Split Structure:\n")
     docat_predataxis(object@row_layout)
-    cat("\n")
+    docat_lyt_legend()
     invisible(object)
   }
 )

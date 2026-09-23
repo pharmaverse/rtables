@@ -19,6 +19,11 @@
 \alias{last_rowsplit,PreDataTableLayouts-method}
 \alias{split_rows}
 \alias{split_rows,NULL-method}
+\alias{get_kid_types}
+\alias{get_kid_types,Split-method}
+\alias{get_kid_types,SplitVector-method}
+\alias{get_kid_types,SplitVectorTree-method}
+\alias{get_kid_types,PreDataRowLayout-method}
 \alias{split_rows,PreDataRowLayout-method}
 \alias{split_rows,SplitVector-method}
 \alias{split_rows,PreDataTableLayouts-method}
@@ -433,6 +438,16 @@ split_rows(
   cmpnd_fun = AnalyzeMultiVars,
   at_sibling = NULL
 )
+
+get_kid_types(obj, type)
+
+\S4method{get_kid_types}{Split}(obj, type)
+
+\S4method{get_kid_types}{SplitVector}(obj, type)
+
+\S4method{get_kid_types}{SplitVectorTree}(obj, type)
+
+\S4method{get_kid_types}{PreDataRowLayout}(obj, type)
 
 \S4method{split_rows}{PreDataRowLayout}(
   lyt = NULL,

@@ -334,54 +334,27 @@ is_analyze_spl <- function(spl) is(spl, "VAnalyzeSplit") || is(spl, "AnalyzeMult
 ## workhorse, this fires off all the checks via find_branch_pos
 
 do_next_split_rows <- function(lyt, spl, nested, at_sibling) {
-  if (!is.null(at_sibling)) {
-    anchordf <- get_anchor_df(lyt)
+    force(lyt)
+    if (!is.null(at_sibling)) {
+    anchordf <- get_row_anchor_df(lyt)
     ## anchor point existence and validity checks occur here
     bprow <- find_branch_pos_df(anchordf = anchordf, at_sibling = at_sibling)
-    if (bprow$is_root) {
-      nested <- FALSE
-      at_sibling <- NULL
+    if (bprow$is_toplevel) {
+        nested <- FALSE
+        at_sibling <- NULL
     }
   }
   if (is.null(at_sibling)) {
     cmpfun <- AnalyzeMultiVars
     pos <- next_rpos(lyt, nested, at_sibling = at_sibling)
   } else {
-    cmpfun <- pack_in_svt ## SplitVectorTree
-    pos <- bprow$step
+    cmpfun <- pack_in_svt ##SplitVectorTree
+    pos <- bprow$anchor_step
   }
   if (is_analyze_spl(spl) && is_analyze_spl(last_rowsplit(lyt)) &&
     nested && is.null(at_sibling)) {
     ret <- cmpnd_last_rowsplit(lyt, spl, cmpfun)
   } else {
-    ret <- split_rows(lyt, spl, pos, at_sibling = at_sibling, cmpnd_fun = cmpfun)
-  }
-  ret
-}
-
-
-do_next_split_rows_old <- function(lyt, spl, nested, at_sibling) {
-  if (!is.null(at_sibling) && branch_is_root(lyt, at_sibling)) {
-    if (has_force_pag(get_branch_anchor(rlayout(lyt), at_sibling))) {
-      stop(
-        "at_sibling pointed to a split with forced pagination (page_by = TRUE).",
-        " This is not supported."
-      )
-    }
-    nested <- FALSE
-    at_sibling <- NULL
-  }
-  if (is.null(at_sibling)) {
-    cmpfun <- AnalyzeMultiVars
-  } else {
-    cmpfun <- pack_in_svt
-  } ## SplitVectorTree
-
-  if (is_analyze_spl(spl) && is_analyze_spl(last_rowsplit(lyt)) &&
-    nested && is.null(at_sibling)) {
-    ret <- cmpnd_last_rowsplit(lyt, spl, cmpfun)
-  } else {
-    pos <- next_rpos(lyt, nested, at_sibling = at_sibling)
     ret <- split_rows(lyt, spl, pos, at_sibling = at_sibling, cmpnd_fun = cmpfun)
   }
   ret
