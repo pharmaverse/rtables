@@ -107,7 +107,7 @@ test_that("at_sibling shows dynamic cut split labels", {
 })
 
 
-test_that("intermediate nesting works correctly", {
+test_that("basic usage of intermediate nesting works correctly", {
   ## analyze nested at "proper" (non top level) split
   lyt <- basic_table() |>
     split_cols_by("ARM") |>
@@ -168,6 +168,9 @@ test_that("intermediate nesting works correctly", {
     ## tapply insists on making an array which trips up waldo/testthat
     lapply(split(tmpdat$AGE, tmpdat$ARM), mean)
   )
+})
+
+test_that("anchoring to top-level element gives exact nested = FALSE behavior", {
 
 
   ## at_sibling = <top-level-split> gracefully works as nested = FALSE
@@ -214,7 +217,9 @@ test_that("intermediate nesting works correctly", {
 
   tbl4b <- build_table(lyt4b, ex_adsl)
   expect_identical(tbl4, tbl4b)
+})
 
+test_that("bad at_sibling values give informative errors", {
   ## Useful errors for bad at_sibling
   expect_error(
     {
@@ -239,6 +244,9 @@ test_that("intermediate nesting works correctly", {
     },
     "at_sibling pointed to an element with forced pagination"
   )
+})
+
+test_that("previously placed siblings can be targeted by at_sibling", {
 
 
   ## even though this doesn't make a ton of sense, as the correct thing is for
@@ -275,6 +283,9 @@ test_that("intermediate nesting works correctly", {
     0L
   )
 
+})
+
+test_that("at_sibling finds and respects overridden table names", {
   ## at_sibling finds overridden table names
 
   lyt_ovrd <- basic_table() |>
@@ -301,7 +312,9 @@ test_that("intermediate nesting works correctly", {
     path_count(tbl_ovrd, c("STRATA1", "*", "BMRKR1")),
     0L
   )
+})
 
+test_that("extreme/repeated usage of intermediate nesting works correctly", {
   lyt_other <- basic_table() |>
     split_rows_by("STRATA1") |>
     split_rows_by("SEX") |>
