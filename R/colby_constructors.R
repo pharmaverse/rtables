@@ -334,6 +334,7 @@ is_analyze_spl <- function(spl) is(spl, "VAnalyzeSplit") || is(spl, "AnalyzeMult
 ## workhorse, this fires off all the checks via find_branch_pos
 
 do_next_split_rows <- function(lyt, spl, nested, at_sibling) {
+  checkmate::assert_string(at_sibling, null.ok = TRUE)
   force(lyt)
   if (!is.null(at_sibling)) {
     anchordf <- get_row_anchor_df(lyt)

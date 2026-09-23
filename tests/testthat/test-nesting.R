@@ -244,6 +244,14 @@ test_that("bad at_sibling values give informative errors", {
     },
     "at_sibling pointed to an element with forced pagination"
   )
+  base <- basic_table() |>
+    split_rows_by("SEX") |>
+    split_rows_by("RACE") |>
+    analyze("AGE")
+  expect_error(split_rows_by(base, "STRATA1", at_sibling = 1))
+  expect_error(analyze(base, "STRATA1", at_sibling = 1))
+  expect_error(analyze(base, "STRATA1", at_sibling = character()))
+  expect_error(split_rows_by_quartiles(base, "AGE", at_sibling = NA_character_))
 })
 
 test_that("previously placed siblings can be targeted by at_sibling", {
