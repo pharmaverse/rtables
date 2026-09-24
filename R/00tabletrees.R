@@ -2113,9 +2113,6 @@ setClass("RefFootnote", representation(
 #' build_table(lyt2, DM)
 #'
 #' @export
-#'
-#'
-#'
 RefFootnote <- function(note, index = NA_integer_, symbol = NA_character_) {
   if (is(note, "RefFootnote")) {
     return(note)
