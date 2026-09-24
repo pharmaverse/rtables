@@ -2063,7 +2063,7 @@ setClass("RefFootnote", representation(
 #'
 #' @param note (`character(1)`)\cr The text of the footnote, not including
 #'   the symbol or index.
-#' @param note (`integer(1)`)\cr The index (position in the list of footnotes);
+#' @param index (`integer(1)`)\cr The index (position in the list of footnotes);
 #'   this should not typically be set by users. `NA` (the default) indicates
 #'   automatic counting.
 #' @param symbol (`character(1)`)\cr The symbol to be used instead of the

@@ -7,7 +7,10 @@
 RefFootnote(note, index = NA_integer_, symbol = NA_character_)
 }
 \arguments{
-\item{note}{(\code{integer(1)})\cr The index (position in the list of footnotes);
+\item{note}{(\code{character(1)})\cr The text of the footnote, not including
+the symbol or index.}
+
+\item{index}{(\code{integer(1)})\cr The index (position in the list of footnotes);
 this should not typically be set by users. \code{NA} (the default) indicates
 automatic counting.}
 
