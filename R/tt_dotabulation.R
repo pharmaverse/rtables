@@ -22,7 +22,13 @@ match_extra_args <- function(f,
       .N_row = .N_row,
       .df_row = .df_row,
       .all_col_exprs = .all_col_exprs,
-      .all_col_counts = .all_col_counts
+      .all_col_counts = .all_col_counts,
+      ## always available as of fix for https://github.com/insightsengineering/rtables/issues/1089
+      ## still will only be passed to afun if it's asked for by the formals, same as
+      ## .N_col, etc
+      .alt_df = .alt_df,
+      .alt_df_row = .alt_df_row,
+      .alt_df_full = .alt_df_full
     ),
     extras
   )
@@ -34,16 +40,6 @@ match_extra_args <- function(f,
   }
   if (!is.null(.ref_group)) {
     possargs <- c(possargs, list(.ref_group = .ref_group))
-  }
-  if (!is.null(.alt_df_row)) {
-    possargs <- c(possargs, list(.alt_df_row = .alt_df_row))
-  }
-  if (!is.null(.alt_df)) {
-    possargs <- c(possargs, list(.alt_df = .alt_df))
-  }
-
-  if (!is.null(.alt_df_full)) {
-    possargs <- c(possargs, list(.alt_df_full = .alt_df_full))
   }
 
   if (!is.null(.ref_full)) {
@@ -119,6 +115,9 @@ gen_onerv <- function(csub, col, count, cextr, cpath,
     dat <- dat[!is.na(dat[[col]]), , drop = FALSE]
   }
 
+  ## firstarg will be df or x (col vec), dat will always be the df
+  firstarg <- dat
+
   fullrefcoldat <- cextr$.ref_full
   if (!is.null(fullrefcoldat)) {
     cextr$.ref_full <- NULL
@@ -133,11 +132,19 @@ gen_onerv <- function(csub, col, count, cextr, cpath,
   ## behavior for x/df and ref-data (full and group)
   ## match
   if (!is.null(col) && !takesdf) {
-    dat <- dat[[col]]
+    firstarg <- firstarg[[col]]
     fullrefcoldat <- fullrefcoldat[[col]]
     baselinedf <- baselinedf[[col]]
   }
-  args <- list(dat)
+  args <- list(firstarg)
+
+  ## replace alt_df (potential) args with their df versions if alt_counts_df not set
+  ## in build_table call
+  if (is.null(alt_df_full)) {
+    alt_df_full <- if (NROW(spl_context) > 0) spl_context$full_parent_df[[1]] else dfpart
+    alt_dfpart <- dfpart
+    alt_dfpart_fil <- dat
+  }
 
   names(all_col_counts) <- names(all_col_exprs)
 
@@ -1405,14 +1412,6 @@ build_table <- function(lyt, df,
   lyt <- set_def_child_ord(lyt, df)
   lyt <- fix_analyze_vis(lyt)
   df <- fix_split_vars(lyt, df, char_ok = is.null(col_counts))
-  alt_params <- check_afun_cfun_params(lyt, c(".alt_df", ".alt_df_row"))
-  if (any(alt_params) && is.null(alt_counts_df)) {
-    stop(
-      "Layout contains afun/cfun functions that have optional parameters ",
-      ".alt_df and/or .alt_df_row, but no alt_counts_df was provided in ",
-      "build_table()."
-    )
-  }
 
   rtpos <- TreePos()
   cinfo <- create_colinfo(lyt, df, rtpos,

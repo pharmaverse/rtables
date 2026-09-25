@@ -39,6 +39,10 @@ where the variables required for row splitting are not present in \code{alt_coun
 \item{.all_col_counts}{Vector of integers. Each of them represents the global count for each column. It differs
 if \code{alt_counts_df} is used (see \code{\link[=build_table]{build_table()}}).}
 }
+
+For the \verb{.alt_df*} family of parameters, these will be passed data
+subsets based on \code{df} if no \code{alt_counts_df} is specified in the
+\code{build_table} call. In \code{rtables} versions \verb{<= 0.6.16} this resulted in an error.
 }
 \note{
 If any of these formals is specified incorrectly or not present in the tabulation machinery, it will be
