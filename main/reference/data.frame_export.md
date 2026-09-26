@@ -88,7 +88,7 @@ path_enriched_df(tt, path_fun = collapse_path, value_fun = collapse_values)
 
   (`"iec"` (default), `"iec_mod"` or `"sas"`)\
   the type of rounding to perform. See
-  [`formatters::format_value()`](https://rdrr.io/pkg/formatters/man/format_value.html)
+  [`formatters::format_value()`](https://pharmaverse.github.io/formatters/latest-tag/reference/format_value.html)
   for details.
 
 - ...:
@@ -139,7 +139,7 @@ values will be as if the relevant siblings had identical names.
 
 [`df_to_tt()`](https://pharmaverse.github.io/rtables/reference/df_to_tt.md)
 when using `simplify = TRUE` and
-[`formatters::make_row_df()`](https://rdrr.io/pkg/formatters/man/make_row_df.html)
+[`formatters::make_row_df()`](https://pharmaverse.github.io/formatters/latest-tag/reference/make_row_df.html)
 to have a comprehensive view of the hierarchical structure of the rows.
 
 ## Examples

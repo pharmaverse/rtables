@@ -123,14 +123,14 @@ constr_args(
 
   (`string`)\
   single string to use as main title
-  ([`formatters::main_title()`](https://rdrr.io/pkg/formatters/man/title_footer.html)).
+  ([`formatters::main_title()`](https://pharmaverse.github.io/formatters/latest-tag/reference/title_footer.html)).
   Ignored for subtables.
 
 - subtitles:
 
   (`character`)\
   a vector of strings to use as subtitles
-  ([`formatters::subtitles()`](https://rdrr.io/pkg/formatters/man/title_footer.html)),
+  ([`formatters::subtitles()`](https://pharmaverse.github.io/formatters/latest-tag/reference/title_footer.html)),
   where every element is printed on a separate line. Ignored for
   subtables.
 
@@ -139,7 +139,7 @@ constr_args(
   (`character`)\
   a vector of strings to use as main global (non-referential) footer
   materials
-  ([`formatters::main_footer()`](https://rdrr.io/pkg/formatters/man/title_footer.html)),
+  ([`formatters::main_footer()`](https://pharmaverse.github.io/formatters/latest-tag/reference/title_footer.html)),
   where every element is printed on a separate line.
 
 - prov_footer:
@@ -147,7 +147,7 @@ constr_args(
   (`character`)\
   a vector of strings to use as provenance-related global footer
   materials
-  ([`formatters::prov_footer()`](https://rdrr.io/pkg/formatters/man/title_footer.html)),
+  ([`formatters::prov_footer()`](https://pharmaverse.github.io/formatters/latest-tag/reference/title_footer.html)),
   where every element is printed on a separate line.
 
 - footnotes:

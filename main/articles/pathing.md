@@ -29,6 +29,7 @@ path, column path, or combination thereof.
 Consider a the table with non-trivial structure in both the column and
 row dimensions:
 
+\
 [`library`](https://rdrr.io/r/base/library.html)`(`[`rtables`](https://github.com/pharmaverse/rtables)`)`
 
     ## Loading required package: formatters
@@ -47,7 +48,29 @@ row dimensions:
     ## 
     ##     str
 
-`keep_rc`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``"ASIAN"``, ``"WHITE"``)`` ``## chosen for brevity`` `` ``afun`` ``<-`` ``function``(``x``)`` ``{`` `` `[`list`](https://rdrr.io/r/base/list.html)`(`` `` Mean ``=`` `[`rcell`](https://pharmaverse.github.io/rtables/reference/rcell.md)`(`[`mean`](https://rdrr.io/r/base/mean.html)`(``x``)``, format ``=`` ``"xx.x"``)``,`` `` Median ``=`` `[`rcell`](https://pharmaverse.github.io/rtables/reference/rcell.md)`(`[`median`](https://rdrr.io/r/stats/median.html)`(``x``)``, format ``=`` ``"xx.x"``)`` `` ``)`` ``}`` `` ``lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``, split_fun ``=`` `[`keep_split_levels`](https://pharmaverse.github.io/rtables/reference/split_funcs.md)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"A: Drug X"``, ``"C: Combination"``)``)``)`` ``|>`` `` `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"SEX"``, split_fun ``=`` `[`keep_split_levels`](https://pharmaverse.github.io/rtables/reference/split_funcs.md)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"F"``, ``"M"``)``)``)`` ``|>`` `` `[`add_overall_col`](https://pharmaverse.github.io/rtables/reference/add_overall_col.md)`(``"All"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"RACE"``, split_fun ``=`` `[`keep_split_levels`](https://pharmaverse.github.io/rtables/reference/split_funcs.md)`(``keep_rc``)``)`` ``|>`` `` `[`summarize_row_groups`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md)`(``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"STRATA1"``)`` ``|>`` `` `[`summarize_row_groups`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md)`(``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"AGE"``, afun ``=`` ``afun``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"BMRKR1"``, nested ``=`` ``FALSE``, show_labels ``=`` ``"visible"``)`` `` ``tbl`` ``<-`` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt``, ``DM``)`` ``tbl`
+\
+`keep_rc`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``"ASIAN"``, ``"WHITE"``)`` ``## chosen for brevity`\
+\
+`afun`` ``<-`` ``function``(``x``)`` ``{`\
+`  `[`list`](https://rdrr.io/r/base/list.html)`(`\
+`    Mean ``=`` `[`rcell`](https://pharmaverse.github.io/rtables/reference/rcell.md)`(`[`mean`](https://rdrr.io/r/base/mean.html)`(``x``)``, format ``=`` ``"xx.x"``)``,`\
+`    Median ``=`` `[`rcell`](https://pharmaverse.github.io/rtables/reference/rcell.md)`(`[`median`](https://rdrr.io/r/stats/median.html)`(``x``)``, format ``=`` ``"xx.x"``)`\
+`  ``)`\
+`}`\
+\
+`lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`\
+`  `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"ARM"``, split_fun ``=`` `[`keep_split_levels`](https://pharmaverse.github.io/rtables/reference/split_funcs.md)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"A: Drug X"``, ``"C: Combination"``)``)``)`` ``|>`\
+`  `[`split_cols_by`](https://pharmaverse.github.io/rtables/reference/split_cols_by.md)`(``"SEX"``, split_fun ``=`` `[`keep_split_levels`](https://pharmaverse.github.io/rtables/reference/split_funcs.md)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"F"``, ``"M"``)``)``)`` ``|>`\
+`  `[`add_overall_col`](https://pharmaverse.github.io/rtables/reference/add_overall_col.md)`(``"All"``)`` ``|>`\
+`  `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"RACE"``, split_fun ``=`` `[`keep_split_levels`](https://pharmaverse.github.io/rtables/reference/split_funcs.md)`(``keep_rc``)``)`` ``|>`\
+`  `[`summarize_row_groups`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md)`(``)`` ``|>`\
+`  `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"STRATA1"``)`` ``|>`\
+`  `[`summarize_row_groups`](https://pharmaverse.github.io/rtables/reference/summarize_row_groups.md)`(``)`` ``|>`\
+`  `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"AGE"``, afun ``=`` ``afun``)`` ``|>`\
+`  `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"BMRKR1"``, nested ``=`` ``FALSE``, show_labels ``=`` ``"visible"``)`\
+\
+`tbl`` ``<-`` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt``, ``DM``)`\
+`tbl`
 
     ##                     A: Drug X              C: Combination                   
     ##                  F            M            F            M            All    
@@ -78,6 +101,7 @@ row dimensions:
 We can get a first look at the row- and column-structure of our table
 (if in different formats) with `table_structure` and `col_info`.
 
+\
 [`table_structure`](https://pharmaverse.github.io/rtables/reference/table_structure.md)`(``tbl``)`
 
     ## [TableTree] root
@@ -100,6 +124,7 @@ We can get a first look at the row- and column-structure of our table
     ##      [ElementaryTable] AGE (2 x 5)
     ##  [ElementaryTable] BMRKR1 (1 x 5)
 
+\
 [`col_info`](https://pharmaverse.github.io/rtables/reference/col_accessors.md)`(``tbl``)`
 
     ## An InstantiatedColumnInfo object
@@ -126,7 +151,8 @@ see all the valid row paths (including an optional “root” beginning
 value which is technically correct but not necessary to include) via
 `row_paths_summary`.
 
-`rpsummry`` ``<-`` `[`row_paths_summary`](https://pharmaverse.github.io/rtables/reference/row_paths_summary.md)`(``tbl``)`
+\
+`rpsummry`` ``<-`` `[`row_paths_summary`](https://pharmaverse.github.io/rtables/reference/row_paths_summary.md)`(``tbl``)`
 
     ## rowname       node_class    path                                      
     ## ——————————————————————————————————————————————————————————————————————
@@ -158,6 +184,7 @@ data.frame containing the same information in a programmatically
 accessible form. In particular `path` is a list-valued column whose
 values can be used directly as row paths:
 
+\
 [`head`](https://pharmaverse.github.io/rtables/reference/head_tail.md)`(``rpsummry``)`
 
     ##    label indent node_class         path
@@ -168,7 +195,8 @@ values can be used directly as row paths:
     ## 5      B      1 ContentRow root, RA....
     ## 6   Mean      2    DataRow root, RA....
 
-`tbl``[``rpsummry``$``path``[[``6``]``]``, ``]`
+\
+`tbl``[``rpsummry``$``path``[[``6``]``]``, ``]`
 
     ##         A: Drug X      C: Combination         
     ##          F      M        F         M      All 
@@ -179,7 +207,8 @@ The `c("RACE", "ASIAN")` row path refers to the horizontal slice of our
 table containing all rows that represent analysis on Asian patients. We
 see that we get the expected subtable:
 
-`tbl``[`[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"ASIAN"``)``, ``]`
+\
+`tbl``[`[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"ASIAN"``)``, ``]`
 
     ##                     A: Drug X              C: Combination                   
     ##                  F            M            F            M            All    
@@ -198,7 +227,8 @@ see that we get the expected subtable:
 Similarly we can get the groups summary and row for strata B of
 Caucasian patients via
 
-`tbl``[`[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"WHITE"``, ``"STRATA1"``, ``"B"``)``, ``]`
+\
+`tbl``[`[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"WHITE"``, ``"STRATA1"``, ``"B"``)``, ``]`
 
     ##                 A: Drug X          C: Combination               
     ##               F          M          F          M          All   
@@ -211,7 +241,8 @@ Notice this is a strict subtable in the structural sense, which means we
 do not get the ethnicity-level group summary here. We can see this
 because our structure and our path now starts with `"B"`:
 
-[`table_structure`](https://pharmaverse.github.io/rtables/reference/table_structure.md)`(``tbl``[`[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"WHITE"``, ``"STRATA1"``, ``"B"``)``, ``]``)`
+\
+[`table_structure`](https://pharmaverse.github.io/rtables/reference/table_structure.md)`(``tbl``[`[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"WHITE"``, ``"STRATA1"``, ``"B"``)``, ``]``)`
 
     ## [TableTree] root
     ##  [TableTree] RACE
@@ -223,7 +254,8 @@ because our structure and our path now starts with `"B"`:
 As mentioned above, to “path into” a group summary we use the
 `"@content"` directive:
 
-`tbl``[`[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"ASIAN"``, ``"@content"``)``, ``]`
+\
+`tbl``[`[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"ASIAN"``, ``"@content"``)``, ``]`
 
     ##                A: Drug X              C: Combination                   
     ##             F            M            F            M            All    
@@ -234,7 +266,8 @@ We can path down to analysis tables and then individual rows via their
 name, which unlike other structures tends to be identical to their
 label:
 
-`tbl``[`[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"WHITE"``, ``"STRATA1"``, ``"B"``, ``"AGE"``)``, ``]`
+\
+`tbl``[`[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"WHITE"``, ``"STRATA1"``, ``"B"``, ``"AGE"``)``, ``]`
 
     ##           A: Drug X      C: Combination         
     ##            F      M        F         M      All 
@@ -242,7 +275,8 @@ label:
     ## Mean     37.0    43.7    34.3      36.0     38.3
     ## Median   38.5    44.0    35.0      36.0     38.0
 
-`tbl``[`[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"WHITE"``, ``"STRATA1"``, ``"B"``, ``"AGE"``, ``"Median"``)``, ``]`
+\
+`tbl``[`[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"WHITE"``, ``"STRATA1"``, ``"B"``, ``"AGE"``, ``"Median"``)``, ``]`
 
     ##           A: Drug X      C: Combination         
     ##            F      M        F         M      All 
@@ -254,6 +288,7 @@ label:
 Similar to row paths, we can get information about column paths via
 `col_paths_summary`:
 
+\
 [`col_paths_summary`](https://pharmaverse.github.io/rtables/reference/row_paths_summary.md)`(``tbl``)`
 
     ## label             path                       
@@ -270,7 +305,8 @@ We can then describe vertical slices of our table via these paths (we
 use `head`, which subsets via absolute position to limit the amount of
 output here):
 
-[`head`](https://pharmaverse.github.io/rtables/reference/head_tail.md)`(``tbl``[``, `[`c`](https://rdrr.io/r/base/c.html)`(``"ARM"``, ``"A: Drug X"``)``]``)`
+\
+[`head`](https://pharmaverse.github.io/rtables/reference/head_tail.md)`(``tbl``[``, `[`c`](https://rdrr.io/r/base/c.html)`(``"ARM"``, ``"A: Drug X"``)``]``)`
 
     ## Note: method with signature 'VTableTree#missing#ANY' chosen for function '[',
     ##  target signature 'TableTree#missing#character'.
@@ -286,7 +322,8 @@ output here):
     ##   B          16 (22.9%)   8 (15.7%) 
     ##     Mean        33.8         34.9
 
-[`head`](https://pharmaverse.github.io/rtables/reference/head_tail.md)`(``tbl``[``, `[`c`](https://rdrr.io/r/base/c.html)`(``"ARM"``, ``"C: Combination"``, ``"SEX"``, ``"M"``)``]``)`
+\
+[`head`](https://pharmaverse.github.io/rtables/reference/head_tail.md)`(``tbl``[``, `[`c`](https://rdrr.io/r/base/c.html)`(``"ARM"``, ``"C: Combination"``, ``"SEX"``, ``"M"``)``]``)`
 
     ##              C: Combination
     ##                    M       
@@ -298,7 +335,8 @@ output here):
     ##   B            12 (17.6%)  
     ##     Mean          35.9
 
-[`head`](https://pharmaverse.github.io/rtables/reference/head_tail.md)`(``tbl``[``, `[`c`](https://rdrr.io/r/base/c.html)`(``"All"``, ``"All"``)``]``)`
+\
+[`head`](https://pharmaverse.github.io/rtables/reference/head_tail.md)`(``tbl``[``, `[`c`](https://rdrr.io/r/base/c.html)`(``"All"``, ``"All"``)``]``)`
 
     ##                  All    
     ## ————————————————————————
@@ -326,12 +364,19 @@ where k is a sequence of integers such that all siblings have unique
 names. This affects the paths to these substructures[^3], as we see from
 the informative messages below:
 
-`lytdup`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"STRATA1"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"STRATA1"``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"AGE"``)`` `` ``tbldup`` ``<-`` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lytdup``, ``DM``)`
+\
+`lytdup`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``)`` ``|>`\
+`  `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"STRATA1"``)`` ``|>`\
+`  `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"STRATA1"``)`` ``|>`\
+`  `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"AGE"``)`\
+\
+`tbldup`` ``<-`` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lytdup``, ``DM``)`
 
     ## Modifying subtable (or row) names to ensure uniqueness among direct siblings
     ## [STRATA1  -> { STRATA1, STRATA1[2] }]
     ##   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE
 
+\
 `tbldup`
 
     ##          all obs
@@ -346,6 +391,7 @@ the informative messages below:
     ## C               
     ##   Mean    34.79
 
+\
 [`row_paths_summary`](https://pharmaverse.github.io/rtables/reference/row_paths_summary.md)`(``tbldup``)`
 
     ## rowname    node_class    path                          
@@ -363,13 +409,15 @@ the informative messages below:
 This allows us to path to all elements of the row structure, which was
 not possible in previous (`<0.6.13`) `rtables` versions:
 
-`tbldup``[`[`c`](https://rdrr.io/r/base/c.html)`(``"STRATA1"``, ``"A"``)``, ``]`
+\
+`tbldup``[`[`c`](https://rdrr.io/r/base/c.html)`(``"STRATA1"``, ``"A"``)``, ``]`
 
     ##     all obs
     ## ———————————
     ## A     114
 
-`tbldup``[`[`c`](https://rdrr.io/r/base/c.html)`(``"STRATA1[2]"``, ``"A"``)``, ``]`
+\
+`tbldup``[`[`c`](https://rdrr.io/r/base/c.html)`(``"STRATA1[2]"``, ``"A"``)``, ``]`
 
     ##          all obs
     ## ————————————————
@@ -384,7 +432,8 @@ will match any *name* present at that step in the table structure,
 leading to (potentially) multiple matches. Note `"*"` will never behave
 as the `"@content"` directive, which must always be used explicitly.
 
-`tbl``[`[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"*"``, ``"STRATA1"``, ``"B"``, ``"AGE"``, ``"Median"``)``, ``]`
+\
+`tbl``[`[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"*"``, ``"STRATA1"``, ``"B"``, ``"AGE"``, ``"Median"``)``, ``]`
 
     ##           A: Drug X      C: Combination         
     ##            F      M        F         M      All 
@@ -396,7 +445,8 @@ Multiple wildcards can appear in a path, with each wildcard applied
 recursively within the full combined set of matches from all wildcards
 earlier in the path.
 
-`tbl``[`[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"*"``, ``"STRATA1"``, ``"*"``, ``"AGE"``, ``"Median"``)``, ``]`
+\
+`tbl``[`[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"*"``, ``"STRATA1"``, ``"*"``, ``"AGE"``, ``"Median"``)``, ``]`
 
     ##           A: Drug X      C: Combination         
     ##            F      M        F         M      All 
@@ -416,7 +466,8 @@ For (currently only) row paths, we can resolve a path with one or more
 wildcards into a set of fully specified paths that match the path in our
 table using the `tt_normalize_row_path` utility function
 
-[`tt_normalize_row_path`](https://pharmaverse.github.io/rtables/reference/tt_row_path_exists.md)`(``tbl``, `[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"*"``, ``"STRATA1"``, ``"*"``, ``"AGE"``, ``"Median"``)``)`
+\
+[`tt_normalize_row_path`](https://pharmaverse.github.io/rtables/reference/tt_row_path_exists.md)`(``tbl``, `[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"*"``, ``"STRATA1"``, ``"*"``, ``"AGE"``, ``"Median"``)``)`
 
     ## $ASIAN.A
     ## [1] "RACE"    "ASIAN"   "STRATA1" "A"       "AGE"     "Median" 
@@ -439,11 +490,13 @@ table using the `tt_normalize_row_path` utility function
 We can also test whether a row path (including those containing
 wildcards) exists in our table with `tt_row_path_exists`
 
-[`tt_row_path_exists`](https://pharmaverse.github.io/rtables/reference/tt_row_path_exists.md)`(``tbl``, `[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"*"``, ``"STRATA1"``, ``"*"``, ``"AGE"``, ``"Median"``)``)`
+\
+[`tt_row_path_exists`](https://pharmaverse.github.io/rtables/reference/tt_row_path_exists.md)`(``tbl``, `[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"*"``, ``"STRATA1"``, ``"*"``, ``"AGE"``, ``"Median"``)``)`
 
     ## [1] TRUE
 
-[`tt_row_path_exists`](https://pharmaverse.github.io/rtables/reference/tt_row_path_exists.md)`(``tbl``, `[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"*"``, ``"STRATA1"``, ``"*"``, ``"FAKEFAKEFAKE"``, ``"Median"``)``)`
+\
+[`tt_row_path_exists`](https://pharmaverse.github.io/rtables/reference/tt_row_path_exists.md)`(``tbl``, `[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"*"``, ``"STRATA1"``, ``"*"``, ``"FAKEFAKEFAKE"``, ``"Median"``)``)`
 
     ## [1] FALSE
 
@@ -453,7 +506,8 @@ the relevant (sub)structure.
 
 Thus we get
 
-[`tt_normalize_row_path`](https://pharmaverse.github.io/rtables/reference/tt_row_path_exists.md)`(``tbl``, `[`c`](https://rdrr.io/r/base/c.html)`(``"*"``, ``"Mean"``)``)`
+\
+[`tt_normalize_row_path`](https://pharmaverse.github.io/rtables/reference/tt_row_path_exists.md)`(``tbl``, `[`c`](https://rdrr.io/r/base/c.html)`(``"*"``, ``"Mean"``)``)`
 
     ## $BMRKR1
     ## [1] "BMRKR1" "Mean"
@@ -466,7 +520,8 @@ are implemented differently in ways not relevant to end users),
 generally those mechanisms which support wildcards in row space and also
 accept a column path support wildcards for column paths as well:
 
-`tbl``[``, `[`c`](https://rdrr.io/r/base/c.html)`(``"ARM"``, ``"*"``, ``"SEX"``, ``"F"``)``]`
+\
+`tbl``[``, `[`c`](https://rdrr.io/r/base/c.html)`(``"ARM"``, ``"*"``, ``"SEX"``, ``"F"``)``]`
 
     ##              A: Drug X    C: Combination
     ##                  F              F       
@@ -508,7 +563,10 @@ We can set (though, currently not get, an oversight that will likely be
 remedied in a future version) the visibility on *a set of sibling
 facets*.
 
-`tbl2`` ``<-`` `[`head`](https://pharmaverse.github.io/rtables/reference/head_tail.md)`(``tbl``)`` ``facet_colcounts_visible``(``tbl2``, `[`c`](https://rdrr.io/r/base/c.html)`(``"ARM"``, ``"A: Drug X"``, ``"SEX"``)``)`` ``<-`` ``TRUE`` ``tbl2`
+\
+`tbl2`` ``<-`` `[`head`](https://pharmaverse.github.io/rtables/reference/head_tail.md)`(``tbl``)`\
+`facet_colcounts_visible``(``tbl2``, `[`c`](https://rdrr.io/r/base/c.html)`(``"ARM"``, ``"A: Drug X"``, ``"SEX"``)``)`` ``<-`` ``TRUE`\
+`tbl2`
 
     ##                     A: Drug X                                               
     ##                  F            M            C: Combination                   
@@ -530,7 +588,9 @@ so pathing to individual facets would lead to an invalid table.
 We can also get or modify the value of any particular column count (note
 no s here):
 
-[`facet_colcount`](https://pharmaverse.github.io/rtables/reference/facet_colcount.md)`(``tbl2``, `[`c`](https://rdrr.io/r/base/c.html)`(``"ARM"``, ``"A: Drug X"``, ``"SEX"``, ``"M"``)``)`` ``<-`` ``5`` ``tbl2`
+\
+[`facet_colcount`](https://pharmaverse.github.io/rtables/reference/facet_colcount.md)`(``tbl2``, `[`c`](https://rdrr.io/r/base/c.html)`(``"ARM"``, ``"A: Drug X"``, ``"SEX"``, ``"M"``)``)`` ``<-`` ``5`\
+`tbl2`
 
     ##                     A: Drug X                                               
     ##                  F            M            C: Combination                   
@@ -547,7 +607,9 @@ If we need to mix visibilty and non-visibilty of counts within a direct
 sibling group the best we can do is setting one to NA, which will leave
 a blank space there:
 
-[`facet_colcount`](https://pharmaverse.github.io/rtables/reference/facet_colcount.md)`(``tbl2``, `[`c`](https://rdrr.io/r/base/c.html)`(``"ARM"``, ``"A: Drug X"``, ``"SEX"``, ``"F"``)``)`` ``<-`` ``NA_integer_`` ``tbl2`
+\
+[`facet_colcount`](https://pharmaverse.github.io/rtables/reference/facet_colcount.md)`(``tbl2``, `[`c`](https://rdrr.io/r/base/c.html)`(``"ARM"``, ``"A: Drug X"``, ``"SEX"``, ``"F"``)``)`` ``<-`` ``NA_integer_`\
+`tbl2`
 
     ##                     A: Drug X                                               
     ##                  F            M            C: Combination                   
@@ -567,7 +629,12 @@ particular row or subtable during rendering to differentiate sections of
 a table (they are most often, and by default, ” ” to create a blank
 line).
 
-`tbl3`` ``<-`` ``tbl`` `` `[`section_div_at_path`](https://pharmaverse.github.io/rtables/reference/section_div.md)`(``tbl3``, `[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"*"``)``)`` ``<-`` ``"*"`` `[`section_div_at_path`](https://pharmaverse.github.io/rtables/reference/section_div.md)`(``tbl3``, `[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"*"``, ``"STRATA1"``, ``"B"``)``)`` ``<-`` ``"+"`` ``tbl3`
+\
+`tbl3`` ``<-`` ``tbl`\
+\
+[`section_div_at_path`](https://pharmaverse.github.io/rtables/reference/section_div.md)`(``tbl3``, `[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"*"``)``)`` ``<-`` ``"*"`\
+[`section_div_at_path`](https://pharmaverse.github.io/rtables/reference/section_div.md)`(``tbl3``, `[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"*"``, ``"STRATA1"``, ``"B"``)``)`` ``<-`` ``"+"`\
+`tbl3`
 
     ##                     A: Drug X              C: Combination                   
     ##                  F            M            F            M            All    
@@ -609,6 +676,7 @@ In addition to the path specific section dividers, there is also the
 more general section divider function, which can be used to query the
 divider after each row:
 
+\
 [`section_div`](https://pharmaverse.github.io/rtables/reference/section_div.md)`(``tbl3``)`
 
     ##  [1] NA  NA  NA  NA  NA  NA  "+" NA  NA  "*" NA  NA  NA  NA  NA  NA  "+" NA  NA 
@@ -617,7 +685,9 @@ divider after each row:
 Together with the corresponding replacement function, this can be used
 to insert a divider after specific rows:
 
-[`section_div`](https://pharmaverse.github.io/rtables/reference/section_div.md)`(``tbl3``)``[``1``]`` ``<-`` ``"-"`` ``tbl3`
+\
+[`section_div`](https://pharmaverse.github.io/rtables/reference/section_div.md)`(``tbl3``)``[``1``]`` ``<-`` ``"-"`\
+`tbl3`
 
     ##                     A: Drug X              C: Combination                   
     ##                  F            M            F            M            All    
@@ -653,7 +723,9 @@ to insert a divider after specific rows:
 Although here again, the path-specific section divider could come in
 more handy, e.g.:
 
-[`section_div_at_path`](https://pharmaverse.github.io/rtables/reference/section_div.md)`(``tbl3``, `[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"*"``, ``"@content"``, ``"*"``)``)`` ``<-`` ``"-"`` ``tbl3`
+\
+[`section_div_at_path`](https://pharmaverse.github.io/rtables/reference/section_div.md)`(``tbl3``, `[`c`](https://rdrr.io/r/base/c.html)`(``"RACE"``, ``"*"``, ``"@content"``, ``"*"``)``)`` ``<-`` ``"-"`\
+`tbl3`
 
     ##                     A: Drug X              C: Combination                   
     ##                  F            M            F            M            All    
@@ -689,6 +761,7 @@ more handy, e.g.:
 
 The relevant paths can be looked up via `section_div_info`:
 
+\
 [`section_div_info`](https://pharmaverse.github.io/rtables/reference/section_div.md)`(``tbl3``)`
 
     ##     label   name node_class         path trailing_sep self_section_div
@@ -782,6 +855,7 @@ working with throughout this vignette has two direct children, one
 containing all of the structure generated underneath the initial
 `"RACE"` split, and one containing the unnested analysis of `"BMRKR1"`:
 
+\
 [`tree_children`](https://pharmaverse.github.io/rtables/reference/tree_children.md)`(``tbl``)`
 
     ## $RACE
@@ -824,13 +898,23 @@ children, etc. For information purposes, we will print the “path step”
 taken each time, thus building up our path as we descend using the class
 structure.
 
-`multi_step_children`` ``<-`` ``function``(``tbl``, ``indices``)`` ``{`` `` `[`print`](https://rdrr.io/r/base/print.html)`(`[`obj_name`](https://rdrr.io/pkg/formatters/man/lab_name.html)`(``tbl``)``)`` `` ``ret`` ``<-`` `[`tree_children`](https://pharmaverse.github.io/rtables/reference/tree_children.md)`(``tbl``)`` `` ``for`` ``(``i`` ``in`` ``indices``)`` ``{`` `` `[`print`](https://rdrr.io/r/base/print.html)`(`[`obj_name`](https://rdrr.io/pkg/formatters/man/lab_name.html)`(``ret``[[``i``]``]``)``)`` `` ``ret`` ``<-`` `[`tree_children`](https://pharmaverse.github.io/rtables/reference/tree_children.md)`(``ret``[[``i``]``]``)`` `` ``}`` `` ``ret`` ``}`
+\
+`multi_step_children`` ``<-`` ``function``(``tbl``, ``indices``)`` ``{`\
+`  `[`print`](https://rdrr.io/r/base/print.html)`(`[`obj_name`](https://pharmaverse.github.io/formatters/latest-tag/reference/lab_name.html)`(``tbl``)``)`\
+`  ``ret`` ``<-`` `[`tree_children`](https://pharmaverse.github.io/rtables/reference/tree_children.md)`(``tbl``)`\
+`  ``for`` ``(``i`` ``in`` ``indices``)`` ``{`\
+`    `[`print`](https://rdrr.io/r/base/print.html)`(`[`obj_name`](https://pharmaverse.github.io/formatters/latest-tag/reference/lab_name.html)`(``ret``[[``i``]``]``)``)`\
+`    ``ret`` ``<-`` `[`tree_children`](https://pharmaverse.github.io/rtables/reference/tree_children.md)`(``ret``[[``i``]``]``)`\
+`  ``}`\
+`  ``ret`\
+`}`
 
 Thus we can see that the first of our table’s children has the path
 `c("root", "RACE")` and has children for each ethnicity in our table
 (recall the “root” path element is correct but optional):
 
-`multi_step_children``(``tbl``, ``1``)`
+\
+`multi_step_children``(``tbl``, ``1``)`
 
     ## [1] "root"
     ## [1] "RACE"
@@ -872,7 +956,8 @@ Each of these children under `"RACE"` is a subtable.
 The children under our `BMRKR1` analysis, on the other hand, are rows
 (in this case only one row, in fact):
 
-`multi_step_children``(``tbl``, ``2``)`
+\
+`multi_step_children``(``tbl``, ``2``)`
 
     ## [1] "root"
     ## [1] "BMRKR1"
@@ -883,7 +968,8 @@ The children under our `BMRKR1` analysis, on the other hand, are rows
 Within each race subtable, we see a table corresponding to the `STRATA1`
 split:
 
-`multi_step_children``(``tbl``, `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``1``)``)`
+\
+`multi_step_children``(``tbl``, `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``1``)``)`
 
     ## [1] "root"
     ## [1] "RACE"
@@ -904,7 +990,8 @@ split:
     ##   Mean        36.9         35.6         33.5         31.4         33.9   
     ##   Median      36.0         37.0         34.0         31.0         34.0
 
-`multi_step_children``(``tbl``, `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``1``, ``1``)``)`
+\
+`multi_step_children``(``tbl``, `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``1``, ``1``)``)`
 
     ## [1] "root"
     ## [1] "RACE"
@@ -941,7 +1028,8 @@ split:
 And finally within each strata facet is a table representing the
 analysis of `AGE`
 
-`multi_step_children``(``tbl``, `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``1``, ``1``, ``2``)``)`
+\
+`multi_step_children``(``tbl``, `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``1``, ``1``, ``2``)``)`
 
     ## [1] "root"
     ## [1] "RACE"
@@ -960,7 +1048,8 @@ analysis of `AGE`
 And within each of those `AGE` analysis tables, like our `BMRKR1` top
 level analysis table, we have a collection of rows:
 
-`multi_step_children``(``tbl``, `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``1``, ``1``, ``2``, ``1``)``)`
+\
+`multi_step_children``(``tbl``, `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``1``, ``1``, ``2``, ``1``)``)`
 
     ## [1] "root"
     ## [1] "RACE"
@@ -980,7 +1069,9 @@ Thus we see that `analyze` calls create tables (called
 `split_rows_by` (and siblings) calls create a subtable with children
 that are a table for each facet declared by the split operation:
 
-`## child is AGE analysis table within RACE->WHITE->STRATA1->A`` ``multi_step_children``(``tbl``, `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``2``, ``1``, ``1``)``)`
+\
+`## child is AGE analysis table within RACE->WHITE->STRATA1->A`\
+`multi_step_children``(``tbl``, `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``2``, ``1``, ``1``)``)`
 
     ## [1] "root"
     ## [1] "RACE"
@@ -996,7 +1087,9 @@ that are a table for each facet declared by the split operation:
     ## Mean     34.0    45.0    35.0      32.8     33.3
     ## Median   34.0    45.0    35.0      31.0     31.0
 
-`## children are individual rows of that AGE table`` ``multi_step_children``(``tbl``, `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``2``, ``1``, ``1``, ``1``)``)`
+\
+`## children are individual rows of that AGE table`\
+`multi_step_children``(``tbl``, `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``2``, ``1``, ``1``, ``1``)``)`
 
     ## [1] "root"
     ## [1] "RACE"
@@ -1027,13 +1120,15 @@ Recall that our `multi_step_children` function returns *the set of
 children at a location*, so we must subset one additional time to arrive
 at a single child:
 
-`tb`` ``<-`` ``multi_step_children``(``tbl``, `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``1``, ``1``)``)``[[``2``]``]`` ``## second ie B strata`
+\
+`tb`` ``<-`` ``multi_step_children``(``tbl``, `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``1``, ``1``)``)``[[``2``]``]`` ``## second ie B strata`
 
     ## [1] "root"
     ## [1] "RACE"
     ## [1] "ASIAN"
     ## [1] "STRATA1"
 
+\
 `tb`
 
     ##                  A: Drug X              C: Combination                  
@@ -1043,6 +1138,7 @@ at a single child:
     ##   Mean        33.8        34.9         33.3         35.9         33.3   
     ##   Median      32.0        34.5         34.0         34.5         33.0
 
+\
 [`content_table`](https://pharmaverse.github.io/rtables/reference/content_table.md)`(``tb``)`
 
     ##           A: Drug X              C: Combination                  
@@ -1054,7 +1150,8 @@ Typically (ie by default) label rows for (sub)tables that have a
 non-empty content table are not visible when rendering, but they do
 still exist:
 
-[`obj_label`](https://rdrr.io/pkg/formatters/man/lab_name.html)`(``tb``)`
+\
+[`obj_label`](https://pharmaverse.github.io/formatters/latest-tag/reference/lab_name.html)`(``tb``)`
 
     ## [1] "B"
 
@@ -1085,6 +1182,7 @@ resulting paths in the table remains valid and useful.
 
 We can see this by looking again at our column paths summary:
 
+\
 [`col_paths_summary`](https://pharmaverse.github.io/rtables/reference/row_paths_summary.md)`(``tbl``)`
 
     ## label             path                       

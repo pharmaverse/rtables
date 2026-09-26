@@ -97,7 +97,7 @@ remaining `path` entries. This can occur multiple times in a path.
 
 A list of valid (non-wildcard) paths can be seen in the `path` column of
 the `data.frame` created by
-[`formatters::make_row_df()`](https://rdrr.io/pkg/formatters/man/make_row_df.html)
+[`formatters::make_row_df()`](https://pharmaverse.github.io/formatters/latest-tag/reference/make_row_df.html)
 with the `visible_only` argument set to `FALSE`. It can also be inferred
 from the summary given by
 [`table_structure()`](https://pharmaverse.github.io/rtables/reference/table_structure.md).
@@ -129,11 +129,11 @@ useful descriptor and accessor functions (coming from related vignette):
 - [`cell_values()`](https://pharmaverse.github.io/rtables/reference/cell_values.md) -
   Retrieves a named list of a `TableRow` or `TableTree` object's values.
 
-- [`formatters::obj_name()`](https://rdrr.io/pkg/formatters/man/lab_name.html) -
+- [`formatters::obj_name()`](https://pharmaverse.github.io/formatters/latest-tag/reference/lab_name.html) -
   Retrieves the name of an object. Note this can differ from the label
   that is displayed (if any is) when printing.
 
-- [`formatters::obj_label()`](https://rdrr.io/pkg/formatters/man/lab_name.html) -
+- [`formatters::obj_label()`](https://pharmaverse.github.io/formatters/latest-tag/reference/lab_name.html) -
   Retrieves the display label of an object. Note this can differ from
   the name that appears in the path.
 
@@ -153,7 +153,7 @@ useful descriptor and accessor functions (coming from related vignette):
   and
   [`cont_n_onecol()`](https://pharmaverse.github.io/rtables/reference/score_funs.md).
 
-- [`formatters::make_row_df()`](https://rdrr.io/pkg/formatters/man/make_row_df.html)
+- [`formatters::make_row_df()`](https://pharmaverse.github.io/formatters/latest-tag/reference/make_row_df.html)
   and
   [`table_structure()`](https://pharmaverse.github.io/rtables/reference/table_structure.md)
   for pathing information.

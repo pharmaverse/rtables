@@ -56,7 +56,9 @@ calculations are often required on subsets of the data.
 
 ## Split Machinery
 
-[`library`](https://rdrr.io/r/base/library.html)`(`[`rtables`](https://github.com/pharmaverse/rtables)`)`` `[`getClass`](https://rdrr.io/r/methods/getClass.html)`(``"TreePos"``)`
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`rtables`](https://github.com/pharmaverse/rtables)`)`\
+[`getClass`](https://rdrr.io/r/methods/getClass.html)`(``"TreePos"``)`
 
     ## Class "TreePos" [package "rtables"]
     ## 
@@ -76,6 +78,7 @@ the split.
 The highest level of the table hierarchy belong to `TableTree`. The code
 below identifies the slots associated with with this class.
 
+\
 [`getClass`](https://rdrr.io/r/methods/getClass.html)`(``"TableTree"``)`
 
     ## Class "TableTree" [package "rtables"]
@@ -119,7 +122,16 @@ multiple classes may need, `rtables` extensively uses virtual classes. A
 virtual class cannot be instantiated, the purpose is for other classes
 to inherit information from it.
 
-`lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``title ``=`` ``"big title"``)`` ``|>`` `` `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"SEX"``, page_by ``=`` ``TRUE``)`` ``|>`` `` `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"AGE"``)`` `` ``tt`` ``<-`` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt``, ``DM``)`` `` ``# Though we don't recommend using str for studying rtable objects,`` ``# we do find it useful in this instance to visualize the parent/child relationships.`` `[`str`](https://pharmaverse.github.io/rtables/reference/int_methods.md)`(``tt``, max.level ``=`` ``2``)`
+\
+`lyt`` ``<-`` `[`basic_table`](https://pharmaverse.github.io/rtables/reference/basic_table.md)`(``title ``=`` ``"big title"``)`` ``|>`\
+`  `[`split_rows_by`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)`(``"SEX"``, page_by ``=`` ``TRUE``)`` ``|>`\
+`  `[`analyze`](https://pharmaverse.github.io/rtables/reference/analyze.md)`(``"AGE"``)`\
+\
+`tt`` ``<-`` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt``, ``DM``)`\
+\
+`# Though we don't recommend using str for studying rtable objects,`\
+`# we do find it useful in this instance to visualize the parent/child relationships.`\
+[`str`](https://pharmaverse.github.io/rtables/reference/int_methods.md)`(``tt``, max.level ``=`` ``2``)`
 
     ## Formal class 'TableTree' [package "rtables"] with 21 slots
     ##   ..@ content             :Formal class 'ElementaryTable' [package "rtables"] with 20 slots

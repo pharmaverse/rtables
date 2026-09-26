@@ -74,7 +74,7 @@ analyze(
   format associated with this split. Formats can be declared via strings
   (`"xx.x"`) or function. In cases such as `analyze` calls, they can be
   character vectors or lists of functions. See
-  [`formatters::list_valid_format_labels()`](https://rdrr.io/pkg/formatters/man/list_formats.html)
+  [`formatters::list_valid_format_labels()`](https://pharmaverse.github.io/formatters/latest-tag/reference/list_formats.html)
   for a list of all available format strings.
 
 - formats_var:
@@ -191,7 +191,7 @@ but will be overridden by formats specified within `rcell` calls in
 `afun`.
 
 `format` can accept a format label string (see
-[`formatters::list_valid_format_labels()`](https://rdrr.io/pkg/formatters/man/list_formats.html)),
+[`formatters::list_valid_format_labels()`](https://pharmaverse.github.io/formatters/latest-tag/reference/list_formats.html)),
 a formatting function, an unnamed list, or a named list.
 
 When `format` is an unnamed list - or a named list where not all values

@@ -25,14 +25,14 @@ basic_table(
 
   (`string`)\
   single string to use as main title
-  ([`formatters::main_title()`](https://rdrr.io/pkg/formatters/man/title_footer.html)).
+  ([`formatters::main_title()`](https://pharmaverse.github.io/formatters/latest-tag/reference/title_footer.html)).
   Ignored for subtables.
 
 - subtitles:
 
   (`character`)\
   a vector of strings to use as subtitles
-  ([`formatters::subtitles()`](https://rdrr.io/pkg/formatters/man/title_footer.html)),
+  ([`formatters::subtitles()`](https://pharmaverse.github.io/formatters/latest-tag/reference/title_footer.html)),
   where every element is printed on a separate line. Ignored for
   subtables.
 
@@ -41,7 +41,7 @@ basic_table(
   (`character`)\
   a vector of strings to use as main global (non-referential) footer
   materials
-  ([`formatters::main_footer()`](https://rdrr.io/pkg/formatters/man/title_footer.html)),
+  ([`formatters::main_footer()`](https://pharmaverse.github.io/formatters/latest-tag/reference/title_footer.html)),
   where every element is printed on a separate line.
 
 - prov_footer:
@@ -49,7 +49,7 @@ basic_table(
   (`character`)\
   a vector of strings to use as provenance-related global footer
   materials
-  ([`formatters::prov_footer()`](https://rdrr.io/pkg/formatters/man/title_footer.html)),
+  ([`formatters::prov_footer()`](https://pharmaverse.github.io/formatters/latest-tag/reference/title_footer.html)),
   where every element is printed on a separate line.
 
 - show_colcounts:
@@ -99,7 +99,7 @@ basic_table(
 
   (`"iec"` (default), `"iec_mod"` or `"sas"`)\
   the type of rounding to perform. See
-  [`formatters::format_value()`](https://rdrr.io/pkg/formatters/man/format_value.html)
+  [`formatters::format_value()`](https://pharmaverse.github.io/formatters/latest-tag/reference/format_value.html)
   for details.
 
 ## Value
@@ -118,7 +118,7 @@ render the counts exactly as they normally would be, while 2d formats
 which don't include a percent, and all 3d formats result in an error.
 Formats in the form of functions are not supported for `colcount`
 format. See
-[`formatters::list_valid_format_labels()`](https://rdrr.io/pkg/formatters/man/list_formats.html)
+[`formatters::list_valid_format_labels()`](https://pharmaverse.github.io/formatters/latest-tag/reference/list_formats.html)
 for the list of valid format labels to select from.
 
 ## Note
@@ -130,11 +130,11 @@ for the list of valid format labels to select from.
   represent strict subsets of the "all patients" column.
 
 - Note that subtitles
-  ([`formatters::subtitles()`](https://rdrr.io/pkg/formatters/man/title_footer.html))
+  ([`formatters::subtitles()`](https://pharmaverse.github.io/formatters/latest-tag/reference/title_footer.html))
   and footers
-  ([`formatters::main_footer()`](https://rdrr.io/pkg/formatters/man/title_footer.html)
+  ([`formatters::main_footer()`](https://pharmaverse.github.io/formatters/latest-tag/reference/title_footer.html)
   and
-  [`formatters::prov_footer()`](https://rdrr.io/pkg/formatters/man/title_footer.html))
+  [`formatters::prov_footer()`](https://pharmaverse.github.io/formatters/latest-tag/reference/title_footer.html))
   that span more than one line can be supplied as a character vector to
   maintain indentation on multiple lines.
 
@@ -176,7 +176,7 @@ tbl2
 #> 
 #> test footer
 #> 
-#> test.R program, executed at 2026-08-25 04:35:50.945225
+#> test.R program, executed at 2026-09-26 00:26:54.124658
 
 lyt3 <- basic_table(
   show_colcounts = TRUE,

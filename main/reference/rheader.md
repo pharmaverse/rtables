@@ -23,7 +23,7 @@ rheader(..., format = "xx", .lst = NULL)
   (`string`, `function`, or `list`)\
   the format label (string) or formatter function to apply to the cell
   values passed via `...`. See
-  [`formatters::list_valid_format_labels()`](https://rdrr.io/pkg/formatters/man/list_formats.html)
+  [`formatters::list_valid_format_labels()`](https://pharmaverse.github.io/formatters/latest-tag/reference/list_formats.html)
   for currently supported format labels.
 
 - .lst:

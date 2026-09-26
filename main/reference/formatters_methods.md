@@ -256,7 +256,7 @@ make_row_df(
   (`font_spec`)\
   a font_spec object specifying the font information to use for
   calculating string widths and heights, as returned by
-  [`font_spec()`](https://rdrr.io/pkg/formatters/man/font_spec.html).
+  [`font_spec()`](https://pharmaverse.github.io/formatters/latest-tag/reference/font_spec.html).
 
 - col_gap:
 

@@ -122,7 +122,7 @@ lyt_args(
   format associated with this split. Formats can be declared via strings
   (`"xx.x"`) or function. In cases such as `analyze` calls, they can be
   character vectors or lists of functions. See
-  [`formatters::list_valid_format_labels()`](https://rdrr.io/pkg/formatters/man/list_formats.html)
+  [`formatters::list_valid_format_labels()`](https://pharmaverse.github.io/formatters/latest-tag/reference/list_formats.html)
   for a list of all available format strings.
 
 - cfun:
@@ -304,7 +304,7 @@ lyt_args(
   (`string` or `NULL`)\
   alignment the value should be rendered with. Defaults to `"center"` if
   `NULL` is used. See
-  [`formatters::list_valid_aligns()`](https://rdrr.io/pkg/formatters/man/list_formats.html)
+  [`formatters::list_valid_aligns()`](https://pharmaverse.github.io/formatters/latest-tag/reference/list_formats.html)
   for all currently supported alignments.
 
 - page_by:

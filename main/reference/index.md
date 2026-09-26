@@ -56,9 +56,11 @@ Functions for declaring layout and tabulation
   : Add overall column
 - [`add_existing_table()`](https://pharmaverse.github.io/rtables/reference/add_existing_table.md)
   : Add an already calculated table to the layout
-- [`table_inset()`](https://rdrr.io/pkg/formatters/man/table_inset.html)
-  [`` `table_inset<-`() ``](https://rdrr.io/pkg/formatters/man/table_inset.html)
+- [`table_inset()`](https://pharmaverse.github.io/formatters/latest-tag/reference/table_inset.html)
+  [`` `table_inset<-`() ``](https://pharmaverse.github.io/formatters/latest-tag/reference/table_inset.html)
   : Access or (recursively) set table inset (from formatters)
+- [`RefFootnote()`](https://pharmaverse.github.io/rtables/reference/RefFootnote.md)
+  : Referential Footnote
 
 ## Tabulation Utility Functions
 
@@ -186,7 +188,7 @@ cell formatting.
 - [`table_shell()`](https://pharmaverse.github.io/rtables/reference/table_shell.md)
   [`table_shell_str()`](https://pharmaverse.github.io/rtables/reference/table_shell.md)
   : Table shells
-- [`make_row_df()`](https://rdrr.io/pkg/formatters/man/make_row_df.html)
+- [`make_row_df()`](https://pharmaverse.github.io/formatters/latest-tag/reference/make_row_df.html)
   : Make row layout summary data frames for use during pagination (from
   formatters)
 - [`make_col_df()`](https://pharmaverse.github.io/rtables/reference/make_col_df.md)
@@ -394,7 +396,7 @@ Pagination related functionality
 
   Pagination of a `TableTree`
 
-- [`make_row_df()`](https://rdrr.io/pkg/formatters/man/make_row_df.html)
+- [`make_row_df()`](https://pharmaverse.github.io/formatters/latest-tag/reference/make_row_df.html)
   : Make row layout summary data frames for use during pagination (from
   formatters)
 
@@ -446,38 +448,38 @@ Pagination related functionality
   [`` `horizontal_sep<-`() ``](https://pharmaverse.github.io/rtables/reference/horizontal_sep.md)
   : Access or recursively set header-body separator for tables
 
-- [`table_inset()`](https://rdrr.io/pkg/formatters/man/table_inset.html)
-  [`` `table_inset<-`() ``](https://rdrr.io/pkg/formatters/man/table_inset.html)
+- [`table_inset()`](https://pharmaverse.github.io/formatters/latest-tag/reference/table_inset.html)
+  [`` `table_inset<-`() ``](https://pharmaverse.github.io/formatters/latest-tag/reference/table_inset.html)
   : Access or (recursively) set table inset (from formatters)
 
-- [`main_title()`](https://rdrr.io/pkg/formatters/man/title_footer.html)
-  [`` `main_title<-`() ``](https://rdrr.io/pkg/formatters/man/title_footer.html)
-  [`subtitles()`](https://rdrr.io/pkg/formatters/man/title_footer.html)
-  [`` `subtitles<-`() ``](https://rdrr.io/pkg/formatters/man/title_footer.html)
-  [`page_titles()`](https://rdrr.io/pkg/formatters/man/title_footer.html)
-  [`` `page_titles<-`() ``](https://rdrr.io/pkg/formatters/man/title_footer.html)
-  [`main_footer()`](https://rdrr.io/pkg/formatters/man/title_footer.html)
-  [`` `main_footer<-`() ``](https://rdrr.io/pkg/formatters/man/title_footer.html)
-  [`prov_footer()`](https://rdrr.io/pkg/formatters/man/title_footer.html)
-  [`` `prov_footer<-`() ``](https://rdrr.io/pkg/formatters/man/title_footer.html)
-  [`all_footers()`](https://rdrr.io/pkg/formatters/man/title_footer.html)
-  [`all_titles()`](https://rdrr.io/pkg/formatters/man/title_footer.html)
+- [`main_title()`](https://pharmaverse.github.io/formatters/latest-tag/reference/title_footer.html)
+  [`` `main_title<-`() ``](https://pharmaverse.github.io/formatters/latest-tag/reference/title_footer.html)
+  [`subtitles()`](https://pharmaverse.github.io/formatters/latest-tag/reference/title_footer.html)
+  [`` `subtitles<-`() ``](https://pharmaverse.github.io/formatters/latest-tag/reference/title_footer.html)
+  [`page_titles()`](https://pharmaverse.github.io/formatters/latest-tag/reference/title_footer.html)
+  [`` `page_titles<-`() ``](https://pharmaverse.github.io/formatters/latest-tag/reference/title_footer.html)
+  [`main_footer()`](https://pharmaverse.github.io/formatters/latest-tag/reference/title_footer.html)
+  [`` `main_footer<-`() ``](https://pharmaverse.github.io/formatters/latest-tag/reference/title_footer.html)
+  [`prov_footer()`](https://pharmaverse.github.io/formatters/latest-tag/reference/title_footer.html)
+  [`` `prov_footer<-`() ``](https://pharmaverse.github.io/formatters/latest-tag/reference/title_footer.html)
+  [`all_footers()`](https://pharmaverse.github.io/formatters/latest-tag/reference/title_footer.html)
+  [`all_titles()`](https://pharmaverse.github.io/formatters/latest-tag/reference/title_footer.html)
   : General title and footer accessors (from formatters)
 
 - [`top_left()`](https://pharmaverse.github.io/rtables/reference/top_left.md)
   [`` `top_left<-`() ``](https://pharmaverse.github.io/rtables/reference/top_left.md)
   : Top left material
 
-- [`obj_name()`](https://rdrr.io/pkg/formatters/man/lab_name.html)
-  [`` `obj_name<-`() ``](https://rdrr.io/pkg/formatters/man/lab_name.html)
-  [`obj_label()`](https://rdrr.io/pkg/formatters/man/lab_name.html)
-  [`` `obj_label<-`() ``](https://rdrr.io/pkg/formatters/man/lab_name.html)
-  [`obj_format()`](https://rdrr.io/pkg/formatters/man/lab_name.html)
-  [`` `obj_format<-`() ``](https://rdrr.io/pkg/formatters/man/lab_name.html)
-  [`obj_na_str()`](https://rdrr.io/pkg/formatters/man/lab_name.html)
-  [`` `obj_na_str<-`() ``](https://rdrr.io/pkg/formatters/man/lab_name.html)
-  [`obj_align()`](https://rdrr.io/pkg/formatters/man/lab_name.html)
-  [`` `obj_align<-`() ``](https://rdrr.io/pkg/formatters/man/lab_name.html)
+- [`obj_name()`](https://pharmaverse.github.io/formatters/latest-tag/reference/lab_name.html)
+  [`` `obj_name<-`() ``](https://pharmaverse.github.io/formatters/latest-tag/reference/lab_name.html)
+  [`obj_label()`](https://pharmaverse.github.io/formatters/latest-tag/reference/lab_name.html)
+  [`` `obj_label<-`() ``](https://pharmaverse.github.io/formatters/latest-tag/reference/lab_name.html)
+  [`obj_format()`](https://pharmaverse.github.io/formatters/latest-tag/reference/lab_name.html)
+  [`` `obj_format<-`() ``](https://pharmaverse.github.io/formatters/latest-tag/reference/lab_name.html)
+  [`obj_na_str()`](https://pharmaverse.github.io/formatters/latest-tag/reference/lab_name.html)
+  [`` `obj_na_str<-`() ``](https://pharmaverse.github.io/formatters/latest-tag/reference/lab_name.html)
+  [`obj_align()`](https://pharmaverse.github.io/formatters/latest-tag/reference/lab_name.html)
+  [`` `obj_align<-`() ``](https://pharmaverse.github.io/formatters/latest-tag/reference/lab_name.html)
   : Label, name, and format accessor generics (from formatters)
 
 ## TableTree Framework Constructors and S4 Classes

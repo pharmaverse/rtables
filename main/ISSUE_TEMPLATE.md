@@ -22,4 +22,7 @@ Please delete this preamble after you have read it.
 
 your brief description of the problem
 
-[`library`](https://rdrr.io/r/base/library.html)`(`[`rtables`](https://github.com/pharmaverse/rtables)`)`` `` ``# your reproducible example here`
+\
+[`library`](https://rdrr.io/r/base/library.html)`(`[`rtables`](https://github.com/pharmaverse/rtables)`)`\
+\
+`# your reproducible example here`

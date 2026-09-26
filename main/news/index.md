@@ -1,6 +1,6 @@
 # Changelog
 
-## rtables 0.6.16.9007
+## rtables 0.6.16.9008
 
 ### New Features
 
@@ -13,6 +13,8 @@
   objects.
 - Exported previously internal `value_expr` accessor for retrieving the
   subsetting expression from a `SplitValue` or `ValueWrapper` object.
+- Exported previously internal `RefFootnote` constructor for reference
+  footnote objects.
 - Added accessor methods for `RowsVerticalSection objects`: `row_cells`,
   `obj_format`, `obj_format<-`, `obj_na_str`, `obj_na_str<-`,
   `cell_values`
@@ -50,6 +52,8 @@
 
 - `indent_mod<-` `RowsVerticalSection` method now correctly recycles
   length 1 values [@gmbecker](https://github.com/gmbecker)
+- Fix in the now exported `RefFootnote` in check for disallowed values
+  in `symbol` argument
 
 ## rtables 0.6.15
 
@@ -578,9 +582,9 @@ CRAN release: 2023-08-30
   ([\#685](https://github.com/pharmaverse/rtables/issues/685))
 - Custom appearance vignette updated with decimal alignment support.
 - Alignment checks have been moved into `formatters`:
-  [`formatters::check_aligns`](https://rdrr.io/pkg/formatters/man/check_formats.html)
+  [`formatters::check_aligns`](https://pharmaverse.github.io/formatters/latest-tag/reference/check_formats.html)
   superseded internal function `chk_rtables_align` and
-  [`formatters::list_valid_aligns`](https://rdrr.io/pkg/formatters/man/list_formats.html)
+  [`formatters::list_valid_aligns`](https://pharmaverse.github.io/formatters/latest-tag/reference/list_formats.html)
   superseded `rtables_aligns`.
 
 ## rtables 0.6.2
@@ -722,7 +726,7 @@ CRAN release: 2023-03-02
   support of `na_str`s with `NA_character_` values
 - `paginate_table` now takes page dimension and font information and
   uses
-  [`formatters::page_lcpp`](https://rdrr.io/pkg/formatters/man/page_lcpp.html)
+  [`formatters::page_lcpp`](https://pharmaverse.github.io/formatters/latest-tag/reference/page_lcpp.html)
   to calculate `lpp` and `cpp` automatically when those are provided.
 - Increase versioned dependency on `formatters` to `>= 0.3.3.2` for
   `page_lcpp`
