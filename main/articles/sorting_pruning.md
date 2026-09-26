@@ -418,7 +418,7 @@ in it’s definition, below:
 `#     }`\
 `#     sum(sapply(row_values(tree_children(ctab)[[1]]), function(cv) cv[1]))`\
 `# }`\
-`# <bytecode: 0x55da023fcda0>`\
+`# <bytecode: 0x563cdd344380>`\
 `# <environment: namespace:rtables>`
 
 Therefore, a fundamental difference between pruning and sorting is that
@@ -829,7 +829,7 @@ gives us an insight into how to proceed.
 `#         row_values(tree_children(ctab)[[1]])[[j]][1]`\
 `#     }`\
 `# }`\
-`# <bytecode: 0x55da06bf4d40>`\
+`# <bytecode: 0x563cd7cb0978>`\
 `# <environment: namespace:rtables>`
 
 We see that a similar function to
