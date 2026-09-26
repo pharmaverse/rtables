@@ -1,10 +1,11 @@
-## rtables 0.6.16.9007
+## rtables 0.6.16.9008
 
 ### New Features
  * Added `restrict_facets` function factory for use with `make_split_fun` @gmbecker
  * Exported previously internal `make_subset_expr` for use when constructing custom splitting behavior
  * Exported previously internal `splv_extra` and `splv_extra<-` accessors for getting and setting child-specific extra arguments on `SplitValue` objects.
  * Exported previously internal `value_expr` accessor for retrieving the subsetting expression from a `SplitValue` or `ValueWrapper` object.
+ * Exported previously internal `RefFootnote` constructor for reference footnote objects.
  * Added accessor methods for `RowsVerticalSection objects`: `row_cells`, `obj_format`, `obj_format<-`, `obj_na_str`, `obj_na_str<-`, `cell_values`
  * Added `c` method for directly combining `RowsVerticalSection` objects
  * Added vignette: Guided Tour (Advanced) @gmbecker
@@ -27,6 +28,7 @@
 ### Bug Fixes
  * `indent_mod<-` `RowsVerticalSection` method now correctly recycles length 1 values @gmbecker
  * Fixed `uniqify_child_names` emitting messages ending in a literal `FALSE` due to passing `call. = FALSE` to `message()`, which does not accept that argument @gmbecker
+ * Fix in the now exported `RefFootnote` in check for disallowed values in `symbol` argument
 
 ## rtables 0.6.15
 

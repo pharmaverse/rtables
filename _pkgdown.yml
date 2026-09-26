@@ -159,6 +159,7 @@ reference:
     - add_existing_table
     - formatters::table_inset
     - get_layout_dfs
+    - RefFootnote
 
   - title: Tabulation Utility Functions
     desc: Functions that are useful to be used with the `analyze*` functions.
