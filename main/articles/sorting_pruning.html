@@ -15,7 +15,7 @@
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Pruning and Sorting Tables">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><script src="../extra.js"></script><meta property="og:title" content="Pruning and Sorting Tables">
 <link rel="stylesheet" href="../consent.css">
 <script src="../consent.js" type="text/javascript" charset="utf-8"></script>
 </head>
@@ -27,7 +27,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">rtables</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.16.9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.16.9010</small>
 
     <div style="width: 140px; margin-left: 0.5rem;"> <small class="nav-text text-muted me-auto">part of</small> <img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/nest.png?raw=true" alt="NEST" style="height: 30px;"><a href="https://pharmaverse.org/" class="external-link"><img src="https://github.com/insightsengineering/hex-stickers/blob/main/PNG/pharmaverse.png?raw=true" alt="pharmaverse" style="height: 28px;"></a> </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,6 +97,7 @@
 <li><a class="dropdown-item" href="../coverage-report/">Coverage report</a></li>
     <li><a class="dropdown-item" href="../unit-test-report/">Unit test report</a></li>
     <li><a class="dropdown-item" href="../unit-test-report-non-cran/">Non-CRAN unit test report</a></li>
+    <li><a class="external-link dropdown-item" href="https://pharmar.github.io/pharmapkgs/src/contrib/Meta/validation_report_rtables_v0.6.16.html">Validation report</a></li>
   </ul>
 </li>
       </ul>
@@ -537,7 +538,7 @@ definition, below:</p>
 <span><span class="co">#     }</span></span>
 <span><span class="co">#     sum(sapply(row_values(tree_children(ctab)[[1]]), function(cv) cv[1]))</span></span>
 <span><span class="co"># }</span></span>
-<span><span class="co"># &lt;bytecode: 0x563cdd344380&gt;</span></span>
+<span><span class="co"># &lt;bytecode: 0x561368b84800&gt;</span></span>
 <span><span class="co"># &lt;environment: namespace:rtables&gt;</span></span></code></pre></div>
 <p>Therefore, a fundamental difference between pruning and sorting is
 that sorting occurs at particular places in the table, as defined by a
@@ -926,7 +927,7 @@ proceed.</p>
 <span><span class="co">#         row_values(tree_children(ctab)[[1]])[[j]][1]</span></span>
 <span><span class="co">#     }</span></span>
 <span><span class="co"># }</span></span>
-<span><span class="co"># &lt;bytecode: 0x563cd7cb0978&gt;</span></span>
+<span><span class="co"># &lt;bytecode: 0x5613635b8798&gt;</span></span>
 <span><span class="co"># &lt;environment: namespace:rtables&gt;</span></span></code></pre></div>
 <p>We see that a similar function to <code><a href="../reference/score_funs.html">cont_n_allcols()</a></code> is
 wrapped by one that allows a parameter <code>j</code> to be used to
