@@ -1,4 +1,4 @@
-## rtables 0.6.16.9007
+## rtables 0.6.16.9008
 
 ### New Features
  * Added `restrict_facets` function factory for use with `make_split_fun` @gmbecker
