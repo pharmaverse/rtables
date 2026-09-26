@@ -4,6 +4,7 @@
 \alias{vars_in_layout}
 \alias{vars_in_layout,PreDataTableLayouts-method}
 \alias{vars_in_layout,PreDataAxisLayout-method}
+\alias{vars_in_layout,SplitVectorTree-method}
 \alias{vars_in_layout,SplitVector-method}
 \alias{vars_in_layout,Split-method}
 \alias{vars_in_layout,CompoundSplit-method}
@@ -15,6 +16,8 @@ vars_in_layout(lyt)
 \S4method{vars_in_layout}{PreDataTableLayouts}(lyt)
 
 \S4method{vars_in_layout}{PreDataAxisLayout}(lyt)
+
+\S4method{vars_in_layout}{SplitVectorTree}(lyt)
 
 \S4method{vars_in_layout}{SplitVector}(lyt)
 

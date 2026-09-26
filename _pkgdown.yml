@@ -158,6 +158,7 @@ reference:
     - add_overall_col
     - add_existing_table
     - formatters::table_inset
+    - get_layout_dfs
     - RefFootnote
 
   - title: Tabulation Utility Functions
