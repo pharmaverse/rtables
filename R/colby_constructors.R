@@ -353,7 +353,7 @@ do_next_split_rows <- function(lyt, spl, nested, at_sibling) {
     pos <- bprow$anchor_step
   }
   if (is_analyze_spl(spl) && is_analyze_spl(last_rowsplit(lyt)) &&
-        nested && is.null(at_sibling)) {
+    nested && is.null(at_sibling)) {
     ret <- cmpnd_last_rowsplit(lyt, spl, cmpfun)
   } else {
     ret <- split_rows(lyt, spl, pos, at_sibling = at_sibling, cmpnd_fun = cmpfun)
