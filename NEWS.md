@@ -1,4 +1,4 @@
-## rtables 0.6.16.9007
+## rtables 0.6.16.9010
 
 ### New Features
  * Added `restrict_facets` function factory for use with `make_split_fun` @gmbecker
@@ -6,6 +6,7 @@
  * Exported previously internal `splv_extra` and `splv_extra<-` accessors for getting and setting child-specific extra arguments on `SplitValue` objects.
  * Exported previously internal `value_expr` accessor for retrieving the subsetting expression from a `SplitValue` or `ValueWrapper` object.
  * The `.alt_df*` family of afun arguments now receive subsets of `df` when `alt_counts_df` is not specified in the `build_table` call; previously resulted in an error.
+ * Exported previously internal `RefFootnote` constructor for reference footnote objects.
  * Added accessor methods for `RowsVerticalSection objects`: `row_cells`, `obj_format`, `obj_format<-`, `obj_na_str`, `obj_na_str<-`, `cell_values`
  * Added `c` method for directly combining `RowsVerticalSection` objects
  * Added vignette: Guided Tour (Advanced) @gmbecker
@@ -24,6 +25,8 @@
  
 ### Bug Fixes
  * `indent_mod<-` `RowsVerticalSection` method now correctly recycles length 1 values @gmbecker
+ * content functions now receive correct `.ref_group` value instead of a data.frame with zero rows, when requested. #1117 @gmbecker
+ * Fix in the now exported `RefFootnote` in check for disallowed values in `symbol` argument
 
 ## rtables 0.6.15
 

@@ -508,7 +508,8 @@ gen_rowvalues <- function(dfpart,
                        alt_df,
                        alt_df_full,
                        extra_args,
-                       spl_context = context_df_row(cinfo = cinfo)) {
+                       spl_context = context_df_row(cinfo = cinfo),
+                       baselines) {
   if (length(cvar) == 0 || is.na(cvar) || identical(nchar(cvar), 0L)) {
     cvar <- NULL
   }
@@ -529,7 +530,8 @@ gen_rowvalues <- function(dfpart,
         alt_dfpart = alt_df,
         alt_df_full = alt_df_full,
         splextra = extra_args,
-        spl_context = spl_context
+        spl_context = spl_context,
+        baselines = baselines
       ),
       error = function(e) e
     )
@@ -1206,7 +1208,8 @@ recursive_applysplit <- function(df,
     alt_df = alt_df,
     alt_df_full = alt_df_full,
     extra_args = cextra_args,
-    spl_context = spl_context
+    spl_context = spl_context,
+    baselines = baselines
   )
 
   nonroot <- lvl != 0L
@@ -1443,7 +1446,11 @@ build_table <- function(lyt, df,
     na_str = content_na_str(rtspl),
     indent_mod = 0L,
     cvar = content_var(rtspl),
-    extra_args = content_extra_args(rtspl)
+    extra_args = content_extra_args(rtspl),
+    baselines = lapply(
+      col_extra_args(cinfo),
+      function(x) x$.ref_full
+    )
   )
 
   kids <- lapply(seq_along(rlyt), function(i) {

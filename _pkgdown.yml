@@ -36,6 +36,8 @@ navbar:
           href: unit-test-report/
         - text: Non-CRAN unit test report
           href: unit-test-report-non-cran/
+        - text: Validation report
+          href: https://pharmar.github.io/pharmapkgs/src/contrib/Meta/validation_report_rtables_v0.6.16.html
 
 repo:
   url:
@@ -158,6 +160,7 @@ reference:
     - add_overall_col
     - add_existing_table
     - formatters::table_inset
+    - RefFootnote
 
   - title: Tabulation Utility Functions
     desc: Functions that are useful to be used with the `analyze*` functions.
