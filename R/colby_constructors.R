@@ -1052,8 +1052,9 @@ NULL
 #'
 #' @note If any of these formals is specified incorrectly or not present in the tabulation machinery, it will be
 #'   treated as if missing. For example, `.ref_group` will be missing if no baseline is previously defined during
-#'   data splitting (via `ref_group` parameters in, e.g., [split_rows_by()]). Similarly, if no `alt_counts_df` is
-#'   provided to [build_table()], `.alt_df_row` and `.alt_df` will not be present.
+#'   data splitting (via `ref_group` parameters in, e.g., [split_rows_by()]). Arguments derived from
+#'   the alt_counts_df will be passed subsets of the primary data (`df`) when no `alt_counts_df` is provided
+#'   to [build_table()].
 #'
 #' @name additional_fun_params
 NULL

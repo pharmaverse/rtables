@@ -47,6 +47,7 @@ subsets based on \code{df} if no \code{alt_counts_df} is specified in the
 \note{
 If any of these formals is specified incorrectly or not present in the tabulation machinery, it will be
 treated as if missing. For example, \code{.ref_group} will be missing if no baseline is previously defined during
-data splitting (via \code{ref_group} parameters in, e.g., \code{\link[=split_rows_by]{split_rows_by()}}). Similarly, if no \code{alt_counts_df} is
-provided to \code{\link[=build_table]{build_table()}}, \code{.alt_df_row} and \code{.alt_df} will not be present.
+data splitting (via \code{ref_group} parameters in, e.g., \code{\link[=split_rows_by]{split_rows_by()}}). Arguments derived from
+the alt_counts_df will be passed subsets of the primary data (\code{df}) when no \code{alt_counts_df} is provided
+to \code{\link[=build_table]{build_table()}}.
 }
