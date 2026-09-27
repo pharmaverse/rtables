@@ -36,6 +36,8 @@ navbar:
           href: unit-test-report/
         - text: Non-CRAN unit test report
           href: unit-test-report-non-cran/
+        - text: Validation report
+          href: https://pharmar.github.io/pharmapkgs/src/contrib/Meta/validation_report_rtables_v0.6.16.html
 
 repo:
   url:
