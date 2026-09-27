@@ -164,9 +164,6 @@ test_that(".spl_context and afun extra parameters contain information about comb
     add_overall_col("All Patients 2") |>
     analyze(vars = "BMRKR1", afun = n_wrapper_alt_df(ex_adsl))
 
-  # NB: If you add keep_levels = c("all_X") to add_combo_levels the other
-  #     column expressions are missing -> Expected!
-
   tbl <- lyt |> build_table(DM, alt_counts_df = ex_adsl)
 
   expect_silent(cbind_rtables(tbl, tbl))
