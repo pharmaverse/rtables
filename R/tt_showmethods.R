@@ -391,7 +391,10 @@ docat_splitvec <- docat_predataxis
 
 docat_lyt_legend <- function() {
   cat("\n",
-    "'->' indicates nesting, vertical stacks of '|' indicate anchoring/siblings.\n'(<type>)' indicates split type, while '(** <type> **)' indicates an analyze instruction.",
+    paste0(
+      "'->' indicates nesting, vertical stacks of '|' indicate anchoring/siblings.\n",
+      "'(<type>)' indicates split type, while '(** <type> **)' indicates an analyze instruction."
+    ),
     "\n\n",
     sep = ""
   )

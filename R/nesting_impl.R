@@ -31,7 +31,7 @@ setMethod(
   function(obj, nested, for_analyze, at_sibling = NULL) {
     l <- length(obj)
     if (length(obj[[l]]) > 0L &&
-      !.check_if_nest(obj, nested, for_analyze, at_sibling = at_sibling)) {
+          !.check_if_nest(obj, nested, for_analyze, at_sibling = at_sibling)) {
       l <- l + 1L
     }
     l
@@ -321,7 +321,12 @@ setMethod(
 #'
 #' @export
 #' @rdname get_anchor_df
-setGeneric("get_full_lyt_df", function(splvec, next_node = 1L, next_anchor_step = 1L, parent, depth, node_type) standardGeneric("get_full_lyt_df"))
+setGeneric(
+  "get_full_lyt_df",
+  function(splvec, next_node = 1L, next_anchor_step = 1L, parent, depth, node_type) {
+    standardGeneric("get_full_lyt_df")
+  }
+)
 
 #' @rdname get_anchor_df
 #' @export
@@ -337,7 +342,17 @@ setMethod(
 )
 
 make_lyt_df_row <- function(name, nodeid, parentid, depth, type, anchor_step, force_pag = NA, spl_abbrev = NA) {
-  data.frame(name = name, nodeid = nodeid, parentid = parentid, depth = depth, type = type, is_toplevel = parentid == 0, anchor_step = anchor_step, force_pag = force_pag, spl_abbrev = spl_abbrev)
+  data.frame(
+    name = name,
+    nodeid = nodeid,
+    parentid = parentid,
+    depth = depth,
+    type = type,
+    is_toplevel = parentid == 0,
+    anchor_step = anchor_step,
+    force_pag = force_pag,
+    spl_abbrev = spl_abbrev
+  )
 }
 
 #' @rdname get_anchor_df
@@ -351,7 +366,8 @@ get_layout_dfs <- function(lyt) {
 }
 
 
-.gflytdf_predataaxis <- function(splvec, next_node = 1, next_anchor_step = 1L, parent = 0L, depth = 1L, node_type = "active") {
+.gflytdf_predataaxis <- function(splvec, next_node = 1, next_anchor_step = 1L,
+                                 parent = 0L, depth = 1L, node_type = "active") {
   len <- length(splvec)
   prvlst <- vector("list", length(splvec))
 
@@ -378,7 +394,14 @@ setMethod(
     if (length(splvec) == 1 && length(splvec[[1]]) == 0) {
       return(make_lyt_df_row(NA, NA, NA, NA, NA, NA, NA)[0, ])
     }
-    .gflytdf_predataaxis(splvec = splvec, next_node = next_node, next_anchor_step = next_anchor_step, parent = parent, depth = depth, node_type = node_type)
+    .gflytdf_predataaxis(
+      splvec = splvec,
+      next_node = next_node,
+      next_anchor_step = next_anchor_step,
+      parent = parent,
+      depth = depth,
+      node_type = node_type
+    )
   }
 )
 
@@ -391,7 +414,14 @@ setMethod(
     if (length(splvec) == 1 && length(splvec[[1]]) == 0) {
       return(get_full_lyt_df(AllSplit("<implicit>"), 1, 1, 0, 1, NA))
     }
-    .gflytdf_predataaxis(splvec = splvec, next_node = next_node, next_anchor_step = next_anchor_step, parent = parent, depth = depth, node_type = node_type)
+    .gflytdf_predataaxis(
+      splvec = splvec,
+      next_node = next_node,
+      next_anchor_step = next_anchor_step,
+      parent = parent,
+      depth = depth,
+      node_type = node_type
+    )
   }
 )
 
@@ -453,7 +483,18 @@ setMethod(
 #' @export
 setMethod(
   "get_full_lyt_df", "Split",
-  function(splvec, next_node, next_anchor_step, parent, depth, node_type) make_lyt_df_row(name = obj_name(splvec), nodeid = next_node, anchor_step = next_anchor_step, parentid = parent, depth = depth, type = node_type, force_pag = has_force_pag(splvec), spl_abbrev = spltype_abbrev(splvec))
+  function(splvec, next_node, next_anchor_step, parent, depth, node_type) {
+    make_lyt_df_row(
+      name = obj_name(splvec),
+      nodeid = next_node,
+      anchor_step = next_anchor_step,
+      parentid = parent,
+      depth = depth,
+      type = node_type,
+      force_pag = has_force_pag(splvec),
+      spl_abbrev = spltype_abbrev(splvec)
+    )
+  }
 )
 
 
@@ -463,7 +504,18 @@ setMethod(
 #' @export
 setMethod(
   "get_full_lyt_df", "VTableNodeInfo",
-  function(splvec, next_node, next_anchor_step, parent, depth, node_type) make_lyt_df_row(name = obj_name(splvec), nodeid = next_node, anchor_step = next_anchor_step, parentid = parent, depth = depth, type = node_type, force_pag = FALSE, spl_abbrev = paste0(nrow(splvec), "x", ncol(splvec), " table"))
+  function(splvec, next_node, next_anchor_step, parent, depth, node_type) {
+    make_lyt_df_row(
+      name = obj_name(splvec),
+      nodeid = next_node,
+      anchor_step = next_anchor_step,
+      parentid = parent,
+      depth = depth,
+      type = node_type,
+      force_pag = FALSE,
+      spl_abbrev = paste0(nrow(splvec), "x", ncol(splvec), " table")
+    )
+  }
 )
 
 
