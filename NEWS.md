@@ -21,9 +21,13 @@
  * Added vignette: Guided Tour (Advanced) - (stub) `TableTree` Objects - (stub) Accessing Table Values @gmbecker
  * Added vignette: Guided Tour (Advanced) - (stub) `TableTree` Objects - (stub) Custom Scoring Functions For Sorting @gmbecker
  * Added vignette: Guided Tour (Advanced) - (stub) `TableTree` Objects - (stub) Custom Pruning Functions @gmbecker
- 
+ * Added `at_sibling` parameter to `split_rows_by*` and `analyze` functions, enabling placement of a new layout directive as a direct sibling of a previously declared split or analysis @gmbecker
+ * Added `get_anchor_list()` function for inspecting the available sibling anchors in an existing layout @gmbecker
+ * `label_pos` now accepts `"default"` as a value, which resolves to `"visible"` when `at_sibling` is non-`NULL` and `"hidden"` otherwise @gmbecker
+
 ### Bug Fixes
  * `indent_mod<-` `RowsVerticalSection` method now correctly recycles length 1 values @gmbecker
+ * Fixed `uniqify_child_names` emitting messages ending in a literal `FALSE` due to passing `call. = FALSE` to `message()`, which does not accept that argument @gmbecker
  * content functions now receive correct `.ref_group` value instead of a data.frame with zero rows, when requested. #1117 @gmbecker
  * Fix in the now exported `RefFootnote` in check for disallowed values in `symbol` argument
 
