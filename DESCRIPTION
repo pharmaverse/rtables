@@ -1,7 +1,7 @@
 Package: rtables
 Title: Reporting Tables
-Version: 0.6.16.9010
-Date: 2026-09-26
+Version: 0.6.16.9011
+Date: 2026-09-28
 Authors@R: c(
     person("Gabriel", "Becker", , "gabembecker@gmail.com", role = "aut",
            comment = "Original creator of the package"),
@@ -77,6 +77,7 @@ Collate:
     'argument_conventions.R'
     'as_html.R'
     'utils.R'
+    'nesting_impl.R'
     'colby_constructors.R'
     'compare_rtables.R'
     'format_rcell.R'
