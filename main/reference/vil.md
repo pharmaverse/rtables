@@ -13,6 +13,9 @@ vars_in_layout(lyt)
 # S4 method for class 'PreDataAxisLayout'
 vars_in_layout(lyt)
 
+# S4 method for class 'SplitVectorTree'
+vars_in_layout(lyt)
+
 # S4 method for class 'SplitVector'
 vars_in_layout(lyt)
 

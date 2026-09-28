@@ -6,25 +6,99 @@ These are internal methods that are documented only to satisfy
 ## Usage
 
 ``` r
-# S4 method for class 'SplitVector'
-c(x, ...)
-
-split_rows(lyt = NULL, spl, pos, cmpnd_fun = AnalyzeMultiVars)
-
-# S4 method for class 'NULL'
-split_rows(lyt = NULL, spl, pos, cmpnd_fun = AnalyzeMultiVars)
-
-# S4 method for class 'PreDataRowLayout'
-split_rows(lyt = NULL, spl, pos, cmpnd_fun = AnalyzeMultiVars)
-
-# S4 method for class 'SplitVector'
-split_rows(lyt = NULL, spl, pos, cmpnd_fun = AnalyzeMultiVars)
+next_rpos(obj, nested = TRUE, for_analyze = FALSE, at_sibling = NULL)
 
 # S4 method for class 'PreDataTableLayouts'
-split_rows(lyt, spl, pos)
+next_rpos(obj, nested = TRUE, for_analyze = FALSE, at_sibling = NULL)
+
+# S4 method for class 'PreDataRowLayout'
+next_rpos(obj, nested = TRUE, for_analyze = FALSE, at_sibling = NULL)
 
 # S4 method for class 'ANY'
-split_rows(lyt, spl, pos)
+next_rpos(obj, nested)
+
+next_cpos(obj, nested = TRUE)
+
+# S4 method for class 'PreDataTableLayouts'
+next_cpos(obj, nested = TRUE)
+
+# S4 method for class 'PreDataColLayout'
+next_cpos(obj, nested = TRUE)
+
+# S4 method for class 'ANY'
+next_cpos(obj, nested = TRUE)
+
+last_rowsplit(obj)
+
+# S4 method for class 'NULL'
+last_rowsplit(obj)
+
+# S4 method for class 'SplitVector'
+last_rowsplit(obj)
+
+# S4 method for class 'SplitVectorTree'
+last_rowsplit(obj)
+
+# S4 method for class 'PreDataRowLayout'
+last_rowsplit(obj)
+
+# S4 method for class 'PreDataTableLayouts'
+last_rowsplit(obj)
+
+split_rows(
+  lyt = NULL,
+  spl,
+  pos,
+  cmpnd_fun = AnalyzeMultiVars,
+  at_sibling = NULL
+)
+
+# S4 method for class 'NULL'
+split_rows(
+  lyt = NULL,
+  spl,
+  pos,
+  cmpnd_fun = AnalyzeMultiVars,
+  at_sibling = NULL
+)
+
+get_kid_types(obj, type)
+
+# S4 method for class 'Split'
+get_kid_types(obj, type)
+
+# S4 method for class 'SplitVector'
+get_kid_types(obj, type)
+
+# S4 method for class 'SplitVectorTree'
+get_kid_types(obj, type)
+
+# S4 method for class 'PreDataRowLayout'
+get_kid_types(obj, type)
+
+# S4 method for class 'PreDataRowLayout'
+split_rows(
+  lyt = NULL,
+  spl,
+  pos,
+  cmpnd_fun = AnalyzeMultiVars,
+  at_sibling = NULL
+)
+
+# S4 method for class 'SplitVector'
+split_rows(
+  lyt = NULL,
+  spl,
+  pos,
+  cmpnd_fun = AnalyzeMultiVars,
+  at_sibling = NULL
+)
+
+# S4 method for class 'PreDataTableLayouts'
+split_rows(lyt, spl, pos, at_sibling = NULL)
+
+# S4 method for class 'ANY'
+split_rows(lyt, spl, pos, at_sibling = NULL)
 
 cmpnd_last_rowsplit(lyt, spl, constructor)
 
@@ -35,6 +109,15 @@ cmpnd_last_rowsplit(lyt, spl, constructor)
 cmpnd_last_rowsplit(lyt, spl, constructor)
 
 # S4 method for class 'SplitVector'
+cmpnd_last_rowsplit(lyt, spl, constructor)
+
+# S4 method for class 'CompoundSplit'
+cmpnd_last_rowsplit(lyt, spl, constructor)
+
+# S4 method for class 'Split'
+cmpnd_last_rowsplit(lyt, spl, constructor)
+
+# S4 method for class 'SplitVectorTree'
 cmpnd_last_rowsplit(lyt, spl, constructor)
 
 # S4 method for class 'PreDataTableLayouts'
@@ -60,6 +143,9 @@ split_cols(lyt = NULL, spl, pos)
 # S4 method for class 'ANY'
 split_cols(lyt = NULL, spl, pos)
 
+# S4 method for class 'SplitVector'
+c(x, ...)
+
 .add_row_summary(
   lyt,
   label,
@@ -99,6 +185,19 @@ split_cols(lyt = NULL, spl, pos)
 )
 
 # S4 method for class 'SplitVector'
+.add_row_summary(
+  lyt,
+  label,
+  cfun,
+  child_labels = c("default", "visible", "hidden"),
+  cformat = NULL,
+  cna_str = "-",
+  indent_mod = 0L,
+  cvar = "",
+  extra_args = list()
+)
+
+# S4 method for class 'SplitVectorTree'
 .add_row_summary(
   lyt,
   label,
@@ -142,6 +241,9 @@ fix_dyncuts(spl, df)
 fix_dyncuts(spl, df)
 
 # S4 method for class 'SplitVector'
+fix_dyncuts(spl, df)
+
+# S4 method for class 'SplitVectorTree'
 fix_dyncuts(spl, df)
 
 # S4 method for class 'PreDataTableLayouts'
@@ -206,42 +308,6 @@ content_table(obj)
 
 # S4 method for class 'TableTree,ElementaryTable'
 content_table(obj) <- value
-
-next_rpos(obj, nested = TRUE, for_analyze = FALSE)
-
-# S4 method for class 'PreDataTableLayouts'
-next_rpos(obj, nested = TRUE, for_analyze = FALSE)
-
-# S4 method for class 'PreDataRowLayout'
-next_rpos(obj, nested = TRUE, for_analyze = FALSE)
-
-# S4 method for class 'ANY'
-next_rpos(obj, nested)
-
-next_cpos(obj, nested = TRUE)
-
-# S4 method for class 'PreDataTableLayouts'
-next_cpos(obj, nested = TRUE)
-
-# S4 method for class 'PreDataColLayout'
-next_cpos(obj, nested = TRUE)
-
-# S4 method for class 'ANY'
-next_cpos(obj, nested = TRUE)
-
-last_rowsplit(obj)
-
-# S4 method for class 'NULL'
-last_rowsplit(obj)
-
-# S4 method for class 'SplitVector'
-last_rowsplit(obj)
-
-# S4 method for class 'PreDataRowLayout'
-last_rowsplit(obj)
-
-# S4 method for class 'PreDataTableLayouts'
-last_rowsplit(obj)
 
 rlayout(obj)
 
@@ -395,6 +461,9 @@ label_position(spl)
 label_position(spl)
 
 # S4 method for class 'VAnalyzeSplit'
+label_position(spl)
+
+# S4 method for class 'SplitVectorTree'
 label_position(spl)
 
 label_position(spl) <- value
@@ -1100,14 +1169,30 @@ show(object)
 
 ## Arguments
 
-- x:
+- obj:
 
   (`ANY`)\
   the object.
 
-- ...:
+- nested:
 
-  splits or `SplitVector` objects.
+  (`logical`)\
+  whether this layout instruction should be applied within the existing
+  layout structure *if possible* (`TRUE`, the default) or as a new
+  top-level element (`FALSE`). Ignored if it would nest a split
+  underneath analyses, which is not allowed.
+
+- for_analyze:
+
+  (`flag`) whether split is an analyze split.
+
+- at_sibling:
+
+  (`character(1)` or `NULL`)\
+  If non-null, a preceding split or analyze to anchor this instruction
+  to as a direct sibling. Cannot select an instruction that is
+  downstream of a point where a previously used anchor (See Nesting
+  Anchor Resolution for details).
 
 - lyt:
 
@@ -1133,6 +1218,15 @@ show(object)
 
   (`function`)\
   constructor function.
+
+- x:
+
+  (`ANY`)\
+  the object.
+
+- ...:
+
+  splits or `SplitVector` objects.
 
 - label:
 
@@ -1193,11 +1287,6 @@ show(object)
   (`data.frame` or `tibble`)\
   dataset.
 
-- obj:
-
-  (`ANY`)\
-  the object.
-
 - depth:
 
   (`numeric(1)`)\
@@ -1229,18 +1318,6 @@ show(object)
 
   (`ANY`)\
   the new value.
-
-- nested:
-
-  (`logical`)\
-  whether this layout instruction should be applied within the existing
-  layout structure *if possible* (`TRUE`, the default) or as a new
-  top-level element (`FALSE`). Ignored if it would nest a split
-  underneath analyses, which is not allowed.
-
-- for_analyze:
-
-  (`flag`) whether split is an analyze split.
 
 - format:
 

@@ -12,6 +12,7 @@ analyze_colvars(
   format = NULL,
   na_str = NA_character_,
   nested = TRUE,
+  at_sibling = NULL,
   extra_args = list(),
   indent_mod = 0L,
   inclNAs = FALSE
@@ -67,6 +68,14 @@ analyze_colvars(
   top-level element (`FALSE`). Ignored if it would nest a split
   underneath analyses, which is not allowed.
 
+- at_sibling:
+
+  (`character(1)` or `NULL`)\
+  If non-null, a preceding split or analyze to anchor this instruction
+  to as a direct sibling. Cannot select an instruction that is
+  downstream of a point where a previously used anchor (See Nesting
+  Anchor Resolution for details).
+
 - extra_args:
 
   (`list`)\
@@ -94,6 +103,40 @@ analyze_colvars(
 A `PreDataTableLayouts` object suitable for passing to further layouting
 functions, and to
 [`build_table()`](https://pharmaverse.github.io/rtables/reference/build_table.md).
+
+## Nesting Anchor Resolution
+
+When `nested` is `TRUE`, `at_sibling` allows you to set a *nesting
+anchor* that your new `split_rows_by*` or `analyze*` directive should be
+placed as a sibling to. The lookup for this anchor occurs *only in the
+currently active top-level nesting stack*, meaning the directives that
+have occurred since the last split or analysis with `nested == FALSE`.
+
+Furthermore, resolution occurs against the first element of each arm of
+a branching point caused by any previous uses of `at_sibling` but *only
+descends into the last arm*.
+
+So for example if our previous layout was generated via:
+
+    lyt <- basic_table() |>
+      split_rows_by("SEX") |>
+      analyze("AGE") |>
+      split_rows_by("BMRKR2", nested = FALSE) |>
+      split_rows_by("RACE") |>
+      analyze("AGE") |>
+      split_rows_by("SEX", at_sibling = "RACE") |>
+      analyze("BMRKR1")
+
+The eligible anchor points would be `"BMRKR2"`, `"RACE"`, `"SEX"` and
+`"BMRKR1"`. `"AGE"` is masked by the branching caused by anchoring our
+`SEX` split on `RACE`.
+
+Finally, while `at_sibling` does support de-duplication of `"<name>[i]"`
+anchors, it does so **within the set of available anchors**, which can
+be counter-intuitive. It is strongly suggested that the `parent_name`
+and `table_names` argument(s) of `split_rows_by*` and `analyze` be used
+to prevent the need for this. `at_sibling` will resolve to table names
+overridden in this manner.
 
 ## See also
 
@@ -130,10 +173,13 @@ lyt
 #> A Pre-data Table Layout
 #> 
 #> Column-Split Structure:
-#> ARM (lvls) -> value:pctdiff (vars) 
+#> ARM (lvls) -> multivars (vars)
 #> 
 #> Row-Split Structure:
-#> RACE (lvls) -> NA (** col-var analysis **) 
+#> RACE (lvls) -> ac_value_pctdiff (** col-var **)
+#> 
+#> '->' indicates nesting, vertical stacks of '|' indicate anchoring/siblings.
+#> '(<type>)' indicates split type, while '(** <type> **)' indicates an analyze instruction.
 #> 
 
 tbl <- build_table(lyt, ANL)

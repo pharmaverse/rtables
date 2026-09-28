@@ -185,10 +185,13 @@ build a table once we get data. We can look at the layout isolated:
 `# A Pre-data Table Layout`\
 `# `\
 `# Column-Split Structure:`\
-`#  () `\
+`# <implicit> (all obs)`\
 `# `\
 `# Row-Split Structure:`\
-`# age (** analysis **)`
+`# age (** var **)`\
+`# `\
+`# '->' indicates nesting, vertical stacks of '|' indicate anchoring/siblings.`\
+`# '(<type>)' indicates split type, while '(** <type> **)' indicates an analyze instruction.`
 
 The general layouting instructions are summarized below:
 

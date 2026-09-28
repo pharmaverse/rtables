@@ -11,7 +11,7 @@
 
 - [Introductory rtables - Basic Table Layout
   Instructions](https://pharmaverse.github.io/rtables/articles/guided_intro_basics.md):
-- [Introductory rtables - Facet And Analysis
+- [Introductory \`rtables\` - Facet And Analysis
   Nesting](https://pharmaverse.github.io/rtables/articles/guided_intro_nesting.md):
 - [A Guided Tour of rtables -
   Intermediate](https://pharmaverse.github.io/rtables/articles/guided_intermediate.md):

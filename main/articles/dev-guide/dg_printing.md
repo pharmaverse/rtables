@@ -63,10 +63,13 @@ printed:
     # A Pre-data Table Layout
     # 
     # Column-Split Structure:
-    # ARM (lvls) 
+    # ARM (lvls)
     # 
     # Row-Split Structure:
-    # SEX (lvls) -> BMRKR1 (** analysis **)
+    # SEX (lvls) -> BMRKR1 (** var **)
+    # 
+    # '->' indicates nesting, vertical stacks of '|' indicate anchoring/siblings.
+    # '(<type>)' indicates split type, while '(** <type> **)' indicates an analyze instruction.
 
 \
 `tbl`` ``<-`` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``lyt``, ``ex_adsl``)`` ``|>`\
@@ -113,13 +116,13 @@ printing machinery:
 
     #  [1] .add_row_summary        clayout                 clayout<-              
     #  [4] col_exprs               colcount_format         colcount_format<-      
-    #  [7] coltree                 header_section_div      header_section_div<-   
-    # [10] main_footer             main_footer<-           main_title             
-    # [13] main_title<-            obj_round_type          prov_footer            
-    # [16] prov_footer<-           show                    subtitles              
-    # [19] subtitles<-             table_inset             table_inset<-          
-    # [22] top_left                top_left<-              top_level_section_div  
-    # [25] top_level_section_div<- vars_in_layout         
+    #  [7] coltree                 get_full_lyt_df         header_section_div     
+    # [10] header_section_div<-    main_footer             main_footer<-          
+    # [13] main_title              main_title<-            obj_round_type         
+    # [16] prov_footer             prov_footer<-           show                   
+    # [19] subtitles               subtitles<-             table_inset            
+    # [22] table_inset<-           top_left                top_left<-             
+    # [25] top_level_section_div   top_level_section_div<- vars_in_layout         
     # see '?methods' for accessing help and source code
 
 Now, lets see the same for our result table `tbl`:
@@ -179,25 +182,26 @@ Now, lets see the same for our result table `tbl`:
     # [22] coltree              content_table        content_table<-     
     # [25] dim                  do_forced_paginate   facet_colcount      
     # [28] facet_colcount<-     fnotes_at_path<-     get_formatted_cells 
-    # [31] has_force_pag        head                 header_section_div  
-    # [34] header_section_div<- horizontal_sep       horizontal_sep<-    
-    # [37] indent_mod           indent_mod<-         insert_row_at_path  
-    # [40] main_footer          main_footer<-        main_title          
-    # [43] main_title<-         make_row_df          matrix_form         
-    # [46] names                ncol                 no_colinfo          
-    # [49] nrow                 obj_format           obj_format<-        
-    # [52] obj_label            obj_label<-          obj_na_str          
-    # [55] obj_na_str<-         obj_name             obj_name<-          
-    # [58] obj_round_type       obj_round_type<-     page_titles         
-    # [61] page_titles<-        prov_footer          prov_footer<-       
-    # [64] rbind                rbind2               rm_all_colcounts    
-    # [67] row_footnotes        row.names            section_div         
-    # [70] section_div<-        show                 str                 
-    # [73] subset_cols          subtitles            subtitles<-         
-    # [76] table_inset          table_inset<-        tail                
-    # [79] top_left             top_left<-           toString            
-    # [82] tree_children        tree_children<-      tt_at_path          
-    # [85] tt_at_path<-         value_at             value_formats       
+    # [31] get_full_lyt_df      has_force_pag        head                
+    # [34] header_section_div   header_section_div<- horizontal_sep      
+    # [37] horizontal_sep<-     indent_mod           indent_mod<-        
+    # [40] insert_row_at_path   main_footer          main_footer<-       
+    # [43] main_title           main_title<-         make_row_df         
+    # [46] matrix_form          names                ncol                
+    # [49] no_colinfo           nrow                 obj_format          
+    # [52] obj_format<-         obj_label            obj_label<-         
+    # [55] obj_na_str           obj_na_str<-         obj_name            
+    # [58] obj_name<-           obj_round_type       obj_round_type<-    
+    # [61] page_titles          page_titles<-        prov_footer         
+    # [64] prov_footer<-        rbind                rbind2              
+    # [67] rm_all_colcounts     row_footnotes        row.names           
+    # [70] section_div          section_div<-        show                
+    # [73] str                  subset_cols          subtitles           
+    # [76] subtitles<-          table_inset          table_inset<-       
+    # [79] tail                 top_left             top_left<-          
+    # [82] toString             tree_children        tree_children<-     
+    # [85] tt_at_path           tt_at_path<-         value_at            
+    # [88] value_formats       
     # see '?methods' for accessing help and source code
 
 Again, the class itself has only the `show` method. Nonetheless, if you
@@ -560,20 +564,20 @@ remember how this printed form is meant to
     # [19] "colcount_visible<-"   "collect_leaves"       "coltree"             
     # [22] "content_table"        "content_table<-"      "dim"                 
     # [25] "do_forced_paginate"   "facet_colcount"       "facet_colcount<-"    
-    # [28] "fnotes_at_path<-"     "get_formatted_cells"  "has_force_pag"       
-    # [31] "head"                 "header_section_div"   "header_section_div<-"
-    # [34] "horizontal_sep"       "horizontal_sep<-"     "indent_mod"          
-    # [37] "indent_mod<-"         "insert_row_at_path"   "names"               
-    # [40] "no_colinfo"           "nrow"                 "obj_format"          
-    # [43] "obj_format<-"         "obj_label"            "obj_label<-"         
-    # [46] "obj_na_str"           "obj_na_str<-"         "obj_name"            
-    # [49] "obj_name<-"           "rbind"                "rbind2"              
-    # [52] "rm_all_colcounts"     "row_footnotes"        "row.names"           
-    # [55] "section_div<-"        "show"                 "str"                 
-    # [58] "subset_cols"          "tail"                 "top_left"            
-    # [61] "top_left<-"           "tree_children"        "tree_children<-"     
-    # [64] "tt_at_path"           "tt_at_path<-"         "value_at"            
-    # [67] "value_formats"
+    # [28] "fnotes_at_path<-"     "get_formatted_cells"  "get_full_lyt_df"     
+    # [31] "has_force_pag"        "head"                 "header_section_div"  
+    # [34] "header_section_div<-" "horizontal_sep"       "horizontal_sep<-"    
+    # [37] "indent_mod"           "indent_mod<-"         "insert_row_at_path"  
+    # [40] "names"                "no_colinfo"           "nrow"                
+    # [43] "obj_format"           "obj_format<-"         "obj_label"           
+    # [46] "obj_label<-"          "obj_na_str"           "obj_na_str<-"        
+    # [49] "obj_name"             "obj_name<-"           "rbind"               
+    # [52] "rbind2"               "rm_all_colcounts"     "row_footnotes"       
+    # [55] "row.names"            "section_div<-"        "show"                
+    # [58] "str"                  "subset_cols"          "tail"                
+    # [61] "top_left"             "top_left<-"           "tree_children"       
+    # [64] "tree_children<-"      "tt_at_path"           "tt_at_path<-"        
+    # [67] "value_at"             "value_formats"
 
 \
 [`setdiff`](https://generics.r-lib.org/reference/setops.html)`(``mpf_methods``, ``tbl_methods``)`` ``# much less unique methods`

@@ -59,7 +59,7 @@ lyt2 <- basic_table() |>
 tbl2 <- build_table(lyt2, DM)
 #> Modifying subtable (or row) names to ensure uniqueness among direct siblings
 #> [AGE  -> { AGE, AGE[2] }]
-#>   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE
+#>   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.
 tbl2
 #>        A: Drug X   B: Placebo   C: Combination
 #> ——————————————————————————————————————————————

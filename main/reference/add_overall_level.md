@@ -114,10 +114,13 @@ lyt2
 #> A Pre-data Table Layout
 #> 
 #> Column-Split Structure:
-#> ARM (lvls) 
+#> ARM (lvls)
 #> 
 #> Row-Split Structure:
-#> RACE (lvls) -> AGE (** analysis **) 
+#> RACE (lvls) -> AGE (** var **)
+#> 
+#> '->' indicates nesting, vertical stacks of '|' indicate anchoring/siblings.
+#> '(<type>)' indicates split type, while '(** <type> **)' indicates an analyze instruction.
 #> 
 
 tbl2 <- build_table(lyt2, DM)

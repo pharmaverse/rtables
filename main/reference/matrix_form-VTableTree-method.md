@@ -121,10 +121,13 @@ lyt
 #> A Pre-data Table Layout
 #> 
 #> Column-Split Structure:
-#> Species (lvls) -> group (lvls) 
+#> Species (lvls) -> group (lvls)
 #> 
 #> Row-Split Structure:
-#> Sepal.Length:Petal.Width (** multivar analysis **) 
+#> ma_Sepal.Length_Petal.Width (** multivar **)
+#> 
+#> '->' indicates nesting, vertical stacks of '|' indicate anchoring/siblings.
+#> '(<type>)' indicates split type, while '(** <type> **)' indicates an analyze instruction.
 #> 
 
 tbl <- build_table(lyt, iris2)

@@ -54,7 +54,8 @@ lyt_args(
   colcount_format,
   parent_name,
   formats_var,
-  na_strs_var
+  na_strs_var,
+  at_sibling
 )
 ```
 
@@ -378,6 +379,14 @@ lyt_args(
   formats (other than `"default"`) set within the afun. Cannot be used
   simultaneously with `format`. Cannot be used if `formats_var` is
   `NULL`.
+
+- at_sibling:
+
+  (`character(1)` or `NULL`)\
+  If non-null, a preceding split or analyze to anchor this instruction
+  to as a direct sibling. Cannot select an instruction that is
+  downstream of a point where a previously used anchor (See Nesting
+  Anchor Resolution for details).
 
 ## Value
 

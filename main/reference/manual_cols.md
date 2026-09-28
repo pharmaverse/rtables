@@ -45,7 +45,7 @@ rows <- lapply(1:5, function(i) {
 tbl <- TableTree(kids = rows, cinfo = manual_cols(split = c("a", "b", "c")))
 #> Modifying subtable (or row) names to ensure uniqueness among direct siblings
 #> [  -> { , [2], [3], [4], [5] }]
-#>   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE
+#>   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.
 tbl
 #>    a   b   c
 #> ————————————

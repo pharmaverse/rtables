@@ -45,11 +45,14 @@ lyt
 #> A Pre-data Table Layout
 #> 
 #> Column-Split Structure:
-#> ARM (lvls) 
-#>  (all obs) 
+#> ARM (lvls)            
+#> All Patients (all obs)
 #> 
 #> Row-Split Structure:
-#> AGE (** analysis **) 
+#> AGE (** var **)
+#> 
+#> '->' indicates nesting, vertical stacks of '|' indicate anchoring/siblings.
+#> '(<type>)' indicates split type, while '(** <type> **)' indicates an analyze instruction.
 #> 
 
 tbl <- build_table(lyt, DM)

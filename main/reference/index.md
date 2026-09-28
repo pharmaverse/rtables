@@ -59,6 +59,12 @@ Functions for declaring layout and tabulation
 - [`table_inset()`](https://pharmaverse.github.io/formatters/latest-tag/reference/table_inset.html)
   [`` `table_inset<-`() ``](https://pharmaverse.github.io/formatters/latest-tag/reference/table_inset.html)
   : Access or (recursively) set table inset (from formatters)
+- [`get_full_lyt_df()`](https://pharmaverse.github.io/rtables/reference/get_anchor_df.md)
+  [`get_layout_dfs()`](https://pharmaverse.github.io/rtables/reference/get_anchor_df.md)
+  [`get_anchor_dfs()`](https://pharmaverse.github.io/rtables/reference/get_anchor_df.md)
+  [`get_row_anchor_df()`](https://pharmaverse.github.io/rtables/reference/get_anchor_df.md)
+  [`get_row_anchor_list()`](https://pharmaverse.github.io/rtables/reference/get_anchor_df.md)
+  : Retrieve Info About Possible Nesting Anchors
 - [`RefFootnote()`](https://pharmaverse.github.io/rtables/reference/RefFootnote.md)
   : Referential Footnote
 

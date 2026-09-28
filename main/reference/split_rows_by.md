@@ -15,8 +15,9 @@ split_rows_by(
   format = NULL,
   na_str = NA_character_,
   nested = TRUE,
+  at_sibling = NULL,
   child_labels = c("default", "visible", "hidden"),
-  label_pos = "hidden",
+  label_pos = if (!is.null(at_sibling)) "visible" else "default",
   indent_mod = 0L,
   page_by = FALSE,
   page_prefix = split_label,
@@ -86,6 +87,14 @@ split_rows_by(
   top-level element (`FALSE`). Ignored if it would nest a split
   underneath analyses, which is not allowed.
 
+- at_sibling:
+
+  (`character(1)` or `NULL`)\
+  If non-null, a preceding split or analyze to anchor this instruction
+  to as a direct sibling. Cannot select an instruction that is
+  downstream of a point where a previously used anchor (See Nesting
+  Anchor Resolution for details).
+
 - child_labels:
 
   (`string`)\
@@ -144,6 +153,40 @@ If `var` is a factor with empty unobserved levels and `labels_var` is
 specified, it must also be a factor with the same number of levels as
 `var`. Currently the error that occurs when this is not the case is not
 very informative, but that will change in the future.
+
+## Nesting Anchor Resolution
+
+When `nested` is `TRUE`, `at_sibling` allows you to set a *nesting
+anchor* that your new `split_rows_by*` or `analyze*` directive should be
+placed as a sibling to. The lookup for this anchor occurs *only in the
+currently active top-level nesting stack*, meaning the directives that
+have occurred since the last split or analysis with `nested == FALSE`.
+
+Furthermore, resolution occurs against the first element of each arm of
+a branching point caused by any previous uses of `at_sibling` but *only
+descends into the last arm*.
+
+So for example if our previous layout was generated via:
+
+    lyt <- basic_table() |>
+      split_rows_by("SEX") |>
+      analyze("AGE") |>
+      split_rows_by("BMRKR2", nested = FALSE) |>
+      split_rows_by("RACE") |>
+      analyze("AGE") |>
+      split_rows_by("SEX", at_sibling = "RACE") |>
+      analyze("BMRKR1")
+
+The eligible anchor points would be `"BMRKR2"`, `"RACE"`, `"SEX"` and
+`"BMRKR1"`. `"AGE"` is masked by the branching caused by anchoring our
+`SEX` split on `RACE`.
+
+Finally, while `at_sibling` does support de-duplication of `"<name>[i]"`
+anchors, it does so **within the set of available anchors**, which can
+be counter-intuitive. It is strongly suggested that the `parent_name`
+and `table_names` argument(s) of `split_rows_by*` and `analyze` be used
+to prevent the need for this. `at_sibling` will resolve to table names
+overridden in this manner.
 
 ## Custom Splitting Function Details
 
@@ -274,10 +317,13 @@ lyt3
 #> A Pre-data Table Layout
 #> 
 #> Column-Split Structure:
-#> ARM (lvls) -> SEX (lvls) 
+#> ARM (lvls) -> SEX (lvls)
 #> 
 #> Row-Split Structure:
-#> RACE (lvls) -> AGE (** analysis **) 
+#> RACE (lvls) -> AGE (** var **)
+#> 
+#> '->' indicates nesting, vertical stacks of '|' indicate anchoring/siblings.
+#> '(<type>)' indicates split type, while '(** <type> **)' indicates an analyze instruction.
 #> 
 
 library(dplyr)

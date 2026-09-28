@@ -203,10 +203,12 @@ lyt1
 #> A Pre-data Table Layout
 #> 
 #> Column-Split Structure:
-#> ARM (lvls) 
+#> ARM (lvls)
 #> 
 #> Row-Split Structure:
-#>  () 
+#> 
+#> '->' indicates nesting, vertical stacks of '|' indicate anchoring/siblings.
+#> '(<type>)' indicates split type, while '(** <type> **)' indicates an analyze instruction.
 #> 
 
 # add an analysis (summary)
@@ -219,10 +221,13 @@ lyt2
 #> A Pre-data Table Layout
 #> 
 #> Column-Split Structure:
-#> ARM (lvls) 
+#> ARM (lvls)
 #> 
 #> Row-Split Structure:
-#> AGE:COUNTRY (** multivar analysis **) 
+#> ma_AGE_COUNTRY (** multivar **)
+#> 
+#> '->' indicates nesting, vertical stacks of '|' indicate anchoring/siblings.
+#> '(<type>)' indicates split type, while '(** <type> **)' indicates an analyze instruction.
 #> 
 
 tbl2 <- build_table(lyt2, DM)
@@ -266,10 +271,13 @@ lyt3
 #> A Pre-data Table Layout
 #> 
 #> Column-Split Structure:
-#> ARM (lvls) -> SEX (lvls) 
+#> ARM (lvls) -> SEX (lvls)
 #> 
 #> Row-Split Structure:
-#> AGE:COUNTRY (** multivar analysis **) 
+#> ma_AGE_COUNTRY (** multivar **)
+#> 
+#> '->' indicates nesting, vertical stacks of '|' indicate anchoring/siblings.
+#> '(<type>)' indicates split type, while '(** <type> **)' indicates an analyze instruction.
 #> 
 
 tbl3 <- build_table(lyt3, DM_MF)
@@ -306,10 +314,13 @@ lyt4
 #> A Pre-data Table Layout
 #> 
 #> Column-Split Structure:
-#> ARM (lvls) 
+#> ARM (lvls)
 #> 
 #> Row-Split Structure:
-#> SEX (lvls) -> RACE (lvls) -> AGE (** analysis **) 
+#> SEX (lvls) -> RACE (lvls) -> AGE (** var **)
+#> 
+#> '->' indicates nesting, vertical stacks of '|' indicate anchoring/siblings.
+#> '(<type>)' indicates split type, while '(** <type> **)' indicates an analyze instruction.
 #> 
 
 tbl4 <- build_table(lyt4, DM)
@@ -341,11 +352,14 @@ lyt5
 #> A Pre-data Table Layout
 #> 
 #> Column-Split Structure:
-#> ARM (lvls) 
+#> ARM (lvls)
 #> 
 #> Row-Split Structure:
-#> SEX (lvls) -> AGE (** analysis **) 
-#> RACE (lvls) -> AGE (** analysis **) 
+#> SEX (lvls)  -> AGE (** var **)
+#> RACE (lvls) -> AGE (** var **)
+#> 
+#> '->' indicates nesting, vertical stacks of '|' indicate anchoring/siblings.
+#> '(<type>)' indicates split type, while '(** <type> **)' indicates an analyze instruction.
 #> 
 
 tbl5 <- build_table(lyt5, DM)

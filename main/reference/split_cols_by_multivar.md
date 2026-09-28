@@ -121,10 +121,13 @@ lyt
 #> A Pre-data Table Layout
 #> 
 #> Column-Split Structure:
-#> ARM (lvls) -> value:pctdiff (vars) 
+#> ARM (lvls) -> multivars (vars)
 #> 
 #> Row-Split Structure:
-#> RACE (lvls) -> NA (** col-var analysis **) 
+#> RACE (lvls) -> ac_value_pctdiff (** col-var **)
+#> 
+#> '->' indicates nesting, vertical stacks of '|' indicate anchoring/siblings.
+#> '(<type>)' indicates split type, while '(** <type> **)' indicates an analyze instruction.
 #> 
 
 tbl <- build_table(lyt, ANL)

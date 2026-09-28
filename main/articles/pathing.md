@@ -374,7 +374,7 @@ the informative messages below:
 
     ## Modifying subtable (or row) names to ensure uniqueness among direct siblings
     ## [STRATA1  -> { STRATA1, STRATA1[2] }]
-    ##   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE
+    ##   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.
 
 \
 `tbldup`

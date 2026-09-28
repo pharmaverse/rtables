@@ -470,49 +470,49 @@ or, if we wanted to calculate two summaries per row split:
 `#   occured at (row) path: r1[U]->r2[u3]`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [x  -> { x, x[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `# Warning in min(x): no non-missing arguments to min; returning Inf`\
 `# Warning in max(x): no non-missing arguments to max; returning -Inf`\
 `# Warning: Non-unique sibling analysis table names. Using Labels instead. Use the table_names argument to analyze to avoid this when analyzing the same variable multiple times.`\
 `#   occured at (row) path: r1[U]->r2[u1]`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [x  -> { x, x[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `# Warning: Non-unique sibling analysis table names. Using Labels instead. Use the table_names argument to analyze to avoid this when analyzing the same variable multiple times.`\
 `#   occured at (row) path: r1[U]->r2[u2]`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [x  -> { x, x[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `# Warning: Non-unique sibling analysis table names. Using Labels instead. Use the table_names argument to analyze to avoid this when analyzing the same variable multiple times.`\
 `#   occured at (row) path: r1[V]->r2[v2]`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [x  -> { x, x[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `# Warning: Non-unique sibling analysis table names. Using Labels instead. Use the table_names argument to analyze to avoid this when analyzing the same variable multiple times.`\
 `#   occured at (row) path: r1[V]->r2[v3]`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [x  -> { x, x[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `# Warning: Non-unique sibling analysis table names. Using Labels instead. Use the table_names argument to analyze to avoid this when analyzing the same variable multiple times.`\
 `#   occured at (row) path: r1[V]->r2[v1]`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [x  -> { x, x[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `# Warning: Non-unique sibling analysis table names. Using Labels instead. Use the table_names argument to analyze to avoid this when analyzing the same variable multiple times.`\
 `#   occured at (row) path: r1[W]->r2[w1]`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [x  -> { x, x[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `# Warning: Non-unique sibling analysis table names. Using Labels instead. Use the table_names argument to analyze to avoid this when analyzing the same variable multiple times.`\
 `#   occured at (row) path: r1[W]->r2[w3]`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [x  -> { x, x[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `# Warning: Non-unique sibling analysis table names. Using Labels instead. Use the table_names argument to analyze to avoid this when analyzing the same variable multiple times.`\
 `#   occured at (row) path: r1[W]->r2[w2]`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [x  -> { x, x[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `tbl12`\
 `#                       A              B              C      `\
 `# ———————————————————————————————————————————————————————————`\
@@ -660,49 +660,49 @@ above we can use the layout framework as follows:
 `#   occured at (row) path: r1[U]->r2[u3]`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [x  -> { x, x[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `# Warning in min(x): no non-missing arguments to min; returning Inf`\
 `# Warning in max(x): no non-missing arguments to max; returning -Inf`\
 `# Warning: Non-unique sibling analysis table names. Using Labels instead. Use the table_names argument to analyze to avoid this when analyzing the same variable multiple times.`\
 `#   occured at (row) path: r1[U]->r2[u1]`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [x  -> { x, x[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `# Warning: Non-unique sibling analysis table names. Using Labels instead. Use the table_names argument to analyze to avoid this when analyzing the same variable multiple times.`\
 `#   occured at (row) path: r1[U]->r2[u2]`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [x  -> { x, x[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `# Warning: Non-unique sibling analysis table names. Using Labels instead. Use the table_names argument to analyze to avoid this when analyzing the same variable multiple times.`\
 `#   occured at (row) path: r1[V]->r2[v2]`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [x  -> { x, x[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `# Warning: Non-unique sibling analysis table names. Using Labels instead. Use the table_names argument to analyze to avoid this when analyzing the same variable multiple times.`\
 `#   occured at (row) path: r1[V]->r2[v3]`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [x  -> { x, x[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `# Warning: Non-unique sibling analysis table names. Using Labels instead. Use the table_names argument to analyze to avoid this when analyzing the same variable multiple times.`\
 `#   occured at (row) path: r1[V]->r2[v1]`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [x  -> { x, x[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `# Warning: Non-unique sibling analysis table names. Using Labels instead. Use the table_names argument to analyze to avoid this when analyzing the same variable multiple times.`\
 `#   occured at (row) path: r1[W]->r2[w1]`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [x  -> { x, x[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `# Warning: Non-unique sibling analysis table names. Using Labels instead. Use the table_names argument to analyze to avoid this when analyzing the same variable multiple times.`\
 `#   occured at (row) path: r1[W]->r2[w3]`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [x  -> { x, x[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `# Warning: Non-unique sibling analysis table names. Using Labels instead. Use the table_names argument to analyze to avoid this when analyzing the same variable multiple times.`\
 `#   occured at (row) path: r1[W]->r2[w2]`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [x  -> { x, x[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `tbl13`\
 `#                       A              B              C      `\
 `# ———————————————————————————————————————————————————————————`\
@@ -755,49 +755,49 @@ it at as follows:
 `#   occured at (row) path: r1[U]->r2[u3]`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [x  -> { x, x[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `# Warning in min(x): no non-missing arguments to min; returning Inf`\
 `# Warning in max(x): no non-missing arguments to max; returning -Inf`\
 `# Warning: Non-unique sibling analysis table names. Using Labels instead. Use the table_names argument to analyze to avoid this when analyzing the same variable multiple times.`\
 `#   occured at (row) path: r1[U]->r2[u1]`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [x  -> { x, x[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `# Warning: Non-unique sibling analysis table names. Using Labels instead. Use the table_names argument to analyze to avoid this when analyzing the same variable multiple times.`\
 `#   occured at (row) path: r1[U]->r2[u2]`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [x  -> { x, x[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `# Warning: Non-unique sibling analysis table names. Using Labels instead. Use the table_names argument to analyze to avoid this when analyzing the same variable multiple times.`\
 `#   occured at (row) path: r1[V]->r2[v2]`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [x  -> { x, x[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `# Warning: Non-unique sibling analysis table names. Using Labels instead. Use the table_names argument to analyze to avoid this when analyzing the same variable multiple times.`\
 `#   occured at (row) path: r1[V]->r2[v3]`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [x  -> { x, x[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `# Warning: Non-unique sibling analysis table names. Using Labels instead. Use the table_names argument to analyze to avoid this when analyzing the same variable multiple times.`\
 `#   occured at (row) path: r1[V]->r2[v1]`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [x  -> { x, x[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `# Warning: Non-unique sibling analysis table names. Using Labels instead. Use the table_names argument to analyze to avoid this when analyzing the same variable multiple times.`\
 `#   occured at (row) path: r1[W]->r2[w1]`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [x  -> { x, x[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `# Warning: Non-unique sibling analysis table names. Using Labels instead. Use the table_names argument to analyze to avoid this when analyzing the same variable multiple times.`\
 `#   occured at (row) path: r1[W]->r2[w3]`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [x  -> { x, x[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `# Warning: Non-unique sibling analysis table names. Using Labels instead. Use the table_names argument to analyze to avoid this when analyzing the same variable multiple times.`\
 `#   occured at (row) path: r1[W]->r2[w2]`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [x  -> { x, x[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `tbl14`\
 `#                       A              B              C      `\
 `# ———————————————————————————————————————————————————————————`\

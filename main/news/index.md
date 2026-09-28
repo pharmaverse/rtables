@@ -1,6 +1,6 @@
 # Changelog
 
-## rtables 0.6.16.9010
+## rtables 0.6.16.9011
 
 ### New Features
 
@@ -47,11 +47,25 @@
 - Added vignette: Guided Tour (Advanced) - (stub) `TableTree` Objects -
   (stub) Custom Pruning Functions
   [@gmbecker](https://github.com/gmbecker)
+- Added `at_sibling` parameter to `split_rows_by*` and `analyze`
+  functions, enabling placement of a new layout directive as a direct
+  sibling of a previously declared split or analysis
+  [@gmbecker](https://github.com/gmbecker)
+- Added `get_anchor_list()` function for inspecting the available
+  sibling anchors in an existing layout
+  [@gmbecker](https://github.com/gmbecker)
+- `label_pos` now accepts `"default"` as a value, which resolves to
+  `"visible"` when `at_sibling` is non-`NULL` and `"hidden"` otherwise
+  [@gmbecker](https://github.com/gmbecker)
 
 ### Bug Fixes
 
 - `indent_mod<-` `RowsVerticalSection` method now correctly recycles
   length 1 values [@gmbecker](https://github.com/gmbecker)
+- Fixed `uniqify_child_names` emitting messages ending in a literal
+  `FALSE` due to passing `call. = FALSE` to
+  [`message()`](https://rdrr.io/r/base/message.html), which does not
+  accept that argument [@gmbecker](https://github.com/gmbecker)
 - content functions now receive correct `.ref_group` value instead of a
   data.frame with zero rows, when requested.
   [\#1117](https://github.com/pharmaverse/rtables/issues/1117)

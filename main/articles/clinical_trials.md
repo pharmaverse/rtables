@@ -668,10 +668,13 @@ Here is an example that demonstrates the reusability of layouts:
 `# A Pre-data Table Layout`\
 `# `\
 `# Column-Split Structure:`\
-`# ARM (lvls) `\
+`# ARM (lvls)`\
 `# `\
 `# Row-Split Structure:`\
-`# AGE:SEX (** multivar analysis **)`
+`# ma_AGE_SEX (** multivar **)`\
+`# `\
+`# '->' indicates nesting, vertical stacks of '|' indicate anchoring/siblings.`\
+`# '(<type>)' indicates split type, while '(** <type> **)' indicates an analyze instruction.`
 
 We can now build a table for `ADSL`
 
@@ -1920,7 +1923,7 @@ the CI for `NE` we could do that as follows:
 `rsp_tbl4`` ``<-`` `[`build_table`](https://pharmaverse.github.io/rtables/reference/build_table.md)`(``rsp_lyt4``, ``ADRS_BESRSPI``)`\
 `# Modifying subtable (or row) names to ensure uniqueness among direct siblings`\
 `# [AVALC  -> { AVALC, AVALC[2] }]`\
-`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.FALSE`\
+`#   To control table names use split_rows_by*(, parent_name =.) or  analyze(., table_names = .) when analyzing a single variable, or analyze(., parent_name = .) when analyzing multiple variables in a single call.`\
 `rsp_tbl4`\
 `#                                           ARM A              ARM B                ARM C       `\
 `#                                          (N=134)            (N=134)              (N=132)      `\
