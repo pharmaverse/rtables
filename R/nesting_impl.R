@@ -30,8 +30,7 @@ setMethod(
   "next_rpos", "PreDataRowLayout",
   function(obj, nested, for_analyze, at_sibling = NULL) {
     l <- length(obj)
-    if (length(obj[[l]]) > 0L &&
-      !.check_if_nest(obj, nested, for_analyze, at_sibling = at_sibling)) {
+    if (length(obj[[l]]) > 0L && !.check_if_nest(obj, nested, for_analyze, at_sibling = at_sibling)) {
       l <- l + 1L
     }
     l
