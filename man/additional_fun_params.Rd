@@ -39,10 +39,15 @@ where the variables required for row splitting are not present in \code{alt_coun
 \item{.all_col_counts}{Vector of integers. Each of them represents the global count for each column. It differs
 if \code{alt_counts_df} is used (see \code{\link[=build_table]{build_table()}}).}
 }
+
+For the \verb{.alt_df*} family of parameters, these will be passed data
+subsets based on \code{df} if no \code{alt_counts_df} is specified in the
+\code{build_table} call. In \code{rtables} versions \verb{<= 0.6.16} this resulted in an error.
 }
 \note{
 If any of these formals is specified incorrectly or not present in the tabulation machinery, it will be
 treated as if missing. For example, \code{.ref_group} will be missing if no baseline is previously defined during
-data splitting (via \code{ref_group} parameters in, e.g., \code{\link[=split_rows_by]{split_rows_by()}}). Similarly, if no \code{alt_counts_df} is
-provided to \code{\link[=build_table]{build_table()}}, \code{.alt_df_row} and \code{.alt_df} will not be present.
+data splitting (via \code{ref_group} parameters in, e.g., \code{\link[=split_rows_by]{split_rows_by()}}). Arguments derived from
+the alt_counts_df will be passed subsets of the primary data (\code{df}) when no \code{alt_counts_df} is provided
+to \code{\link[=build_table]{build_table()}}.
 }
