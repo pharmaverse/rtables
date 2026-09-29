@@ -95,6 +95,11 @@ analysis function below:
   column. It differs if `alt_counts_df` is used (see
   [`build_table()`](https://pharmaverse.github.io/rtables/reference/build_table.md)).
 
+For the `.alt_df*` family of parameters, these will be passed data
+subsets based on `df` if no `alt_counts_df` is specified in the
+`build_table` call. In `rtables` versions `<= 0.6.16` this resulted in
+an error.
+
 ## Note
 
 If any of these formals is specified incorrectly or not present in the
@@ -102,6 +107,6 @@ tabulation machinery, it will be treated as if missing. For example,
 `.ref_group` will be missing if no baseline is previously defined during
 data splitting (via `ref_group` parameters in, e.g.,
 [`split_rows_by()`](https://pharmaverse.github.io/rtables/reference/split_rows_by.md)).
-Similarly, if no `alt_counts_df` is provided to
-[`build_table()`](https://pharmaverse.github.io/rtables/reference/build_table.md),
-`.alt_df_row` and `.alt_df` will not be present.
+Arguments derived from the alt_counts_df will be passed subsets of the
+primary data (`df`) when no `alt_counts_df` is provided to
+[`build_table()`](https://pharmaverse.github.io/rtables/reference/build_table.md).

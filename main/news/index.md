@@ -1,6 +1,6 @@
 # Changelog
 
-## rtables 0.6.16.9011
+## rtables 0.6.16.9012
 
 ### New Features
 
@@ -13,6 +13,9 @@
   objects.
 - Exported previously internal `value_expr` accessor for retrieving the
   subsetting expression from a `SplitValue` or `ValueWrapper` object.
+- The `.alt_df*` family of afun arguments now receive subsets of `df`
+  when `alt_counts_df` is not specified in the `build_table` call;
+  previously resulted in an error.
 - Exported previously internal `RefFootnote` constructor for reference
   footnote objects.
 - Added accessor methods for `RowsVerticalSection objects`: `row_cells`,
