@@ -1,4 +1,4 @@
-## rtables 0.6.16.9012
+## rtables 0.6.17
 
 ### New Features
  * Added `restrict_facets` function factory for use with `make_split_fun` @gmbecker
@@ -31,6 +31,12 @@
  * Fixed `uniqify_child_names` emitting messages ending in a literal `FALSE` due to passing `call. = FALSE` to `message()`, which does not accept that argument @gmbecker
  * content functions now receive correct `.ref_group` value instead of a data.frame with zero rows, when requested. #1117 @gmbecker
  * Fix in the now exported `RefFootnote` in check for disallowed values in `symbol` argument
+
+## rtables 0.6.16
+
+### New Features
+ * Added `restrict_facets` function factory for use with `make_split_fun` @gmbecker
+ * Exported previously internal `make_subset_expr` for use when constructing custom splitting behavior
 
 ## rtables 0.6.15
 
