@@ -1,6 +1,6 @@
 # Changelog
 
-## rtables 0.6.16.9012
+## rtables 0.6.17
 
 ### New Features
 
@@ -75,6 +75,17 @@
   [@gmbecker](https://github.com/gmbecker)
 - Fix in the now exported `RefFootnote` in check for disallowed values
   in `symbol` argument
+
+## rtables 0.6.16
+
+CRAN release: 2026-04-22
+
+### New Features
+
+- Added `restrict_facets` function factory for use with `make_split_fun`
+  [@gmbecker](https://github.com/gmbecker)
+- Exported previously internal `make_subset_expr` for use when
+  constructing custom splitting behavior
 
 ## rtables 0.6.15
 

@@ -470,7 +470,7 @@ can include annotations such as titles, subtitles and footnotes like so:
 `# S2         61           67             76      `\
 `# ———————————————————————————————————————————————`\
 `# `\
-`# Date: 2026-09-29`
+`# Date: 2026-09-30`
 
 ## Summary
 
