@@ -273,7 +273,7 @@ purpose which is preferred to creating our own combination afun from
 scratch in most cases.
 
 We leave it as an exercise to use the methods in the
-[./guided_advanced_afuns_spl_context.html](Split Context) portion of
+[Split Context](./guided_advanced_afuns_spl_context.html) portion of
 this guide to reformulate this so that we split on `EOSSTT` and then
 use an afun with behavior conditional on the current row facet.
 

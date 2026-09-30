@@ -189,5 +189,5 @@ Thus we have created a basic table. In practice, our table structures
 are generally significantly more complex than this; rtables supports
 these myriad structures by allowing us to control the *nesting*
 behavior of both splitting and analysis instructions. We cover this in
-detail in the [next section](./guided_intro.nesting.html) of this
+detail in the [next section](./guided_intro_nesting.html) of this
 guide.
