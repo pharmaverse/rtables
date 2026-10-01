@@ -305,8 +305,8 @@ Note that for production usage, `junco` provides `a_two_tier` for this
 purpose which is preferred to creating our own combination afun from
 scratch in most cases.
 
-We leave it as an exercise to use the methods in the
-[./guided_advanced_afuns_spl_context.html](https://pharmaverse.github.io/rtables/articles/Split%20Context)
+We leave it as an exercise to use the methods in the [Split
+Context](https://pharmaverse.github.io/rtables/articles/guided_advanced_afuns_spl_context.md)
 portion of this guide to reformulate this so that we split on `EOSSTT`
 and then use an afun with behavior conditional on the current row facet.
 

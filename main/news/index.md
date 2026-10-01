@@ -2,6 +2,8 @@
 
 ## rtables 0.6.17
 
+CRAN release: 2026-10-01
+
 ### New Features
 
 - Added `restrict_facets` function factory for use with `make_split_fun`

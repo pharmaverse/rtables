@@ -44,7 +44,7 @@ when their existing function library falls short.
     `make_split_fun` and recognizing when to specify `pre`, `core`, and
     `post` behavior customizations
   - [Using And Combining Provided Behavior Building
-    Blocks](https://pharmaverse.github.io/rtables/articles/guided_advanced_split_funs_bbbs.md)
+    Blocks](https://pharmaverse.github.io/rtables/articles/guided_advanced_split_funs_new_bbbs.md)
     The split function behavior building blocks provided by `rtables`
     and how to use and combine them
   - [Writing Reusable Behavior Building

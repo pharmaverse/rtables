@@ -286,5 +286,5 @@ are generally significantly more complex than this; rtables supports
 these myriad structures by allowing us to control the *nesting* behavior
 of both splitting and analysis instructions. We cover this in detail in
 the [next
-section](https://pharmaverse.github.io/rtables/articles/guided_intro.nesting.md)
+section](https://pharmaverse.github.io/rtables/articles/guided_intro_nesting.md)
 of this guide.

@@ -81,7 +81,7 @@ involve padding the results with blank cells in some columns.
 We can use the `cur_col_*` elements of the split context - all of which
 are constant across rows - to determine where in the column structure we
 are creating cells for, as we saw in the [Translating
-Shells](https://pharmaverse.github.io/rtables/articles/guided_intermediate_translating_Shells.md)
+Shells](https://pharmaverse.github.io/rtables/articles/guided_intermediate_translating_shells.md)
 portion of the intermediate guided tour. In that function we used
 `cur_col_id` to indicate column, but using `cur_col_split` and/or
 `cur_col_split_value` is more robust, as follows:
