@@ -587,6 +587,7 @@ split_cols_by_cuts <- function(lyt, var, cuts,
     cuts = cuts,
     cutlabels = cutlabels,
     cumulative = cumulative,
+    label_pos = "hidden",
     show_colcounts = show_colcounts,
     colcount_format = colcount_format
   )
@@ -1757,10 +1758,31 @@ setMethod(
       cutlabels <- names(cuts)[-1]
     }
 
+    lk <- spl@label_children
+    child_labels <- if (is.na(lk)) "default" else if (lk) "visible" else "hidden"
     ret <- make_static_cut_split(
-      var = var, split_label = obj_label(spl),
-      cuts = cuts, cutlabels = cutlabels,
-      cumulative = spl_is_cmlcuts(spl)
+      var = var,
+      split_label = obj_label(spl),
+      cuts = cuts,
+      cutlabels = cutlabels,
+      cfun = content_fun(spl),
+      cformat = content_format(spl),
+      cna_str = content_na_str(spl),
+      split_format = obj_format(spl),
+      split_na_str = obj_na_str(spl),
+      split_name = obj_name(spl),
+      child_labels = child_labels,
+      extra_args = spl@extra_args,
+      indent_mod = spl@indent_modifier,
+      cindent_mod = spl@content_indent_modifier,
+      cvar = content_var(spl),
+      cextra_args = content_extra_args(spl),
+      label_pos = label_position(spl),
+      cumulative = spl_is_cmlcuts(spl),
+      page_prefix = ptitle_prefix(spl),
+      section_div = spl@child_section_div,
+      show_colcounts = spl@child_show_colcounts,
+      colcount_format = spl@child_colcount_format
     )
     ## ret = VarStaticCutSplit(var = var, split_label = obj_label(spl),
     ##                   cuts = cuts, cutlabels = cutlabels)
